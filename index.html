@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>LotoPro | Sistema de Referidos</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        /* Variables - Estilo sobrio y legible */
+        :root {
+            --primary: #00b894;
+            --primary-dark: #00997a;
+            --primary-light: #55efc4;
+            --secondary: #0984e3;
+            --danger: #d63031;
+            --warning: #fdcb6e;
+            --success: #00b894;
+            --dark: #0f0f1a;
+            --dark-card: #1e1e2e;
+            --dark-hover: #2a2a3a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0b0;
+            --border: #2a2a3a;
+            --glass: rgba(30, 30, 46, 0.95);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animaciones suaves */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* Tarjetas sobrias */
+        .card {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 24px;
+            margin: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+            border: 1px solid var(--border);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        /* Botones sobrios */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        /* Grid de números */
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .number-card {
+            background: var(--dark);
+            border-radius: 14px;
+            padding: 14px 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            cursor: default;
+        }
+
+        .number-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            background: var(--dark-hover);
+        }
+
+        .number-card.winner {
+            border-color: var(--warning);
+            background: rgba(253, 203, 110, 0.15);
+            animation: pulse 1.5s infinite;
+        }
+
+        .number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .winner-icon {
+            font-size: 12px;
+            margin-top: 6px;
+            color: var(--warning);
+        }
+
+        /* Pantalla de autenticación */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .auth-card {
+            background: var(--dark-card);
+            border-radius: 28px;
+            padding: 40px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .auth-card h2 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 184, 148, 0.2);
+        }
+
+        /* Navegación */
+        .nav-menu {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: var(--dark);
+            color: var(--text-secondary);
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--dark-hover);
+            color: var(--text-primary);
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .logo p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Tablas */
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        th {
+            background: rgba(0, 184, 148, 0.1);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Badges */
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-active {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge-inactive {
+            background: var(--danger);
+            color: white;
+        }
+
+        .badge-pending {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: white;
+        }
+
+        /* Grid de estadísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--dark);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        /* Modal centrado */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--dark-card);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid var(--border);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content h3 {
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-size: 24px;
+        }
+
+        .modal-content p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        /* Código de referido */
+        .referral-code {
+            background: var(--dark);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            margin: 15px 0;
+            border: 1px solid var(--border);
+        }
+
+        .referral-code span {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            background: var(--dark);
+            border-radius: 10px;
+            height: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--primary);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .numbers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+                gap: 8px;
+            }
+            
+            .number {
+                font-size: 18px;
+            }
+            
+            .card {
+                margin: 12px;
+                padding: 16px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .nav-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            
+            .stat-number {
+                font-size: 24px;
+            }
+            
+            .modal-content {
+                padding: 24px;
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .numbers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+                gap: 6px;
+            }
+            
+            .number-card {
+                padding: 10px 4px;
+            }
+            
+            .number {
+                font-size: 16px;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-success {
+            color: var(--success);
+        }
+
+        .mt-3 {
+            margin-top: 16px;
+        }
+
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Pantalla de Login/Registro -->
+        <div id="authScreen" class="auth-container">
+            <div class="auth-card">
+                <h2 id="authTitle">LotoPro</h2>
+                <div class="auth-subtitle" id="authSubtitle">Inicia sesión para ver los pronósticos</div>
+                <div class="input-group">
+                    <label>📧 Correo electrónico</label>
+                    <input type="email" id="authEmail" placeholder="tu@email.com">
+                </div>
+                <div class="input-group">
+                    <label>🔐 Contraseña</label>
+                    <input type="password" id="authPassword" placeholder="••••••">
+                </div>
+                <div class="input-group" id="referralGroup" style="display: none;">
+                    <label>🎁 Código de invitación (opcional)</label>
+                    <input type="text" id="referralCode" placeholder="Código de un amigo">
+                </div>
+                <button class="btn" id="authBtn" onclick="handleAuth()">Iniciar Sesión</button>
+                <div class="switch-auth" onclick="toggleAuthMode()" id="switchText" style="text-align: center; margin-top: 16px; color: var(--primary); cursor: pointer;">
+                    ¿No tienes cuenta? Regístrate aquí
+                </div>
+                <div class="text-center mt-3" style="font-size: 12px; color: var(--text-secondary);">
+                    💎 Invita amigos y gana meses gratis
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dashboard Principal -->
+        <div id="dashboardScreen" style="display: none;">
+            <div class="container">
+                <!-- Header -->
+                <div class="card">
+                    <div class="header">
+                        <div class="logo">
+                            <h1>🎯 LotoPro</h1>
+                            <p>Pronósticos profesionales</p>
+                        </div>
+                        <button class="btn" onclick="logout()" style="width: auto; padding: 8px 20px; background: var(--danger);">
+                            Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Estadísticas -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalWins">0</div>
+                        <div class="stat-label">🏆 Premios Acertados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="winRate">0%</div>
+                        <div class="stat-label">⭐ Porcentaje de Acierto</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="daysLeft">0</div>
+                        <div class="stat-label">📅 Días de Membresía</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="referralsCount">0</div>
+                        <div class="stat-label">👥 Amigos Invitados</div>
+                    </div>
+                </div>
+                
+                <!-- Navegación -->
+                <div class="card">
+                    <div class="nav-menu">
+                        <button class="nav-btn active" onclick="showSection('predictions')">🎯 Pronósticos Hoy</button>
+                        <button class="nav-btn" onclick="showSection('referrals')">🎁 Mis Referidos</button>
+                        <button class="nav-btn" onclick="showSection('winners')">🏆 Historial</button>
+                        <button class="nav-btn" onclick="showSection('profile')">👤 Mi Perfil</button>
+                        <button class="nav-btn" onclick="showSection('payment')">💰 Pagar</button>
+                    </div>
+                </div>
+                
+                <!-- Sección Pronósticos -->
+                <div id="predictionsSection">
+                    <div class="card" id="predictionsContent">
+                        <div class="text-center" style="padding: 60px;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">🎲</div>
+                            <h3>Cargando pronósticos...</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección Referidos -->
+                <div id="referralsSection" style="display: none;">
+                    <div class="card">
+                        <h2 style="color: var(--primary); margin-bottom: 20px;">🎁 Sistema de Referidos</h2>
+                        <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                            Invita a tus amigos y gana meses gratis de membresía. Por cada 10 amigos con membresía activa, recibes 1 mes adicional.
+                        </p>
+                        
+                        <div class="referral-code">
+                            <label style="color: var(--text-secondary); font-size: 13px;">Tu código de invitación:</label>
+                            <div><span id="userReferralCode">Cargando...</span></div>
+                            <button class="copy-btn" onclick="copyReferralCode()">📋 Copiar código</button>
+                        </div>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="referralProgress" style="width: 0%"></div>
+                        </div>
+                        <div class="text-center" id="referralProgressText">0/10 amigos con membresía activa</div>
+                        
+                        <div class="table-responsive">
+                            <h3 style="margin: 20px 0 10px 0;">Mis amigos referidos</h3>
+                            <table id="referralsTable">
+                                <thead>
+                                    <tr><th>Email</th><th>Fecha registro</th><th>Membresía activa</th><th>Beneficio</th></tr>
+                                </thead>
+                                <tbody id="referralsTableBody">
+                                    <tr><td colspan="4" class="text-center">Cargando tus referidos...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="stats-grid mt-3">
+                            <div class="stat-card">
+                                <div class="stat-number" id="freeMonthsEarned">0</div>
+                                <div class="stat-label">🎁 Meses gratis ganados</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="activeReferrals">0</div>
+                                <div class="stat-label">👥 Amigos activos</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección Historial de Premios -->
+                <div id="winnersSection" style="display: none;">
+                    <div class="card">
+                        <h2 style="color: var(--primary); margin-bottom: 20px;">🏆 Historial de Premios</h2>
+                        <div class="table-responsive">
+                            <table id="winnersTable">
+                                <thead>
+                                    <tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Resultado</th></tr>
+                                </thead>
+                                <tbody id="winnersTableBody">
+                                    <tr><td colspan="4" class="text-center">Cargando historial...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección Perfil -->
+                <div id="profileSection" style="display: none;">
+                    <div class="card" id="profileContent"></div>
+                </div>
+                
+                <!-- Sección Pago -->
+                <div id="paymentSection" style="display: none;">
+                    <div class="card">
+                        <h2 style="color: var(--primary); margin-bottom: 20px;">💰 Pagar Membresía</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">$30</div>
+                                <div class="stat-label">USD / Mes</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">24h</div>
+                                <div class="stat-label">Activación</div>
+                            </div>
+                        </div>
+                        <div class="referral-code" style="background: var(--dark);">
+                            <div style="font-size: 14px; margin-bottom: 10px;">📞 Número de Transferencia:</div>
+                            <div style="font-size: 28px; font-weight: bold; color: var(--primary);">192993939383</div>
+                            <div style="font-size: 12px; margin-top: 10px;">Banco: Todos los bancos</div>
+                            <div style="font-size: 12px;">Beneficiario: LotoPro Services</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>📝 Número de Transferencia:</label>
+                            <input type="text" id="transferNumber" placeholder="Ej: REF-123456789">
+                        </div>
+                        
+                        <button class="btn" onclick="submitPayment()">Enviar Comprobante</button>
+                        
+                        <div class="text-center mt-3" style="font-size: 12px; color: var(--text-secondary);">
+                            ⏱️ Activación en menos de 24 horas hábiles
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal centrado -->
+    <div id="dialogModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="dialogTitle">Notificación</h3>
+            <p id="dialogMessage"></p>
+            <button class="btn" onclick="closeDialog()">Aceptar</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA1vFooiPl-CTM-z5QCrpBNya1h_D7Ws8I",
+            authDomain: "loteriapro-46e18.firebaseapp.com",
+            databaseURL: "https://loteriapro-46e18-default-rtdb.firebaseio.com",
+            projectId: "loteriapro-46e18",
+            storageBucket: "loteriapro-46e18.firebasestorage.app",
+            messagingSenderId: "435907893737",
+            appId: "1:435907893737:web:d48e112267b7f5636c9378",
+            measurementId: "G-992PY501L9"
+        };
+        
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        // Variables globales
+        let currentUser = null;
+        let userMembership = null;
+        let authMode = 'login';
+        let todaysNumbers = [];
+        let morningWinner = null;
+        let eveningWinner = null;
+        
+        // Función para mostrar modal centrado
+        function showDialog(title, message) {
+            document.getElementById('dialogTitle').innerText = title;
+            document.getElementById('dialogMessage').innerHTML = message;
+            document.getElementById('dialogModal').style.display = 'flex';
+        }
+        
+        function closeDialog() {
+            document.getElementById('dialogModal').style.display = 'none';
+        }
+        
+        // Generar código de referido único
+        function generateReferralCode(email) {
+            const prefix = email.split('@')[0].substring(0, 6).toUpperCase();
+            const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+            return `${prefix}${random}`;
+        }
+        
+        // Copiar código de referido
+        async function copyReferralCode() {
+            const code = document.getElementById('userReferralCode').innerText;
+            await navigator.clipboard.writeText(code);
+            showDialog('¡Copiado!', 'Código de invitación copiado al portapapeles');
+        }
+        
+        // Cambiar entre login y registro
+        function toggleAuthMode() {
+            if (authMode === 'login') {
+                authMode = 'register';
+                document.getElementById('authTitle').innerText = 'Crear Cuenta';
+                document.getElementById('authSubtitle').innerText = 'Regístrate y comienza a ganar';
+                document.getElementById('authBtn').innerText = 'Registrarse';
+                document.getElementById('switchText').innerHTML = '¿Ya tienes cuenta? Inicia sesión aquí';
+                document.getElementById('referralGroup').style.display = 'block';
+            } else {
+                authMode = 'login';
+                document.getElementById('authTitle').innerText = 'LotoPro';
+                document.getElementById('authSubtitle').innerText = 'Inicia sesión para ver los pronósticos';
+                document.getElementById('authBtn').innerText = 'Iniciar Sesión';
+                document.getElementById('switchText').innerHTML = '¿No tienes cuenta? Regístrate aquí';
+                document.getElementById('referralGroup').style.display = 'none';
+            }
+        }
+        
+        // Procesar referido al registrar
+        async function processReferral(newUserEmail, referralCode) {
+            if (!referralCode) return null;
+            
+            try {
+                // Buscar quién tiene ese código
+                const usersRef = db.collection('members');
+                const query = await usersRef.where('referralCode', '==', referralCode).get();
+                
+                if (!query.empty) {
+                    const referrerDoc = query.docs[0];
+                    const referrerEmail = referrerDoc.data().email;
+                    
+                    if (referrerEmail === newUserEmail) {
+                        return null; // No auto-referencia
+                    }
+                    
+                    // Crear registro de referido
+                    await db.collection('referrals').add({
+                        referrerEmail: referrerEmail,
+                        referredEmail: newUserEmail,
+                        referredAt: new Date().toISOString(),
+                        status: 'pending', // Pendiente hasta que tenga membresía activa
+                        referralCode: referralCode
+                    });
+                    
+                    return referrerEmail;
+                }
+            } catch (error) {
+                console.error('Error procesando referido:', error);
+            }
+            return null;
+        }
+        
+        // Verificar referidos activos y dar recompensas
+        async function checkAndRewardReferrals(userEmail) {
+            try {
+                // Obtener referidos con membresía activa
+                const referralsSnapshot = await db.collection('referrals')
+                    .where('referrerEmail', '==', userEmail)
+                    .get();
+                
+                let activeCount = 0;
+                const referralIds = [];
+                
+                for (const doc of referralsSnapshot.docs) {
+                    const referral = doc.data();
+                    if (referral.status === 'rewarded') continue;
+                    
+                    // Verificar si el referido tiene membresía activa
+                    const referredMember = await db.collection('members').doc(referral.referredEmail).get();
+                    
+                    if (referredMember.exists && referredMember.data().membershipActive) {
+                        const expires = new Date(referredMember.data().membershipExpires);
+                        if (expires > new Date()) {
+                            activeCount++;
+                            referralIds.push(doc.id);
+                        }
+                    }
+                }
+                
+                // Calcular cuántos meses gratis ha ganado (cada 10 referidos activos = 1 mes)
+                const totalReferrals = referralsSnapshot.size;
+                const activeReferrals = referralIds.length;
+                const monthsEarned = Math.floor(activeReferrals / 10);
+                
+                // Actualizar estadísticas en UI
+                document.getElementById('referralsCount').innerText = totalReferrals;
+                document.getElementById('activeReferrals').innerText = activeReferrals;
+                document.getElementById('freeMonthsEarned').innerText = monthsEarned;
+                
+                const progressPercent = (activeReferrals / 10) * 100;
+                document.getElementById('referralProgress').style.width = `${Math.min(progressPercent, 100)}%`;
+                document.getElementById('referralProgressText').innerHTML = `${activeReferrals}/10 amigos con membresía activa ${monthsEarned > 0 ? `(${monthsEarned} mes(es) gratis ganado)` : ''}`;
+                
+                // Si hay meses gratis pendientes, aplicar a la membresía
+                if (monthsEarned > 0 && userMembership) {
+                    const currentExpires = userMembership.membershipExpires ? new Date(userMembership.membershipExpires) : new Date();
+                    const newExpires = new Date(currentExpires);
+                    newExpires.setMonth(newExpires.getMonth() + monthsEarned);
+                    
+                    await db.collection('members').doc(userEmail).update({
+                        membershipExpires: newExpires.toISOString(),
+                        referralBonusMonths: firebase.firestore.FieldValue.increment(monthsEarned)
+                    });
+                    
+                    // Marcar referidos como recompensados
+                    for (const id of referralIds.slice(0, monthsEarned * 10)) {
+                        await db.collection('referrals').doc(id).update({
+                            status: 'rewarded',
+                            rewardedAt: new Date().toISOString()
+                        });
+                    }
+                    
+                    showDialog('🎁 ¡Recompensa recibida!', `Has ganado ${monthsEarned} mes(es) gratis de membresía por tus referidos activos.`);
+                    
+                    // Recargar membresía
+                    await checkMembership(userEmail);
+                }
+                
+            } catch (error) {
+                console.error('Error verificando recompensas:', error);
+            }
+        }
+        
+        // Manejar autenticación
+        async function handleAuth() {
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            const referralCodeInput = document.getElementById('referralCode').value;
+            
+            if (!email || !password) {
+                showDialog('Error', 'Por favor completa todos los campos');
+                return;
+            }
+            
+            try {
+                if (authMode === 'login') {
+                    await auth.signInWithEmailAndPassword(email, password);
+                } else {
+                    const userCred = await auth.createUserWithEmailAndPassword(email, password);
+                    const referralCode = generateReferralCode(email);
+                    
+                    // Procesar referido
+                    const referrer = await processReferral(email, referralCodeInput);
+                    
+                    await db.collection('members').doc(email).set({
+                        email: email,
+                        membershipActive: false,
+                        createdAt: new Date().toISOString(),
+                        userId: userCred.user.uid,
+                        wins: 0,
+                        losses: 0,
+                        referralCode: referralCode,
+                        referredBy: referrer || null,
+                        referralBonusMonths: 0
+                    });
+                    
+                    let message = 'Cuenta creada correctamente.\n\nAhora necesitas pagar la membresía para acceder a los pronósticos.\n\n📞 Número de transferencia: 192993939383\n💰 Monto: $30 USD';
+                    
+                    if (referrer) {
+                        message += `\n\n🎁 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él recibirá puntos para su recompensa.`;
+                    }
+                    
+                    message += `\n\n📋 Tu código de invitación: ${referralCode}\n¡Invita amigos y gana meses gratis!`;
+                    
+                    showDialog('✅ Registro Exitoso', message);
+                    document.getElementById('authPassword').value = '';
+                    document.getElementById('referralCode').value = '';
+                }
+            } catch (error) {
+                let mensaje = error.message;
+                if (error.code === 'auth/email-already-in-use') {
+                    mensaje = 'Este email ya está registrado. Por favor inicia sesión.';
+                } else if (error.code === 'auth/weak-password') {
+                    mensaje = 'La contraseña debe tener al menos 6 caracteres.';
+                }
+                showDialog('Error', mensaje);
+            }
+        }
+        
+        // Cerrar sesión
+        function logout() {
+            auth.signOut();
+            location.reload();
+        }
+        
+        // Navegación
+        function showSection(section) {
+            document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
+            document.getElementById('referralsSection').style.display = section === 'referrals' ? 'block' : 'none';
+            document.getElementById('winnersSection').style.display = section === 'winners' ? 'block' : 'none';
+            document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
+            document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none';
+            
+            const btns = document.querySelectorAll('.nav-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            if (event && event.target) event.target.classList.add('active');
+            
+            if (section === 'profile') loadProfile();
+            if (section === 'predictions') loadPredictions();
+            if (section === 'referrals') loadReferrals();
+            if (section === 'winners') loadUserWinners();
+        }
+        
+        // Cargar referidos
+        async function loadReferrals() {
+            if (!currentUser) return;
+            
+            try {
+                // Mostrar código de referido
+                const userDoc = await db.collection('members').doc(currentUser.email).get();
+                if (userDoc.exists) {
+                    const referralCode = userDoc.data().referralCode || 'No disponible';
+                    document.getElementById('userReferralCode').innerText = referralCode;
+                }
+                
+                // Cargar lista de referidos
+                const referrals = await db.collection('referrals')
+                    .where('referrerEmail', '==', currentUser.email)
+                    .get();
+                
+                const tbody = document.getElementById('referralsTableBody');
+                tbody.innerHTML = '';
+                
+                let activeCount = 0;
+                
+                if (referrals.empty) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></tr>';
+                } else {
+                    for (const doc of referrals.docs) {
+                        const data = doc.data();
+                        const referredEmail = data.referredEmail;
+                        
+                        // Verificar si tiene membresía activa
+                        const referredMember = await db.collection('members').doc(referredEmail).get();
+                        let isActive = false;
+                        let expiresText = 'Inactivo';
+                        
+                        if (referredMember.exists && referredMember.data().membershipActive) {
+                            const expires = new Date(referredMember.data().membershipExpires);
+                            if (expires > new Date()) {
+                                isActive = true;
+                                activeCount++;
+                                expiresText = '✅ Activo';
+                            } else {
+                                expiresText = '⏳ Expirado';
+                            }
+                        }
+                        
+                        const row = tbody.insertRow();
+                        row.insertCell(0).innerText = referredEmail;
+                        row.insertCell(1).innerText = new Date(data.referredAt).toLocaleDateString();
+                        row.insertCell(2).innerHTML = isActive ? '<span class="badge badge-active">Activo</span>' : '<span class="badge badge-inactive">Inactivo</span>';
+                        row.insertCell(3).innerHTML = data.status === 'rewarded' ? '✅ Recompensa entregada' : '⏳ Pendiente';
+                    }
+                }
+                
+                // Verificar y dar recompensas
+                await checkAndRewardReferrals(currentUser.email);
+                
+            } catch (error) {
+                console.error('Error cargando referidos:', error);
+            }
+        }
+        
+        // Cargar pronósticos
+        async function loadPredictions() {
+            const content = document.getElementById('predictionsContent');
+            const today = new Date().toISOString().split('T')[0];
+            
+            try {
+                const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
+                
+                if (!isActive) {
+                    content.innerHTML = `
+                        <div class="text-center" style="padding: 60px;">
+                            <div style="font-size: 64px; margin-bottom: 20px;">🔒</div>
+                            <h3>Membresía Inactiva</h3>
+                            <p style="margin: 20px 0;">Para ver los pronósticos necesitas una membresía activa.</p>
+                            <button class="btn" onclick="showSection('payment')" style="width: auto; padding: 12px 30px;">💰 Activar Membresía</button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const doc = await db.collection('dailyNumbers').doc(today).get();
+                
+                if (doc.exists && doc.data().numbers) {
+                    todaysNumbers = doc.data().numbers;
+                    
+                    const winnersDoc = await db.collection('dailyWinners').doc(today).get();
+                    if (winnersDoc.exists) {
+                        morningWinner = winnersDoc.data().morningWinner;
+                        eveningWinner = winnersDoc.data().eveningWinner;
+                    }
+                    
+                    content.innerHTML = `
+                        <h2 style="color: var(--primary); margin-bottom: 5px;">🎯 Pronósticos del día</h2>
+                        <p style="color: var(--text-secondary); margin-bottom: 20px;">${today}</p>
+                        
+                        <div style="margin-bottom: 40px;">
+                            <h3 style="color: var(--warning); margin-bottom: 15px;">🌅 Sorteo 1:35 PM</h3>
+                            <div class="numbers-grid" id="morningGrid"></div>
+                            ${morningWinner ? `<div class="text-center mt-3" style="padding: 10px; background: rgba(0,184,148,0.1); border-radius: 12px;">
+                                🏆 <strong>Número Ganador:</strong> ${morningWinner}
+                            </div>` : ''}
+                        </div>
+                        
+                        <div>
+                            <h3 style="color: var(--warning); margin-bottom: 15px;">🌙 Sorteo 9:50 PM</h3>
+                            <div class="numbers-grid" id="eveningGrid"></div>
+                            ${eveningWinner ? `<div class="text-center mt-3" style="padding: 10px; background: rgba(0,184,148,0.1); border-radius: 12px;">
+                                🏆 <strong>Número Ganador:</strong> ${eveningWinner}
+                            </div>` : ''}
+                        </div>
+                    `;
+                    
+                    const morningGrid = document.getElementById('morningGrid');
+                    const eveningGrid = document.getElementById('eveningGrid');
+                    
+                    todaysNumbers.forEach(num => {
+                        const morningCard = document.createElement('div');
+                        morningCard.className = `number-card ${morningWinner === num ? 'winner' : ''}`;
+                        morningCard.innerHTML = `
+                            <div class="number">${num}</div>
+                            ${morningWinner === num ? '<div class="winner-icon">🏆 GANADOR</div>' : ''}
+                        `;
+                        morningGrid.appendChild(morningCard);
+                        
+                        const eveningCard = document.createElement('div');
+                        eveningCard.className = `number-card ${eveningWinner === num ? 'winner' : ''}`;
+                        eveningCard.innerHTML = `
+                            <div class="number">${num}</div>
+                            ${eveningWinner === num ? '<div class="winner-icon">🏆 GANADOR</div>' : ''}
+                        `;
+                        eveningGrid.appendChild(eveningCard);
+                    });
+                } else {
+                    content.innerHTML = '<div class="text-center" style="padding: 60px;"><h3>⏳ Pronósticos no disponibles</h3><p>Se actualizan diariamente a las 12:00 AM</p></div>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                content.innerHTML = '<div class="text-center">Error al cargar los pronósticos</div>';
+            }
+        }
+        
+        // Escuchar ganadores
+        function listenForWinners() {
+            const today = new Date().toISOString().split('T')[0];
+            
+            db.collection('dailyWinners').doc(today).onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    morningWinner = data.morningWinner;
+                    eveningWinner = data.eveningWinner;
+                    
+                    if (document.getElementById('predictionsSection').style.display !== 'none') {
+                        loadPredictions();
+                    }
+                }
+            });
+        }
+        
+        // Cargar historial de premios
+        async function loadUserWinners() {
+            if (!currentUser) return;
+            
+            try {
+                const userDoc = await db.collection('members').doc(currentUser.email).get();
+                const wins = userDoc.data()?.wins || 0;
+                const losses = userDoc.data()?.losses || 0;
+                const total = wins + losses;
+                const winRate = total > 0 ? Math.round((wins / total) * 100) : 0;
+                
+                document.getElementById('totalWins').innerText = wins;
+                document.getElementById('winRate').innerText = `${winRate}%`;
+                
+                const winners = await db.collection('userHistory')
+                    .where('userEmail', '==', currentUser.email)
+                    .orderBy('timestamp', 'desc')
+                    .limit(50)
+                    .get();
+                
+                const tbody = document.getElementById('winnersTableBody');
+                tbody.innerHTML = '';
+                
+                if (winners.empty) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">No hay historial de premios aún</td></tr>';
+                } else {
+                    winners.forEach(doc => {
+                        const data = doc.data();
+                        const row = tbody.insertRow();
+                        row.insertCell(0).innerText = data.date;
+                        row.insertCell(1).innerText = data.drawTime === 'morning' ? '🌅 1:35 PM' : '🌙 9:50 PM';
+                        row.insertCell(2).innerText = data.winnerNumber;
+                        row.insertCell(3).innerHTML = data.result === 'win' ? 
+                            '<span class="badge badge-active">🏆 GANADO</span>' : 
+                            '<span class="badge badge-inactive">❌ PERDIDO</span>';
+                    });
+                }
+            } catch (error) {
+                console.error('Error cargando winners:', error);
+            }
+        }
+        
+        // Cargar perfil
+        async function loadProfile() {
+            const content = document.getElementById('profileContent');
+            const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
+            const expires = userMembership?.membershipExpires ? new Date(userMembership.membershipExpires).toLocaleDateString() : 'No activa';
+            
+            let daysLeft = 0;
+            if (isActive && userMembership?.membershipExpires) {
+                const diff = new Date(userMembership.membershipExpires) - new Date();
+                daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('daysLeft').innerText = daysLeft;
+            }
+            
+            // Obtener código de referido
+            let referralCode = 'No disponible';
+            if (userMembership?.referralCode) {
+                referralCode = userMembership.referralCode;
+            } else {
+                const userDoc = await db.collection('members').doc(currentUser.email).get();
+                if (userDoc.exists) {
+                    referralCode = userDoc.data().referralCode || 'No disponible';
+                }
+            }
+            
+            content.innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">${isActive ? '✅' : '❌'}</div>
+                        <div class="stat-label">Estado</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${daysLeft}</div>
+                        <div class="stat-label">Días Restantes</div>
+                    </div>
+                </div>
+                <div style="background: var(--dark); border-radius: 16px; padding: 20px; margin-top: 16px;">
+                    <p><strong>📧 Email:</strong> ${currentUser?.email}</p>
+                    <p><strong>📅 Vence:</strong> ${expires}</p>
+                    <p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0}</p>
+                    <p><strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p>
+                    <p><strong>🎁 Código de invitación:</strong> <code style="background: var(--primary); padding: 4px 8px; border-radius: 8px;">${referralCode}</code></p>
+                    <p><strong>👥 Amigos invitados:</strong> ${userMembership?.referralBonusMonths || 0} meses gratis ganados</p>
+                </div>
+                ${!isActive ? `<button class="btn mt-3" onclick="showSection('payment')">💰 Activar Membresía</button>` : ''}
+            `;
+        }
+        
+        // Enviar pago
+        async function submitPayment() {
+            const transferNumber = document.getElementById('transferNumber').value;
+            
+            if (!transferNumber) {
+                showDialog('Error', 'Por favor ingresa el número de transferencia');
+                return;
+            }
+            
+            try {
+                await db.collection('payments').add({
+                    userEmail: currentUser.email,
+                    transferNumber: transferNumber,
+                    amount: 30,
+                    status: 'pending',
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    userId: currentUser.uid
+                });
+                
+                showDialog('✅ Comprobante Enviado', `Hemos recibido tu comprobante.\n\n📝 Número: ${transferNumber}\n💰 Monto: $30 USD\n\n⏱️ Tu membresía se activará en menos de 24 horas.`);
+                
+                document.getElementById('transferNumber').value = '';
+                
+            } catch (error) {
+                showDialog('Error', error.message);
+            }
+        }
+        
+        // Verificar membresía
+        async function checkMembership(userEmail) {
+            try {
+                const doc = await db.collection('members').doc(userEmail).get();
+                if (doc.exists) {
+                    userMembership = doc.data();
+                    const isActive = userMembership.membershipActive && new Date(userMembership.membershipExpires) > new Date();
+                    
+                    if (isActive) {
+                        const diff = new Date(userMembership.membershipExpires) - new Date();
+                        const daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                        document.getElementById('daysLeft').innerText = daysLeft;
+                    } else {
+                        document.getElementById('daysLeft').innerText = 0;
+                    }
+                    
+                    // Verificar recompensas por referidos si tiene membresía activa
+                    if (isActive) {
+                        await checkAndRewardReferrals(userEmail);
+                    }
+                } else {
+                    userMembership = { membershipActive: false, wins: 0, losses: 0 };
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                userMembership = { membershipActive: false, wins: 0, losses: 0 };
+            }
+        }
+        
+        // Verificar y registrar resultados de sorteos (simulado)
+        async function checkAndRecordWinners() {
+            // Esta función sería llamada por el admin, aquí está como referencia
+            console.log('Sistema de verificación de ganadores activo');
+        }
+        
+        // Escuchar autenticación
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                await checkMembership(user.email);
+                
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('dashboardScreen').style.display = 'block';
+                
+                loadPredictions();
+                loadProfile();
+                loadReferrals();
+                loadUserWinners();
+                listenForWinners();
+            } else {
+                document.getElementById('dashboardScreen').style.display = 'none';
+                document.getElementById('authScreen').style.display = 'flex';
+                currentUser = null;
+                userMembership = null;
+            }
+        });
+    </script>
+</body>
+</html>
