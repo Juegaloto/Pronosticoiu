@@ -12,36 +12,69 @@
             box-sizing: border-box;
         }
 
-        /* Estilo Minimalista Florida Lottery */
+        /* Protección anti-captura y anti-copia */
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Bloqueo de selección de texto en toda la app */
+        .container, .card, .numbers-grid, .result-box {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        /* Protección contra captura (efecto visual de advertencia) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background: transparent;
+        }
+        
+        /* Estilo Tropical - Naranja y Verde */
         :root {
-            --primary: #2c7da0;
-            --primary-dark: #1f5e7a;
-            --primary-light: #61a5c2;
+            --primary: #f4a261;
+            --primary-dark: #e76f51;
+            --primary-light: #f4a261;
             --secondary: #2a9d8f;
+            --secondary-dark: #264653;
             --accent: #e9c46a;
-            --danger: #e76f51;
+            --danger: #e63946;
             --success: #2a9d8f;
-            --warning: #e9c46a;
-            --info: #4a90e2;
+            --warning: #f4a261;
             --dark: #1e2a3a;
             --white: #ffffff;
-            --gray-bg: #f8fafc;
-            --text-primary: #1e2a3a;
-            --text-secondary: #5a6e7c;
-            --border: #e2e8f0;
-            --shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --gray-bg: #fff8f0;
+            --text-primary: #2c3e50;
+            --text-secondary: #6c757d;
+            --border: #e9ecef;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: #f0f4f8;
+            background: linear-gradient(135deg, #fff8f0 0%, #e8f5e9 100%);
             color: var(--text-primary);
             line-height: 1.5;
+            min-height: 100vh;
         }
 
-        .app-container {
-            min-height: 100vh;
+        /* Bloqueo de imágenes y selección */
+        img, .number-card, .result-box {
+            pointer-events: auto;
+            user-select: none;
         }
 
         .container {
@@ -50,7 +83,6 @@
             padding: 1.5rem;
         }
 
-        /* Tarjetas */
         .card {
             background: var(--white);
             border-radius: 20px;
@@ -61,13 +93,8 @@
             transition: all 0.2s;
         }
 
-        .card:hover {
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* Botones */
         .btn {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
@@ -79,16 +106,10 @@
             width: 100%;
         }
 
-        .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
         .btn-danger {
-            background: var(--danger);
+            background: linear-gradient(135deg, var(--danger), #c1121f);
         }
 
-        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
@@ -109,7 +130,7 @@
         }
 
         .florida-badge {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             padding: 0.25rem 0.75rem;
             border-radius: 30px;
@@ -117,7 +138,6 @@
             font-weight: 600;
         }
 
-        /* Navegación */
         .nav-menu {
             display: flex;
             gap: 0.5rem;
@@ -138,11 +158,10 @@
         }
 
         .nav-btn.active {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
         }
 
-        /* Grid de números */
         .numbers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
@@ -161,12 +180,12 @@
         }
 
         .number-card.strong {
-            background: linear-gradient(135deg, #fff, #e8f4f8);
+            background: linear-gradient(135deg, #fff, #fff3e6);
             border-left: 4px solid var(--primary);
         }
 
         .number-card.medium {
-            background: linear-gradient(135deg, #fff, #e8f8f4);
+            background: linear-gradient(135deg, #fff, #e8f5e9);
             border-left: 4px solid var(--secondary);
         }
 
@@ -174,11 +193,6 @@
             border: 2px solid var(--accent);
             background: linear-gradient(135deg, #fffbeb, #fef3c7);
             animation: pulse 1s infinite;
-        }
-
-        .number-card.fallo {
-            border: 2px solid var(--danger);
-            background: #fef2f0;
         }
 
         @keyframes pulse {
@@ -198,13 +212,6 @@
             margin-top: 0.2rem;
         }
 
-        .winner-icon {
-            font-size: 0.7rem;
-            margin-top: 0.2rem;
-            color: var(--accent);
-        }
-
-        /* Resultado separado */
         .result-box {
             background: var(--gray-bg);
             border-radius: 16px;
@@ -214,8 +221,8 @@
         }
 
         .result-winner {
-            background: #fffbeb;
-            border: 1px solid var(--accent);
+            background: linear-gradient(135deg, #fff8f0, #ffe8d6);
+            border: 1px solid var(--primary);
         }
 
         .result-waiting {
@@ -224,7 +231,7 @@
         }
 
         .result-fallo {
-            background: #fef2f0;
+            background: linear-gradient(135deg, #fff0f0, #ffe0e0);
             border: 1px solid var(--danger);
         }
 
@@ -239,7 +246,6 @@
             font-weight: 700;
         }
 
-        /* Estadísticas */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -266,7 +272,6 @@
             color: var(--text-secondary);
         }
 
-        /* Tablas */
         .table-responsive {
             overflow-x: auto;
         }
@@ -294,23 +299,15 @@
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
             font-size: 0.7rem;
+            display: inline-block;
         }
 
-        .badge-loss {
-            background: var(--danger);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-        }
-
-        /* Auth */
         .auth-container {
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #f0f4f8 0%, #e9eef3 100%);
+            background: linear-gradient(135deg, #fff8f0 0%, #e8f5e9 100%);
             padding: 1rem;
         }
 
@@ -349,12 +346,6 @@
             font-size: 0.9rem;
         }
 
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -363,6 +354,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -377,7 +369,6 @@
             text-align: center;
         }
 
-        /* Pago */
         .payment-info {
             background: var(--gray-bg);
             border-radius: 16px;
@@ -395,20 +386,32 @@
         .text-center { text-align: center; }
         .mt-3 { margin-top: 1rem; }
 
+        /* Advertencia de protección */
+        .protection-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.6rem;
+            color: rgba(0,0,0,0.1);
+            z-index: 999;
+            pointer-events: none;
+        }
+
         @media (max-width: 640px) {
             .container { padding: 1rem; }
             .card { padding: 1rem; }
             .numbers-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 0.5rem; }
             .number { font-size: 1rem; }
+            .result-value { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Pantalla de Login -->
+        <!-- Login -->
         <div id="authScreen" class="auth-container">
             <div class="auth-card">
-                <h2>Florida Pro</h2>
+                <h2>🌴 Florida Pro</h2>
                 <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos profesionales</p>
                 <div class="input-group">
                     <label>📧 Correo electrónico</label>
@@ -418,8 +421,8 @@
                     <label>🔐 Contraseña</label>
                     <input type="password" id="authPassword" placeholder="••••••">
                 </div>
-                <button class="btn" onclick="handleAuth()">Iniciar Sesión</button>
-                <div onclick="toggleAuthMode()" style="text-align: center; margin-top: 1rem; color: var(--primary); cursor: pointer; font-size: 0.8rem;">
+                <button class="btn" id="authBtn" onclick="handleAuth()">Iniciar Sesión</button>
+                <div onclick="toggleAuthMode()" id="switchAuth" style="text-align: center; margin-top: 1rem; color: var(--primary); cursor: pointer; font-size: 0.8rem;">
                     ¿No tienes cuenta? Regístrate
                 </div>
             </div>
@@ -428,66 +431,57 @@
         <!-- Dashboard -->
         <div id="dashboardScreen" style="display: none;">
             <div class="container">
-                <!-- Header -->
                 <div class="card">
                     <div class="header">
                         <div class="logo">
-                            <h1>🎯 Florida Pro</h1>
+                            <h1>🌺 Florida Pro</h1>
                             <p>Pronósticos con inteligencia predictiva</p>
                         </div>
                         <div style="display: flex; gap: 0.75rem; align-items: center;">
-                            <span class="florida-badge">Florida Lottery Style</span>
+                            <span class="florida-badge">🌴 Florida Tropical Style</span>
                             <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Stats -->
                 <div class="stats-grid">
                     <div class="stat-card"><div class="stat-number" id="totalWins">0</div><div class="stat-label">🏆 Premios</div></div>
                     <div class="stat-card"><div class="stat-number" id="winRate">0%</div><div class="stat-label">⭐ Precisión</div></div>
                     <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
                 </div>
 
-                <!-- Navegación -->
                 <div class="card">
                     <div class="nav-menu">
                         <button class="nav-btn active" data-section="predictions">🎯 Pronósticos</button>
-                        <button class="nav-btn" data-section="winners">🏆 Historial</button>
+                        <button class="nav-btn" data-section="history">🏆 Historial</button>
                         <button class="nav-btn" data-section="profile">👤 Perfil</button>
                         <button class="nav-btn" data-section="payment">💰 Membresía</button>
                     </div>
                 </div>
 
-                <!-- Sección Pronósticos -->
                 <div id="predictionsSection">
                     <div class="card" id="predictionsContent">Cargando pronósticos...</div>
                 </div>
 
-                <!-- Sección Historial -->
-                <div id="winnersSection" style="display: none;">
+                <div id="historySection" style="display: none;">
                     <div class="card">
-                        <h2 style="color: var(--primary); font-size: 1.2rem;">🏆 Historial de Resultados</h2>
+                        <h2 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
                         <div class="table-responsive">
-                            <table id="winnersTable">
-                                <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número</th><th>Resultado</th></tr></thead>
-                                <tbody id="winnersTableBody"><tr><td colspan="4">Cargando...</td></tr></tbody>
+                            <table id="historyTable">
+                                <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
+                                <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...</td></tr></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- Sección Perfil -->
-                <div id="profileSection" style="display: none;">
-                    <div class="card" id="profileContent"></div>
-                </div>
+                <div id="profileSection" style="display: none;"><div class="card" id="profileContent"></div></div>
 
-                <!-- Sección Pago -->
                 <div id="paymentSection" style="display: none;">
                     <div class="card">
                         <h2 style="color: var(--primary); font-size: 1.2rem;">💰 Membresía Premium</h2>
                         <div class="stats-grid">
-                            <div class="stat-card"><div class="stat-number">$250</div><div class="stat-label">USD / Mes</div></div>
+                            <div class="stat-card"><div class="stat-number">$250</div><div class="stat-label">CUP / Mes</div></div>
                             <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Activación</div></div>
                         </div>
                         <div class="payment-info">
@@ -497,7 +491,7 @@
                         </div>
                         <div class="input-group">
                             <label>📝 Número de transferencia</label>
-                            <input type="text" id="transferNumber" placeholder="Ej: REF-123456789">
+                            <input type="text" id="transferNumber" placeholder="Ej: KW600UIE4C999">
                         </div>
                         <button class="btn" onclick="submitPayment()">Enviar comprobante</button>
                         <p class="text-center mt-3" style="font-size: 0.65rem;">⏱️ Activación en menos de 24h</p>
@@ -507,7 +501,8 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <div class="protection-watermark">🔒 Contenido protegido</div>
+
     <div id="dialogModal" class="modal-overlay">
         <div class="modal-content">
             <h3 id="dialogTitle">Aviso</h3>
@@ -521,6 +516,22 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
+        // Detección de captura de pantalla (intento de bloqueo)
+        document.addEventListener('keyup', function(e) {
+            if (e.key === 'PrintScreen') {
+                alert('📸 Captura de pantalla no permitida por protección de contenido');
+                return false;
+            }
+        });
+        
+        // Detección de herramientas de desarrollador
+        setInterval(function() {
+            if (window.outerHeight - window.innerHeight > 200 || window.outerWidth - window.innerWidth > 200) {
+                document.body.style.opacity = '0.5';
+                setTimeout(() => { document.body.style.opacity = '1'; }, 500);
+            }
+        }, 3000);
+        
         const firebaseConfig = {
             apiKey: "AIzaSyA1vFooiPl-CTM-z5QCrpBNya1h_D7Ws8I",
             authDomain: "loteriapro-46e18.firebaseapp.com",
@@ -550,13 +561,13 @@
             if (authMode === 'login') {
                 authMode = 'register';
                 document.querySelector('.auth-card h2').innerText = 'Crear Cuenta';
-                document.querySelector('#authScreen .btn').innerHTML = 'Registrarse';
-                document.querySelector('#authScreen .switch-auth').innerHTML = '¿Ya tienes cuenta? Inicia sesión';
+                document.getElementById('authBtn').innerHTML = 'Registrarse';
+                document.getElementById('switchAuth').innerHTML = '¿Ya tienes cuenta? Inicia sesión';
             } else {
                 authMode = 'login';
-                document.querySelector('.auth-card h2').innerText = 'Florida Pro';
-                document.querySelector('#authScreen .btn').innerHTML = 'Iniciar Sesión';
-                document.querySelector('#authScreen .switch-auth').innerHTML = '¿No tienes cuenta? Regístrate';
+                document.querySelector('.auth-card h2').innerText = '🌴 Florida Pro';
+                document.getElementById('authBtn').innerHTML = 'Iniciar Sesión';
+                document.getElementById('switchAuth').innerHTML = '¿No tienes cuenta? Regístrate';
             }
         }
         
@@ -573,11 +584,14 @@
                         email: email, membershipActive: false, createdAt: new Date().toISOString(),
                         userId: userCred.user.uid, wins: 0, losses: 0
                     });
-                    showDialog('✅ Cuenta creada', 'Cuenta registrada.\nActiva tu membresía por $250 USD.');
+                    showDialog('✅ Cuenta creada', 'Cuenta registrada correctamente.\n\nActiva tu membresía por $250 USD.');
                 }
                 document.getElementById('authPassword').value = '';
             } catch (error) {
-                showDialog('Error', error.code === 'auth/email-already-in-use' ? 'Email ya registrado' : error.message);
+                let msg = error.message;
+                if (error.code === 'auth/email-already-in-use') msg = 'Email ya registrado';
+                if (error.code === 'auth/weak-password') msg = 'Contraseña débil (mínimo 6 caracteres)';
+                showDialog('Error', msg);
             }
         }
         
@@ -585,16 +599,15 @@
         
         function showSection(section) {
             document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
-            document.getElementById('winnersSection').style.display = section === 'winners' ? 'block' : 'none';
+            document.getElementById('historySection').style.display = section === 'history' ? 'block' : 'none';
             document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
             document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none';
-            
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`.nav-btn[data-section="${section}"]`).classList.add('active');
-            
+            const activeBtn = document.querySelector(`.nav-btn[data-section="${section}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
             if (section === 'profile') loadProfile();
             if (section === 'predictions') loadPredictions();
-            if (section === 'winners') loadUserHistory();
+            if (section === 'history') loadHistory();
         }
         
         async function loadPredictions() {
@@ -603,16 +616,13 @@
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             
             if (!isActive) {
-                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Membresía inactiva</h3><button class="btn" onclick="showSection('payment')">💰 Activar ($250/mes)</button></div>`;
+                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Membresía inactiva</h3><p style="margin: 1rem 0;">Activa tu membresía para acceder a los pronósticos</p><button class="btn" onclick="showSection('payment')">💰 Activar ($250/mes)</button></div>`;
                 return;
             }
             
             try {
-                // Cargar pronóstico (40 números)
                 const dailyDoc = await db.collection('dailyNumbers').doc(today).get();
-                // Cargar probabilidades
                 const probDoc = await db.collection('probabilities').doc(today).get();
-                // Cargar resultados
                 const resultsDoc = await db.collection('dailyResults').doc(today).get();
                 
                 let numbers = dailyDoc.exists ? dailyDoc.data().numbers : [];
@@ -627,28 +637,31 @@
                 }
                 
                 let html = `<h2 style="color: var(--primary); font-size: 1.2rem;">🎯 Pronóstico del Día</h2>
-                           <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 0.5rem;">${today}</p>
-                           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                                <span style="background: #e8f4f8; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
-                                <span style="background: #e8f8f4; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟢 Medio: 50%</span>
+                           <p style="color: var(--text-secondary); font-size: 0.75rem;">${today}</p>
+                           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+                                <span style="background: #fff3e6; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
+                                <span style="background: #e8f5e9; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟢 Medio: 50%</span>
                             </div>
                            <div class="numbers-grid" id="numbersGrid"></div>`;
                 
-                // Resultado Mediodía
-                html += `<div class="result-box ${afternoonWinner ? (afternoonWinner === 'fallo' ? 'result-fallo' : 'result-winner') : 'result-waiting'}">
-                            <div class="result-title">🌅 SORTEO MEDIODÍA (1:35 PM)</div>
-                            <div class="result-value">${afternoonWinner ? (afternoonWinner === 'fallo' ? '❌ FALLO' : `🎯 ${afternoonWinner}`) : '⏳ Esperando resultado...'}</div>
-                         </div>`;
+                let afternoonClass = 'result-box result-waiting';
+                let afternoonText = '⏳ Esperando resultado...';
+                if (afternoonWinner) {
+                    if (afternoonWinner === 'fallo') { afternoonClass = 'result-box result-fallo'; afternoonText = '❌ FALLO'; }
+                    else { afternoonClass = 'result-box result-winner'; afternoonText = `🎯 ${afternoonWinner}`; }
+                }
+                html += `<div class="${afternoonClass}"><div class="result-title">🌅 SORTEO MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div></div>`;
                 
-                // Resultado Noche
-                html += `<div class="result-box ${nightWinner ? (nightWinner === 'fallo' ? 'result-fallo' : 'result-winner') : 'result-waiting'}">
-                            <div class="result-title">🌙 SORTEO NOCHE (9:50 PM)</div>
-                            <div class="result-value">${nightWinner ? (nightWinner === 'fallo' ? '❌ FALLO' : `🎯 ${nightWinner}`) : '⏳ Esperando resultado...'}</div>
-                         </div>`;
+                let nightClass = 'result-box result-waiting';
+                let nightText = '⏳ Esperando resultado...';
+                if (nightWinner) {
+                    if (nightWinner === 'fallo') { nightClass = 'result-box result-fallo'; nightText = '❌ FALLO'; }
+                    else { nightClass = 'result-box result-winner'; nightText = `🎯 ${nightWinner}`; }
+                }
+                html += `<div class="${nightClass}"><div class="result-title">🌙 SORTEO NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div></div>`;
                 
                 container.innerHTML = html;
                 
-                // Llenar grid de números
                 const grid = document.getElementById('numbersGrid');
                 if (grid) {
                     numbers.forEach(num => {
@@ -656,52 +669,62 @@
                         if (strongNumbers.includes(num)) className += ' strong';
                         else if (mediumNumbers.includes(num)) className += ' medium';
                         if (afternoonWinner === num || nightWinner === num) className += ' winner';
-                        
                         let probText = '';
                         if (strongNumbers.includes(num)) probText = '<div class="probability">🔥 68%</div>';
                         else if (mediumNumbers.includes(num)) probText = '<div class="probability">📊 50%</div>';
-                        
                         const card = document.createElement('div');
                         card.className = className;
                         card.innerHTML = `<div class="number">${num}</div>${probText}`;
                         grid.appendChild(card);
                     });
                 }
-                
             } catch (error) {
                 container.innerHTML = '<div class="text-center">Error al cargar</div>';
-                console.error(error);
             }
         }
         
-        async function loadUserHistory() {
+        async function loadHistory() {
             if (!currentUser) return;
+            const tbody = document.getElementById('historyTableBody');
             try {
                 const userDoc = await db.collection('members').doc(currentUser.email).get();
-                const wins = userDoc.data()?.wins || 0;
-                const losses = userDoc.data()?.losses || 0;
-                const total = wins + losses;
-                const winRate = total > 0 ? Math.round((wins / total) * 100) : 0;
-                document.getElementById('totalWins').innerText = wins;
-                document.getElementById('winRate').innerText = `${winRate}%`;
+                if (userDoc.exists) {
+                    const wins = userDoc.data()?.wins || 0;
+                    const losses = userDoc.data()?.losses || 0;
+                    const total = wins + losses;
+                    const winRate = total > 0 ? Math.round((wins / total) * 100) : 0;
+                    document.getElementById('totalWins').innerText = wins;
+                    document.getElementById('winRate').innerText = `${winRate}%`;
+                }
                 
-                const history = await db.collection('userHistory').where('userEmail', '==', currentUser.email).orderBy('timestamp', 'desc').limit(30).get();
-                const tbody = document.getElementById('winnersTableBody');
+                const historySnapshot = await db.collection('resultsHistory').orderBy('timestamp', 'desc').limit(50).get();
                 tbody.innerHTML = '';
-                
-                if (history.empty) {
-                    tbody.innerHTML = '</table><td colspan="4" class="text-center">No hay historial aún</td></tr>';
+                if (historySnapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados</td></tr>';
                 } else {
-                    history.forEach(doc => {
+                    historySnapshot.forEach(doc => {
                         const data = doc.data();
-                        const row = tbody.insertRow();
-                        row.insertCell(0).innerText = data.date || '—';
-                        row.insertCell(1).innerText = data.drawTime === 'afternoon' ? '🌅 Mediodía' : '🌙 Noche';
-                        row.insertCell(2).innerText = data.winnerNumber === 'fallo' ? '❌ FALLO' : data.winnerNumber;
-                        row.insertCell(3).innerHTML = data.result === 'win' ? '<span class="badge-win">🏆 Ganado</span>' : '<span class="badge-loss">❌ Perdido</span>';
+                        const date = data.date || 'Fecha no disponible';
+                        if (data.afternoonWinner) {
+                            const row = tbody.insertRow();
+                            row.insertCell(0).innerText = date;
+                            row.insertCell(1).innerHTML = '🌅 <strong>Mediodía</strong><br><span style="font-size:0.7rem;">(1:35 PM)</span>';
+                            row.insertCell(2).innerHTML = data.afternoonWinner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary); font-weight:700;">${data.afternoonWinner}</span>`;
+                            row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
+                        }
+                        if (data.nightWinner) {
+                            const row = tbody.insertRow();
+                            row.insertCell(0).innerText = date;
+                            row.insertCell(1).innerHTML = '🌙 <strong>Noche</strong><br><span style="font-size:0.7rem;">(9:50 PM)</span>';
+                            row.insertCell(2).innerHTML = data.nightWinner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary); font-weight:700;">${data.nightWinner}</span>`;
+                            row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
+                        }
                     });
                 }
-            } catch(e) { console.error(e); }
+            } catch (error) {
+                console.error('Error:', error);
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar</td></tr>';
+            }
         }
         
         async function loadProfile() {
@@ -719,11 +742,11 @@
                     <div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div>
                 </div>
                 <div style="background: var(--gray-bg); border-radius: 16px; padding: 1rem;">
-                    <p style="margin-bottom: 0.5rem;"><strong>📧 Email:</strong> ${currentUser?.email}</p>
-                    <p style="margin-bottom: 0.5rem;"><strong>📅 Vence:</strong> ${expires}</p>
+                    <p><strong>📧 Email:</strong> ${currentUser?.email}</p>
+                    <p><strong>📅 Vence:</strong> ${expires}</p>
                     <p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0} | <strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p>
                 </div>
-                ${!isActive ? `<button class="btn mt-3" onclick="showSection('payment')">💰 Activar membresía ($250/mes)</button>` : ''}
+                ${!isActive ? `<button class="btn mt-3" onclick="showSection('payment')">💰 Activar ($250/mes)</button>` : ''}
             `;
         }
         
@@ -749,10 +772,15 @@
                     if (active) {
                         const days = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
                         document.getElementById('daysLeft').innerText = days;
-                    }
-                }
+                    } else { document.getElementById('daysLeft').innerText = 0; }
+                } else { userMembership = { membershipActive: false, wins: 0, losses: 0 }; }
             } catch(e) { console.error(e); }
         }
+        
+        document.querySelector('.nav-menu')?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.nav-btn');
+            if (btn && btn.dataset.section) showSection(btn.dataset.section);
+        });
         
         auth.onAuthStateChanged(async (user) => {
             if (user) {
@@ -762,18 +790,13 @@
                 document.getElementById('dashboardScreen').style.display = 'block';
                 loadPredictions();
                 loadProfile();
-                loadUserHistory();
+                loadHistory();
                 showSection('predictions');
             } else {
                 document.getElementById('dashboardScreen').style.display = 'none';
                 document.getElementById('authScreen').style.display = 'flex';
                 currentUser = null;
             }
-        });
-        
-        document.querySelector('.nav-menu')?.addEventListener('click', (e) => {
-            const btn = e.target.closest('.nav-btn');
-            if (btn && btn.dataset.section) showSection(btn.dataset.section);
         });
     </script>
 </body>
