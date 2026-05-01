@@ -12,36 +12,6 @@
             box-sizing: border-box;
         }
 
-        /* Protección anti-captura y anti-copia */
-        body {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Bloqueo de selección de texto en toda la app */
-        .container, .card, .numbers-grid, .result-box {
-            user-select: none;
-            -webkit-user-select: none;
-        }
-        
-        /* Protección contra captura (efecto visual de advertencia) */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            background: transparent;
-        }
-        
         /* Estilo Tropical - Naranja y Verde */
         :root {
             --primary: #f4a261;
@@ -71,9 +41,13 @@
             min-height: 100vh;
         }
 
-        /* Bloqueo de imágenes y selección */
-        img, .number-card, .result-box {
-            pointer-events: auto;
+        /* Protección anti-captura */
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
             user-select: none;
         }
 
@@ -93,6 +67,10 @@
             transition: all 0.2s;
         }
 
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
         .btn {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
@@ -106,8 +84,18 @@
             width: 100%;
         }
 
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+        }
+
         .btn-danger {
             background: linear-gradient(135deg, var(--danger), #c1121f);
+        }
+
+        .btn-small {
+            width: auto;
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
         }
 
         .header {
@@ -176,7 +164,6 @@
             text-align: center;
             border: 1px solid var(--border);
             transition: all 0.2s;
-            position: relative;
         }
 
         .number-card.strong {
@@ -270,6 +257,170 @@
         .stat-label {
             font-size: 0.7rem;
             color: var(--text-secondary);
+        }
+
+        /* Sección de Comentarios */
+        .comments-section {
+            margin-top: 1rem;
+        }
+
+        .comment-card {
+            background: var(--gray-bg);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .comment-user {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+
+        .comment-date {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+
+        .comment-text {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            word-break: break-word;
+        }
+
+        .comment-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-top: 0.3rem;
+        }
+
+        .comment-number span {
+            font-weight: 700;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .like-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .like-btn:hover {
+            color: var(--danger);
+        }
+
+        .new-comment-form {
+            background: var(--gray-bg);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .new-comment-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.85rem;
+            resize: vertical;
+            font-family: inherit;
+            margin-bottom: 0.75rem;
+        }
+
+        .new-comment-form input {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .new-comment-form .form-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .form-row input {
+            flex: 1;
+        }
+
+        /* Alerta VPN */
+        .vpn-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .vpn-alert-content {
+            background: linear-gradient(135deg, var(--danger), #c1121f);
+            color: white;
+            padding: 2rem;
+            border-radius: 32px;
+            max-width: 500px;
+            animation: pulse 1s infinite;
+        }
+
+        .vpn-alert-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .vpn-alert-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .vpn-alert-content .vpn-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .vpn-alert-content .retry-btn {
+            background: white;
+            color: var(--danger);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .table-responsive {
@@ -385,17 +536,7 @@
 
         .text-center { text-align: center; }
         .mt-3 { margin-top: 1rem; }
-
-        /* Advertencia de protección */
-        .protection-watermark {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            font-size: 0.6rem;
-            color: rgba(0,0,0,0.1);
-            z-index: 999;
-            pointer-events: none;
-        }
+        .mb-2 { margin-bottom: 0.5rem; }
 
         @media (max-width: 640px) {
             .container { padding: 1rem; }
@@ -403,11 +544,28 @@
             .numbers-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 0.5rem; }
             .number { font-size: 1rem; }
             .result-value { font-size: 1.2rem; }
+            .vpn-alert-content h2 { font-size: 1.5rem; }
+            .vpn-alert-content p { font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
     <div class="app-container">
+        <!-- Alerta VPN (se muestra solo si hay problemas de conexión) -->
+        <div id="vpnAlert" class="vpn-alert" style="display: none;">
+            <div class="vpn-alert-content">
+                <div class="vpn-icon">🌐🔒</div>
+                <h2>⚠️ CONEXÓN BLOQUEADA</h2>
+                <p>Para acceder a Florida Pro desde Cuba, necesitas usar una <strong>VPN</strong> o <strong>Proxy</strong>.</p>
+                <p>Recomendaciones:<br>
+                • TunnelBear<br>
+                • ProtonVPN (gratis)<br>
+                • Psiphon<br>
+                • ExpressVPN</p>
+                <button class="retry-btn" onclick="checkConnectionAndRetry()">🔄 Reintentar conexión</button>
+            </div>
+        </div>
+
         <!-- Login -->
         <div id="authScreen" class="auth-container">
             <div class="auth-card">
@@ -454,29 +612,62 @@
                     <div class="nav-menu">
                         <button class="nav-btn active" data-section="predictions">🎯 Pronósticos</button>
                         <button class="nav-btn" data-section="history">🏆 Historial</button>
+                        <button class="nav-btn" data-section="comments">💬 Comentarios</button>
                         <button class="nav-btn" data-section="profile">👤 Perfil</button>
                         <button class="nav-btn" data-section="payment">💰 Membresía</button>
                     </div>
                 </div>
 
+                <!-- Pronósticos -->
                 <div id="predictionsSection">
                     <div class="card" id="predictionsContent">Cargando pronósticos...</div>
                 </div>
 
+                <!-- Historial (CORREGIDO - sin duplicados) -->
                 <div id="historySection" style="display: none;">
                     <div class="card">
                         <h2 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
                         <div class="table-responsive">
                             <table id="historyTable">
-                                <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
-                                <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...</td></tr></tbody>
+                                <thead>
+                                    <tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th>
+                                </thead>
+                                <tbody id="historyTableBody">
+                                    <tr><td colspan="4" class="text-center">Cargando historial...</td>
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <div id="profileSection" style="display: none;"><div class="card" id="profileContent"></div></div>
+                <!-- Comentarios (NUEVA SECCIÓN) -->
+                <div id="commentsSection" style="display: none;">
+                    <div class="card">
+                        <h2 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem;">💬 Comentarios y Jugadas</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
+                        
+                        <div id="commentsList" class="comments-section">
+                            <div class="text-center">Cargando comentarios...</div>
+                        </div>
+                        
+                        <div class="new-comment-form">
+                            <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📝 Publicar jugada/comentario</h3>
+                            <div class="form-row">
+                                <input type="text" id="commentNumber" placeholder="Número que jugaste (ej: 76)" maxlength="2">
+                                <input type="text" id="commentDraw" placeholder="Sorteo (mediodía/noche)" maxlength="10">
+                            </div>
+                            <textarea id="commentMessage" rows="3" placeholder="Escribe tu comentario o experiencia..."></textarea>
+                            <button class="btn btn-small" onclick="publishComment()" style="width: auto;">📢 Publicar comentario</button>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Perfil -->
+                <div id="profileSection" style="display: none;">
+                    <div class="card" id="profileContent"></div>
+                </div>
+
+                <!-- Pago -->
                 <div id="paymentSection" style="display: none;">
                     <div class="card">
                         <h2 style="color: var(--primary); font-size: 1.2rem;">💰 Membresía Premium</h2>
@@ -491,7 +682,7 @@
                         </div>
                         <div class="input-group">
                             <label>📝 Número de transferencia</label>
-                            <input type="text" id="transferNumber" placeholder="Ej: KW600UIE4C999">
+                            <input type="text" id="transferNumber" placeholder="Ej: REF-123456789">
                         </div>
                         <button class="btn" onclick="submitPayment()">Enviar comprobante</button>
                         <p class="text-center mt-3" style="font-size: 0.65rem;">⏱️ Activación en menos de 24h</p>
@@ -500,8 +691,6 @@
             </div>
         </div>
     </div>
-
-    <div class="protection-watermark">🔒 Contenido protegido</div>
 
     <div id="dialogModal" class="modal-overlay">
         <div class="modal-content">
@@ -516,22 +705,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Detección de captura de pantalla (intento de bloqueo)
-        document.addEventListener('keyup', function(e) {
-            if (e.key === 'PrintScreen') {
-                alert('📸 Captura de pantalla no permitida por protección de contenido');
-                return false;
-            }
-        });
-        
-        // Detección de herramientas de desarrollador
-        setInterval(function() {
-            if (window.outerHeight - window.innerHeight > 200 || window.outerWidth - window.innerWidth > 200) {
-                document.body.style.opacity = '0.5';
-                setTimeout(() => { document.body.style.opacity = '1'; }, 500);
-            }
-        }, 3000);
-        
         const firebaseConfig = {
             apiKey: "AIzaSyA1vFooiPl-CTM-z5QCrpBNya1h_D7Ws8I",
             authDomain: "loteriapro-46e18.firebaseapp.com",
@@ -548,7 +721,49 @@
         let currentUser = null;
         let userMembership = null;
         let authMode = 'login';
+        let connectionCheckInterval = null;
         
+        // ========== DETECCIÓN DE CONEXIÓN PARA CUBA ==========
+        async function checkConnection() {
+            try {
+                // Intentar conectar a Firebase
+                const testDoc = await db.collection('connectionTest').doc('test').get();
+                return true;
+            } catch (error) {
+                console.error('Error de conexión:', error);
+                return false;
+            }
+        }
+        
+        async function checkConnectionAndRetry() {
+            const vpnAlert = document.getElementById('vpnAlert');
+            const isConnected = await checkConnection();
+            
+            if (isConnected) {
+                vpnAlert.style.display = 'none';
+                showDialog('✅ Conexión restablecida', 'Ya puedes usar Florida Pro normalmente');
+                // Recargar datos
+                if (currentUser) {
+                    loadPredictions();
+                    loadComments();
+                }
+            } else {
+                vpnAlert.style.display = 'flex';
+                showDialog('⚠️ Sin conexión', 'No se pudo establecer conexión. Verifica tu VPN o conexión a internet.');
+            }
+        }
+        
+        // Verificar conexión periódicamente
+        function startConnectionMonitoring() {
+            setInterval(async () => {
+                const isConnected = await checkConnection();
+                if (!isConnected) {
+                    document.getElementById('vpnAlert').style.display = 'flex';
+                }
+            }, 30000); // Cada 30 segundos
+        }
+        
+        // ========== FUNCIONES PRINCIPALES ==========
         function showDialog(title, message) {
             document.getElementById('dialogTitle').innerText = title;
             document.getElementById('dialogMessage').innerHTML = message;
@@ -584,7 +799,7 @@
                         email: email, membershipActive: false, createdAt: new Date().toISOString(),
                         userId: userCred.user.uid, wins: 0, losses: 0
                     });
-                    showDialog('✅ Cuenta creada', 'Cuenta registrada correctamente.\n\nActiva tu membresía por $250 USD.');
+                    showDialog('✅ Cuenta creada', 'Cuenta registrada correctamente.\n\nActiva tu membresía por $250 CUP.');
                 }
                 document.getElementById('authPassword').value = '';
             } catch (error) {
@@ -600,16 +815,21 @@
         function showSection(section) {
             document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
             document.getElementById('historySection').style.display = section === 'history' ? 'block' : 'none';
+            document.getElementById('commentsSection').style.display = section === 'comments' ? 'block' : 'none';
             document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
             document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none';
+            
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.querySelector(`.nav-btn[data-section="${section}"]`);
             if (activeBtn) activeBtn.classList.add('active');
+            
             if (section === 'profile') loadProfile();
             if (section === 'predictions') loadPredictions();
             if (section === 'history') loadHistory();
+            if (section === 'comments') loadComments();
         }
         
+        // ========== PRONÓSTICOS ==========
         async function loadPredictions() {
             const container = document.getElementById('predictionsContent');
             const today = new Date().toISOString().split('T')[0];
@@ -683,6 +903,7 @@
             }
         }
         
+        // ========== HISTORIAL CORREGIDO (SIN DUPLICADOS) ==========
         async function loadHistory() {
             if (!currentUser) return;
             const tbody = document.getElementById('historyTableBody');
@@ -697,28 +918,50 @@
                     document.getElementById('winRate').innerText = `${winRate}%`;
                 }
                 
+                // Usar un Map para evitar duplicados por fecha y sorteo
+                const historyMap = new Map();
                 const historySnapshot = await db.collection('resultsHistory').orderBy('timestamp', 'desc').limit(50).get();
+                
+                historySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const date = data.date || 'Fecha no disponible';
+                    const key = `${date}_afternoon`;
+                    const keyNight = `${date}_night`;
+                    
+                    if (data.afternoonWinner && !historyMap.has(key)) {
+                        historyMap.set(key, {
+                            date: date,
+                            type: 'afternoon',
+                            winner: data.afternoonWinner,
+                            drawTime: 'afternoon'
+                        });
+                    }
+                    if (data.nightWinner && !historyMap.has(keyNight)) {
+                        historyMap.set(keyNight, {
+                            date: date,
+                            type: 'night',
+                            winner: data.nightWinner,
+                            drawTime: 'night'
+                        });
+                    }
+                });
+                
+                // Convertir Map a array y ordenar por fecha descendente
+                const uniqueHistory = Array.from(historyMap.values()).sort((a, b) => {
+                    return b.date.localeCompare(a.date);
+                });
+                
                 tbody.innerHTML = '';
-                if (historySnapshot.empty) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados</td></tr>';
+                
+                if (uniqueHistory.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td></tr>';
                 } else {
-                    historySnapshot.forEach(doc => {
-                        const data = doc.data();
-                        const date = data.date || 'Fecha no disponible';
-                        if (data.afternoonWinner) {
-                            const row = tbody.insertRow();
-                            row.insertCell(0).innerText = date;
-                            row.insertCell(1).innerHTML = '🌅 <strong>Mediodía</strong><br><span style="font-size:0.7rem;">(1:35 PM)</span>';
-                            row.insertCell(2).innerHTML = data.afternoonWinner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary); font-weight:700;">${data.afternoonWinner}</span>`;
-                            row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
-                        }
-                        if (data.nightWinner) {
-                            const row = tbody.insertRow();
-                            row.insertCell(0).innerText = date;
-                            row.insertCell(1).innerHTML = '🌙 <strong>Noche</strong><br><span style="font-size:0.7rem;">(9:50 PM)</span>';
-                            row.insertCell(2).innerHTML = data.nightWinner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary); font-weight:700;">${data.nightWinner}</span>`;
-                            row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
-                        }
+                    uniqueHistory.forEach(item => {
+                        const row = tbody.insertRow();
+                        row.insertCell(0).innerText = item.date;
+                        row.insertCell(1).innerHTML = item.type === 'afternoon' ? '🌅 <strong>Mediodía</strong><br><span style="font-size:0.7rem;">(1:35 PM)</span>' : '🌙 <strong>Noche</strong><br><span style="font-size:0.7rem;">(9:50 PM)</span>';
+                        row.insertCell(2).innerHTML = item.winner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary); font-weight:700;">${item.winner}</span>`;
+                        row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
                     });
                 }
             } catch (error) {
@@ -727,6 +970,119 @@
             }
         }
         
+        // ========== COMENTARIOS (NUEVA SECCIÓN) ==========
+        async function loadComments() {
+            const container = document.getElementById('commentsList');
+            if (!container) return;
+            
+            try {
+                const commentsSnapshot = await db.collection('comments')
+                    .orderBy('timestamp', 'desc')
+                    .limit(50)
+                    .get();
+                
+                if (commentsSnapshot.empty) {
+                    container.innerHTML = '<div class="text-center" style="padding: 2rem;">💬 No hay comentarios aún. ¡Sé el primero en compartir tu jugada!</div>';
+                    return;
+                }
+                
+                container.innerHTML = '';
+                
+                commentsSnapshot.forEach(doc => {
+                    const comment = doc.data();
+                    const commentId = doc.id;
+                    
+                    const commentDiv = document.createElement('div');
+                    commentDiv.className = 'comment-card';
+                    
+                    let numberHtml = '';
+                    if (comment.number) {
+                        numberHtml = `<div class="comment-number">🎯 Número jugado: <span>${comment.number}</span> ${comment.draw ? `(${comment.draw})` : ''}</div>`;
+                    }
+                    
+                    commentDiv.innerHTML = `
+                        <div class="comment-header">
+                            <span class="comment-user">👤 ${comment.userEmail || 'Usuario'}</span>
+                            <span class="comment-date">📅 ${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Reciente'}</span>
+                        </div>
+                        <div class="comment-text">${escapeHtml(comment.message)}</div>
+                        ${numberHtml}
+                        <div class="comment-actions">
+                            <button class="like-btn" onclick="likeComment('${commentId}', ${comment.likes || 0})">❤️ ${comment.likes || 0}</button>
+                        </div>
+                    `;
+                    container.appendChild(commentDiv);
+                });
+                
+            } catch (error) {
+                console.error('Error cargando comentarios:', error);
+                container.innerHTML = '<div class="text-center">❌ Error al cargar comentarios</div>';
+            }
+        }
+        
+        async function publishComment() {
+            if (!currentUser) {
+                showDialog('Inicia sesión', 'Debes iniciar sesión para publicar comentarios');
+                return;
+            }
+            
+            const message = document.getElementById('commentMessage').value.trim();
+            const number = document.getElementById('commentNumber').value.trim();
+            const draw = document.getElementById('commentDraw').value.trim();
+            
+            if (!message) {
+                showDialog('Error', 'Escribe un comentario antes de publicar');
+                return;
+            }
+            
+            try {
+                await db.collection('comments').add({
+                    userEmail: currentUser.email,
+                    userId: currentUser.uid,
+                    message: message,
+                    number: number || null,
+                    draw: draw || null,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    likes: 0
+                });
+                
+                // Limpiar formulario
+                document.getElementById('commentMessage').value = '';
+                document.getElementById('commentNumber').value = '';
+                document.getElementById('commentDraw').value = '';
+                
+                showDialog('✅ Publicado', 'Tu comentario ha sido publicado');
+                loadComments();
+                
+            } catch (error) {
+                showDialog('Error', 'No se pudo publicar el comentario');
+                console.error(error);
+            }
+        }
+        
+        async function likeComment(commentId, currentLikes) {
+            if (!currentUser) {
+                showDialog('Inicia sesión', 'Debes iniciar sesión para dar like');
+                return;
+            }
+            
+            try {
+                await db.collection('comments').doc(commentId).update({
+                    likes: currentLikes + 1
+                });
+                loadComments();
+            } catch (error) {
+                console.error('Error al dar like:', error);
+            }
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // ========== PERFIL Y PAGOS ==========
         async function loadProfile() {
             const content = document.getElementById('profileContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
@@ -777,12 +1133,20 @@
             } catch(e) { console.error(e); }
         }
         
+        // ========== NAVEGACIÓN Y AUTENTICACIÓN ==========
         document.querySelector('.nav-menu')?.addEventListener('click', (e) => {
             const btn = e.target.closest('.nav-btn');
             if (btn && btn.dataset.section) showSection(btn.dataset.section);
         });
         
         auth.onAuthStateChanged(async (user) => {
+            // Verificar conexión primero
+            const isConnected = await checkConnection();
+            if (!isConnected) {
+                document.getElementById('vpnAlert').style.display = 'flex';
+                return;
+            }
+            
             if (user) {
                 currentUser = user;
                 await checkMembership(user.email);
@@ -791,6 +1155,7 @@
                 loadPredictions();
                 loadProfile();
                 loadHistory();
+                loadComments();
                 showSection('predictions');
             } else {
                 document.getElementById('dashboardScreen').style.display = 'none';
@@ -798,6 +1163,9 @@
                 currentUser = null;
             }
         });
+        
+        // Iniciar monitoreo de conexión
+        startConnectionMonitoring();
     </script>
 </body>
 </html>
