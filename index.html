@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Florida Pro | Pronósticos Profesionales</title>
+    <title>Florida Pro | Pronósticos Verde Tropical</title>
     
     <style>
         * {
@@ -12,42 +12,36 @@
             box-sizing: border-box;
         }
 
-        /* Estilo Tropical - Naranja y Verde */
+        /* Estilo Verde Tropical - Predominante */
         :root {
-            --primary: #f4a261;
-            --primary-dark: #e76f51;
-            --primary-light: #f4a261;
-            --secondary: #2a9d8f;
-            --secondary-dark: #264653;
-            --accent: #e9c46a;
-            --danger: #e63946;
+            --primary: #006d77;
+            --primary-dark: #004e5c;
+            --primary-light: #2a9d8f;
+            --secondary: #e9c46a;
+            --accent: #f4a261;
+            --danger: #e76f51;
+            --danger-dark: #c14c33;
             --success: #2a9d8f;
-            --warning: #f4a261;
-            --dark: #1e2a3a;
             --white: #ffffff;
-            --gray-bg: #fff8f0;
-            --text-primary: #2c3e50;
-            --text-secondary: #6c757d;
-            --border: #e9ecef;
+            --gray-bg: #e8f5e9;
+            --text-primary: #1b4332;
+            --text-secondary: #2d6a4f;
+            --border: #cfe3d0;
             --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #fff8f0 0%, #e8f5e9 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #d8f3dc;
             color: var(--text-primary);
             line-height: 1.5;
             min-height: 100vh;
         }
 
-        /* Protección anti-captura */
         body {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
         }
 
@@ -59,7 +53,7 @@
 
         .card {
             background: var(--white);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 1.5rem;
             margin-bottom: 1.25rem;
             box-shadow: var(--shadow);
@@ -72,7 +66,7 @@
         }
 
         .btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--primary);
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
@@ -84,12 +78,8 @@
             width: 100%;
         }
 
-        .btn-secondary {
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger), #c1121f);
+        .btn:hover {
+            background: var(--primary-dark);
         }
 
         .btn-small {
@@ -118,7 +108,7 @@
         }
 
         .florida-badge {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--primary);
             color: white;
             padding: 0.25rem 0.75rem;
             border-radius: 30px;
@@ -146,8 +136,44 @@
         }
 
         .nav-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--primary);
             color: white;
+        }
+
+        /* Info de actualización */
+        .update-info {
+            background: #d8f3dc;
+            padding: 0.75rem;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            text-align: center;
+            border-left: 4px solid var(--primary);
+        }
+
+        .update-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            display: block;
+        }
+
+        .update-time {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .update-badge {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            margin-left: 0.5rem;
+        }
+
+        .outdated-badge {
+            background: var(--danger);
         }
 
         .numbers-grid {
@@ -167,18 +193,18 @@
         }
 
         .number-card.strong {
-            background: linear-gradient(135deg, #fff, #fff3e6);
+            background: #d8f3dc;
             border-left: 4px solid var(--primary);
         }
 
         .number-card.medium {
-            background: linear-gradient(135deg, #fff, #e8f5e9);
+            background: #fff3e0;
             border-left: 4px solid var(--secondary);
         }
 
         .number-card.winner {
-            border: 2px solid var(--accent);
-            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 2px solid var(--secondary);
+            background: #fff3e0;
             animation: pulse 1s infinite;
         }
 
@@ -208,17 +234,17 @@
         }
 
         .result-winner {
-            background: linear-gradient(135deg, #fff8f0, #ffe8d6);
+            background: #d8f3dc;
             border: 1px solid var(--primary);
         }
 
         .result-waiting {
-            background: #f1f5f9;
-            border: 1px dashed var(--border);
+            background: #fff3e0;
+            border: 2px dashed var(--secondary);
         }
 
         .result-fallo {
-            background: linear-gradient(135deg, #fff0f0, #ffe0e0);
+            background: #ffe0e0;
             border: 1px solid var(--danger);
         }
 
@@ -231,6 +257,17 @@
         .result-value {
             font-size: 1.5rem;
             font-weight: 700;
+        }
+
+        .waiting-alert {
+            background: var(--secondary);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+            animation: pulse 1s infinite;
         }
 
         .stats-grid {
@@ -259,7 +296,7 @@
             color: var(--text-secondary);
         }
 
-        /* Sección de Comentarios */
+        /* Comentarios */
         .comments-section {
             margin-top: 1rem;
         }
@@ -308,31 +345,6 @@
             margin-top: 0.3rem;
         }
 
-        .comment-number span {
-            font-weight: 700;
-        }
-
-        .comment-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .like-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-        }
-
-        .like-btn:hover {
-            color: var(--danger);
-        }
-
         .new-comment-form {
             background: var(--gray-bg);
             border-radius: 16px;
@@ -378,7 +390,6 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -388,7 +399,7 @@
         }
 
         .vpn-alert-content {
-            background: linear-gradient(135deg, var(--danger), #c1121f);
+            background: var(--danger);
             color: white;
             padding: 2rem;
             border-radius: 32px;
@@ -458,7 +469,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #fff8f0 0%, #e8f5e9 100%);
+            background: #d8f3dc;
             padding: 1rem;
         }
 
@@ -536,7 +547,16 @@
 
         .text-center { text-align: center; }
         .mt-3 { margin-top: 1rem; }
-        .mb-2 { margin-bottom: 0.5rem; }
+
+        .live-badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            margin-left: 0.5rem;
+            animation: pulse 1s infinite;
+        }
 
         @media (max-width: 640px) {
             .container { padding: 1rem; }
@@ -551,17 +571,13 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Alerta VPN (se muestra solo si hay problemas de conexión) -->
+        <!-- Alerta VPN -->
         <div id="vpnAlert" class="vpn-alert" style="display: none;">
             <div class="vpn-alert-content">
                 <div class="vpn-icon">🌐🔒</div>
-                <h2>⚠️ CONEXÓN BLOQUEADA</h2>
+                <h2>⚠️ CONEXIÓN BLOQUEADA</h2>
                 <p>Para acceder a Florida Pro desde Cuba, necesitas usar una <strong>VPN</strong> o <strong>Proxy</strong>.</p>
-                <p>Recomendaciones:<br>
-                • TunnelBear<br>
-                • ProtonVPN (gratis)<br>
-                • Psiphon<br>
-                • ExpressVPN</p>
+                <p>Recomendaciones:<br>• TunnelBear<br>• ProtonVPN (gratis)<br>• Psiphon<br>• ExpressVPN</p>
                 <button class="retry-btn" onclick="checkConnectionAndRetry()">🔄 Reintentar conexión</button>
             </div>
         </div>
@@ -569,8 +585,8 @@
         <!-- Login -->
         <div id="authScreen" class="auth-container">
             <div class="auth-card">
-                <h2>🌴 Florida Pro</h2>
-                <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos profesionales</p>
+                <h2>🌿 Florida Pro</h2>
+                <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos profesionales | </p>
                 <div class="input-group">
                     <label>📧 Correo electrónico</label>
                     <input type="email" id="authEmail" placeholder="tu@email.com">
@@ -592,11 +608,11 @@
                 <div class="card">
                     <div class="header">
                         <div class="logo">
-                            <h1>🌺 Florida Pro</h1>
-                            <p>Pronósticos con inteligencia predictiva</p>
+                            <h1>🌿 Florida Pro <span class="live-badge">EN VIVO</span></h1>
+                            <p>Pronósticos en tiempo real | Actualización </p>
                         </div>
                         <div style="display: flex; gap: 0.75rem; align-items: center;">
-                            <span class="florida-badge">🌴 Florida Tropical Style</span>
+                            <span class="florida-badge">🌴 PRONOSTICO</span>
                             <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
                         </div>
                     </div>
@@ -620,36 +636,30 @@
 
                 <!-- Pronósticos -->
                 <div id="predictionsSection">
-                    <div class="card" id="predictionsContent">Cargando pronósticos...</div>
+                    <div class="card" id="predictionsContent">
+                        <div class="text-center">Cargando pronósticos...</div>
+                    </div>
                 </div>
 
-                <!-- Historial (CORREGIDO - sin duplicados) -->
+                <!-- Historial -->
                 <div id="historySection" style="display: none;">
                     <div class="card">
                         <h2 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
                         <div class="table-responsive">
                             <table id="historyTable">
-                                <thead>
-                                    <tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th>
-                                </thead>
-                                <tbody id="historyTableBody">
-                                    <tr><td colspan="4" class="text-center">Cargando historial...</td>
-                                </tbody>
+                                <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
+                                <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...</td></tr></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- Comentarios (NUEVA SECCIÓN) -->
+                <!-- Comentarios -->
                 <div id="commentsSection" style="display: none;">
                     <div class="card">
                         <h2 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem;">💬 Comentarios y Jugadas</h2>
                         <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
-                        
-                        <div id="commentsList" class="comments-section">
-                            <div class="text-center">Cargando comentarios...</div>
-                        </div>
-                        
+                        <div id="commentsList" class="comments-section"><div class="text-center">Cargando comentarios...</div></div>
                         <div class="new-comment-form">
                             <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📝 Publicar jugada/comentario</h3>
                             <div class="form-row">
@@ -663,16 +673,14 @@
                 </div>
 
                 <!-- Perfil -->
-                <div id="profileSection" style="display: none;">
-                    <div class="card" id="profileContent"></div>
-                </div>
+                <div id="profileSection" style="display: none;"><div class="card" id="profileContent"></div></div>
 
                 <!-- Pago -->
                 <div id="paymentSection" style="display: none;">
                     <div class="card">
                         <h2 style="color: var(--primary); font-size: 1.2rem;">💰 Membresía Premium</h2>
                         <div class="stats-grid">
-                            <div class="stat-card"><div class="stat-number">$250</div><div class="stat-label">CUP / Mes</div></div>
+                            <div class="stat-card"><div class="stat-number">$250</div><div class="stat-label">CUP/ Mes</div></div>
                             <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Activación</div></div>
                         </div>
                         <div class="payment-info">
@@ -721,49 +729,42 @@
         let currentUser = null;
         let userMembership = null;
         let authMode = 'login';
-        let connectionCheckInterval = null;
+        let unsubscribePredictions = null;
+        let unsubscribeProbabilities = null;
+        let unsubscribeResults = null;
         
-        // ========== DETECCIÓN DE CONEXIÓN PARA CUBA ==========
+        // Detección de conexión
         async function checkConnection() {
             try {
-                // Intentar conectar a Firebase
-                const testDoc = await db.collection('connectionTest').doc('test').get();
+                await db.collection('connectionTest').doc('test').get();
                 return true;
             } catch (error) {
-                console.error('Error de conexión:', error);
                 return false;
             }
         }
         
         async function checkConnectionAndRetry() {
-            const vpnAlert = document.getElementById('vpnAlert');
             const isConnected = await checkConnection();
-            
             if (isConnected) {
-                vpnAlert.style.display = 'none';
+                document.getElementById('vpnAlert').style.display = 'none';
                 showDialog('✅ Conexión restablecida', 'Ya puedes usar Florida Pro normalmente');
-                // Recargar datos
                 if (currentUser) {
-                    loadPredictions();
-                    loadComments();
+                    setupRealtimeListeners();
                 }
             } else {
-                vpnAlert.style.display = 'flex';
-                showDialog('⚠️ Sin conexión', 'No se pudo establecer conexión. Verifica tu VPN o conexión a internet.');
+                document.getElementById('vpnAlert').style.display = 'flex';
             }
         }
         
-        // Verificar conexión periódicamente
         function startConnectionMonitoring() {
             setInterval(async () => {
                 const isConnected = await checkConnection();
                 if (!isConnected) {
                     document.getElementById('vpnAlert').style.display = 'flex';
                 }
-            }, 30000); // Cada 30 segundos
+            }, 30000);
         }
         
-        // ========== FUNCIONES PRINCIPALES ==========
         function showDialog(title, message) {
             document.getElementById('dialogTitle').innerText = title;
             document.getElementById('dialogMessage').innerHTML = message;
@@ -780,7 +781,7 @@
                 document.getElementById('switchAuth').innerHTML = '¿Ya tienes cuenta? Inicia sesión';
             } else {
                 authMode = 'login';
-                document.querySelector('.auth-card h2').innerText = '🌴 Florida Pro';
+                document.querySelector('.auth-card h2').innerText = '🌿 Florida Pro';
                 document.getElementById('authBtn').innerHTML = 'Iniciar Sesión';
                 document.getElementById('switchAuth').innerHTML = '¿No tienes cuenta? Regístrate';
             }
@@ -810,7 +811,13 @@
             }
         }
         
-        function logout() { auth.signOut(); location.reload(); }
+        function logout() { 
+            if (unsubscribePredictions) unsubscribePredictions();
+            if (unsubscribeProbabilities) unsubscribeProbabilities();
+            if (unsubscribeResults) unsubscribeResults();
+            auth.signOut(); 
+            location.reload(); 
+        }
         
         function showSection(section) {
             document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
@@ -824,13 +831,32 @@
             if (activeBtn) activeBtn.classList.add('active');
             
             if (section === 'profile') loadProfile();
-            if (section === 'predictions') loadPredictions();
             if (section === 'history') loadHistory();
             if (section === 'comments') loadComments();
         }
         
-        // ========== PRONÓSTICOS ==========
-        async function loadPredictions() {
+        // Formatear hora a 12 horas
+        function formatTime12Hour(dateString) {
+            if (!dateString) return 'No disponible';
+            const date = new Date(dateString);
+            let hours = date.getHours();
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            return `${hours}:${minutes} ${ampm}`;
+        }
+        
+        function isTodayOrRecent(lastUpdate) {
+            if (!lastUpdate) return false;
+            const updateDate = new Date(lastUpdate);
+            const now = new Date();
+            const diffHours = (now - updateDate) / (1000 * 60 * 60);
+            return diffHours < 24;
+        }
+        
+        // ========== PRONÓSTICOS EN TIEMPO REAL CON FECHA/HORA ==========
+        function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
             const container = document.getElementById('predictionsContent');
             const today = new Date().toISOString().split('T')[0];
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
@@ -840,70 +866,148 @@
                 return;
             }
             
-            try {
-                const dailyDoc = await db.collection('dailyNumbers').doc(today).get();
-                const probDoc = await db.collection('probabilities').doc(today).get();
-                const resultsDoc = await db.collection('dailyResults').doc(today).get();
-                
-                let numbers = dailyDoc.exists ? dailyDoc.data().numbers : [];
-                let strongNumbers = probDoc.exists ? probDoc.data().strongNumbers : [];
-                let mediumNumbers = probDoc.exists ? probDoc.data().mediumNumbers : [];
-                let afternoonWinner = resultsDoc.exists ? resultsDoc.data().afternoonWinner : null;
-                let nightWinner = resultsDoc.exists ? resultsDoc.data().nightWinner : null;
-                
-                if (numbers.length === 0) {
-                    container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Se actualizan a las 12:00 AM</p></div>`;
-                    return;
+            if (!numbers || numbers.length === 0) {
+                container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Se actualizan a las 12:00 AM</p></div>`;
+                return;
+            }
+            
+            const isUpdated = isTodayOrRecent(lastUpdate);
+            const displayTime = lastUpdateFormatted || formatTime12Hour(lastUpdate);
+            const updateBadge = isUpdated ? '<span class="update-badge">✅ ACTUALIZADO</span>' : '<span class="update-badge outdated-badge">⚠️ DESACTUALIZADO</span>';
+            
+            let html = `<h2 style="color: var(--primary); font-size: 1.2rem;">🎯 Pronóstico del Día <span class="live-badge">ACTUALIZACIÓN AUTOMÁTICA</span></h2>
+                       <div class="update-info">
+                           <span class="update-label">📅 Última actualización del pronóstico</span>
+                           <span class="update-time">${displayTime} ${updateBadge}</span>
+                       </div>
+                       <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
+                            <span style="background: #d8f3dc; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
+                            <span style="background: #fff3e0; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
+                        </div>
+                       <div class="numbers-grid" id="numbersGrid"></div>`;
+            
+            // Sorteo Mediodía
+            let afternoonClass = 'result-box result-waiting';
+            let afternoonText = '⏳ ESPERANDO RESULTADO...';
+            let afternoonAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
+            
+            if (afternoonWinner) {
+                if (afternoonWinner === 'fallo') { 
+                    afternoonClass = 'result-box result-fallo'; 
+                    afternoonText = '❌ FALLO - No hubo número ganador';
+                    afternoonAlert = '';
+                } else { 
+                    afternoonClass = 'result-box result-winner'; 
+                    afternoonText = `🎯 NÚMERO GANADOR: ${afternoonWinner}`;
+                    afternoonAlert = '';
                 }
-                
-                let html = `<h2 style="color: var(--primary); font-size: 1.2rem;">🎯 Pronóstico del Día</h2>
-                           <p style="color: var(--text-secondary); font-size: 0.75rem;">${today}</p>
-                           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
-                                <span style="background: #fff3e6; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
-                                <span style="background: #e8f5e9; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟢 Medio: 50%</span>
-                            </div>
-                           <div class="numbers-grid" id="numbersGrid"></div>`;
-                
-                let afternoonClass = 'result-box result-waiting';
-                let afternoonText = '⏳ Esperando resultado...';
-                if (afternoonWinner) {
-                    if (afternoonWinner === 'fallo') { afternoonClass = 'result-box result-fallo'; afternoonText = '❌ FALLO'; }
-                    else { afternoonClass = 'result-box result-winner'; afternoonText = `🎯 ${afternoonWinner}`; }
+            }
+            
+            html += `<div class="${afternoonClass}">
+                        <div class="result-title">🌅 SORTEO MEDIODÍA (1:35 PM)</div>
+                        <div class="result-value">${afternoonText}</div>
+                        ${afternoonAlert}
+                     </div>`;
+            
+            // Sorteo Noche
+            let nightClass = 'result-box result-waiting';
+            let nightText = '⏳ ESPERANDO RESULTADO...';
+            let nightAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
+            
+            if (nightWinner) {
+                if (nightWinner === 'fallo') { 
+                    nightClass = 'result-box result-fallo'; 
+                    nightText = '❌ FALLO - No hubo número ganador';
+                    nightAlert = '';
+                } else { 
+                    nightClass = 'result-box result-winner'; 
+                    nightText = `🎯 NÚMERO GANADOR: ${nightWinner}`;
+                    nightAlert = '';
                 }
-                html += `<div class="${afternoonClass}"><div class="result-title">🌅 SORTEO MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div></div>`;
-                
-                let nightClass = 'result-box result-waiting';
-                let nightText = '⏳ Esperando resultado...';
-                if (nightWinner) {
-                    if (nightWinner === 'fallo') { nightClass = 'result-box result-fallo'; nightText = '❌ FALLO'; }
-                    else { nightClass = 'result-box result-winner'; nightText = `🎯 ${nightWinner}`; }
-                }
-                html += `<div class="${nightClass}"><div class="result-title">🌙 SORTEO NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div></div>`;
-                
-                container.innerHTML = html;
-                
-                const grid = document.getElementById('numbersGrid');
-                if (grid) {
-                    numbers.forEach(num => {
-                        let className = 'number-card';
-                        if (strongNumbers.includes(num)) className += ' strong';
-                        else if (mediumNumbers.includes(num)) className += ' medium';
-                        if (afternoonWinner === num || nightWinner === num) className += ' winner';
-                        let probText = '';
-                        if (strongNumbers.includes(num)) probText = '<div class="probability">🔥 68%</div>';
-                        else if (mediumNumbers.includes(num)) probText = '<div class="probability">📊 50%</div>';
-                        const card = document.createElement('div');
-                        card.className = className;
-                        card.innerHTML = `<div class="number">${num}</div>${probText}`;
-                        grid.appendChild(card);
-                    });
-                }
-            } catch (error) {
-                container.innerHTML = '<div class="text-center">Error al cargar</div>';
+            }
+            
+            html += `<div class="${nightClass}">
+                        <div class="result-title">🌙 SORTEO NOCHE (9:50 PM)</div>
+                        <div class="result-value">${nightText}</div>
+                        ${nightAlert}
+                     </div>`;
+            
+            container.innerHTML = html;
+            
+            const grid = document.getElementById('numbersGrid');
+            if (grid) {
+                numbers.forEach(num => {
+                    let className = 'number-card';
+                    if (strongNumbers && strongNumbers.includes(num)) className += ' strong';
+                    else if (mediumNumbers && mediumNumbers.includes(num)) className += ' medium';
+                    if (afternoonWinner === num || nightWinner === num) className += ' winner';
+                    let probText = '';
+                    if (strongNumbers && strongNumbers.includes(num)) probText = '<div class="probability">🔥 68%</div>';
+                    else if (mediumNumbers && mediumNumbers.includes(num)) probText = '<div class="probability">📊 50%</div>';
+                    const card = document.createElement('div');
+                    card.className = className;
+                    card.innerHTML = `<div class="number">${num}</div>${probText}`;
+                    grid.appendChild(card);
+                });
             }
         }
         
-        // ========== HISTORIAL CORREGIDO (SIN DUPLICADOS) ==========
+        function setupRealtimeListeners() {
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Escuchar cambios en pronóstico (números)
+            if (unsubscribePredictions) unsubscribePredictions();
+            unsubscribePredictions = db.collection('dailyNumbers').doc(today)
+                .onSnapshot((doc) => {
+                    const numbers = doc.exists ? doc.data().numbers : [];
+                    const lastUpdate = doc.exists ? doc.data().lastUpdate : null;
+                    const lastUpdateFormatted = doc.exists ? doc.data().lastUpdateFormatted : null;
+                    window.currentLastUpdate = lastUpdate;
+                    window.currentLastUpdateFormatted = lastUpdateFormatted;
+                    if (window.currentStrong && window.currentMedium && window.currentAfternoon !== undefined && window.currentNight !== undefined) {
+                        renderPredictions(numbers, window.currentStrong, window.currentMedium, window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
+                    }
+                });
+            
+            // Escuchar cambios en probabilidades
+            if (unsubscribeProbabilities) unsubscribeProbabilities();
+            unsubscribeProbabilities = db.collection('probabilities').doc(today)
+                .onSnapshot((doc) => {
+                    const strongNumbers = doc.exists ? doc.data().strongNumbers : [];
+                    const mediumNumbers = doc.exists ? doc.data().mediumNumbers : [];
+                    window.currentStrong = strongNumbers;
+                    window.currentMedium = mediumNumbers;
+                    db.collection('dailyNumbers').doc(today).get().then(numDoc => {
+                        const numbers = numDoc.exists ? numDoc.data().numbers : [];
+                        const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
+                        const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
+                        renderPredictions(numbers, strongNumbers, mediumNumbers, window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
+                    });
+                });
+            
+            // Escuchar cambios en resultados
+            if (unsubscribeResults) unsubscribeResults();
+            unsubscribeResults = db.collection('dailyResults').doc(today)
+                .onSnapshot((doc) => {
+                    const afternoonWinner = doc.exists ? doc.data().afternoonWinner : null;
+                    const nightWinner = doc.exists ? doc.data().nightWinner : null;
+                    window.currentAfternoon = afternoonWinner;
+                    window.currentNight = nightWinner;
+                    Promise.all([
+                        db.collection('dailyNumbers').doc(today).get(),
+                        db.collection('probabilities').doc(today).get()
+                    ]).then(([numDoc, probDoc]) => {
+                        const numbers = numDoc.exists ? numDoc.data().numbers : [];
+                        const strongNumbers = probDoc.exists ? probDoc.data().strongNumbers : [];
+                        const mediumNumbers = probDoc.exists ? probDoc.data().mediumNumbers : [];
+                        const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
+                        const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
+                        renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted);
+                    });
+                });
+        }
+        
+        // ========== HISTORIAL ==========
         async function loadHistory() {
             if (!currentUser) return;
             const tbody = document.getElementById('historyTableBody');
@@ -918,7 +1022,6 @@
                     document.getElementById('winRate').innerText = `${winRate}%`;
                 }
                 
-                // Usar un Map para evitar duplicados por fecha y sorteo
                 const historyMap = new Map();
                 const historySnapshot = await db.collection('resultsHistory').orderBy('timestamp', 'desc').limit(50).get();
                 
@@ -929,28 +1032,14 @@
                     const keyNight = `${date}_night`;
                     
                     if (data.afternoonWinner && !historyMap.has(key)) {
-                        historyMap.set(key, {
-                            date: date,
-                            type: 'afternoon',
-                            winner: data.afternoonWinner,
-                            drawTime: 'afternoon'
-                        });
+                        historyMap.set(key, { date: date, type: 'afternoon', winner: data.afternoonWinner });
                     }
                     if (data.nightWinner && !historyMap.has(keyNight)) {
-                        historyMap.set(keyNight, {
-                            date: date,
-                            type: 'night',
-                            winner: data.nightWinner,
-                            drawTime: 'night'
-                        });
+                        historyMap.set(keyNight, { date: date, type: 'night', winner: data.nightWinner });
                     }
                 });
                 
-                // Convertir Map a array y ordenar por fecha descendente
-                const uniqueHistory = Array.from(historyMap.values()).sort((a, b) => {
-                    return b.date.localeCompare(a.date);
-                });
-                
+                const uniqueHistory = Array.from(historyMap.values()).sort((a, b) => b.date.localeCompare(a.date));
                 tbody.innerHTML = '';
                 
                 if (uniqueHistory.length === 0) {
@@ -970,50 +1059,35 @@
             }
         }
         
-        // ========== COMENTARIOS (NUEVA SECCIÓN) ==========
+        // ========== COMENTARIOS ==========
         async function loadComments() {
             const container = document.getElementById('commentsList');
             if (!container) return;
-            
             try {
-                const commentsSnapshot = await db.collection('comments')
-                    .orderBy('timestamp', 'desc')
-                    .limit(50)
-                    .get();
-                
+                const commentsSnapshot = await db.collection('comments').orderBy('timestamp', 'desc').limit(50).get();
                 if (commentsSnapshot.empty) {
                     container.innerHTML = '<div class="text-center" style="padding: 2rem;">💬 No hay comentarios aún. ¡Sé el primero en compartir tu jugada!</div>';
                     return;
                 }
-                
                 container.innerHTML = '';
-                
                 commentsSnapshot.forEach(doc => {
                     const comment = doc.data();
-                    const commentId = doc.id;
-                    
                     const commentDiv = document.createElement('div');
                     commentDiv.className = 'comment-card';
-                    
                     let numberHtml = '';
                     if (comment.number) {
                         numberHtml = `<div class="comment-number">🎯 Número jugado: <span>${comment.number}</span> ${comment.draw ? `(${comment.draw})` : ''}</div>`;
                     }
-                    
                     commentDiv.innerHTML = `
                         <div class="comment-header">
-                            <span class="comment-user">👤 ${comment.userEmail || 'Usuario'}</span>
+                            <span class="comment-user">👤 ${escapeHtml(comment.userEmail || 'Usuario')}</span>
                             <span class="comment-date">📅 ${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Reciente'}</span>
                         </div>
                         <div class="comment-text">${escapeHtml(comment.message)}</div>
                         ${numberHtml}
-                        <div class="comment-actions">
-                            <button class="like-btn" onclick="likeComment('${commentId}', ${comment.likes || 0})">❤️ ${comment.likes || 0}</button>
-                        </div>
                     `;
                     container.appendChild(commentDiv);
                 });
-                
             } catch (error) {
                 console.error('Error cargando comentarios:', error);
                 container.innerHTML = '<div class="text-center">❌ Error al cargar comentarios</div>';
@@ -1025,16 +1099,13 @@
                 showDialog('Inicia sesión', 'Debes iniciar sesión para publicar comentarios');
                 return;
             }
-            
             const message = document.getElementById('commentMessage').value.trim();
             const number = document.getElementById('commentNumber').value.trim();
             const draw = document.getElementById('commentDraw').value.trim();
-            
             if (!message) {
                 showDialog('Error', 'Escribe un comentario antes de publicar');
                 return;
             }
-            
             try {
                 await db.collection('comments').add({
                     userEmail: currentUser.email,
@@ -1045,34 +1116,13 @@
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     likes: 0
                 });
-                
-                // Limpiar formulario
                 document.getElementById('commentMessage').value = '';
                 document.getElementById('commentNumber').value = '';
                 document.getElementById('commentDraw').value = '';
-                
                 showDialog('✅ Publicado', 'Tu comentario ha sido publicado');
                 loadComments();
-                
             } catch (error) {
                 showDialog('Error', 'No se pudo publicar el comentario');
-                console.error(error);
-            }
-        }
-        
-        async function likeComment(commentId, currentLikes) {
-            if (!currentUser) {
-                showDialog('Inicia sesión', 'Debes iniciar sesión para dar like');
-                return;
-            }
-            
-            try {
-                await db.collection('comments').doc(commentId).update({
-                    likes: currentLikes + 1
-                });
-                loadComments();
-            } catch (error) {
-                console.error('Error al dar like:', error);
             }
         }
         
@@ -1140,31 +1190,31 @@
         });
         
         auth.onAuthStateChanged(async (user) => {
-            // Verificar conexión primero
             const isConnected = await checkConnection();
             if (!isConnected) {
                 document.getElementById('vpnAlert').style.display = 'flex';
                 return;
             }
-            
             if (user) {
                 currentUser = user;
                 await checkMembership(user.email);
                 document.getElementById('authScreen').style.display = 'none';
                 document.getElementById('dashboardScreen').style.display = 'block';
-                loadPredictions();
-                loadProfile();
+                setupRealtimeListeners();
                 loadHistory();
                 loadComments();
+                loadProfile();
                 showSection('predictions');
             } else {
+                if (unsubscribePredictions) unsubscribePredictions();
+                if (unsubscribeProbabilities) unsubscribeProbabilities();
+                if (unsubscribeResults) unsubscribeResults();
                 document.getElementById('dashboardScreen').style.display = 'none';
                 document.getElementById('authScreen').style.display = 'flex';
                 currentUser = null;
             }
         });
         
-        // Iniciar monitoreo de conexión
         startConnectionMonitoring();
     </script>
 </body>
