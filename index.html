@@ -531,11 +531,6 @@
             cursor: pointer;
         }
 
-        .referral-link-btn:hover {
-            background: #1e8a4e;
-            transform: scale(1.02);
-        }
-
         /* Comentarios */
         .comments-section {
             margin-top: 1rem;
@@ -679,7 +674,7 @@
             background: white;
             border-radius: 20px;
             padding: 1.5rem;
-            max-width: 400px;
+            max-width: 500px;
             width: 90%;
             text-align: center;
         }
@@ -747,13 +742,19 @@
             color: var(--text-secondary);
         }
 
-        .input-group input {
+        .input-group input, .input-group textarea {
             width: 100%;
             padding: 0.75rem;
             background: var(--gray-bg);
             border: 1px solid var(--border);
             border-radius: 12px;
             font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 100px;
         }
 
         .payment-methods {
@@ -786,6 +787,25 @@
         .payment-method-icon {
             font-size: 1.5rem;
             margin-bottom: 0.25rem;
+        }
+
+        .transfer-example {
+            background: #fef3c7;
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .transfer-example code {
+            display: block;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin-top: 0.25rem;
+            font-size: 0.7rem;
+            word-break: break-all;
         }
 
         @media (max-width: 640px) {
@@ -968,7 +988,7 @@
                     <div class="table-responsive">
                         <table id="historyTable">
                             <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
-                            <tbody id="historyTableBody"><td><td colspan="4" class="text-center">Cargando historial...<\/td><\/tr>
+                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...<\/td><\/tr>
                             </tbody>
                         </table>
                     </div>
@@ -1039,18 +1059,27 @@
                         </div>
                     </div>
 
-                    <div class="input-group">
-                        <label>📝 Número de transferencia / Comprobante</label>
-                        <input type="text" id="transferNumber" placeholder="Ej: REF-123456789">
+                    <!-- Ejemplo de formato -->
+                    <div class="transfer-example">
+                        📋 <strong>Formato de ejemplo:</strong>
+                        <code>Se ha realizado una transferencia a la cuenta 9227069997711927 de 250.00 CUP. Nro. Transaccion KW600UIE4C999. Fecha: 29/4/2026</code>
+                        <div style="margin-top: 0.5rem; font-size: 0.65rem;">✅ Copia y pega el mensaje de tu transferencia, editando los datos</div>
                     </div>
+
+                    <div class="input-group">
+                        <label>📝 Mensaje de transferencia completo</label>
+                        <textarea id="transferMessage" placeholder="Ej: Se ha realizado una transferencia a la cuenta 9227069997711927 de 250.00 CUP. Nro. Transaccion KW600UIE4C999. Fecha: 29/4/2026"></textarea>
+                    </div>
+
                     <div class="input-group">
                         <label>📱 Teléfono de contacto (opcional)</label>
                         <input type="text" id="contactPhone" placeholder="+53 XXXXXXXX">
                     </div>
+
                     <button class="btn" onclick="submitPayment()" id="submitPaymentBtn">💰 Enviar comprobante y activar</button>
                     <p class="text-center mt-3" style="font-size: 0.65rem; color: var(--text-secondary);">
                         ⏱️ Activación en menos de 24 horas<br>
-                        📞 Soporte: +53 12345678
+                        
                     </p>
                 </div>
 
@@ -1059,7 +1088,7 @@
                     <div class="table-responsive">
                         <table id="paymentsTable">
                             <thead>
-                                <td><th>Fecha</th><th>Monto</th><th>Estado</th>
+                                <tr><th>Fecha</th><th>Monto</th><th>Estado</th>
                             </thead>
                             <tbody id="paymentsTableBody"></tbody>
                         </table>
@@ -1508,21 +1537,34 @@
         async function submitPayment() {
             if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; }
             
-            const transferNumber = document.getElementById('transferNumber').value.trim();
+            const transferMessage = document.getElementById('transferMessage').value.trim();
             const contactPhone = document.getElementById('contactPhone').value.trim();
             
-            if (!transferNumber) { 
-                showDialog('Error', '❌ Ingresa el número de transferencia o comprobante'); 
+            if (!transferMessage) { 
+                showDialog('Error', '❌ Ingresa el mensaje completo de tu transferencia'); 
                 return; 
             }
             
+            // Validar que el mensaje contenga información básica
+            if (transferMessage.length < 20) {
+                showDialog('Error', '❌ Por favor, ingresa el mensaje completo de la transferencia con todos los datos');
+                return;
+            }
+            
             try {
+                // Extraer monto del mensaje (ej: 250.00 CUP o 3000.00)
+                let amount = 250;
+                const amountMatch = transferMessage.match(/(\d+(?:\.\d+)?)\s*(?:CUP|cup)/i);
+                if (amountMatch) {
+                    amount = parseFloat(amountMatch[1]);
+                }
+                
                 const paymentData = {
                     userEmail: currentUser.email,
                     userId: currentUser.uid,
-                    transferNumber: transferNumber,
+                    transferMessage: transferMessage,
                     contactPhone: contactPhone || '',
-                    amount: 250,
+                    amount: amount,
                     currency: 'CUP',
                     paymentMethod: selectedPaymentMethod,
                     status: 'pending',
@@ -1532,24 +1574,25 @@
                 
                 await db.collection('payments').add(paymentData);
                 
+                // Limpiar formulario
+                document.getElementById('transferMessage').value = '';
+                document.getElementById('contactPhone').value = '';
+                
                 showDialog(
                     '✅ Comprobante enviado', 
                     `Tu solicitud de membresía ha sido registrada.\n\n` +
-                    `📝 Comprobante: ${transferNumber}\n` +
+                    `📝 Mensaje enviado:\n${transferMessage.substring(0, 150)}${transferMessage.length > 150 ? '...' : ''}\n\n` +
                     `💳 Método: ${selectedPaymentMethod === 'transfer' ? 'Transferencia' : selectedPaymentMethod === 'card' ? 'Tarjeta' : 'EnZona'}\n` +
-                    `💰 Monto: $250 CUP\n\n` +
+                    `💰 Monto: $${amount.toFixed(2)} CUP\n\n` +
                     `⏱️ Tu membresía se activará en menos de 24 horas.\n` +
                     `📞 Ante cualquier duda, contacta al soporte.`
                 );
-                
-                document.getElementById('transferNumber').value = '';
-                document.getElementById('contactPhone').value = '';
                 
                 await loadPaymentSection();
                 
             } catch (error) {
                 console.error('Error enviando pago:', error);
-                showDialog('Error', 'No se pudo enviar el comprobante. Intenta nuevamente.');
+                showDialog('Error', 'No se pudo enviar el comprobante. Intenta nuevamente.\n' + error.message);
             }
         }
         
