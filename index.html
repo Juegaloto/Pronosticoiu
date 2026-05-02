@@ -569,6 +569,15 @@
             display: inline-block;
         }
 
+        .badge-pending {
+            background: var(--secondary);
+            color: var(--text-primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            display: inline-block;
+        }
+
         .modal-overlay {
             display: none;
             position: fixed;
@@ -608,6 +617,7 @@
 
         .text-center { text-align: center; }
         .mt-3 { margin-top: 1rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
 
         .live-badge {
             background: var(--primary);
@@ -661,6 +671,38 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             font-size: 0.9rem;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .payment-method {
+            flex: 1;
+            background: var(--gray-bg);
+            border-radius: 12px;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: #fef3c7;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+
+        .payment-method-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
         }
 
         @media (max-width: 640px) {
@@ -718,7 +760,7 @@
                         <p>Pronósticos en tiempo real | Invita y gana días gratis</p>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
-                        <span class="florida-badge">🌴 REFERIDOS</span>
+                        <span class="florida-badge">🌴 PRONO</span>
                         <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
                     </div>
                 </div>
@@ -738,6 +780,7 @@
                     <button class="nav-btn" data-section="history">🏆 Historial</button>
                     <button class="nav-btn" data-section="comments">💬 Comentarios</button>
                     <button class="nav-btn" data-section="profile">👤 Perfil</button>
+                    <button class="nav-btn" data-section="payment">💰 Membresía</button>
                 </div>
             </div>
 
@@ -835,6 +878,77 @@
 
             <!-- Perfil -->
             <div id="profileSection" style="display: none;"><div class="card" id="profileContent"></div></div>
+
+            <!-- Pago/Membresía -->
+            <div id="paymentSection" style="display: none;">
+                <div class="card">
+                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">💰 Membresía Premium</h2>
+                    <p class="text-center mb-2" style="color: var(--text-secondary);">Activa tu membresía y accede a todos los pronósticos</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">$250</div>
+                            <div class="stat-label">CUP / Mes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">24h</div>
+                            <div class="stat-label">Activación</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="currentStatus">Inactiva</div>
+                            <div class="stat-label">Estado Actual</div>
+                        </div>
+                    </div>
+
+                    <div class="payment-info">
+                        <div style="font-size: 0.7rem; color: var(--text-secondary);">💳 Información de pago</div>
+                        <div class="payment-number">9227 0699 9771 1927</div>
+                        <div style="font-size: 0.65rem;">Beneficiario: Florida Pro Services</div>
+                        <div style="font-size: 0.65rem; margin-top: 0.25rem;">📧 Referencia: flpro@servicios.cu</div>
+                    </div>
+
+                    <div class="payment-methods">
+                        <div class="payment-method selected" data-method="transfer" onclick="selectPaymentMethod('transfer')">
+                            <div class="payment-method-icon">🏦</div>
+                            <div style="font-size: 0.7rem;">Transferencia</div>
+                        </div>
+                        <div class="payment-method" data-method="card" onclick="selectPaymentMethod('card')">
+                            <div class="payment-method-icon">💳</div>
+                            <div style="font-size: 0.7rem;">Tarjeta</div>
+                        </div>
+                        <div class="payment-method" data-method="enZona" onclick="selectPaymentMethod('enZona')">
+                            <div class="payment-method-icon">📱</div>
+                            <div style="font-size: 0.7rem;">EnZona</div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>📝 Número de transferencia / Comprobante</label>
+                        <input type="text" id="transferNumber" placeholder="Ej: REF-123456789">
+                    </div>
+                    <div class="input-group">
+                        <label>📱 Teléfono de contacto (opcional)</label>
+                        <input type="text" id="contactPhone" placeholder="+53 XXXXXXXX">
+                    </div>
+                    <button class="btn" onclick="submitPayment()" id="submitPaymentBtn">💰 Enviar comprobante y activar</button>
+                    <p class="text-center mt-3" style="font-size: 0.65rem; color: var(--text-secondary);">
+                        ⏱️ Activación en menos de 24 horas<br>
+                        📞 Soporte: +53 12345678
+                    </p>
+                </div>
+
+                <div class="card" id="paymentHistoryCard" style="display: none;">
+                    <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Historial de pagos</h3>
+                    <div class="table-responsive">
+                        <table id="paymentsTable">
+                            <thead>
+                                <tr><th>Fecha</th><th>Monto</th><th>Estado</th>
+                            </thead>
+                            <tbody id="paymentsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -867,6 +981,7 @@
         let currentUser = null;
         let userMembership = null;
         let authMode = 'login';
+        let selectedPaymentMethod = 'transfer';
         let unsubscribePredictions = null;
         let unsubscribeProbabilities = null;
         let unsubscribeResults = null;
@@ -931,6 +1046,14 @@
                 document.getElementById('switchAuth').innerHTML = '¿No tienes cuenta? Regístrate';
                 document.getElementById('referralCodeGroup').style.display = 'none';
             }
+        }
+        
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelector(`.payment-method[data-method="${method}"]`).classList.add('selected');
         }
         
         function generateReferralCode(email) {
@@ -1106,10 +1229,8 @@
             if (unsubscribeProbabilities) unsubscribeProbabilities();
             if (unsubscribeResults) unsubscribeResults();
             auth.signOut();
-            // Mostrar pantalla de login nuevamente
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('authScreen').style.display = 'flex';
-            // Resetear modo a login
             authMode = 'login';
             document.querySelector('.auth-card h2').innerText = '🌿 Florida Pro';
             document.getElementById('authBtn').innerHTML = 'Iniciar Sesión';
@@ -1126,6 +1247,7 @@
             document.getElementById('historySection').style.display = section === 'history' ? 'block' : 'none';
             document.getElementById('commentsSection').style.display = section === 'comments' ? 'block' : 'none';
             document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
+            document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none';
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.querySelector(`.nav-btn[data-section="${section}"]`);
             if (activeBtn) activeBtn.classList.add('active');
@@ -1133,6 +1255,105 @@
             if (section === 'history') loadHistory();
             if (section === 'comments') loadComments();
             if (section === 'referrals') updateReferralsUI();
+            if (section === 'payment') loadPaymentSection();
+        }
+        
+        async function loadPaymentSection() {
+            if (!currentUser) return;
+            
+            // Actualizar estado actual
+            const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
+            const statusEl = document.getElementById('currentStatus');
+            if (statusEl) {
+                if (isActive) {
+                    const daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
+                    statusEl.innerHTML = `✅ Activa<br><span style="font-size:0.6rem;">${daysLeft} días restantes</span>`;
+                } else {
+                    statusEl.innerHTML = '❌ Inactiva';
+                }
+            }
+            
+            // Cargar historial de pagos
+            try {
+                const paymentsSnapshot = await db.collection('payments')
+                    .where('userEmail', '==', currentUser.email)
+                    .orderBy('timestamp', 'desc')
+                    .limit(10)
+                    .get();
+                
+                const paymentsCard = document.getElementById('paymentHistoryCard');
+                const tbody = document.getElementById('paymentsTableBody');
+                
+                if (!paymentsSnapshot.empty) {
+                    paymentsCard.style.display = 'block';
+                    tbody.innerHTML = '';
+                    paymentsSnapshot.forEach(doc => {
+                        const payment = doc.data();
+                        const row = tbody.insertRow();
+                        const date = payment.timestamp?.toDate ? payment.timestamp.toDate().toLocaleDateString() : new Date(payment.timestamp).toLocaleDateString();
+                        row.insertCell(0).innerText = date;
+                        row.insertCell(1).innerText = `$${payment.amount || 250} CUP`;
+                        let statusHtml = '';
+                        if (payment.status === 'approved') statusHtml = '<span class="badge-win">✅ Aprobado</span>';
+                        else if (payment.status === 'pending') statusHtml = '<span class="badge-pending">⏳ Pendiente</span>';
+                        else statusHtml = '<span style="color: var(--danger);">❌ Rechazado</span>';
+                        row.insertCell(2).innerHTML = statusHtml;
+                    });
+                } else {
+                    paymentsCard.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error cargando pagos:', error);
+            }
+        }
+        
+        async function submitPayment() {
+            if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; }
+            
+            const transferNumber = document.getElementById('transferNumber').value.trim();
+            const contactPhone = document.getElementById('contactPhone').value.trim();
+            
+            if (!transferNumber) { 
+                showDialog('Error', '❌ Ingresa el número de transferencia o comprobante'); 
+                return; 
+            }
+            
+            try {
+                const paymentData = {
+                    userEmail: currentUser.email,
+                    userId: currentUser.uid,
+                    transferNumber: transferNumber,
+                    contactPhone: contactPhone || '',
+                    amount: 250,
+                    currency: 'CUP',
+                    paymentMethod: selectedPaymentMethod,
+                    status: 'pending',
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    createdAt: new Date().toISOString()
+                };
+                
+                await db.collection('payments').add(paymentData);
+                
+                showDialog(
+                    '✅ Comprobante enviado', 
+                    `Tu solicitud de membresía ha sido registrada.\n\n` +
+                    `📝 Comprobante: ${transferNumber}\n` +
+                    `💳 Método: ${selectedPaymentMethod === 'transfer' ? 'Transferencia' : selectedPaymentMethod === 'card' ? 'Tarjeta' : 'EnZona'}\n` +
+                    `💰 Monto: $250 CUP\n\n` +
+                    `⏱️ Tu membresía se activará en menos de 24 horas.\n` +
+                    `📞 Ante cualquier duda, contacta al soporte.`
+                );
+                
+                document.getElementById('transferNumber').value = '';
+                document.getElementById('contactPhone').value = '';
+                
+                // Recargar historial
+                await loadPaymentSection();
+                
+            } catch (error) {
+                console.error('Error enviando pago:', error);
+                showDialog('Error', 'No se pudo enviar el comprobante. Intenta nuevamente.');
+            }
         }
         
         function formatTime12Hour(dateString) {
@@ -1158,7 +1379,12 @@
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             if (!isActive) {
-                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Membresía inactiva</h3><p style="margin: 1rem 0;">Activa tu membresía para acceder a los pronósticos</p></div>`;
+                container.innerHTML = `<div class="text-center" style="padding: 2rem;">
+                    <div style="font-size: 3rem;">🔒</div>
+                    <h3>Contenido Bloqueado</h3>
+                    <p style="margin: 1rem 0;">Necesitas una membresía activa para acceder a los pronósticos</p>
+                    <button class="btn" onclick="showSection('payment')" style="background: var(--primary);">💰 Activar Membresía</button>
+                </div>`;
                 return;
             }
             if (!numbers || numbers.length === 0) {
@@ -1350,7 +1576,17 @@
             if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
             document.getElementById('daysLeft').innerText = daysLeft;
             const referralCode = userMembership?.referralCode || 'Cargando...';
-            content.innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div></div><div style="background: var(--gray-bg); border-radius: 16px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Vence:</strong> ${expires}</p><p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0} | <strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--primary); color: white; padding: 0.2rem 0.5rem; border-radius: 8px;">${referralCode}</code></p></div>`;
+            content.innerHTML = `<div class="stats-grid">
+                <div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div>
+                <div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div>
+            </div>
+            <div style="background: var(--gray-bg); border-radius: 16px; padding: 1rem;">
+                <p><strong>📧 Email:</strong> ${currentUser?.email}</p>
+                <p><strong>📅 Vence:</strong> ${expires}</p>
+                <p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0} | <strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p>
+                <p><strong>🎁 Código de invitación:</strong> <code style="background: var(--primary); color: white; padding: 0.2rem 0.5rem; border-radius: 8px;">${referralCode}</code></p>
+            </div>
+            ${!isActive ? `<button class="btn mt-3" onclick="showSection('payment')" style="background: var(--primary);">💰 Activar Membresía</button>` : ''}`;
         }
         
         async function checkMembership(email) {
@@ -1372,7 +1608,7 @@
             if (btn && btn.dataset.section) showSection(btn.dataset.section);
         });
         
-        // Inicialización: mostrar carga
+        // Inicialización
         animateLoading();
         
         setTimeout(async () => {
@@ -1391,7 +1627,6 @@
             }
         }, 1500);
         
-        // Manejo de autenticación
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
