@@ -38,12 +38,6 @@
             min-height: 100vh;
         }
 
-        body {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
         .container {
             max-width: 1280px;
             margin: 0 auto;
@@ -690,135 +684,157 @@
         </div>
     </div>
 
-    <div class="app-container">
-        <!-- Dashboard principal -->
-        <div id="dashboardScreen" style="display: none;">
-            <div class="container">
-                <div class="card">
-                    <div class="header">
-                        <div class="logo">
-                            <h1>🌿 Florida Pro <span class="live-badge">EN VIVO</span></h1>
-                            <p>Pronósticos en tiempo real | Invita y gana días gratis</p>
-                        </div>
-                        <div style="display: flex; gap: 0.75rem; align-items: center;">
-                            <span class="florida-badge">🌴 PRO</span>
-                            <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-number" id="totalWins">0</div><div class="stat-label">🏆 Premios</div></div>
-                    <div class="stat-card"><div class="stat-number" id="winRate">0%</div><div class="stat-label">⭐ Precisión</div></div>
-                    <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
-                    <div class="stat-card"><div class="stat-number" id="referralsCount">0</div><div class="stat-label">👥 Referidos</div></div>
-                </div>
-
-                <div class="card">
-                    <div class="nav-menu">
-                        <button class="nav-btn active" data-section="predictions">🎯 Pronósticos</button>
-                        <button class="nav-btn" data-section="referrals">🎁 Referidos</button>
-                        <button class="nav-btn" data-section="history">🏆 Historial</button>
-                        <button class="nav-btn" data-section="comments">💬 Comentarios</button>
-                        <button class="nav-btn" data-section="profile">👤 Perfil</button>
-                    </div>
-                </div>
-
-                <!-- Pronósticos -->
-                <div id="predictionsSection">
-                    <div class="card" id="predictionsContent">
-                        <div class="text-center">Cargando pronósticos...</div>
-                    </div>
-                </div>
-
-                <!-- Referidos -->
-                <div id="referralsSection" style="display: none;">
-                    <div class="card referral-card">
-                        <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana Días Gratis</h2>
-                        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">
-                            Comparte tu código de invitación. Por cada 10 amigos que se registren y activen su membresía, 
-                            recibirás <strong>30 DÍAS GRATIS de pronóstico</strong> automáticamente.
-                        </p>
-                        
-                        <div class="referral-code-box">
-                            <span style="font-size: 0.7rem; color: var(--text-secondary);">TU CÓDIGO DE INVITACIÓN</span>
-                            <div>
-                                <span class="referral-code" id="userReferralCode">Cargando...</span>
-                                <button class="copy-btn" onclick="copyReferralCode()">📋 Copiar</button>
-                            </div>
-                        </div>
-
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="referralProgress" style="width: 0%"></div>
-                        </div>
-                        <div class="text-center" id="progressText" style="font-size: 0.75rem; margin-bottom: 1rem;">0/10 referidos activos</div>
-
-                        <div class="referral-stats">
-                            <div class="referral-stat">
-                                <div class="referral-stat-number" id="totalReferrals">0</div>
-                                <div class="stat-label">Total Referidos</div>
-                            </div>
-                            <div class="referral-stat">
-                                <div class="referral-stat-number" id="activeReferrals">0</div>
-                                <div class="stat-label">Activos con Membresía</div>
-                            </div>
-                            <div class="referral-stat">
-                                <div class="referral-stat-number" id="bonusDays">0</div>
-                                <div class="stat-label">Días Gratis Ganados</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
-                        <div class="table-responsive">
-                            <table id="referralsTable">
-                                <thead>
-                                    <tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Estado</th>
-                                </thead>
-                                <tbody id="referralsTableBody">
-                                    <tr><td colspan="4" class="text-center">Cargando tus referidos...<\/td><\/tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Historial -->
-                <div id="historySection" style="display: none;">
-                    <div class="card">
-                        <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
-                        <div class="table-responsive">
-                            <table id="historyTable">
-                                <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
-                                <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...<\/td><\/tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Comentarios -->
-                <div id="commentsSection" style="display: none;">
-                    <div class="card">
-                        <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">💬 Comentarios y Jugadas</h2>
-                        <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
-                        <div id="commentsList" class="comments-section"><div class="text-center">Cargando comentarios...</div></div>
-                        <div class="new-comment-form">
-                            <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📝 Publicar jugada/comentario</h3>
-                            <div class="form-row">
-                                <input type="text" id="commentNumber" placeholder="Número que jugaste (ej: 76)" maxlength="2">
-                                <input type="text" id="commentDraw" placeholder="Sorteo (mediodía/noche)" maxlength="10">
-                            </div>
-                            <textarea id="commentMessage" rows="3" placeholder="Escribe tu comentario o experiencia..."></textarea>
-                            <button class="btn btn-small" onclick="publishComment()" style="width: auto;">📢 Publicar comentario</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Perfil -->
-                <div id="profileSection" style="display: none;"><div class="card" id="profileContent"></div></div>
+    <!-- Pantalla de Login/Registro -->
+    <div id="authScreen" class="auth-container">
+        <div class="auth-card">
+            <h2>🌿 Florida Pro</h2>
+            <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos profesionales | Sistema de Referidos</p>
+            <div class="input-group">
+                <label>📧 Correo electrónico</label>
+                <input type="email" id="authEmail" placeholder="tu@email.com">
             </div>
+            <div class="input-group">
+                <label>🔐 Contraseña</label>
+                <input type="password" id="authPassword" placeholder="••••••">
+            </div>
+            <div class="input-group" id="referralCodeGroup" style="display: none;">
+                <label>🎁 Código de invitación (opcional)</label>
+                <input type="text" id="referralCodeInput" placeholder="Código de un amigo">
+            </div>
+            <button class="btn" id="authBtn" onclick="handleAuth()">Iniciar Sesión</button>
+            <div onclick="toggleAuthMode()" id="switchAuth" style="text-align: center; margin-top: 1rem; color: var(--primary); cursor: pointer; font-size: 0.8rem;">
+                ¿No tienes cuenta? Regístrate
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard principal -->
+    <div id="dashboardScreen" style="display: none;">
+        <div class="container">
+            <div class="card">
+                <div class="header">
+                    <div class="logo">
+                        <h1>🌿 Florida Pro <span class="live-badge">EN VIVO</span></h1>
+                        <p>Pronósticos en tiempo real | Invita y gana días gratis</p>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                        <span class="florida-badge">🌴 REFERIDOS</span>
+                        <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number" id="totalWins">0</div><div class="stat-label">🏆 Premios</div></div>
+                <div class="stat-card"><div class="stat-number" id="winRate">0%</div><div class="stat-label">⭐ Precisión</div></div>
+                <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
+                <div class="stat-card"><div class="stat-number" id="referralsCount">0</div><div class="stat-label">👥 Referidos</div></div>
+            </div>
+
+            <div class="card">
+                <div class="nav-menu">
+                    <button class="nav-btn active" data-section="predictions">🎯 Pronósticos</button>
+                    <button class="nav-btn" data-section="referrals">🎁 Referidos</button>
+                    <button class="nav-btn" data-section="history">🏆 Historial</button>
+                    <button class="nav-btn" data-section="comments">💬 Comentarios</button>
+                    <button class="nav-btn" data-section="profile">👤 Perfil</button>
+                </div>
+            </div>
+
+            <!-- Pronósticos -->
+            <div id="predictionsSection">
+                <div class="card" id="predictionsContent">
+                    <div class="text-center">Cargando pronósticos...</div>
+                </div>
+            </div>
+
+            <!-- Referidos -->
+            <div id="referralsSection" style="display: none;">
+                <div class="card referral-card">
+                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana Días Gratis</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">
+                        Comparte tu código de invitación. Por cada 10 amigos que se registren y activen su membresía, 
+                        recibirás <strong>30 DÍAS GRATIS de pronóstico</strong> automáticamente.
+                    </p>
+                    
+                    <div class="referral-code-box">
+                        <span style="font-size: 0.7rem; color: var(--text-secondary);">TU CÓDIGO DE INVITACIÓN</span>
+                        <div>
+                            <span class="referral-code" id="userReferralCode">Cargando...</span>
+                            <button class="copy-btn" onclick="copyReferralCode()">📋 Copiar</button>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="referralProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="text-center" id="progressText" style="font-size: 0.75rem; margin-bottom: 1rem;">0/10 referidos activos</div>
+
+                    <div class="referral-stats">
+                        <div class="referral-stat">
+                            <div class="referral-stat-number" id="totalReferrals">0</div>
+                            <div class="stat-label">Total Referidos</div>
+                        </div>
+                        <div class="referral-stat">
+                            <div class="referral-stat-number" id="activeReferrals">0</div>
+                            <div class="stat-label">Activos con Membresía</div>
+                        </div>
+                        <div class="referral-stat">
+                            <div class="referral-stat-number" id="bonusDays">0</div>
+                            <div class="stat-label">Días Gratis Ganados</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
+                    <div class="table-responsive">
+                        <table id="referralsTable">
+                            <thead>
+                                <tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Estado</th>
+                            </thead>
+                            <tbody id="referralsTableBody">
+                                <tr><td colspan="4" class="text-center">Cargando tus referidos...<\/td><\/tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historial -->
+            <div id="historySection" style="display: none;">
+                <div class="card">
+                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
+                    <div class="table-responsive">
+                        <table id="historyTable">
+                            <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
+                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...<\/td><\/tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comentarios -->
+            <div id="commentsSection" style="display: none;">
+                <div class="card">
+                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">💬 Comentarios y Jugadas</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
+                    <div id="commentsList" class="comments-section"><div class="text-center">Cargando comentarios...</div></div>
+                    <div class="new-comment-form">
+                        <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📝 Publicar jugada/comentario</h3>
+                        <div class="form-row">
+                            <input type="text" id="commentNumber" placeholder="Número que jugaste (ej: 76)" maxlength="2">
+                            <input type="text" id="commentDraw" placeholder="Sorteo (mediodía/noche)" maxlength="10">
+                        </div>
+                        <textarea id="commentMessage" rows="3" placeholder="Escribe tu comentario o experiencia..."></textarea>
+                        <button class="btn btn-small" onclick="publishComment()" style="width: auto;">📢 Publicar comentario</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Perfil -->
+            <div id="profileSection" style="display: none;"><div class="card" id="profileContent"></div></div>
         </div>
     </div>
 
@@ -850,6 +866,7 @@
         
         let currentUser = null;
         let userMembership = null;
+        let authMode = 'login';
         let unsubscribePredictions = null;
         let unsubscribeProbabilities = null;
         let unsubscribeResults = null;
@@ -899,6 +916,22 @@
         }
         
         function closeDialog() { document.getElementById('dialogModal').style.display = 'none'; }
+        
+        function toggleAuthMode() {
+            if (authMode === 'login') {
+                authMode = 'register';
+                document.querySelector('.auth-card h2').innerText = 'Crear Cuenta';
+                document.getElementById('authBtn').innerHTML = 'Registrarse';
+                document.getElementById('switchAuth').innerHTML = '¿Ya tienes cuenta? Inicia sesión';
+                document.getElementById('referralCodeGroup').style.display = 'block';
+            } else {
+                authMode = 'login';
+                document.querySelector('.auth-card h2').innerText = '🌿 Florida Pro';
+                document.getElementById('authBtn').innerHTML = 'Iniciar Sesión';
+                document.getElementById('switchAuth').innerHTML = '¿No tienes cuenta? Regístrate';
+                document.getElementById('referralCodeGroup').style.display = 'none';
+            }
+        }
         
         function generateReferralCode(email) {
             const prefix = email.split('@')[0].substring(0, 6).toUpperCase();
@@ -1030,12 +1063,61 @@
             }
         }
         
+        async function handleAuth() {
+            const email = document.getElementById('authEmail').value.trim();
+            const password = document.getElementById('authPassword').value;
+            const referralCode = document.getElementById('referralCodeInput').value.trim();
+            if (!email || !password) { showDialog('Error', 'Completa todos los campos'); return; }
+            try {
+                if (authMode === 'login') {
+                    await auth.signInWithEmailAndPassword(email, password);
+                } else {
+                    const userCred = await auth.createUserWithEmailAndPassword(email, password);
+                    const newReferralCode = generateReferralCode(email);
+                    const referrer = await processReferral(email, referralCode);
+                    await db.collection('members').doc(email).set({
+                        email: email, membershipActive: false, createdAt: new Date().toISOString(),
+                        userId: userCred.user.uid, wins: 0, losses: 0,
+                        referralCode: newReferralCode, referredBy: referrer || null, referralBonusDays: 0
+                    });
+                    let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Florida Pro!\n\n';
+                    message += `📋 Tu código de invitación: ${newReferralCode}\n`;
+                    message += '¡Invita amigos y gana días gratis! Cada 10 referidos activos = 30 días de membresía gratis.\n\n';
+                    if (referrer) message += `🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él ganará puntos para su recompensa.`;
+                    showDialog('✅ Registro Exitoso', message);
+                    document.getElementById('authPassword').value = '';
+                    document.getElementById('referralCodeInput').value = '';
+                    await auth.signOut();
+                    await auth.signInWithEmailAndPassword(email, password);
+                }
+            } catch (error) {
+                let msg = error.message;
+                if (error.code === 'auth/email-already-in-use') msg = 'Email ya registrado';
+                if (error.code === 'auth/weak-password') msg = 'Contraseña débil (mínimo 6 caracteres)';
+                if (error.code === 'auth/invalid-email') msg = 'Email inválido';
+                if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta';
+                if (error.code === 'auth/user-not-found') msg = 'Usuario no encontrado';
+                showDialog('Error', msg);
+            }
+        }
+        
         function logout() { 
             if (unsubscribePredictions) unsubscribePredictions();
             if (unsubscribeProbabilities) unsubscribeProbabilities();
             if (unsubscribeResults) unsubscribeResults();
-            auth.signOut(); 
-            location.reload(); 
+            auth.signOut();
+            // Mostrar pantalla de login nuevamente
+            document.getElementById('dashboardScreen').style.display = 'none';
+            document.getElementById('authScreen').style.display = 'flex';
+            // Resetear modo a login
+            authMode = 'login';
+            document.querySelector('.auth-card h2').innerText = '🌿 Florida Pro';
+            document.getElementById('authBtn').innerHTML = 'Iniciar Sesión';
+            document.getElementById('switchAuth').innerHTML = '¿No tienes cuenta? Regístrate';
+            document.getElementById('referralCodeGroup').style.display = 'none';
+            document.getElementById('authEmail').value = '';
+            document.getElementById('authPassword').value = '';
+            document.getElementById('referralCodeInput').value = '';
         }
         
         function showSection(section) {
@@ -1115,6 +1197,7 @@
             
             const grid = document.getElementById('numbersGrid');
             if (grid) {
+                grid.innerHTML = '';
                 numbers.forEach(num => {
                     let className = 'number-card';
                     if (strongNumbers && strongNumbers.includes(num)) className += ' strong';
@@ -1280,17 +1363,6 @@
                     else document.getElementById('daysLeft').innerText = 0;
                 } else {
                     userMembership = { membershipActive: false, wins: 0, losses: 0 };
-                    await db.collection('members').doc(email).set({
-                        email: email,
-                        membershipActive: false,
-                        createdAt: new Date().toISOString(),
-                        userId: currentUser.uid,
-                        wins: 0,
-                        losses: 0,
-                        referralCode: generateReferralCode(email),
-                        referredBy: null,
-                        referralBonusDays: 0
-                    });
                 }
             } catch(e) { console.error(e); }
         }
@@ -1300,10 +1372,9 @@
             if (btn && btn.dataset.section) showSection(btn.dataset.section);
         });
         
-        // Inicialización: mostrar carga y luego conectar
+        // Inicialización: mostrar carga
         animateLoading();
         
-        // Intentar conexión automática sin pantalla de registro
         setTimeout(async () => {
             const isConnected = await checkConnection();
             if (isConnected) {
@@ -1320,11 +1391,12 @@
             }
         }, 1500);
         
-        // Simular login automático anónimo para acceso directo
+        // Manejo de autenticación
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
                 await checkMembership(user.email);
+                document.getElementById('authScreen').style.display = 'none';
                 document.getElementById('dashboardScreen').style.display = 'block';
                 setupRealtimeListeners();
                 loadHistory();
@@ -1333,22 +1405,12 @@
                 updateReferralsUI();
                 showSection('predictions');
             } else {
-                // Login anónimo automático
-                try {
-                    const userCred = await auth.signInAnonymously();
-                    currentUser = userCred.user;
-                    await checkMembership(currentUser.email);
-                    document.getElementById('dashboardScreen').style.display = 'block';
-                    setupRealtimeListeners();
-                    loadHistory();
-                    loadComments();
-                    loadProfile();
-                    updateReferralsUI();
-                    showSection('predictions');
-                } catch (error) {
-                    console.error('Error en login anónimo:', error);
-                    showDialog('Error', 'No se pudo iniciar sesión automáticamente');
-                }
+                if (unsubscribePredictions) unsubscribePredictions();
+                if (unsubscribeProbabilities) unsubscribeProbabilities();
+                if (unsubscribeResults) unsubscribeResults();
+                document.getElementById('dashboardScreen').style.display = 'none';
+                document.getElementById('authScreen').style.display = 'flex';
+                currentUser = null;
             }
         });
     </script>
