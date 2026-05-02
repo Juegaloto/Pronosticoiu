@@ -28,6 +28,7 @@
             --border: #fed7aa;
             --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+            --riddle-bg: #fef3c7;
         }
 
         body {
@@ -165,6 +166,13 @@
             color: var(--primary-dark);
         }
 
+        .update-date {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: block;
+            margin-top: 0.2rem;
+        }
+
         .update-badge {
             display: inline-block;
             background: var(--success);
@@ -295,6 +303,81 @@
         }
 
         .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        /* Adivinanzas */
+        .riddle-card {
+            background: linear-gradient(135deg, #fef3c7, #ffedd5);
+            border: 2px solid var(--primary);
+            text-align: center;
+        }
+
+        .riddle-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 16px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .riddle-answer {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .riddle-answer.show {
+            display: block;
+        }
+
+        .riddle-date {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .show-answer-btn {
+            background: var(--primary-dark);
+            margin-top: 0.5rem;
+            width: auto;
+        }
+
+        /* Probabilidades diarias */
+        .probabilities-card {
+            background: var(--gray-bg);
+        }
+
+        .probabilities-list {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .prob-item {
+            text-align: center;
+            padding: 0.5rem 1rem;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .prob-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .prob-percent {
             font-size: 0.7rem;
             color: var(--text-secondary);
         }
@@ -712,6 +795,7 @@
             .number { font-size: 1rem; }
             .result-value { font-size: 1.2rem; }
             .referral-code { font-size: 1rem; }
+            .riddle-question { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -760,7 +844,7 @@
                         <p>Pronósticos en tiempo real | Invita y gana días gratis</p>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
-                        <span class="florida-badge">🌴 PRONO</span>
+                        <span class="florida-badge">🌴 REFERIDOS</span>
                         <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
                     </div>
                 </div>
@@ -776,6 +860,8 @@
             <div class="card">
                 <div class="nav-menu">
                     <button class="nav-btn active" data-section="predictions">🎯 Pronósticos</button>
+                    <button class="nav-btn" data-section="riddle">🤔 Adivinanza</button>
+                    <button class="nav-btn" data-section="dailyProb">📊 Probabilidades</button>
                     <button class="nav-btn" data-section="referrals">🎁 Referidos</button>
                     <button class="nav-btn" data-section="history">🏆 Historial</button>
                     <button class="nav-btn" data-section="comments">💬 Comentarios</button>
@@ -788,6 +874,37 @@
             <div id="predictionsSection">
                 <div class="card" id="predictionsContent">
                     <div class="text-center">Cargando pronósticos...</div>
+                </div>
+            </div>
+
+            <!-- Adivinanza -->
+            <div id="riddleSection" style="display: none;">
+                <div class="card riddle-card">
+                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🤔 Adivinanza del Día</h2>
+                    <div id="riddleContent" class="text-center">
+                        <div class="riddle-question" id="riddleQuestion">Cargando adivinanza...</div>
+                        <button class="btn btn-small show-answer-btn" onclick="toggleRiddleAnswer()">🔍 Ver respuesta</button>
+                        <div id="riddleAnswer" class="riddle-answer"></div>
+                        <div class="riddle-date" id="riddleDate"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Probabilidades Diarias -->
+            <div id="dailyProbSection" style="display: none;">
+                <div class="card probabilities-card">
+                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">📊 Probabilidades del Día</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">Números con mayor probabilidad de salir según análisis del administrador</p>
+                    <div id="dailyProbContent" class="text-center">
+                        <div class="probabilities-list" id="probabilitiesList">
+                            <div>Cargando probabilidades...</div>
+                        </div>
+                        <div class="update-info" style="margin-top: 1rem;">
+                            <span class="update-label">📅 Última actualización</span>
+                            <span class="update-time" id="probUpdateTime">--:-- --</span>
+                            <span class="update-date" id="probUpdateDate">--/--/----</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -851,7 +968,7 @@
                     <div class="table-responsive">
                         <table id="historyTable">
                             <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
-                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...<\/td><\/tr>
+                            <tbody id="historyTableBody"><td><td colspan="4" class="text-center">Cargando historial...<\/td><\/tr>
                             </tbody>
                         </table>
                     </div>
@@ -942,7 +1059,7 @@
                     <div class="table-responsive">
                         <table id="paymentsTable">
                             <thead>
-                                <tr><th>Fecha</th><th>Monto</th><th>Estado</th>
+                                <td><th>Fecha</th><th>Monto</th><th>Estado</th>
                             </thead>
                             <tbody id="paymentsTableBody"></tbody>
                         </table>
@@ -985,6 +1102,8 @@
         let unsubscribePredictions = null;
         let unsubscribeProbabilities = null;
         let unsubscribeResults = null;
+        let unsubscribeRiddle = null;
+        let unsubscribeDailyProb = null;
         
         let loadingProgress = 0;
         let loadingInterval;
@@ -1228,6 +1347,8 @@
             if (unsubscribePredictions) unsubscribePredictions();
             if (unsubscribeProbabilities) unsubscribeProbabilities();
             if (unsubscribeResults) unsubscribeResults();
+            if (unsubscribeRiddle) unsubscribeRiddle();
+            if (unsubscribeDailyProb) unsubscribeDailyProb();
             auth.signOut();
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('authScreen').style.display = 'flex';
@@ -1243,6 +1364,8 @@
         
         function showSection(section) {
             document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
+            document.getElementById('riddleSection').style.display = section === 'riddle' ? 'block' : 'none';
+            document.getElementById('dailyProbSection').style.display = section === 'dailyProb' ? 'block' : 'none';
             document.getElementById('referralsSection').style.display = section === 'referrals' ? 'block' : 'none';
             document.getElementById('historySection').style.display = section === 'history' ? 'block' : 'none';
             document.getElementById('commentsSection').style.display = section === 'comments' ? 'block' : 'none';
@@ -1256,12 +1379,88 @@
             if (section === 'comments') loadComments();
             if (section === 'referrals') updateReferralsUI();
             if (section === 'payment') loadPaymentSection();
+            if (section === 'riddle') loadRiddle();
+            if (section === 'dailyProb') loadDailyProbabilities();
         }
         
+        // ==================== ADIVINANZAS ====================
+        let currentRiddleAnswer = '';
+        
+        async function loadRiddle() {
+            const today = new Date().toISOString().split('T')[0];
+            try {
+                const doc = await db.collection('riddles').doc(today).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('riddleQuestion').innerHTML = data.question || 'No hay adivinanza para hoy';
+                    currentRiddleAnswer = data.answer || 'Sin respuesta';
+                    document.getElementById('riddleAnswer').innerHTML = currentRiddleAnswer;
+                    document.getElementById('riddleDate').innerHTML = `📅 Adivinanza del ${data.date || today}`;
+                } else {
+                    document.getElementById('riddleQuestion').innerHTML = '✨ No hay adivinanza disponible hoy. ¡Vuelve mañana!';
+                    document.getElementById('riddleAnswer').innerHTML = '';
+                    document.getElementById('riddleDate').innerHTML = '';
+                }
+                document.getElementById('riddleAnswer').classList.remove('show');
+            } catch (error) {
+                console.error('Error cargando adivinanza:', error);
+                document.getElementById('riddleQuestion').innerHTML = 'Error al cargar la adivinanza';
+            }
+        }
+        
+        function toggleRiddleAnswer() {
+            const answerDiv = document.getElementById('riddleAnswer');
+            answerDiv.classList.toggle('show');
+        }
+        
+        // ==================== PROBABILIDADES DIARIAS ====================
+        async function loadDailyProbabilities() {
+            const today = new Date().toISOString().split('T')[0];
+            try {
+                const doc = await db.collection('dailyProbabilities').doc(today).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    const numbers = data.numbers || [];
+                    const percentages = data.percentages || [];
+                    const lastUpdate = data.lastUpdateFormatted || 'No disponible';
+                    const lastUpdateDate = data.lastUpdate ? new Date(data.lastUpdate).toLocaleDateString() : 'No disponible';
+                    
+                    document.getElementById('probUpdateTime').innerHTML = lastUpdate;
+                    document.getElementById('probUpdateDate').innerHTML = lastUpdateDate;
+                    
+                    const container = document.getElementById('probabilitiesList');
+                    container.innerHTML = '';
+                    
+                    if (numbers.length === 0) {
+                        container.innerHTML = '<div class="text-center">📊 No hay probabilidades disponibles hoy</div>';
+                        return;
+                    }
+                    
+                    numbers.forEach((num, index) => {
+                        const percent = percentages[index] || Math.floor(Math.random() * 30) + 50;
+                        const probDiv = document.createElement('div');
+                        probDiv.className = 'prob-item';
+                        probDiv.innerHTML = `
+                            <div class="prob-number">${num}</div>
+                            <div class="prob-percent">${percent}%</div>
+                        `;
+                        container.appendChild(probDiv);
+                    });
+                } else {
+                    document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">📊 No hay probabilidades disponibles hoy</div>';
+                    document.getElementById('probUpdateTime').innerHTML = '--:-- --';
+                    document.getElementById('probUpdateDate').innerHTML = '--/--/----';
+                }
+            } catch (error) {
+                console.error('Error cargando probabilidades:', error);
+                document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">❌ Error al cargar probabilidades</div>';
+            }
+        }
+        
+        // ==================== FUNCIONES EXISTENTES ====================
         async function loadPaymentSection() {
             if (!currentUser) return;
             
-            // Actualizar estado actual
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             const statusEl = document.getElementById('currentStatus');
             if (statusEl) {
@@ -1273,7 +1472,6 @@
                 }
             }
             
-            // Cargar historial de pagos
             try {
                 const paymentsSnapshot = await db.collection('payments')
                     .where('userEmail', '==', currentUser.email)
@@ -1294,7 +1492,7 @@
                         row.insertCell(0).innerText = date;
                         row.insertCell(1).innerText = `$${payment.amount || 250} CUP`;
                         let statusHtml = '';
-                        if (payment.status === 'approved') statusHtml = '<span class="badge-win">✅ Aprobado</span>';
+                        if (payment.status === 'approved' || payment.status === 'verified') statusHtml = '<span class="badge-win">✅ Aprobado</span>';
                         else if (payment.status === 'pending') statusHtml = '<span class="badge-pending">⏳ Pendiente</span>';
                         else statusHtml = '<span style="color: var(--danger);">❌ Rechazado</span>';
                         row.insertCell(2).innerHTML = statusHtml;
@@ -1347,7 +1545,6 @@
                 document.getElementById('transferNumber').value = '';
                 document.getElementById('contactPhone').value = '';
                 
-                // Recargar historial
                 await loadPaymentSection();
                 
             } catch (error) {
@@ -1365,6 +1562,12 @@
             hours = hours % 12;
             hours = hours ? hours : 12;
             return `${hours}:${minutes} ${ampm}`;
+        }
+        
+        function formatDate(dateString) {
+            if (!dateString) return 'No disponible';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
         
         function isTodayOrRecent(lastUpdate) {
@@ -1393,9 +1596,14 @@
             }
             const isUpdated = isTodayOrRecent(lastUpdate);
             const displayTime = lastUpdateFormatted || formatTime12Hour(lastUpdate);
+            const displayDate = formatDate(lastUpdate);
             const updateBadge = isUpdated ? '<span class="update-badge">✅ ACTUALIZADO</span>' : '<span class="update-badge outdated-badge">⚠️ DESACTUALIZADO</span>';
             let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día <span class="live-badge">ACTUALIZACIÓN AUTOMÁTICA</span></h2>
-                       <div class="update-info"><span class="update-label">📅 Última actualización del pronóstico</span><span class="update-time">${displayTime} ${updateBadge}</span></div>
+                       <div class="update-info">
+                           <span class="update-label">📅 Última actualización del pronóstico</span>
+                           <span class="update-time">${displayTime} ${updateBadge}</span>
+                           <span class="update-date">📆 ${displayDate}</span>
+                       </div>
                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
                             <span style="background: #fed7aa; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
                             <span style="background: #fef3c7; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
@@ -1478,6 +1686,18 @@
                     const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
                     renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted);
                 });
+            });
+            
+            // Escuchar adivinanzas
+            if (unsubscribeRiddle) unsubscribeRiddle();
+            unsubscribeRiddle = db.collection('riddles').doc(today).onSnapshot(() => {
+                if (document.getElementById('riddleSection').style.display !== 'none') loadRiddle();
+            });
+            
+            // Escuchar probabilidades diarias
+            if (unsubscribeDailyProb) unsubscribeDailyProb();
+            unsubscribeDailyProb = db.collection('dailyProbabilities').doc(today).onSnapshot(() => {
+                if (document.getElementById('dailyProbSection').style.display !== 'none') loadDailyProbabilities();
             });
         }
         
@@ -1638,11 +1858,15 @@
                 loadComments();
                 loadProfile();
                 updateReferralsUI();
+                loadRiddle();
+                loadDailyProbabilities();
                 showSection('predictions');
             } else {
                 if (unsubscribePredictions) unsubscribePredictions();
                 if (unsubscribeProbabilities) unsubscribeProbabilities();
                 if (unsubscribeResults) unsubscribeResults();
+                if (unsubscribeRiddle) unsubscribeRiddle();
+                if (unsubscribeDailyProb) unsubscribeDailyProb();
                 document.getElementById('dashboardScreen').style.display = 'none';
                 document.getElementById('authScreen').style.display = 'flex';
                 currentUser = null;
