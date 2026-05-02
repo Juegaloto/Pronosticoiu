@@ -13,26 +13,26 @@
         }
 
         :root {
-            --primary: #006d77;
-            --primary-dark: #004e5c;
-            --primary-light: #2a9d8f;
+            --primary: #f59e0b;
+            --primary-dark: #ea580c;
+            --primary-light: #fbbf24;
             --secondary: #e9c46a;
-            --accent: #f4a261;
-            --danger: #e76f51;
-            --danger-dark: #c14c33;
-            --success: #2a9d8f;
+            --accent: #f97316;
+            --danger: #ef4444;
+            --danger-dark: #dc2626;
+            --success: #10b981;
             --white: #ffffff;
-            --gray-bg: #e8f5e9;
-            --text-primary: #1b4332;
-            --text-secondary: #2d6a4f;
-            --border: #cfe3d0;
+            --gray-bg: #fff7ed;
+            --text-primary: #431407;
+            --text-secondary: #9a3412;
+            --border: #fed7aa;
             --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #d8f3dc;
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
             color: var(--text-primary);
             line-height: 1.5;
             min-height: 100vh;
@@ -107,7 +107,7 @@
         }
 
         .logo h1 {
-            color: var(--primary);
+            color: var(--primary-dark);
             font-size: 1.5rem;
             font-weight: 700;
         }
@@ -151,7 +151,7 @@
         }
 
         .update-info {
-            background: #d8f3dc;
+            background: #fff7ed;
             padding: 0.75rem;
             border-radius: 16px;
             margin-bottom: 1rem;
@@ -168,7 +168,7 @@
         .update-time {
             font-size: 0.9rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--primary-dark);
         }
 
         .update-badge {
@@ -202,18 +202,18 @@
         }
 
         .number-card.strong {
-            background: #d8f3dc;
+            background: #fed7aa;
             border-left: 4px solid var(--primary);
         }
 
         .number-card.medium {
-            background: #fff3e0;
+            background: #fef3c7;
             border-left: 4px solid var(--secondary);
         }
 
         .number-card.winner {
             border: 2px solid var(--secondary);
-            background: #fff3e0;
+            background: #fef3c7;
             animation: pulse 1s infinite;
         }
 
@@ -225,7 +225,7 @@
         .number {
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--primary-dark);
         }
 
         .probability {
@@ -243,17 +243,17 @@
         }
 
         .result-winner {
-            background: #d8f3dc;
+            background: #fef3c7;
             border: 1px solid var(--primary);
         }
 
         .result-waiting {
-            background: #fff3e0;
+            background: #fff7ed;
             border: 2px dashed var(--secondary);
         }
 
         .result-fallo {
-            background: #ffe0e0;
+            background: #fee2e2;
             border: 1px solid var(--danger);
         }
 
@@ -297,7 +297,7 @@
         .stat-number {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--primary-dark);
         }
 
         .stat-label {
@@ -305,9 +305,69 @@
             color: var(--text-secondary);
         }
 
+        /* Pantalla de carga */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            z-index: 20000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading-subtext {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .loading-progress {
+            width: 200px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .loading-progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
         /* Referidos */
         .referral-card {
-            background: linear-gradient(135deg, #d8f3dc, #c8e6d9);
+            background: linear-gradient(135deg, #fff7ed, #ffedd5);
             border: 2px solid var(--primary);
         }
 
@@ -322,7 +382,7 @@
         .referral-code {
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--primary-dark);
             letter-spacing: 2px;
             font-family: monospace;
         }
@@ -373,7 +433,7 @@
         .referral-stat-number {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--primary-dark);
         }
 
         .referral-link-btn {
@@ -423,7 +483,7 @@
 
         .comment-user {
             font-weight: 700;
-            color: var(--primary);
+            color: var(--primary-dark);
             font-size: 0.85rem;
         }
 
@@ -485,58 +545,6 @@
             flex: 1;
         }
 
-        /* Alerta VPN */
-        .vpn-alert {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .vpn-alert-content {
-            background: var(--danger);
-            color: white;
-            padding: 2rem;
-            border-radius: 32px;
-            max-width: 500px;
-            animation: pulse 1s infinite;
-        }
-
-        .vpn-alert-content h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .vpn-alert-content p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .vpn-alert-content .vpn-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .vpn-alert-content .retry-btn {
-            background: white;
-            color: var(--danger);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 40px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
         .table-responsive {
             overflow-x: auto;
         }
@@ -554,7 +562,7 @@
         }
 
         th {
-            color: var(--primary);
+            color: var(--primary-dark);
             font-weight: 600;
         }
 
@@ -565,50 +573,6 @@
             border-radius: 20px;
             font-size: 0.7rem;
             display: inline-block;
-        }
-
-        .auth-container {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #d8f3dc;
-            padding: 1rem;
-        }
-
-        .auth-card {
-            background: white;
-            border-radius: 28px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: var(--shadow-hover);
-        }
-
-        .auth-card h2 {
-            color: var(--primary);
-            text-align: center;
-            font-size: 1.75rem;
-        }
-
-        .input-group {
-            margin-bottom: 1rem;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 0.25rem;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--gray-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            font-size: 0.9rem;
         }
 
         .modal-overlay {
@@ -645,7 +609,7 @@
         .payment-number {
             font-size: 0.9rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--primary-dark);
         }
 
         .text-center { text-align: center; }
@@ -661,56 +625,73 @@
             animation: pulse 1s infinite;
         }
 
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            padding: 1rem;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .auth-card h2 {
+            color: var(--primary-dark);
+            text-align: center;
+            font-size: 1.75rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--gray-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 640px) {
             .container { padding: 1rem; }
             .card { padding: 1rem; }
             .numbers-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 0.5rem; }
             .number { font-size: 1rem; }
             .result-value { font-size: 1.2rem; }
-            .vpn-alert-content h2 { font-size: 1.5rem; }
-            .vpn-alert-content p { font-size: 0.9rem; }
             .referral-code { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
+    <!-- Pantalla de carga -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">🌿 Florida Pro</div>
+        <div class="loading-subtext">Conectando con el servidor...</div>
+        <div class="loading-progress">
+            <div id="loadingProgressBar" class="loading-progress-bar"></div>
+        </div>
+    </div>
+
     <div class="app-container">
-        <!-- Alerta VPN -->
-        <div id="vpnAlert" class="vpn-alert" style="display: none;">
-            <div class="vpn-alert-content">
-                <div class="vpn-icon">🌐🔒</div>
-                <h2>⚠️ CONEXIÓN BLOQUEADA</h2>
-                <p>Para acceder a Florida Pro desde Cuba, necesitas usar una <strong>VPN</strong> o <strong>Proxy</strong>.</p>
-                <p>Recomendaciones:<br>• TunnelBear<br>• ProtonVPN (gratis)<br>• Psiphon<br>• ExpressVPN</p>
-                <button class="retry-btn" onclick="checkConnectionAndRetry()">🔄 Reintentar conexión</button>
-            </div>
-        </div>
-
-        <!-- Login -->
-        <div id="authScreen" class="auth-container">
-            <div class="auth-card">
-                <h2>🌿 Florida Pro</h2>
-                <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos profesionales | Sistema de Referidos</p>
-                <div class="input-group">
-                    <label>📧 Correo electrónico</label>
-                    <input type="email" id="authEmail" placeholder="tu@email.com">
-                </div>
-                <div class="input-group">
-                    <label>🔐 Contraseña</label>
-                    <input type="password" id="authPassword" placeholder="••••••">
-                </div>
-                <div class="input-group" id="referralCodeGroup" style="display: none;">
-                    <label>🎁 Código de invitación (opcional)</label>
-                    <input type="text" id="referralCodeInput" placeholder="Código de un amigo">
-                </div>
-                <button class="btn" id="authBtn" onclick="handleAuth()">Iniciar Sesión</button>
-                <div onclick="toggleAuthMode()" id="switchAuth" style="text-align: center; margin-top: 1rem; color: var(--primary); cursor: pointer; font-size: 0.8rem;">
-                    ¿No tienes cuenta? Regístrate
-                </div>
-            </div>
-        </div>
-
-        <!-- Dashboard -->
+        <!-- Dashboard principal -->
         <div id="dashboardScreen" style="display: none;">
             <div class="container">
                 <div class="card">
@@ -720,7 +701,7 @@
                             <p>Pronósticos en tiempo real | Invita y gana días gratis</p>
                         </div>
                         <div style="display: flex; gap: 0.75rem; align-items: center;">
-                            <span class="florida-badge">🌴 REFERIDOS</span>
+                            <span class="florida-badge">🌴 PRO</span>
                             <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
                         </div>
                     </div>
@@ -740,7 +721,6 @@
                         <button class="nav-btn" data-section="history">🏆 Historial</button>
                         <button class="nav-btn" data-section="comments">💬 Comentarios</button>
                         <button class="nav-btn" data-section="profile">👤 Perfil</button>
-                        <button class="nav-btn" data-section="payment">💰 Membresía</button>
                     </div>
                 </div>
 
@@ -754,7 +734,7 @@
                 <!-- Referidos -->
                 <div id="referralsSection" style="display: none;">
                     <div class="card referral-card">
-                        <h2 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana Días Gratis</h2>
+                        <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana Días Gratis</h2>
                         <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">
                             Comparte tu código de invitación. Por cada 10 amigos que se registren y activen su membresía, 
                             recibirás <strong>30 DÍAS GRATIS de pronóstico</strong> automáticamente.
@@ -787,13 +767,6 @@
                                 <div class="stat-label">Días Gratis Ganados</div>
                             </div>
                         </div>
-
-                        <div style="text-align: center; margin-top: 1rem;">
-                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">📱 Comparte tu enlace de invitación</p>
-                            <button id="telegramInviteBtn" class="referral-link-btn">
-                                💬 Invitar por Telegram
-                            </button>
-                        </div>
                     </div>
 
                     <div class="card">
@@ -814,7 +787,7 @@
                 <!-- Historial -->
                 <div id="historySection" style="display: none;">
                     <div class="card">
-                        <h2 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
+                        <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
                         <div class="table-responsive">
                             <table id="historyTable">
                                 <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
@@ -828,7 +801,7 @@
                 <!-- Comentarios -->
                 <div id="commentsSection" style="display: none;">
                     <div class="card">
-                        <h2 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem;">💬 Comentarios y Jugadas</h2>
+                        <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">💬 Comentarios y Jugadas</h2>
                         <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
                         <div id="commentsList" class="comments-section"><div class="text-center">Cargando comentarios...</div></div>
                         <div class="new-comment-form">
@@ -845,28 +818,6 @@
 
                 <!-- Perfil -->
                 <div id="profileSection" style="display: none;"><div class="card" id="profileContent"></div></div>
-
-                <!-- Pago -->
-                <div id="paymentSection" style="display: none;">
-                    <div class="card">
-                        <h2 style="color: var(--primary); font-size: 1.2rem;">💰 Membresía Premium</h2>
-                        <div class="stats-grid">
-                            <div class="stat-card"><div class="stat-number">$250</div><div class="stat-label">CUP/ Mes</div></div>
-                            <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Activación</div></div>
-                        </div>
-                        <div class="payment-info">
-                            <div style="font-size: 0.7rem;">💳 Número de tarjeta</div>
-                            <div class="payment-number">9227 0699 9771 1927</div>
-                            <div style="font-size: 0.65rem;">Beneficiario: Florida Pro Services</div>
-                        </div>
-                        <div class="input-group">
-                            <label>📝 Número de transferencia</label>
-                            <input type="text" id="transferNumber" placeholder="Ej: REF-123456789">
-                        </div>
-                        <button class="btn" onclick="submitPayment()">Enviar comprobante</button>
-                        <p class="text-center mt-3" style="font-size: 0.65rem;">⏱️ Activación en menos de 24h</p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -899,36 +850,37 @@
         
         let currentUser = null;
         let userMembership = null;
-        let authMode = 'login';
         let unsubscribePredictions = null;
         let unsubscribeProbabilities = null;
         let unsubscribeResults = null;
         
-        const TELEGRAM_BOT = "pronostico1_bot";
+        let loadingProgress = 0;
+        let loadingInterval;
         
-        // Función corregida para invitar por Telegram
-        function shareTelegramInvite(referralCode) {
-            if (!referralCode || referralCode === 'Cargando...') {
-                showDialog('⚠️ Código no disponible', 'Espera a que cargue tu código de invitación e intenta nuevamente.');
-                return;
-            }
-            // Formato correcto para link de invitación de bot de Telegram
-            const inviteLink = `https://t.me/${TELEGRAM_BOT}?start=${referralCode}`;
-            window.open(inviteLink, '_blank');
+        function updateLoadingProgress(progress) {
+            loadingProgress = Math.min(progress, 95);
+            const bar = document.getElementById('loadingProgressBar');
+            if (bar) bar.style.width = loadingProgress + '%';
         }
-
-        // Función global para el botón de Telegram
-        function setupTelegramButton() {
-            const btn = document.getElementById('telegramInviteBtn');
-            if (btn) {
-                btn.removeEventListener('click', window.telegramClickHandler);
-                window.telegramClickHandler = () => {
-                    const codeElement = document.getElementById('userReferralCode');
-                    const code = codeElement ? codeElement.innerText : null;
-                    shareTelegramInvite(code);
-                };
-                btn.addEventListener('click', window.telegramClickHandler);
+        
+        function hideLoadingScreen() {
+            clearInterval(loadingInterval);
+            const loadingScreen = document.getElementById('loadingScreen');
+            if (loadingScreen) {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
             }
+        }
+        
+        function animateLoading() {
+            loadingInterval = setInterval(() => {
+                if (loadingProgress < 90) {
+                    loadingProgress += Math.random() * 5;
+                    updateLoadingProgress(loadingProgress);
+                }
+            }, 300);
         }
         
         async function checkConnection() {
@@ -940,24 +892,6 @@
             }
         }
         
-        async function checkConnectionAndRetry() {
-            const isConnected = await checkConnection();
-            if (isConnected) {
-                document.getElementById('vpnAlert').style.display = 'none';
-                showDialog('✅ Conexión restablecida', 'Ya puedes usar Florida Pro normalmente');
-                if (currentUser) setupRealtimeListeners();
-            } else {
-                document.getElementById('vpnAlert').style.display = 'flex';
-            }
-        }
-        
-        function startConnectionMonitoring() {
-            setInterval(async () => {
-                const isConnected = await checkConnection();
-                if (!isConnected) document.getElementById('vpnAlert').style.display = 'flex';
-            }, 30000);
-        }
-        
         function showDialog(title, message) {
             document.getElementById('dialogTitle').innerText = title;
             document.getElementById('dialogMessage').innerHTML = message;
@@ -965,22 +899,6 @@
         }
         
         function closeDialog() { document.getElementById('dialogModal').style.display = 'none'; }
-        
-        function toggleAuthMode() {
-            if (authMode === 'login') {
-                authMode = 'register';
-                document.querySelector('.auth-card h2').innerText = 'Crear Cuenta';
-                document.getElementById('authBtn').innerHTML = 'Registrarse';
-                document.getElementById('switchAuth').innerHTML = '¿Ya tienes cuenta? Inicia sesión';
-                document.getElementById('referralCodeGroup').style.display = 'block';
-            } else {
-                authMode = 'login';
-                document.querySelector('.auth-card h2').innerText = '🌿 Florida Pro';
-                document.getElementById('authBtn').innerHTML = 'Iniciar Sesión';
-                document.getElementById('switchAuth').innerHTML = '¿No tienes cuenta? Regístrate';
-                document.getElementById('referralCodeGroup').style.display = 'none';
-            }
-        }
         
         function generateReferralCode(email) {
             const prefix = email.split('@')[0].substring(0, 6).toUpperCase();
@@ -1073,9 +991,6 @@
                 const referralCode = userData?.referralCode || 'No disponible';
                 document.getElementById('userReferralCode').innerText = referralCode;
                 
-                // Configurar el botón de Telegram
-                setupTelegramButton();
-                
                 const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get();
                 let activeCount = 0;
                 const referralsList = [];
@@ -1115,40 +1030,6 @@
             }
         }
         
-        async function handleAuth() {
-            const email = document.getElementById('authEmail').value.trim();
-            const password = document.getElementById('authPassword').value;
-            const referralCode = document.getElementById('referralCodeInput').value.trim();
-            if (!email || !password) { showDialog('Error', 'Completa todos los campos'); return; }
-            try {
-                if (authMode === 'login') {
-                    await auth.signInWithEmailAndPassword(email, password);
-                } else {
-                    const userCred = await auth.createUserWithEmailAndPassword(email, password);
-                    const newReferralCode = generateReferralCode(email);
-                    const referrer = await processReferral(email, referralCode);
-                    await db.collection('members').doc(email).set({
-                        email: email, membershipActive: false, createdAt: new Date().toISOString(),
-                        userId: userCred.user.uid, wins: 0, losses: 0,
-                        referralCode: newReferralCode, referredBy: referrer || null, referralBonusDays: 0
-                    });
-                    let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Florida Pro!\n\n';
-                    message += `📋 Tu código de invitación: ${newReferralCode}\n`;
-                    message += '¡Invita amigos y gana días gratis! Cada 10 referidos activos = 30 días de membresía gratis.\n\n';
-                    message += `🔗 Comparte tu enlace: https://t.me/${TELEGRAM_BOT}?start=${newReferralCode}`;
-                    if (referrer) message += `\n\n🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él ganará puntos para su recompensa.`;
-                    showDialog('✅ Registro Exitoso', message);
-                    document.getElementById('authPassword').value = '';
-                    document.getElementById('referralCodeInput').value = '';
-                }
-            } catch (error) {
-                let msg = error.message;
-                if (error.code === 'auth/email-already-in-use') msg = 'Email ya registrado';
-                if (error.code === 'auth/weak-password') msg = 'Contraseña débil (mínimo 6 caracteres)';
-                showDialog('Error', msg);
-            }
-        }
-        
         function logout() { 
             if (unsubscribePredictions) unsubscribePredictions();
             if (unsubscribeProbabilities) unsubscribeProbabilities();
@@ -1163,7 +1044,6 @@
             document.getElementById('historySection').style.display = section === 'history' ? 'block' : 'none';
             document.getElementById('commentsSection').style.display = section === 'comments' ? 'block' : 'none';
             document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
-            document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none';
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.querySelector(`.nav-btn[data-section="${section}"]`);
             if (activeBtn) activeBtn.classList.add('active');
@@ -1196,7 +1076,7 @@
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             if (!isActive) {
-                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Membresía inactiva</h3><p style="margin: 1rem 0;">Activa tu membresía para acceder a los pronósticos</p><button class="btn" onclick="showSection('payment')">💰 Activar</button></div>`;
+                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Membresía inactiva</h3><p style="margin: 1rem 0;">Activa tu membresía para acceder a los pronósticos</p></div>`;
                 return;
             }
             if (!numbers || numbers.length === 0) {
@@ -1206,11 +1086,11 @@
             const isUpdated = isTodayOrRecent(lastUpdate);
             const displayTime = lastUpdateFormatted || formatTime12Hour(lastUpdate);
             const updateBadge = isUpdated ? '<span class="update-badge">✅ ACTUALIZADO</span>' : '<span class="update-badge outdated-badge">⚠️ DESACTUALIZADO</span>';
-            let html = `<h2 style="color: var(--primary); font-size: 1.2rem;">🎯 Pronóstico del Día <span class="live-badge">ACTUALIZACIÓN AUTOMÁTICA</span></h2>
+            let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día <span class="live-badge">ACTUALIZACIÓN AUTOMÁTICA</span></h2>
                        <div class="update-info"><span class="update-label">📅 Última actualización del pronóstico</span><span class="update-time">${displayTime} ${updateBadge}</span></div>
                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
-                            <span style="background: #d8f3dc; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
-                            <span style="background: #fff3e0; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
+                            <span style="background: #fed7aa; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
+                            <span style="background: #fef3c7; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
                         </div>
                        <div class="numbers-grid" id="numbersGrid"></div>`;
             
@@ -1322,7 +1202,7 @@
                         const row = tbody.insertRow();
                         row.insertCell(0).innerText = item.date;
                         row.insertCell(1).innerHTML = item.type === 'afternoon' ? '🌅 <strong>Mediodía</strong><br><span style="font-size:0.7rem;">(1:35 PM)</span>' : '🌙 <strong>Noche</strong><br><span style="font-size:0.7rem;">(9:50 PM)</span>';
-                        row.insertCell(2).innerHTML = item.winner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary); font-weight:700;">${item.winner}</span>`;
+                        row.insertCell(2).innerHTML = item.winner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary-dark); font-weight:700;">${item.winner}</span>`;
                         row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
                     });
                 }
@@ -1387,27 +1267,7 @@
             if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
             document.getElementById('daysLeft').innerText = daysLeft;
             const referralCode = userMembership?.referralCode || 'Cargando...';
-            content.innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div></div><div style="background: var(--gray-bg); border-radius: 16px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Vence:</strong> ${expires}</p><p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0} | <strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--primary); color: white; padding: 0.2rem 0.5rem; border-radius: 8px;">${referralCode}</code></p></div>${!isActive ? `<button class="btn mt-3" onclick="showSection('payment')">💰 Activar Membresía</button>` : ''}`;
-            const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get();
-            let activeCount = 0;
-            for (const doc of referralsSnapshot.docs) {
-                const referral = doc.data();
-                const referredMember = await db.collection('members').doc(referral.referredEmail).get();
-                if (referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date()) activeCount++;
-            }
-            const bonusDays = Math.floor(activeCount / 10) * 30;
-            document.getElementById('profileReferrals') ? document.getElementById('profileReferrals').innerText = activeCount : null;
-            document.getElementById('profileBonusDays') ? document.getElementById('profileBonusDays').innerText = bonusDays : null;
-        }
-        
-        async function submitPayment() {
-            const transfer = document.getElementById('transferNumber').value.trim();
-            if (!transfer) { showDialog('Error', 'Ingresa el número de transferencia'); return; }
-            try {
-                await db.collection('payments').add({ userEmail: currentUser.email, transferNumber: transfer, amount: 250, status: 'pending', timestamp: firebase.firestore.FieldValue.serverTimestamp(), userId: currentUser.uid });
-                showDialog('✅ Enviado', `Comprobante registrado.\nActivación en <24h.`);
-                document.getElementById('transferNumber').value = '';
-            } catch(e) { showDialog('Error', e.message); }
+            content.innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div></div><div style="background: var(--gray-bg); border-radius: 16px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Vence:</strong> ${expires}</p><p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0} | <strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--primary); color: white; padding: 0.2rem 0.5rem; border-radius: 8px;">${referralCode}</code></p></div>`;
         }
         
         async function checkMembership(email) {
@@ -1418,7 +1278,20 @@
                     const active = userMembership.membershipActive && new Date(userMembership.membershipExpires) > new Date();
                     if (active) document.getElementById('daysLeft').innerText = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
                     else document.getElementById('daysLeft').innerText = 0;
-                } else userMembership = { membershipActive: false, wins: 0, losses: 0 };
+                } else {
+                    userMembership = { membershipActive: false, wins: 0, losses: 0 };
+                    await db.collection('members').doc(email).set({
+                        email: email,
+                        membershipActive: false,
+                        createdAt: new Date().toISOString(),
+                        userId: currentUser.uid,
+                        wins: 0,
+                        losses: 0,
+                        referralCode: generateReferralCode(email),
+                        referredBy: null,
+                        referralBonusDays: 0
+                    });
+                }
             } catch(e) { console.error(e); }
         }
         
@@ -1427,13 +1300,31 @@
             if (btn && btn.dataset.section) showSection(btn.dataset.section);
         });
         
-        auth.onAuthStateChanged(async (user) => {
+        // Inicialización: mostrar carga y luego conectar
+        animateLoading();
+        
+        // Intentar conexión automática sin pantalla de registro
+        setTimeout(async () => {
             const isConnected = await checkConnection();
-            if (!isConnected) { document.getElementById('vpnAlert').style.display = 'flex'; return; }
+            if (isConnected) {
+                updateLoadingProgress(100);
+                setTimeout(() => {
+                    hideLoadingScreen();
+                }, 500);
+            } else {
+                updateLoadingProgress(100);
+                setTimeout(() => {
+                    hideLoadingScreen();
+                    showDialog('⚠️ Error de conexión', 'No se pudo conectar al servidor. Verifica tu conexión a internet.');
+                }, 500);
+            }
+        }, 1500);
+        
+        // Simular login automático anónimo para acceso directo
+        auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
                 await checkMembership(user.email);
-                document.getElementById('authScreen').style.display = 'none';
                 document.getElementById('dashboardScreen').style.display = 'block';
                 setupRealtimeListeners();
                 loadHistory();
@@ -1442,16 +1333,24 @@
                 updateReferralsUI();
                 showSection('predictions');
             } else {
-                if (unsubscribePredictions) unsubscribePredictions();
-                if (unsubscribeProbabilities) unsubscribeProbabilities();
-                if (unsubscribeResults) unsubscribeResults();
-                document.getElementById('dashboardScreen').style.display = 'none';
-                document.getElementById('authScreen').style.display = 'flex';
-                currentUser = null;
+                // Login anónimo automático
+                try {
+                    const userCred = await auth.signInAnonymously();
+                    currentUser = userCred.user;
+                    await checkMembership(currentUser.email);
+                    document.getElementById('dashboardScreen').style.display = 'block';
+                    setupRealtimeListeners();
+                    loadHistory();
+                    loadComments();
+                    loadProfile();
+                    updateReferralsUI();
+                    showSection('predictions');
+                } catch (error) {
+                    console.error('Error en login anónimo:', error);
+                    showDialog('Error', 'No se pudo iniciar sesión automáticamente');
+                }
             }
         });
-        
-        startConnectionMonitoring();
     </script>
 </body>
 </html>
