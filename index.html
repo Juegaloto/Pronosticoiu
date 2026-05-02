@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Florida Pro | Pronósticos Verde Tropical</title>
+    <title>Florida Pro | Pronósticos con Referidos</title>
     
     <style>
         * {
@@ -12,7 +12,6 @@
             box-sizing: border-box;
         }
 
-        /* Estilo Verde Tropical - Predominante */
         :root {
             --primary: #006d77;
             --primary-dark: #004e5c;
@@ -88,6 +87,17 @@
             font-size: 0.75rem;
         }
 
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -140,7 +150,6 @@
             color: white;
         }
 
-        /* Info de actualización */
         .update-info {
             background: #d8f3dc;
             padding: 0.75rem;
@@ -294,6 +303,92 @@
         .stat-label {
             font-size: 0.7rem;
             color: var(--text-secondary);
+        }
+
+        /* Referidos */
+        .referral-card {
+            background: linear-gradient(135deg, #d8f3dc, #c8e6d9);
+            border: 2px solid var(--primary);
+        }
+
+        .referral-code-box {
+            background: white;
+            border-radius: 12px;
+            padding: 0.75rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .referral-code {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 2px;
+            font-family: monospace;
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 20px;
+            height: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            background: var(--primary);
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .referral-stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .referral-stat {
+            flex: 1;
+            background: white;
+            padding: 0.75rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .referral-stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .referral-link-btn {
+            background: #25a363;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
         }
 
         /* Comentarios */
@@ -566,6 +661,7 @@
             .result-value { font-size: 1.2rem; }
             .vpn-alert-content h2 { font-size: 1.5rem; }
             .vpn-alert-content p { font-size: 0.9rem; }
+            .referral-code { font-size: 1rem; }
         }
     </style>
 </head>
@@ -586,7 +682,7 @@
         <div id="authScreen" class="auth-container">
             <div class="auth-card">
                 <h2>🌿 Florida Pro</h2>
-                <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos profesionales | </p>
+                <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos profesionales | Sistema de Referidos</p>
                 <div class="input-group">
                     <label>📧 Correo electrónico</label>
                     <input type="email" id="authEmail" placeholder="tu@email.com">
@@ -594,6 +690,10 @@
                 <div class="input-group">
                     <label>🔐 Contraseña</label>
                     <input type="password" id="authPassword" placeholder="••••••">
+                </div>
+                <div class="input-group" id="referralCodeGroup" style="display: none;">
+                    <label>🎁 Código de invitación (opcional)</label>
+                    <input type="text" id="referralCodeInput" placeholder="Código de un amigo">
                 </div>
                 <button class="btn" id="authBtn" onclick="handleAuth()">Iniciar Sesión</button>
                 <div onclick="toggleAuthMode()" id="switchAuth" style="text-align: center; margin-top: 1rem; color: var(--primary); cursor: pointer; font-size: 0.8rem;">
@@ -609,10 +709,10 @@
                     <div class="header">
                         <div class="logo">
                             <h1>🌿 Florida Pro <span class="live-badge">EN VIVO</span></h1>
-                            <p>Pronósticos en tiempo real | Actualización </p>
+                            <p>Pronósticos en tiempo real | Invita y gana días gratis</p>
                         </div>
                         <div style="display: flex; gap: 0.75rem; align-items: center;">
-                            <span class="florida-badge">🌴 PRONOSTICO</span>
+                            <span class="florida-badge">🌴 REFERIDOS</span>
                             <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
                         </div>
                     </div>
@@ -622,11 +722,13 @@
                     <div class="stat-card"><div class="stat-number" id="totalWins">0</div><div class="stat-label">🏆 Premios</div></div>
                     <div class="stat-card"><div class="stat-number" id="winRate">0%</div><div class="stat-label">⭐ Precisión</div></div>
                     <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
+                    <div class="stat-card"><div class="stat-number" id="referralsCount">0</div><div class="stat-label">👥 Referidos</div></div>
                 </div>
 
                 <div class="card">
                     <div class="nav-menu">
                         <button class="nav-btn active" data-section="predictions">🎯 Pronósticos</button>
+                        <button class="nav-btn" data-section="referrals">🎁 Referidos</button>
                         <button class="nav-btn" data-section="history">🏆 Historial</button>
                         <button class="nav-btn" data-section="comments">💬 Comentarios</button>
                         <button class="nav-btn" data-section="profile">👤 Perfil</button>
@@ -641,6 +743,66 @@
                     </div>
                 </div>
 
+                <!-- Referidos -->
+                <div id="referralsSection" style="display: none;">
+                    <div class="card referral-card">
+                        <h2 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana Días Gratis</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">
+                            Comparte tu código de invitación. Por cada 10 amigos que se registren y activen su membresía, 
+                            recibirás <strong>30 DÍAS GRATIS de pronóstico</strong> automáticamente.
+                        </p>
+                        
+                        <div class="referral-code-box">
+                            <span style="font-size: 0.7rem; color: var(--text-secondary);">TU CÓDIGO DE INVITACIÓN</span>
+                            <div>
+                                <span class="referral-code" id="userReferralCode">Cargando...</span>
+                                <button class="copy-btn" onclick="copyReferralCode()">📋 Copiar</button>
+                            </div>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="referralProgress" style="width: 0%"></div>
+                        </div>
+                        <div class="text-center" id="progressText" style="font-size: 0.75rem; margin-bottom: 1rem;">0/10 referidos activos</div>
+
+                        <div class="referral-stats">
+                            <div class="referral-stat">
+                                <div class="referral-stat-number" id="totalReferrals">0</div>
+                                <div class="stat-label">Total Referidos</div>
+                            </div>
+                            <div class="referral-stat">
+                                <div class="referral-stat-number" id="activeReferrals">0</div>
+                                <div class="stat-label">Activos con Membresía</div>
+                            </div>
+                            <div class="referral-stat">
+                                <div class="referral-stat-number" id="bonusDays">0</div>
+                                <div class="stat-label">Días Gratis Ganados</div>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">📱 Comparte tu enlace de invitación</p>
+                            <a href="#" id="telegramLink" class="referral-link-btn" target="_blank">
+                                💬 Invitar por Telegram
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
+                        <div class="table-responsive">
+                            <table id="referralsTable">
+                                <thead>
+                                    <tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Estado</th>
+                                </thead>
+                                <tbody id="referralsTableBody">
+                                    <td><td colspan="4" class="text-center">Cargando tus referidos...<\/td><\/tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Historial -->
                 <div id="historySection" style="display: none;">
                     <div class="card">
@@ -648,7 +810,8 @@
                         <div class="table-responsive">
                             <table id="historyTable">
                                 <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
-                                <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...</td></tr></tbody>
+                                <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...<\/td><\/tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -733,7 +896,8 @@
         let unsubscribeProbabilities = null;
         let unsubscribeResults = null;
         
-        // Detección de conexión
+        const TELEGRAM_BOT = "@pronostico1_bot";
+        
         async function checkConnection() {
             try {
                 await db.collection('connectionTest').doc('test').get();
@@ -748,9 +912,7 @@
             if (isConnected) {
                 document.getElementById('vpnAlert').style.display = 'none';
                 showDialog('✅ Conexión restablecida', 'Ya puedes usar Florida Pro normalmente');
-                if (currentUser) {
-                    setupRealtimeListeners();
-                }
+                if (currentUser) setupRealtimeListeners();
             } else {
                 document.getElementById('vpnAlert').style.display = 'flex';
             }
@@ -759,9 +921,7 @@
         function startConnectionMonitoring() {
             setInterval(async () => {
                 const isConnected = await checkConnection();
-                if (!isConnected) {
-                    document.getElementById('vpnAlert').style.display = 'flex';
-                }
+                if (!isConnected) document.getElementById('vpnAlert').style.display = 'flex';
             }, 30000);
         }
         
@@ -779,30 +939,174 @@
                 document.querySelector('.auth-card h2').innerText = 'Crear Cuenta';
                 document.getElementById('authBtn').innerHTML = 'Registrarse';
                 document.getElementById('switchAuth').innerHTML = '¿Ya tienes cuenta? Inicia sesión';
+                document.getElementById('referralCodeGroup').style.display = 'block';
             } else {
                 authMode = 'login';
                 document.querySelector('.auth-card h2').innerText = '🌿 Florida Pro';
                 document.getElementById('authBtn').innerHTML = 'Iniciar Sesión';
                 document.getElementById('switchAuth').innerHTML = '¿No tienes cuenta? Regístrate';
+                document.getElementById('referralCodeGroup').style.display = 'none';
+            }
+        }
+        
+        function generateReferralCode(email) {
+            const prefix = email.split('@')[0].substring(0, 6).toUpperCase();
+            const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+            return `${prefix}${random}`;
+        }
+        
+        async function copyReferralCode() {
+            const code = document.getElementById('userReferralCode').innerText;
+            await navigator.clipboard.writeText(code);
+            showDialog('¡Copiado!', 'Código de invitación copiado al portapapeles');
+        }
+        
+        async function processReferral(newUserEmail, referralCode) {
+            if (!referralCode) return null;
+            try {
+                const usersRef = db.collection('members');
+                const query = await usersRef.where('referralCode', '==', referralCode).get();
+                if (!query.empty) {
+                    const referrerDoc = query.docs[0];
+                    const referrerEmail = referrerDoc.data().email;
+                    if (referrerEmail === newUserEmail) return null;
+                    await db.collection('referrals').add({
+                        referrerEmail: referrerEmail,
+                        referredEmail: newUserEmail,
+                        referredAt: new Date().toISOString(),
+                        status: 'pending',
+                        membershipActive: false,
+                        referralCode: referralCode
+                    });
+                    return referrerEmail;
+                }
+            } catch (error) {
+                console.error('Error procesando referido:', error);
+            }
+            return null;
+        }
+        
+        async function checkAndRewardReferrals(userEmail) {
+            try {
+                const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get();
+                let activeReferrals = [];
+                for (const doc of referralsSnapshot.docs) {
+                    const referral = doc.data();
+                    if (referral.status === 'rewarded') continue;
+                    const referredMember = await db.collection('members').doc(referral.referredEmail).get();
+                    if (referredMember.exists && referredMember.data().membershipActive) {
+                        const expires = new Date(referredMember.data().membershipExpires);
+                        if (expires > new Date()) activeReferrals.push({ id: doc.id, data: referral });
+                    }
+                }
+                const activeCount = activeReferrals.length;
+                const rewardCycles = Math.floor(activeCount / 10);
+                if (rewardCycles > 0) {
+                    const userDoc = await db.collection('members').doc(userEmail).get();
+                    let currentExpires = new Date();
+                    if (userDoc.exists && userDoc.data().membershipExpires) {
+                        currentExpires = new Date(userDoc.data().membershipExpires);
+                        if (currentExpires < new Date()) currentExpires = new Date();
+                    }
+                    const newExpires = new Date(currentExpires);
+                    newExpires.setDate(newExpires.getDate() + (rewardCycles * 30));
+                    await db.collection('members').doc(userEmail).update({
+                        membershipExpires: newExpires.toISOString(),
+                        referralBonusDays: firebase.firestore.FieldValue.increment(rewardCycles * 30),
+                        lastReferralReward: new Date().toISOString()
+                    });
+                    for (let i = 0; i < rewardCycles * 10 && i < activeReferrals.length; i++) {
+                        await db.collection('referrals').doc(activeReferrals[i].id).update({
+                            status: 'rewarded',
+                            rewardedAt: new Date().toISOString(),
+                            rewardDays: 30
+                        });
+                    }
+                    showDialog('🎁 ¡RECOMPENSA RECIBIDA!', `¡Felicidades! Has ganado ${rewardCycles * 30} días gratis de membresía por tus ${rewardCycles * 10} referidos activos.\n\nTu membresía ha sido extendida automáticamente.`);
+                    await checkMembership(userEmail);
+                }
+                return { totalReferrals: referralsSnapshot.size, activeReferrals: activeCount, rewardCycles };
+            } catch (error) {
+                console.error('Error verificando recompensas:', error);
+                return { totalReferrals: 0, activeReferrals: 0, rewardCycles: 0 };
+            }
+        }
+        
+        async function updateReferralsUI() {
+            if (!currentUser) return;
+            try {
+                const userDoc = await db.collection('members').doc(currentUser.email).get();
+                const userData = userDoc.data();
+                const referralCode = userData?.referralCode || 'No disponible';
+                document.getElementById('userReferralCode').innerText = referralCode;
+                const telegramLink = document.getElementById('telegramLink');
+                if (telegramLink) telegramLink.href = `https://t.me/${TELEGRAM_BOT.substring(1)}?start=${referralCode}`;
+                
+                const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get();
+                let activeCount = 0;
+                const referralsList = [];
+                for (const doc of referralsSnapshot.docs) {
+                    const referral = doc.data();
+                    const referredMember = await db.collection('members').doc(referral.referredEmail).get();
+                    const isActive = referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date();
+                    if (isActive) activeCount++;
+                    referralsList.push({ email: referral.referredEmail, date: referral.referredAt, isActive: isActive, status: referral.status });
+                }
+                const totalReferrals = referralsSnapshot.size;
+                const progressPercent = (activeCount / 10) * 100;
+                const bonusDays = Math.floor(activeCount / 10) * 30;
+                document.getElementById('referralsCount').innerText = totalReferrals;
+                document.getElementById('totalReferrals').innerText = totalReferrals;
+                document.getElementById('activeReferrals').innerText = activeCount;
+                document.getElementById('bonusDays').innerText = bonusDays;
+                document.getElementById('referralProgress').style.width = `${Math.min(progressPercent, 100)}%`;
+                document.getElementById('progressText').innerHTML = `${activeCount}/10 referidos activos ${bonusDays > 0 ? `🎉 (${bonusDays} días gratis ganados)` : ''}`;
+                
+                const tbody = document.getElementById('referralsTableBody');
+                tbody.innerHTML = '';
+                if (referralsList.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!<\/td><\/tr>';
+                } else {
+                    referralsList.forEach(ref => {
+                        const row = tbody.insertRow();
+                        row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`;
+                        row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString();
+                        row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>';
+                        row.insertCell(3).innerHTML = ref.status === 'rewarded' ? '🎁 Recompensado' : '⏳ Pendiente';
+                    });
+                }
+                await checkAndRewardReferrals(currentUser.email);
+            } catch (error) {
+                console.error('Error actualizando referidos:', error);
             }
         }
         
         async function handleAuth() {
             const email = document.getElementById('authEmail').value.trim();
             const password = document.getElementById('authPassword').value;
+            const referralCode = document.getElementById('referralCodeInput').value.trim();
             if (!email || !password) { showDialog('Error', 'Completa todos los campos'); return; }
             try {
                 if (authMode === 'login') {
                     await auth.signInWithEmailAndPassword(email, password);
                 } else {
                     const userCred = await auth.createUserWithEmailAndPassword(email, password);
+                    const newReferralCode = generateReferralCode(email);
+                    const referrer = await processReferral(email, referralCode);
                     await db.collection('members').doc(email).set({
                         email: email, membershipActive: false, createdAt: new Date().toISOString(),
-                        userId: userCred.user.uid, wins: 0, losses: 0
+                        userId: userCred.user.uid, wins: 0, losses: 0,
+                        referralCode: newReferralCode, referredBy: referrer || null, referralBonusDays: 0
                     });
-                    showDialog('✅ Cuenta creada', 'Cuenta registrada correctamente.\n\nActiva tu membresía por $250 CUP.');
+                    let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Florida Pro!\n\n';
+                    message += `📋 Tu código de invitación: ${newReferralCode}\n`;
+                    message += '¡Invita amigos y gana días gratis! Cada 10 referidos activos = 30 días de membresía gratis.\n\n';
+                    message += '🔗 Comparte tu enlace: https://t.me/pronostico1_bot?start=' + newReferralCode;
+                    if (referrer) message += `\n\n🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él ganará puntos para su recompensa.`;
+                    showDialog('✅ Registro Exitoso', message);
+                    document.getElementById('authPassword').value = '';
+                    document.getElementById('referralCodeInput').value = '';
                 }
-                document.getElementById('authPassword').value = '';
             } catch (error) {
                 let msg = error.message;
                 if (error.code === 'auth/email-already-in-use') msg = 'Email ya registrado';
@@ -821,21 +1125,20 @@
         
         function showSection(section) {
             document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
+            document.getElementById('referralsSection').style.display = section === 'referrals' ? 'block' : 'none';
             document.getElementById('historySection').style.display = section === 'history' ? 'block' : 'none';
             document.getElementById('commentsSection').style.display = section === 'comments' ? 'block' : 'none';
             document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
             document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none';
-            
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.querySelector(`.nav-btn[data-section="${section}"]`);
             if (activeBtn) activeBtn.classList.add('active');
-            
             if (section === 'profile') loadProfile();
             if (section === 'history') loadHistory();
             if (section === 'comments') loadComments();
+            if (section === 'referrals') updateReferralsUI();
         }
         
-        // Formatear hora a 12 horas
         function formatTime12Hour(dateString) {
             if (!dateString) return 'No disponible';
             const date = new Date(dateString);
@@ -855,83 +1158,45 @@
             return diffHours < 24;
         }
         
-        // ========== PRONÓSTICOS EN TIEMPO REAL CON FECHA/HORA ==========
         function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
             const container = document.getElementById('predictionsContent');
-            const today = new Date().toISOString().split('T')[0];
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-            
             if (!isActive) {
-                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Membresía inactiva</h3><p style="margin: 1rem 0;">Activa tu membresía para acceder a los pronósticos</p><button class="btn" onclick="showSection('payment')">💰 Activar ($250/mes)</button></div>`;
+                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Membresía inactiva</h3><p style="margin: 1rem 0;">Activa tu membresía para acceder a los pronósticos</p><button class="btn" onclick="showSection('payment')">💰 Activar</button></div>`;
                 return;
             }
-            
             if (!numbers || numbers.length === 0) {
                 container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Se actualizan a las 12:00 AM</p></div>`;
                 return;
             }
-            
             const isUpdated = isTodayOrRecent(lastUpdate);
             const displayTime = lastUpdateFormatted || formatTime12Hour(lastUpdate);
             const updateBadge = isUpdated ? '<span class="update-badge">✅ ACTUALIZADO</span>' : '<span class="update-badge outdated-badge">⚠️ DESACTUALIZADO</span>';
-            
             let html = `<h2 style="color: var(--primary); font-size: 1.2rem;">🎯 Pronóstico del Día <span class="live-badge">ACTUALIZACIÓN AUTOMÁTICA</span></h2>
-                       <div class="update-info">
-                           <span class="update-label">📅 Última actualización del pronóstico</span>
-                           <span class="update-time">${displayTime} ${updateBadge}</span>
-                       </div>
+                       <div class="update-info"><span class="update-label">📅 Última actualización del pronóstico</span><span class="update-time">${displayTime} ${updateBadge}</span></div>
                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
                             <span style="background: #d8f3dc; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
                             <span style="background: #fff3e0; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
                         </div>
                        <div class="numbers-grid" id="numbersGrid"></div>`;
             
-            // Sorteo Mediodía
             let afternoonClass = 'result-box result-waiting';
             let afternoonText = '⏳ ESPERANDO RESULTADO...';
             let afternoonAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
-            
             if (afternoonWinner) {
-                if (afternoonWinner === 'fallo') { 
-                    afternoonClass = 'result-box result-fallo'; 
-                    afternoonText = '❌ FALLO - No hubo número ganador';
-                    afternoonAlert = '';
-                } else { 
-                    afternoonClass = 'result-box result-winner'; 
-                    afternoonText = `🎯 NÚMERO GANADOR: ${afternoonWinner}`;
-                    afternoonAlert = '';
-                }
+                if (afternoonWinner === 'fallo') { afternoonClass = 'result-box result-fallo'; afternoonText = '❌ FALLO - No hubo número ganador'; afternoonAlert = ''; }
+                else { afternoonClass = 'result-box result-winner'; afternoonText = `🎯 NÚMERO GANADOR: ${afternoonWinner}`; afternoonAlert = ''; }
             }
+            html += `<div class="${afternoonClass}"><div class="result-title">🌅 SORTEO MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`;
             
-            html += `<div class="${afternoonClass}">
-                        <div class="result-title">🌅 SORTEO MEDIODÍA (1:35 PM)</div>
-                        <div class="result-value">${afternoonText}</div>
-                        ${afternoonAlert}
-                     </div>`;
-            
-            // Sorteo Noche
             let nightClass = 'result-box result-waiting';
             let nightText = '⏳ ESPERANDO RESULTADO...';
             let nightAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
-            
             if (nightWinner) {
-                if (nightWinner === 'fallo') { 
-                    nightClass = 'result-box result-fallo'; 
-                    nightText = '❌ FALLO - No hubo número ganador';
-                    nightAlert = '';
-                } else { 
-                    nightClass = 'result-box result-winner'; 
-                    nightText = `🎯 NÚMERO GANADOR: ${nightWinner}`;
-                    nightAlert = '';
-                }
+                if (nightWinner === 'fallo') { nightClass = 'result-box result-fallo'; nightText = '❌ FALLO - No hubo número ganador'; nightAlert = ''; }
+                else { nightClass = 'result-box result-winner'; nightText = `🎯 NÚMERO GANADOR: ${nightWinner}`; nightAlert = ''; }
             }
-            
-            html += `<div class="${nightClass}">
-                        <div class="result-title">🌙 SORTEO NOCHE (9:50 PM)</div>
-                        <div class="result-value">${nightText}</div>
-                        ${nightAlert}
-                     </div>`;
-            
+            html += `<div class="${nightClass}"><div class="result-title">🌙 SORTEO NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div>${nightAlert}</div>`;
             container.innerHTML = html;
             
             const grid = document.getElementById('numbersGrid');
@@ -954,60 +1219,45 @@
         
         function setupRealtimeListeners() {
             const today = new Date().toISOString().split('T')[0];
-            
-            // Escuchar cambios en pronóstico (números)
             if (unsubscribePredictions) unsubscribePredictions();
-            unsubscribePredictions = db.collection('dailyNumbers').doc(today)
-                .onSnapshot((doc) => {
-                    const numbers = doc.exists ? doc.data().numbers : [];
-                    const lastUpdate = doc.exists ? doc.data().lastUpdate : null;
-                    const lastUpdateFormatted = doc.exists ? doc.data().lastUpdateFormatted : null;
-                    window.currentLastUpdate = lastUpdate;
-                    window.currentLastUpdateFormatted = lastUpdateFormatted;
-                    if (window.currentStrong && window.currentMedium && window.currentAfternoon !== undefined && window.currentNight !== undefined) {
-                        renderPredictions(numbers, window.currentStrong, window.currentMedium, window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
-                    }
-                });
-            
-            // Escuchar cambios en probabilidades
+            unsubscribePredictions = db.collection('dailyNumbers').doc(today).onSnapshot((doc) => {
+                const numbers = doc.exists ? doc.data().numbers : [];
+                const lastUpdate = doc.exists ? doc.data().lastUpdate : null;
+                const lastUpdateFormatted = doc.exists ? doc.data().lastUpdateFormatted : null;
+                if (window.currentStrong && window.currentMedium && window.currentAfternoon !== undefined && window.currentNight !== undefined) {
+                    renderPredictions(numbers, window.currentStrong, window.currentMedium, window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
+                }
+            });
             if (unsubscribeProbabilities) unsubscribeProbabilities();
-            unsubscribeProbabilities = db.collection('probabilities').doc(today)
-                .onSnapshot((doc) => {
-                    const strongNumbers = doc.exists ? doc.data().strongNumbers : [];
-                    const mediumNumbers = doc.exists ? doc.data().mediumNumbers : [];
-                    window.currentStrong = strongNumbers;
-                    window.currentMedium = mediumNumbers;
-                    db.collection('dailyNumbers').doc(today).get().then(numDoc => {
-                        const numbers = numDoc.exists ? numDoc.data().numbers : [];
-                        const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
-                        const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
-                        renderPredictions(numbers, strongNumbers, mediumNumbers, window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
-                    });
+            unsubscribeProbabilities = db.collection('probabilities').doc(today).onSnapshot((doc) => {
+                const strongNumbers = doc.exists ? doc.data().strongNumbers : [];
+                const mediumNumbers = doc.exists ? doc.data().mediumNumbers : [];
+                window.currentStrong = strongNumbers;
+                window.currentMedium = mediumNumbers;
+                db.collection('dailyNumbers').doc(today).get().then(numDoc => {
+                    const numbers = numDoc.exists ? numDoc.data().numbers : [];
+                    const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
+                    const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
+                    renderPredictions(numbers, strongNumbers, mediumNumbers, window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
                 });
-            
-            // Escuchar cambios en resultados
+            });
             if (unsubscribeResults) unsubscribeResults();
-            unsubscribeResults = db.collection('dailyResults').doc(today)
-                .onSnapshot((doc) => {
-                    const afternoonWinner = doc.exists ? doc.data().afternoonWinner : null;
-                    const nightWinner = doc.exists ? doc.data().nightWinner : null;
-                    window.currentAfternoon = afternoonWinner;
-                    window.currentNight = nightWinner;
-                    Promise.all([
-                        db.collection('dailyNumbers').doc(today).get(),
-                        db.collection('probabilities').doc(today).get()
-                    ]).then(([numDoc, probDoc]) => {
-                        const numbers = numDoc.exists ? numDoc.data().numbers : [];
-                        const strongNumbers = probDoc.exists ? probDoc.data().strongNumbers : [];
-                        const mediumNumbers = probDoc.exists ? probDoc.data().mediumNumbers : [];
-                        const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
-                        const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
-                        renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted);
-                    });
+            unsubscribeResults = db.collection('dailyResults').doc(today).onSnapshot((doc) => {
+                const afternoonWinner = doc.exists ? doc.data().afternoonWinner : null;
+                const nightWinner = doc.exists ? doc.data().nightWinner : null;
+                window.currentAfternoon = afternoonWinner;
+                window.currentNight = nightWinner;
+                Promise.all([db.collection('dailyNumbers').doc(today).get(), db.collection('probabilities').doc(today).get()]).then(([numDoc, probDoc]) => {
+                    const numbers = numDoc.exists ? numDoc.data().numbers : [];
+                    const strongNumbers = probDoc.exists ? probDoc.data().strongNumbers : [];
+                    const mediumNumbers = probDoc.exists ? probDoc.data().mediumNumbers : [];
+                    const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
+                    const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
+                    renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted);
                 });
+            });
         }
         
-        // ========== HISTORIAL ==========
         async function loadHistory() {
             if (!currentUser) return;
             const tbody = document.getElementById('historyTableBody');
@@ -1021,29 +1271,18 @@
                     document.getElementById('totalWins').innerText = wins;
                     document.getElementById('winRate').innerText = `${winRate}%`;
                 }
-                
                 const historyMap = new Map();
                 const historySnapshot = await db.collection('resultsHistory').orderBy('timestamp', 'desc').limit(50).get();
-                
                 historySnapshot.forEach(doc => {
                     const data = doc.data();
                     const date = data.date || 'Fecha no disponible';
-                    const key = `${date}_afternoon`;
-                    const keyNight = `${date}_night`;
-                    
-                    if (data.afternoonWinner && !historyMap.has(key)) {
-                        historyMap.set(key, { date: date, type: 'afternoon', winner: data.afternoonWinner });
-                    }
-                    if (data.nightWinner && !historyMap.has(keyNight)) {
-                        historyMap.set(keyNight, { date: date, type: 'night', winner: data.nightWinner });
-                    }
+                    if (data.afternoonWinner && !historyMap.has(`${date}_afternoon`)) historyMap.set(`${date}_afternoon`, { date: date, type: 'afternoon', winner: data.afternoonWinner });
+                    if (data.nightWinner && !historyMap.has(`${date}_night`)) historyMap.set(`${date}_night`, { date: date, type: 'night', winner: data.nightWinner });
                 });
-                
                 const uniqueHistory = Array.from(historyMap.values()).sort((a, b) => b.date.localeCompare(a.date));
                 tbody.innerHTML = '';
-                
                 if (uniqueHistory.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td></tr>';
+                    tbody.innerHTML = '<td><td colspan="4" class="text-center">📭 No hay resultados registrados aún<\/td><\/tr>';
                 } else {
                     uniqueHistory.forEach(item => {
                         const row = tbody.insertRow();
@@ -1055,11 +1294,10 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar</td></tr>';
+                tbody.innerHTML = '<td><td colspan="4" class="text-center">❌ Error al cargar<\/td><\/tr>';
             }
         }
         
-        // ========== COMENTARIOS ==========
         async function loadComments() {
             const container = document.getElementById('commentsList');
             if (!container) return;
@@ -1075,17 +1313,8 @@
                     const commentDiv = document.createElement('div');
                     commentDiv.className = 'comment-card';
                     let numberHtml = '';
-                    if (comment.number) {
-                        numberHtml = `<div class="comment-number">🎯 Número jugado: <span>${comment.number}</span> ${comment.draw ? `(${comment.draw})` : ''}</div>`;
-                    }
-                    commentDiv.innerHTML = `
-                        <div class="comment-header">
-                            <span class="comment-user">👤 ${escapeHtml(comment.userEmail || 'Usuario')}</span>
-                            <span class="comment-date">📅 ${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Reciente'}</span>
-                        </div>
-                        <div class="comment-text">${escapeHtml(comment.message)}</div>
-                        ${numberHtml}
-                    `;
+                    if (comment.number) numberHtml = `<div class="comment-number">🎯 Número jugado: <span>${comment.number}</span> ${comment.draw ? `(${comment.draw})` : ''}</div>`;
+                    commentDiv.innerHTML = `<div class="comment-header"><span class="comment-user">👤 ${escapeHtml(comment.userEmail || 'Usuario')}</span><span class="comment-date">📅 ${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Reciente'}</span></div><div class="comment-text">${escapeHtml(comment.message)}</div>${numberHtml}`;
                     container.appendChild(commentDiv);
                 });
             } catch (error) {
@@ -1095,75 +1324,53 @@
         }
         
         async function publishComment() {
-            if (!currentUser) {
-                showDialog('Inicia sesión', 'Debes iniciar sesión para publicar comentarios');
-                return;
-            }
+            if (!currentUser) { showDialog('Inicia sesión', 'Debes iniciar sesión para publicar comentarios'); return; }
             const message = document.getElementById('commentMessage').value.trim();
             const number = document.getElementById('commentNumber').value.trim();
             const draw = document.getElementById('commentDraw').value.trim();
-            if (!message) {
-                showDialog('Error', 'Escribe un comentario antes de publicar');
-                return;
-            }
+            if (!message) { showDialog('Error', 'Escribe un comentario antes de publicar'); return; }
             try {
                 await db.collection('comments').add({
-                    userEmail: currentUser.email,
-                    userId: currentUser.uid,
-                    message: message,
-                    number: number || null,
-                    draw: draw || null,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    likes: 0
+                    userEmail: currentUser.email, userId: currentUser.uid, message: message,
+                    number: number || null, draw: draw || null,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(), likes: 0
                 });
                 document.getElementById('commentMessage').value = '';
                 document.getElementById('commentNumber').value = '';
                 document.getElementById('commentDraw').value = '';
                 showDialog('✅ Publicado', 'Tu comentario ha sido publicado');
                 loadComments();
-            } catch (error) {
-                showDialog('Error', 'No se pudo publicar el comentario');
-            }
+            } catch (error) { showDialog('Error', 'No se pudo publicar el comentario'); }
         }
         
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+        function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
         
-        // ========== PERFIL Y PAGOS ==========
         async function loadProfile() {
             const content = document.getElementById('profileContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             const expires = userMembership?.membershipExpires ? new Date(userMembership.membershipExpires).toLocaleDateString() : 'Inactiva';
             let daysLeft = 0;
-            if (isActive && userMembership?.membershipExpires) {
-                daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
-                document.getElementById('daysLeft').innerText = daysLeft;
+            if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
+            document.getElementById('daysLeft').innerText = daysLeft;
+            const referralCode = userMembership?.referralCode || 'Cargando...';
+            content.innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div></div><div style="background: var(--gray-bg); border-radius: 16px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Vence:</strong> ${expires}</p><p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0} | <strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--primary); color: white; padding: 0.2rem 0.5rem; border-radius: 8px;">${referralCode}</code></p></div>${!isActive ? `<button class="btn mt-3" onclick="showSection('payment')">💰 Activar Membresía</button>` : ''}`;
+            const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get();
+            let activeCount = 0;
+            for (const doc of referralsSnapshot.docs) {
+                const referral = doc.data();
+                const referredMember = await db.collection('members').doc(referral.referredEmail).get();
+                if (referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date()) activeCount++;
             }
-            content.innerHTML = `
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div>
-                    <div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div>
-                </div>
-                <div style="background: var(--gray-bg); border-radius: 16px; padding: 1rem;">
-                    <p><strong>📧 Email:</strong> ${currentUser?.email}</p>
-                    <p><strong>📅 Vence:</strong> ${expires}</p>
-                    <p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0} | <strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p>
-                </div>
-                ${!isActive ? `<button class="btn mt-3" onclick="showSection('payment')">💰 Activar ($250/mes)</button>` : ''}
-            `;
+            const bonusDays = Math.floor(activeCount / 10) * 30;
+            document.getElementById('profileReferrals') ? document.getElementById('profileReferrals').innerText = activeCount : null;
+            document.getElementById('profileBonusDays') ? document.getElementById('profileBonusDays').innerText = bonusDays : null;
         }
         
         async function submitPayment() {
             const transfer = document.getElementById('transferNumber').value.trim();
             if (!transfer) { showDialog('Error', 'Ingresa el número de transferencia'); return; }
             try {
-                await db.collection('payments').add({
-                    userEmail: currentUser.email, transferNumber: transfer, amount: 250,
-                    status: 'pending', timestamp: firebase.firestore.FieldValue.serverTimestamp(), userId: currentUser.uid
-                });
+                await db.collection('payments').add({ userEmail: currentUser.email, transferNumber: transfer, amount: 250, status: 'pending', timestamp: firebase.firestore.FieldValue.serverTimestamp(), userId: currentUser.uid });
                 showDialog('✅ Enviado', `Comprobante registrado.\nActivación en <24h.`);
                 document.getElementById('transferNumber').value = '';
             } catch(e) { showDialog('Error', e.message); }
@@ -1175,15 +1382,12 @@
                 if (doc.exists) {
                     userMembership = doc.data();
                     const active = userMembership.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-                    if (active) {
-                        const days = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
-                        document.getElementById('daysLeft').innerText = days;
-                    } else { document.getElementById('daysLeft').innerText = 0; }
-                } else { userMembership = { membershipActive: false, wins: 0, losses: 0 }; }
+                    if (active) document.getElementById('daysLeft').innerText = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
+                    else document.getElementById('daysLeft').innerText = 0;
+                } else userMembership = { membershipActive: false, wins: 0, losses: 0 };
             } catch(e) { console.error(e); }
         }
         
-        // ========== NAVEGACIÓN Y AUTENTICACIÓN ==========
         document.querySelector('.nav-menu')?.addEventListener('click', (e) => {
             const btn = e.target.closest('.nav-btn');
             if (btn && btn.dataset.section) showSection(btn.dataset.section);
@@ -1191,10 +1395,7 @@
         
         auth.onAuthStateChanged(async (user) => {
             const isConnected = await checkConnection();
-            if (!isConnected) {
-                document.getElementById('vpnAlert').style.display = 'flex';
-                return;
-            }
+            if (!isConnected) { document.getElementById('vpnAlert').style.display = 'flex'; return; }
             if (user) {
                 currentUser = user;
                 await checkMembership(user.email);
@@ -1204,6 +1405,7 @@
                 loadHistory();
                 loadComments();
                 loadProfile();
+                updateReferralsUI();
                 showSection('predictions');
             } else {
                 if (unsubscribePredictions) unsubscribePredictions();
