@@ -383,12 +383,20 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            padding: 0.6rem 1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.85rem;
             margin-top: 0.5rem;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .referral-link-btn:hover {
+            background: #1e8a4e;
+            transform: scale(1.02);
         }
 
         /* Comentarios */
@@ -782,9 +790,9 @@
 
                         <div style="text-align: center; margin-top: 1rem;">
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">📱 Comparte tu enlace de invitación</p>
-                            <a href="#" id="telegramLink" class="referral-link-btn" target="_blank">
+                            <button id="telegramInviteBtn" class="referral-link-btn">
                                 💬 Invitar por Telegram
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -796,7 +804,7 @@
                                     <tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Estado</th>
                                 </thead>
                                 <tbody id="referralsTableBody">
-                                    <td><td colspan="4" class="text-center">Cargando tus referidos...<\/td><\/tr>
+                                    <tr><td colspan="4" class="text-center">Cargando tus referidos...<\/td><\/tr>
                                 </tbody>
                             </table>
                         </div>
@@ -896,7 +904,32 @@
         let unsubscribeProbabilities = null;
         let unsubscribeResults = null;
         
-        const TELEGRAM_BOT = "@pronostico1_bot";
+        const TELEGRAM_BOT = "pronostico1_bot";
+        
+        // Función corregida para invitar por Telegram
+        function shareTelegramInvite(referralCode) {
+            if (!referralCode || referralCode === 'Cargando...') {
+                showDialog('⚠️ Código no disponible', 'Espera a que cargue tu código de invitación e intenta nuevamente.');
+                return;
+            }
+            // Formato correcto para link de invitación de bot de Telegram
+            const inviteLink = `https://t.me/${TELEGRAM_BOT}?start=${referralCode}`;
+            window.open(inviteLink, '_blank');
+        }
+
+        // Función global para el botón de Telegram
+        function setupTelegramButton() {
+            const btn = document.getElementById('telegramInviteBtn');
+            if (btn) {
+                btn.removeEventListener('click', window.telegramClickHandler);
+                window.telegramClickHandler = () => {
+                    const codeElement = document.getElementById('userReferralCode');
+                    const code = codeElement ? codeElement.innerText : null;
+                    shareTelegramInvite(code);
+                };
+                btn.addEventListener('click', window.telegramClickHandler);
+            }
+        }
         
         async function checkConnection() {
             try {
@@ -1039,8 +1072,9 @@
                 const userData = userDoc.data();
                 const referralCode = userData?.referralCode || 'No disponible';
                 document.getElementById('userReferralCode').innerText = referralCode;
-                const telegramLink = document.getElementById('telegramLink');
-                if (telegramLink) telegramLink.href = `https://t.me/${TELEGRAM_BOT.substring(1)}?start=${referralCode}`;
+                
+                // Configurar el botón de Telegram
+                setupTelegramButton();
                 
                 const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get();
                 let activeCount = 0;
@@ -1101,7 +1135,7 @@
                     let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Florida Pro!\n\n';
                     message += `📋 Tu código de invitación: ${newReferralCode}\n`;
                     message += '¡Invita amigos y gana días gratis! Cada 10 referidos activos = 30 días de membresía gratis.\n\n';
-                    message += '🔗 Comparte tu enlace: https://t.me/pronostico1_bot?start=' + newReferralCode;
+                    message += `🔗 Comparte tu enlace: https://t.me/${TELEGRAM_BOT}?start=${newReferralCode}`;
                     if (referrer) message += `\n\n🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él ganará puntos para su recompensa.`;
                     showDialog('✅ Registro Exitoso', message);
                     document.getElementById('authPassword').value = '';
@@ -1282,7 +1316,7 @@
                 const uniqueHistory = Array.from(historyMap.values()).sort((a, b) => b.date.localeCompare(a.date));
                 tbody.innerHTML = '';
                 if (uniqueHistory.length === 0) {
-                    tbody.innerHTML = '<td><td colspan="4" class="text-center">📭 No hay resultados registrados aún<\/td><\/tr>';
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún<\/td><\/tr>';
                 } else {
                     uniqueHistory.forEach(item => {
                         const row = tbody.insertRow();
@@ -1294,7 +1328,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                tbody.innerHTML = '<td><td colspan="4" class="text-center">❌ Error al cargar<\/td><\/tr>';
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar<\/td><\/tr>';
             }
         }
         
