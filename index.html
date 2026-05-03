@@ -12,6 +12,7 @@
             box-sizing: border-box;
         }
 
+        /* TEMA CLARO (por defecto) */
         :root {
             --primary: #f59e0b;
             --primary-dark: #ea580c;
@@ -29,14 +30,45 @@
             --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
             --riddle-bg: #fef3c7;
+            --card-bg: #ffffff;
+            --body-bg-start: #fff7ed;
+            --body-bg-end: #ffedd5;
+            --input-bg: #ffffff;
+            --table-hover: #fef3c7;
+        }
+
+        /* TEMA OSCURO */
+        body.dark {
+            --primary: #f59e0b;
+            --primary-dark: #fbbf24;
+            --primary-light: #f59e0b;
+            --secondary: #e9c46a;
+            --accent: #f97316;
+            --danger: #ef4444;
+            --danger-dark: #dc2626;
+            --success: #10b981;
+            --white: #1e293b;
+            --gray-bg: #334155;
+            --text-primary: #fef3c7;
+            --text-secondary: #ffedd5;
+            --border: #f59e0b;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.3);
+            --riddle-bg: #422006;
+            --card-bg: #0f172a;
+            --body-bg-start: #0f172a;
+            --body-bg-end: #1e293b;
+            --input-bg: #1e293b;
+            --table-hover: #334155;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            background: linear-gradient(135deg, var(--body-bg-start) 0%, var(--body-bg-end) 100%);
             color: var(--text-primary);
             line-height: 1.5;
             min-height: 100vh;
+            transition: background 0.3s ease, color 0.2s ease;
         }
 
         .container {
@@ -46,7 +78,7 @@
         }
 
         .card {
-            background: var(--white);
+            background: var(--card-bg);
             border-radius: 24px;
             padding: 1.5rem;
             margin-bottom: 1.25rem;
@@ -121,6 +153,28 @@
             font-weight: 600;
         }
 
+        .theme-toggle {
+            background: var(--gray-bg);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .theme-toggle:hover {
+            background: var(--primary-light);
+            color: #1e293b;
+            transform: scale(1.05);
+        }
+        body.dark .theme-toggle:hover {
+            color: #0f172a;
+        }
+
         .nav-menu {
             display: flex;
             gap: 0.5rem;
@@ -146,7 +200,7 @@
         }
 
         .update-info {
-            background: #fff7ed;
+            background: var(--gray-bg);
             padding: 0.75rem;
             border-radius: 16px;
             margin-bottom: 1rem;
@@ -234,16 +288,27 @@
             background: #fed7aa;
             border-left: 4px solid var(--primary);
         }
+        body.dark .number-card.strong {
+            background: #422006;
+            color: #ffedd5;
+        }
 
         .number-card.medium {
             background: #fef3c7;
             border-left: 4px solid var(--secondary);
+        }
+        body.dark .number-card.medium {
+            background: #2d1a02;
+            color: #ffedd5;
         }
 
         .number-card.winner {
             border: 2px solid var(--secondary);
             background: #fef3c7;
             animation: pulse 1s infinite;
+        }
+        body.dark .number-card.winner {
+            background: #533603;
         }
 
         @keyframes pulse {
@@ -275,15 +340,24 @@
             background: #fef3c7;
             border: 1px solid var(--primary);
         }
+        body.dark .result-winner {
+            background: #2d1a02;
+        }
 
         .result-waiting {
             background: #fff7ed;
             border: 2px dashed var(--secondary);
         }
+        body.dark .result-waiting {
+            background: #1e293b;
+        }
 
         .result-fallo {
             background: #fee2e2;
             border: 1px solid var(--danger);
+        }
+        body.dark .result-fallo {
+            background: #2d1a02;
         }
 
         .result-title {
@@ -316,7 +390,7 @@
         }
 
         .stat-card {
-            background: var(--white);
+            background: var(--card-bg);
             border-radius: 16px;
             padding: 1rem;
             text-align: center;
@@ -339,6 +413,9 @@
             border: 2px solid var(--primary);
             text-align: center;
         }
+        body.dark .riddle-card {
+            background: linear-gradient(135deg, #422006, #2d1a02);
+        }
 
         .riddle-question {
             font-size: 1.1rem;
@@ -350,6 +427,9 @@
             border-radius: 16px;
             display: inline-block;
             width: 100%;
+        }
+        body.dark .riddle-question {
+            background: #1e293b;
         }
 
         .riddle-answer {
@@ -396,6 +476,9 @@
             padding: 0.3rem 1rem;
             border-radius: 30px;
         }
+        body.dark .probabilities-title {
+            background: #422006;
+        }
 
         .probabilities-list {
             display: flex;
@@ -409,6 +492,9 @@
             padding: 0.5rem 1rem;
             background: white;
             border-radius: 12px;
+        }
+        body.dark .prob-item {
+            background: #1e293b;
         }
 
         .prob-number {
@@ -435,6 +521,9 @@
             align-items: center;
             flex-direction: column;
             transition: opacity 0.5s ease;
+        }
+        body.dark .loading-screen {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
         }
 
         .loading-spinner {
@@ -485,6 +574,9 @@
             background: linear-gradient(135deg, #fff7ed, #ffedd5);
             border: 2px solid var(--primary);
         }
+        body.dark .referral-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+        }
 
         .referral-code-box {
             background: white;
@@ -492,6 +584,9 @@
             padding: 0.75rem;
             text-align: center;
             margin: 1rem 0;
+        }
+        body.dark .referral-code-box {
+            background: #334155;
         }
 
         .referral-code {
@@ -520,6 +615,9 @@
             overflow: hidden;
             margin: 1rem 0;
         }
+        body.dark .progress-bar {
+            background: #1e293b;
+        }
 
         .progress-fill {
             background: var(--primary);
@@ -543,6 +641,9 @@
             padding: 0.75rem;
             border-radius: 12px;
             text-align: center;
+        }
+        body.dark .referral-stat {
+            background: #1e293b;
         }
 
         .referral-stat-number {
@@ -606,24 +707,21 @@
             margin-top: 1rem;
         }
 
-        .new-comment-form textarea {
+        .new-comment-form textarea,
+        .new-comment-form input {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid var(--border);
             border-radius: 12px;
             font-size: 0.85rem;
-            resize: vertical;
             font-family: inherit;
             margin-bottom: 0.75rem;
+            background: var(--input-bg);
+            color: var(--text-primary);
         }
 
-        .new-comment-form input {
-            width: 100%;
-            padding: 0.6rem;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            font-size: 0.8rem;
-            margin-bottom: 0.75rem;
+        .new-comment-form textarea {
+            resize: vertical;
         }
 
         .new-comment-form .form-row {
@@ -655,6 +753,10 @@
         th {
             color: var(--primary-dark);
             font-weight: 600;
+        }
+
+        tr:hover {
+            background: var(--table-hover);
         }
 
         .badge-win {
@@ -690,12 +792,13 @@
         }
 
         .modal-content {
-            background: white;
+            background: var(--card-bg);
             border-radius: 20px;
             padding: 1.5rem;
             max-width: 500px;
             width: 90%;
             text-align: center;
+            color: var(--text-primary);
         }
 
         .payment-info {
@@ -734,9 +837,12 @@
             background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
             padding: 1rem;
         }
+        body.dark .auth-container {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
 
         .auth-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 28px;
             padding: 2rem;
             width: 100%;
@@ -761,14 +867,16 @@
             color: var(--text-secondary);
         }
 
-        .input-group input, .input-group textarea {
+        .input-group input, 
+        .input-group textarea {
             width: 100%;
             padding: 0.75rem;
-            background: var(--gray-bg);
+            background: var(--input-bg);
             border: 1px solid var(--border);
             border-radius: 12px;
             font-size: 0.9rem;
             font-family: inherit;
+            color: var(--text-primary);
         }
 
         .input-group textarea {
@@ -798,6 +906,9 @@
             border-color: var(--primary);
             background: #fef3c7;
         }
+        body.dark .payment-method.selected {
+            background: #422006;
+        }
 
         .payment-method:hover {
             border-color: var(--primary);
@@ -816,6 +927,10 @@
             margin-bottom: 1rem;
             text-align: left;
         }
+        body.dark .transfer-example {
+            background: #422006;
+            color: #ffedd5;
+        }
 
         .transfer-example code {
             display: block;
@@ -825,6 +940,11 @@
             margin-top: 0.25rem;
             font-size: 0.7rem;
             word-break: break-all;
+            color: black;
+        }
+        body.dark .transfer-example code {
+            background: #1e293b;
+            color: #ffedd5;
         }
 
         @media (max-width: 640px) {
@@ -881,6 +1001,9 @@
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
                         <span class="florida-badge">🌴 PRONOSTICOS 24H</span>
+                        <div class="theme-toggle" id="themeToggleBtn" title="Cambiar tema">
+                            🌙
+                        </div>
                         <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
                     </div>
                 </div>
@@ -991,8 +1114,10 @@
                     <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
                     <div class="table-responsive">
                         <table id="referralsTable">
-                            <thead><tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Estado</th></tr></thead>
-                            <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...<\/td><\/tr></tbody>
+                            <thead>
+                                <tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Estado</th></tr>
+                            </thead>
+                            <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -1004,7 +1129,7 @@
                     <div class="table-responsive">
                         <table id="historyTable">
                             <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
-                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...<\/td><\/tr></tbody>
+                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -1027,7 +1152,9 @@
                 </div>
             </div>
 
-            <div id="profileSection" style="display: none;"><div class="card" id="profileContent"></div></div>
+            <div id="profileSection" style="display: none;">
+                <div class="card" id="profileContent"></div>
+            </div>
 
             <div id="paymentSection" style="display: none;">
                 <div class="card">
@@ -1127,6 +1254,34 @@
         
         let loadingProgress = 0;
         let loadingInterval;
+        
+        // ======================== FUNCIÓN CLARO/OSCURO ========================
+        function initTheme() {
+            const savedTheme = localStorage.getItem('floridaTheme');
+            const themeBtn = document.getElementById('themeToggleBtn');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark');
+                if (themeBtn) themeBtn.innerHTML = '☀️';
+            } else {
+                document.body.classList.remove('dark');
+                if (themeBtn) themeBtn.innerHTML = '🌙';
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('themeToggleBtn');
+            if (body.classList.contains('dark')) {
+                body.classList.remove('dark');
+                localStorage.setItem('floridaTheme', 'light');
+                if (btn) btn.innerHTML = '🌙';
+            } else {
+                body.classList.add('dark');
+                localStorage.setItem('floridaTheme', 'dark');
+                if (btn) btn.innerHTML = '☀️';
+            }
+        }
+        // ======================================================================
         
         function updateLoadingProgress(progress) {
             loadingProgress = Math.min(progress, 95);
@@ -1351,7 +1506,7 @@
                 const tbody = document.getElementById('referralsTableBody');
                 tbody.innerHTML = '';
                 if (referralsList.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!<\/td><\/tr>';
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></tr>';
                 } else {
                     referralsList.forEach(ref => {
                         const row = tbody.insertRow();
@@ -1479,7 +1634,6 @@
             const today = new Date().toISOString().split('T')[0];
             const currentDate = getCurrentDateFormatted();
             
-            // Actualizar el badge con la fecha actual
             const badgeElement = document.getElementById('probabilitiesTodayBadge');
             if (badgeElement) {
                 badgeElement.innerHTML = `📅 ${currentDate}`;
@@ -1782,7 +1936,7 @@
                 const uniqueHistory = Array.from(historyMap.values()).sort((a, b) => b.date.localeCompare(a.date));
                 tbody.innerHTML = '';
                 if (uniqueHistory.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún<\/td><\/tr>';
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td><\/tr>';
                 } else {
                     uniqueHistory.forEach(item => {
                         const row = tbody.insertRow();
@@ -1794,7 +1948,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar<\/td><\/tr>';
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar</td><\/tr>';
             }
         }
         
@@ -1916,6 +2070,9 @@
                 loadDailyProbabilities();
                 showSection('predictions');
                 scheduleMidnightUpdate();
+                initTheme();
+                const themeBtn = document.getElementById('themeToggleBtn');
+                if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
             } else {
                 if (unsubscribePredictions) unsubscribePredictions();
                 if (unsubscribeProbabilities) unsubscribeProbabilities();
