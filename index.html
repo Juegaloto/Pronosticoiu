@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Florida Pro | Pronósticos con Referidos</title>
+    <title>Florida Pro | Pronósticos con Referidos (24h)</title>
     
     <style>
         * {
@@ -860,11 +860,11 @@
             <div class="card">
                 <div class="header">
                     <div class="logo">
-                        <h1>🌿 Florida Pro <span class="live-badge">EN VIVO</span></h1>
-                        <p>Pronósticos en tiempo real | Invita y gana días gratis</p>
+                        <h1>🌿 Florida Pro <span class="live-badge">24H ACTIVO</span></h1>
+                        <p>Pronóstico válido todo el día hasta las 12:00 AM</p>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
-                        <span class="florida-badge">🌴 PRONOSTICOS</span>
+                        <span class="florida-badge">🌴 PRONOSTICOS 24H</span>
                         <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
                     </div>
                 </div>
@@ -890,10 +890,10 @@
                 </div>
             </div>
 
-            <!-- Pronósticos -->
+            <!-- Pronósticos (24h) -->
             <div id="predictionsSection">
                 <div class="card" id="predictionsContent">
-                    <div class="text-center">Cargando pronósticos...</div>
+                    <div class="text-center">Cargando pronósticos 24h...</div>
                 </div>
             </div>
 
@@ -1613,14 +1613,8 @@
             return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
         
-        function isTodayOrRecent(lastUpdate) {
-            if (!lastUpdate) return false;
-            const updateDate = new Date(lastUpdate);
-            const now = new Date();
-            const diffHours = (now - updateDate) / (1000 * 60 * 60);
-            return diffHours < 24;
-        }
-        
+        // FUNCIÓN MODIFICADA: El pronóstico dura 24 horas y no desaparece hasta las 12 de la noche
+        // Ahora siempre mostrará el pronóstico del día actual durante toda la jornada
         function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
@@ -1634,22 +1628,26 @@
                 return;
             }
             if (!numbers || numbers.length === 0) {
-                container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Se actualizan a las 12:00 AM</p></div>`;
+                container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Se actualizan diariamente a las 12:00 AM y duran 24 horas completas</p></div>`;
                 return;
             }
-            const isUpdated = isTodayOrRecent(lastUpdate);
+            
+            // El pronóstico se muestra siempre, sin importar la hora, hasta las 12 de la noche
+            // Indicador de que el pronóstico es válido por 24h
             const displayTime = lastUpdateFormatted || formatTime12Hour(lastUpdate);
             const displayDate = formatDate(lastUpdate);
-            const updateBadge = isUpdated ? '<span class="update-badge">✅ ACTUALIZADO</span>' : '<span class="update-badge outdated-badge">⚠️ DESACTUALIZADO</span>';
-            let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día <span class="live-badge">ACTUALIZA AUTO</span></h2>
+            
+            let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día (24h) <span class="live-badge">VÁLIDO HASTA 12:00 AM</span></h2>
                        <div class="update-info">
-                           <span class="update-label">📅 Última actualización del pronóstico</span>
-                           <span class="update-time">${displayTime} ${updateBadge}</span>
-                           <span class="update-date">📆 ${displayDate}</span>
+                           <span class="update-label">📅 Pronóstico actualizado - Dura 24 horas completas</span>
+                           <span class="update-time">🕒 Última actualización: ${displayTime}</span>
+                           <span class="update-date">📆 Fecha del pronóstico: ${displayDate}</span>
+                           <span class="update-badge" style="background: var(--primary);">🌙 Válido hasta media noche</span>
                        </div>
                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
                             <span style="background: #fed7aa; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
                             <span style="background: #fef3c7; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
+                            <span style="background: #d1fae5; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">⏰ Pronóstico 24h activo</span>
                         </div>
                        <div class="numbers-grid" id="numbersGrid"></div>`;
             
