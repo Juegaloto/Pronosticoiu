@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="viewport" content="width=pdevice-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Florida Pro | Pronósticos con Referidos (24h)</title>
     
     <style>
@@ -181,6 +181,27 @@
             border-radius: 20px;
             font-size: 0.65rem;
             margin-left: 0.5rem;
+        }
+
+        .countdown-timer {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.75rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .countdown-label {
+            font-size: 0.7rem;
+            opacity: 0.9;
+        }
+
+        .countdown-time {
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: monospace;
+            letter-spacing: 2px;
         }
 
         .outdated-badge {
@@ -861,13 +882,20 @@
                 <div class="header">
                     <div class="logo">
                         <h1>🌿 Florida Pro <span class="live-badge">24H ACTIVO</span></h1>
-                        <p>Pronóstico válido todo el día hasta las 12:00 AM</p>
+                        <p>Pronóstico válido todo el día hasta las 11:59 PM</p>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
                         <span class="florida-badge">🌴 PRONOSTICOS 24H</span>
                         <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
                     </div>
                 </div>
+            </div>
+
+            <!-- Contador regresivo para próxima actualización -->
+            <div class="countdown-timer">
+                <div class="countdown-label">🔄 PRÓXIMA ACTUALIZACIÓN AUTOMÁTICA</div>
+                <div class="countdown-time" id="countdownTimer">--:--:--</div>
+                <div class="countdown-label" style="font-size: 0.65rem; margin-top: 0.25rem;">⏰ Los pronósticos se renuevan automáticamente a las 12:00 AM</div>
             </div>
 
             <div class="stats-grid">
@@ -1133,6 +1161,7 @@
         let unsubscribeResults = null;
         let unsubscribeRiddle = null;
         let unsubscribeDailyProb = null;
+        let countdownInterval = null;
         
         let loadingProgress = 0;
         let loadingInterval;
@@ -1179,6 +1208,52 @@
         }
         
         function closeDialog() { document.getElementById('dialogModal').style.display = 'none'; }
+        
+        // Función para actualizar el contador regresivo
+        function updateCountdown() {
+            const now = new Date();
+            const midnight = new Date(now);
+            midnight.setHours(24, 0, 0, 0); // 12:00 AM del día siguiente
+            
+            const diff = midnight - now;
+            
+            if (diff <= 0) {
+                // Ya es medianoche o pasó, recargar
+                if (document.getElementById('dashboardScreen').style.display !== 'none') {
+                    location.reload();
+                }
+                return;
+            }
+            
+            const hours = Math.floor(diff / 3600000);
+            const minutes = Math.floor((diff % 3600000) / 60000);
+            const seconds = Math.floor((diff % 60000) / 1000);
+            
+            const timerElement = document.getElementById('countdownTimer');
+            if (timerElement) {
+                timerElement.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+        
+        // Programar la actualización automática a medianoche
+        function scheduleMidnightUpdate() {
+            const now = new Date();
+            const midnight = new Date(now);
+            midnight.setHours(24, 0, 0, 0);
+            const timeToMidnight = midnight - now;
+            
+            setTimeout(() => {
+                // Recargar la página a medianoche para obtener los nuevos pronósticos
+                if (document.getElementById('dashboardScreen').style.display !== 'none') {
+                    location.reload();
+                }
+            }, timeToMidnight);
+            
+            // Iniciar el contador regresivo
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownInterval = setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
         
         function toggleAuthMode() {
             if (authMode === 'login') {
@@ -1378,6 +1453,7 @@
             if (unsubscribeResults) unsubscribeResults();
             if (unsubscribeRiddle) unsubscribeRiddle();
             if (unsubscribeDailyProb) unsubscribeDailyProb();
+            if (countdownInterval) clearInterval(countdownInterval);
             auth.signOut();
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('authScreen').style.display = 'flex';
@@ -1545,14 +1621,12 @@
                 return; 
             }
             
-            // Validar que el mensaje contenga información básica
             if (transferMessage.length < 20) {
                 showDialog('Error', '❌ Por favor, ingresa el mensaje completo de la transferencia con todos los datos');
                 return;
             }
             
             try {
-                // Extraer monto del mensaje (ej: 250.00 CUP o 3000.00)
                 let amount = 250;
                 const amountMatch = transferMessage.match(/(\d+(?:\.\d+)?)\s*(?:CUP|cup)/i);
                 if (amountMatch) {
@@ -1574,7 +1648,6 @@
                 
                 await db.collection('payments').add(paymentData);
                 
-                // Limpiar formulario
                 document.getElementById('transferMessage').value = '';
                 document.getElementById('contactPhone').value = '';
                 
@@ -1613,8 +1686,6 @@
             return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
         
-        // FUNCIÓN MODIFICADA: El pronóstico dura 24 horas y no desaparece hasta las 12 de la noche
-        // Ahora siempre mostrará el pronóstico del día actual durante toda la jornada
         function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
@@ -1628,21 +1699,19 @@
                 return;
             }
             if (!numbers || numbers.length === 0) {
-                container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Se actualizan diariamente a las 12:00 AM y duran 24 horas completas</p></div>`;
+                container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Se actualizan automáticamente a las 12:00 AM</p></div>`;
                 return;
             }
             
-            // El pronóstico se muestra siempre, sin importar la hora, hasta las 12 de la noche
-            // Indicador de que el pronóstico es válido por 24h
             const displayTime = lastUpdateFormatted || formatTime12Hour(lastUpdate);
             const displayDate = formatDate(lastUpdate);
             
-            let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día (24h) <span class="live-badge">VÁLIDO HASTA 12:00 AM</span></h2>
+            let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día (24h) <span class="live-badge">VÁLIDO HASTA 11:59 PM</span></h2>
                        <div class="update-info">
-                           <span class="update-label">📅 Pronóstico actualizado - Dura 24 horas completas</span>
-                           <span class="update-time">🕒 Última actualización: ${displayTime}</span>
+                           <span class="update-label">📅 Pronóstico válido por 24 horas completas</span>
+                           <span class="update-time">🕒 Última actualización del admin: ${displayTime}</span>
                            <span class="update-date">📆 Fecha del pronóstico: ${displayDate}</span>
-                           <span class="update-badge" style="background: var(--primary);">🌙 Válido hasta media noche</span>
+                           <span class="update-badge" style="background: var(--primary);">🌙 Se renueva a las 12:00 AM</span>
                        </div>
                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
                             <span style="background: #fed7aa; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
@@ -1729,13 +1798,11 @@
                 });
             });
             
-            // Escuchar adivinanzas
             if (unsubscribeRiddle) unsubscribeRiddle();
             unsubscribeRiddle = db.collection('riddles').doc(today).onSnapshot(() => {
                 if (document.getElementById('riddleSection').style.display !== 'none') loadRiddle();
             });
             
-            // Escuchar probabilidades diarias
             if (unsubscribeDailyProb) unsubscribeDailyProb();
             unsubscribeDailyProb = db.collection('dailyProbabilities').doc(today).onSnapshot(() => {
                 if (document.getElementById('dailyProbSection').style.display !== 'none') loadDailyProbabilities();
@@ -1869,7 +1936,6 @@
             if (btn && btn.dataset.section) showSection(btn.dataset.section);
         });
         
-        // Inicialización
         animateLoading();
         
         setTimeout(async () => {
@@ -1902,12 +1968,14 @@
                 loadRiddle();
                 loadDailyProbabilities();
                 showSection('predictions');
+                scheduleMidnightUpdate(); // Iniciar el temporizador para actualización automática
             } else {
                 if (unsubscribePredictions) unsubscribePredictions();
                 if (unsubscribeProbabilities) unsubscribeProbabilities();
                 if (unsubscribeResults) unsubscribeResults();
                 if (unsubscribeRiddle) unsubscribeRiddle();
                 if (unsubscribeDailyProb) unsubscribeDailyProb();
+                if (countdownInterval) clearInterval(countdownInterval);
                 document.getElementById('dashboardScreen').style.display = 'none';
                 document.getElementById('authScreen').style.display = 'flex';
                 currentUser = null;
