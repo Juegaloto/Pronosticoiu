@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=pdevice-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Florida Pro | Pronósticos con Referidos (24h)</title>
     
     <style>
@@ -204,8 +204,14 @@
             letter-spacing: 2px;
         }
 
-        .outdated-badge {
-            background: var(--danger);
+        .today-badge {
+            background: var(--primary);
+            color: white;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-bottom: 0.75rem;
         }
 
         .numbers-grid {
@@ -328,7 +334,6 @@
             color: var(--text-secondary);
         }
 
-        /* Adivinanzas */
         .riddle-card {
             background: linear-gradient(135deg, #fef3c7, #ffedd5);
             border: 2px solid var(--primary);
@@ -373,9 +378,23 @@
             width: auto;
         }
 
-        /* Probabilidades diarias */
         .probabilities-card {
             background: var(--gray-bg);
+        }
+
+        .probabilities-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .probabilities-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            background: #fef3c7;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
         }
 
         .probabilities-list {
@@ -403,7 +422,6 @@
             color: var(--text-secondary);
         }
 
-        /* Pantalla de carga */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -463,7 +481,6 @@
             transition: width 0.3s ease;
         }
 
-        /* Referidos */
         .referral-card {
             background: linear-gradient(135deg, #fff7ed, #ffedd5);
             border: 2px solid var(--primary);
@@ -534,25 +551,6 @@
             color: var(--primary-dark);
         }
 
-        .referral-link-btn {
-            background: #25a363;
-            color: white;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            transition: all 0.2s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        /* Comentarios */
         .comments-section {
             margin-top: 1rem;
         }
@@ -841,7 +839,6 @@
     </style>
 </head>
 <body>
-    <!-- Pantalla de carga -->
     <div id="loadingScreen" class="loading-screen">
         <div class="loading-spinner"></div>
         <div class="loading-text">🌿 Florida Pro</div>
@@ -851,7 +848,6 @@
         </div>
     </div>
 
-    <!-- Pantalla de Login/Registro -->
     <div id="authScreen" class="auth-container">
         <div class="auth-card">
             <h2>🌿 Florida Pro</h2>
@@ -875,7 +871,6 @@
         </div>
     </div>
 
-    <!-- Dashboard principal -->
     <div id="dashboardScreen" style="display: none;">
         <div class="container">
             <div class="card">
@@ -891,7 +886,6 @@
                 </div>
             </div>
 
-            <!-- Contador regresivo para próxima actualización -->
             <div class="countdown-timer">
                 <div class="countdown-label">🔄 PRÓXIMA ACTUALIZACIÓN AUTOMÁTICA</div>
                 <div class="countdown-time" id="countdownTimer">--:--:--</div>
@@ -918,14 +912,12 @@
                 </div>
             </div>
 
-            <!-- Pronósticos (24h) -->
             <div id="predictionsSection">
                 <div class="card" id="predictionsContent">
                     <div class="text-center">Cargando pronósticos 24h...</div>
                 </div>
             </div>
 
-            <!-- Adivinanza -->
             <div id="riddleSection" style="display: none;">
                 <div class="card riddle-card">
                     <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🤔 Adivinanza del Día</h2>
@@ -938,17 +930,19 @@
                 </div>
             </div>
 
-            <!-- Probabilidades Diarias -->
             <div id="dailyProbSection" style="display: none;">
                 <div class="card probabilities-card">
-                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">📊 Probabilidades del Día</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">Números con mayor probabilidad de salir según análisis del administrador</p>
+                    <div class="probabilities-header">
+                        <div class="today-badge" id="probabilitiesTodayBadge">📊 Cargando...</div>
+                        <div class="probabilities-title">🎯 ESTOS SON LOS NÚMEROS DE HOY</div>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem; text-align: center;">Números con mayor probabilidad de salir según análisis del administrador</p>
                     <div id="dailyProbContent" class="text-center">
                         <div class="probabilities-list" id="probabilitiesList">
                             <div>Cargando probabilidades...</div>
                         </div>
                         <div class="update-info" style="margin-top: 1rem;">
-                            <span class="update-label">📅 Última actualización</span>
+                            <span class="update-label">📅 Última actualización del admin</span>
                             <span class="update-time" id="probUpdateTime">--:-- --</span>
                             <span class="update-date" id="probUpdateDate">--/--/----</span>
                         </div>
@@ -956,7 +950,6 @@
                 </div>
             </div>
 
-            <!-- Referidos -->
             <div id="referralsSection" style="display: none;">
                 <div class="card referral-card">
                     <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana Días Gratis</h2>
@@ -998,32 +991,25 @@
                     <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
                     <div class="table-responsive">
                         <table id="referralsTable">
-                            <thead>
-                                <tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Estado</th>
-                            </thead>
-                            <tbody id="referralsTableBody">
-                                <tr><td colspan="4" class="text-center">Cargando tus referidos...<\/td><\/tr>
-                            </tbody>
+                            <thead><tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Estado</th></tr></thead>
+                            <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...<\/td><\/tr></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- Historial -->
             <div id="historySection" style="display: none;">
                 <div class="card">
                     <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
                     <div class="table-responsive">
                         <table id="historyTable">
                             <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
-                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...<\/td><\/tr>
-                            </tbody>
+                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...<\/td><\/tr></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- Comentarios -->
             <div id="commentsSection" style="display: none;">
                 <div class="card">
                     <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">💬 Comentarios y Jugadas</h2>
@@ -1041,28 +1027,17 @@
                 </div>
             </div>
 
-            <!-- Perfil -->
             <div id="profileSection" style="display: none;"><div class="card" id="profileContent"></div></div>
 
-            <!-- Pago/Membresía -->
             <div id="paymentSection" style="display: none;">
                 <div class="card">
                     <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">💰 Membresía Premium</h2>
                     <p class="text-center mb-2" style="color: var(--text-secondary);">Activa tu membresía y accede a todos los pronósticos</p>
                     
                     <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-number">$250</div>
-                            <div class="stat-label">CUP / Mes</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">24h</div>
-                            <div class="stat-label">Activación</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="currentStatus">Inactiva</div>
-                            <div class="stat-label">Estado Actual</div>
-                        </div>
+                        <div class="stat-card"><div class="stat-number">$250</div><div class="stat-label">CUP / Mes</div></div>
+                        <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Activación</div></div>
+                        <div class="stat-card"><div class="stat-number" id="currentStatus">Inactiva</div><div class="stat-label">Estado Actual</div></div>
                     </div>
 
                     <div class="payment-info">
@@ -1073,21 +1048,11 @@
                     </div>
 
                     <div class="payment-methods">
-                        <div class="payment-method selected" data-method="transfer" onclick="selectPaymentMethod('transfer')">
-                            <div class="payment-method-icon">🏦</div>
-                            <div style="font-size: 0.7rem;">Transferencia</div>
-                        </div>
-                        <div class="payment-method" data-method="card" onclick="selectPaymentMethod('card')">
-                            <div class="payment-method-icon">💳</div>
-                            <div style="font-size: 0.7rem;">Tarjeta</div>
-                        </div>
-                        <div class="payment-method" data-method="enZona" onclick="selectPaymentMethod('enZona')">
-                            <div class="payment-method-icon">📱</div>
-                            <div style="font-size: 0.7rem;">EnZona</div>
-                        </div>
+                        <div class="payment-method selected" data-method="transfer" onclick="selectPaymentMethod('transfer')"><div class="payment-method-icon">🏦</div><div style="font-size: 0.7rem;">Transferencia</div></div>
+                        <div class="payment-method" data-method="card" onclick="selectPaymentMethod('card')"><div class="payment-method-icon">💳</div><div style="font-size: 0.7rem;">Tarjeta</div></div>
+                        <div class="payment-method" data-method="enZona" onclick="selectPaymentMethod('enZona')"><div class="payment-method-icon">📱</div><div style="font-size: 0.7rem;">EnZona</div></div>
                     </div>
 
-                    <!-- Ejemplo de formato -->
                     <div class="transfer-example">
                         📋 <strong>Formato de ejemplo:</strong>
                         <code>Se ha realizado una transferencia a la cuenta 9227069997711927 de 250.00 CUP. Nro. Transaccion KW600UIE4C999. Fecha: 29/4/2026</code>
@@ -1107,7 +1072,6 @@
                     <button class="btn" onclick="submitPayment()" id="submitPaymentBtn">💰 Enviar comprobante y activar</button>
                     <p class="text-center mt-3" style="font-size: 0.65rem; color: var(--text-secondary);">
                         ⏱️ Activación en menos de 24 horas<br>
-                        
                     </p>
                 </div>
 
@@ -1115,9 +1079,7 @@
                     <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Historial de pagos</h3>
                     <div class="table-responsive">
                         <table id="paymentsTable">
-                            <thead>
-                                <tr><th>Fecha</th><th>Monto</th><th>Estado</th>
-                            </thead>
+                            <thead><tr><th>Fecha</th><th>Monto</th><th>Estado</th></tr></thead>
                             <tbody id="paymentsTableBody"></tbody>
                         </table>
                     </div>
@@ -1209,16 +1171,18 @@
         
         function closeDialog() { document.getElementById('dialogModal').style.display = 'none'; }
         
-        // Función para actualizar el contador regresivo
+        function getCurrentDateFormatted() {
+            const today = new Date();
+            return today.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+        
         function updateCountdown() {
             const now = new Date();
             const midnight = new Date(now);
-            midnight.setHours(24, 0, 0, 0); // 12:00 AM del día siguiente
-            
+            midnight.setHours(24, 0, 0, 0);
             const diff = midnight - now;
             
             if (diff <= 0) {
-                // Ya es medianoche o pasó, recargar
                 if (document.getElementById('dashboardScreen').style.display !== 'none') {
                     location.reload();
                 }
@@ -1228,14 +1192,12 @@
             const hours = Math.floor(diff / 3600000);
             const minutes = Math.floor((diff % 3600000) / 60000);
             const seconds = Math.floor((diff % 60000) / 1000);
-            
             const timerElement = document.getElementById('countdownTimer');
             if (timerElement) {
                 timerElement.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
         }
         
-        // Programar la actualización automática a medianoche
         function scheduleMidnightUpdate() {
             const now = new Date();
             const midnight = new Date(now);
@@ -1243,13 +1205,11 @@
             const timeToMidnight = midnight - now;
             
             setTimeout(() => {
-                // Recargar la página a medianoche para obtener los nuevos pronósticos
                 if (document.getElementById('dashboardScreen').style.display !== 'none') {
                     location.reload();
                 }
             }, timeToMidnight);
             
-            // Iniciar el contador regresivo
             if (countdownInterval) clearInterval(countdownInterval);
             countdownInterval = setInterval(updateCountdown, 1000);
             updateCountdown();
@@ -1273,9 +1233,7 @@
         
         function selectPaymentMethod(method) {
             selectedPaymentMethod = method;
-            document.querySelectorAll('.payment-method').forEach(el => {
-                el.classList.remove('selected');
-            });
+            document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
             document.querySelector(`.payment-method[data-method="${method}"]`).classList.add('selected');
         }
         
@@ -1488,9 +1446,6 @@
             if (section === 'dailyProb') loadDailyProbabilities();
         }
         
-        // ==================== ADIVINANZAS ====================
-        let currentRiddleAnswer = '';
-        
         async function loadRiddle() {
             const today = new Date().toISOString().split('T')[0];
             try {
@@ -1513,14 +1468,23 @@
             }
         }
         
+        let currentRiddleAnswer = '';
+        
         function toggleRiddleAnswer() {
             const answerDiv = document.getElementById('riddleAnswer');
             answerDiv.classList.toggle('show');
         }
         
-        // ==================== PROBABILIDADES DIARIAS ====================
         async function loadDailyProbabilities() {
             const today = new Date().toISOString().split('T')[0];
+            const currentDate = getCurrentDateFormatted();
+            
+            // Actualizar el badge con la fecha actual
+            const badgeElement = document.getElementById('probabilitiesTodayBadge');
+            if (badgeElement) {
+                badgeElement.innerHTML = `📅 ${currentDate}`;
+            }
+            
             try {
                 const doc = await db.collection('dailyProbabilities').doc(today).get();
                 if (doc.exists) {
@@ -1545,10 +1509,7 @@
                         const percent = percentages[index] || Math.floor(Math.random() * 30) + 50;
                         const probDiv = document.createElement('div');
                         probDiv.className = 'prob-item';
-                        probDiv.innerHTML = `
-                            <div class="prob-number">${num}</div>
-                            <div class="prob-percent">${percent}%</div>
-                        `;
+                        probDiv.innerHTML = `<div class="prob-number">${num}</div><div class="prob-percent">${percent}%</div>`;
                         container.appendChild(probDiv);
                     });
                 } else {
@@ -1562,7 +1523,6 @@
             }
         }
         
-        // ==================== FUNCIONES EXISTENTES ====================
         async function loadPaymentSection() {
             if (!currentUser) return;
             
@@ -1651,15 +1611,7 @@
                 document.getElementById('transferMessage').value = '';
                 document.getElementById('contactPhone').value = '';
                 
-                showDialog(
-                    '✅ Comprobante enviado', 
-                    `Tu solicitud de membresía ha sido registrada.\n\n` +
-                    `📝 Mensaje enviado:\n${transferMessage.substring(0, 150)}${transferMessage.length > 150 ? '...' : ''}\n\n` +
-                    `💳 Método: ${selectedPaymentMethod === 'transfer' ? 'Transferencia' : selectedPaymentMethod === 'card' ? 'Tarjeta' : 'EnZona'}\n` +
-                    `💰 Monto: $${amount.toFixed(2)} CUP\n\n` +
-                    `⏱️ Tu membresía se activará en menos de 24 horas.\n` +
-                    `📞 Ante cualquier duda, contacta al soporte.`
-                );
+                showDialog('✅ Comprobante enviado', `Tu solicitud de membresía ha sido registrada.\n\n📝 Mensaje enviado:\n${transferMessage.substring(0, 150)}${transferMessage.length > 150 ? '...' : ''}\n\n💳 Método: ${selectedPaymentMethod === 'transfer' ? 'Transferencia' : selectedPaymentMethod === 'card' ? 'Tarjeta' : 'EnZona'}\n💰 Monto: $${amount.toFixed(2)} CUP\n\n⏱️ Tu membresía se activará en menos de 24 horas.\n📞 Ante cualquier duda, contacta al soporte.`);
                 
                 await loadPaymentSection();
                 
@@ -1681,8 +1633,9 @@
         }
         
         function formatDate(dateString) {
-            if (!dateString) return 'No disponible';
+            if (!dateString) return getCurrentDateFormatted();
             const date = new Date(dateString);
+            if (isNaN(date.getTime())) return getCurrentDateFormatted();
             return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
         
@@ -1690,12 +1643,7 @@
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             if (!isActive) {
-                container.innerHTML = `<div class="text-center" style="padding: 2rem;">
-                    <div style="font-size: 3rem;">🔒</div>
-                    <h3>Contenido Bloqueado</h3>
-                    <p style="margin: 1rem 0;">Necesitas una membresía activa para acceder a los pronósticos</p>
-                    <button class="btn" onclick="showSection('payment')" style="background: var(--primary);">💰 Activar Membresía</button>
-                </div>`;
+                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p style="margin: 1rem 0;">Necesitas una membresía activa para acceder a los pronósticos</p><button class="btn" onclick="showSection('payment')" style="background: var(--primary);">💰 Activar Membresía</button></div>`;
                 return;
             }
             if (!numbers || numbers.length === 0) {
@@ -1705,12 +1653,13 @@
             
             const displayTime = lastUpdateFormatted || formatTime12Hour(lastUpdate);
             const displayDate = formatDate(lastUpdate);
+            const currentDate = getCurrentDateFormatted();
             
             let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día (24h) <span class="live-badge">VÁLIDO HASTA 11:59 PM</span></h2>
                        <div class="update-info">
-                           <span class="update-label">📅 Pronóstico válido por 24 horas completas</span>
+                           <span class="update-label">📅 Pronóstico válido para hoy: ${currentDate}</span>
                            <span class="update-time">🕒 Última actualización del admin: ${displayTime}</span>
-                           <span class="update-date">📆 Fecha del pronóstico: ${displayDate}</span>
+                           <span class="update-date">📆 Pronóstico subido el: ${displayDate}</span>
                            <span class="update-badge" style="background: var(--primary);">🌙 Se renueva a las 12:00 AM</span>
                        </div>
                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
@@ -1942,9 +1891,7 @@
             const isConnected = await checkConnection();
             if (isConnected) {
                 updateLoadingProgress(100);
-                setTimeout(() => {
-                    hideLoadingScreen();
-                }, 500);
+                setTimeout(() => { hideLoadingScreen(); }, 500);
             } else {
                 updateLoadingProgress(100);
                 setTimeout(() => {
@@ -1968,7 +1915,7 @@
                 loadRiddle();
                 loadDailyProbabilities();
                 showSection('predictions');
-                scheduleMidnightUpdate(); // Iniciar el temporizador para actualización automática
+                scheduleMidnightUpdate();
             } else {
                 if (unsubscribePredictions) unsubscribePredictions();
                 if (unsubscribeProbabilities) unsubscribeProbabilities();
