@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Florida Pro | Bingo + Pronósticos</title>
+    <title>Florida Pro | Pronósticos</title>
     
     <style>
         * {
@@ -35,8 +35,6 @@
             --body-bg-end: #ffedd5;
             --input-bg: #ffffff;
             --table-hover: #fef3c7;
-            --bingo-ball: #f59e0b;
-            --bingo-marked: #10b981;
         }
 
         /* TEMA OSCURO */
@@ -62,8 +60,6 @@
             --body-bg-end: #1e293b;
             --input-bg: #1e293b;
             --table-hover: #334155;
-            --bingo-ball: #f59e0b;
-            --bingo-marked: #10b981;
         }
 
         body {
@@ -73,13 +69,6 @@
             line-height: 1.5;
             min-height: 100vh;
             transition: background 0.3s ease, color 0.2s ease;
-        }
-
-        body.bingo-fullscreen {
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
-            height: 100%;
         }
 
         .container {
@@ -966,7 +955,7 @@
             color: #ffedd5;
         }
 
-        .admin-phone-warning {
+        .admin-contact-warning {
             background: var(--danger);
             color: white;
             padding: 0.5rem;
@@ -974,88 +963,6 @@
             font-size: 0.7rem;
             text-align: center;
             margin-bottom: 1rem;
-        }
-
-        /* ===== ESTILOS BINGO ===== */
-        .bingo-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 1rem;
-            border: 2px solid var(--primary);
-        }
-
-        .bingo-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin: 1rem 0;
-        }
-
-        .bingo-cell {
-            aspect-ratio: 1;
-            background: var(--gray-bg);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-        }
-
-        .bingo-cell.marked {
-            background: var(--bingo-marked);
-            color: white;
-            text-decoration: line-through;
-        }
-
-        .bingo-cell:hover:not(.marked) {
-            background: var(--primary-light);
-            transform: scale(1.05);
-        }
-
-        .bingo-ball {
-            display: inline-block;
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--bingo-ball), var(--primary-dark));
-            border-radius: 50%;
-            text-align: center;
-            line-height: 45px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: white;
-            margin: 0.2rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .bingo-ball.called {
-            opacity: 0.5;
-            background: var(--gray-bg);
-            color: var(--text-secondary);
-        }
-
-        .server-balls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            margin: 1rem 0;
-            max-height: 150px;
-            overflow-y: auto;
-            padding: 0.5rem;
-            background: var(--gray-bg);
-            border-radius: 16px;
-        }
-
-        .bingo-jackpot {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            text-align: center;
         }
 
         .balance-display {
@@ -1067,50 +974,6 @@
             font-size: 0.8rem;
         }
 
-        /* Pantalla completa BINGO */
-        .bingo-fullscreen-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--body-bg-start);
-            z-index: 10000;
-            overflow-y: auto;
-            padding: 1rem;
-        }
-
-        .bingo-fullscreen-container .bingo-grid {
-            gap: 12px;
-        }
-
-        .bingo-fullscreen-container .bingo-cell {
-            font-size: 1.5rem;
-        }
-
-        .bingo-fullscreen-container .server-balls {
-            max-height: 200px;
-        }
-
-        .exit-fullscreen-btn {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: var(--danger);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 10001;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Estilos para los botones de copiar */
         .copy-number-btn {
             background: var(--primary);
             color: white;
@@ -1138,17 +1001,13 @@
             .result-value { font-size: 1.2rem; }
             .referral-code { font-size: 1rem; }
             .riddle-question { font-size: 0.9rem; }
-            .bingo-grid { gap: 4px; }
-            .bingo-cell { font-size: 0.8rem; }
-            .bingo-ball { width: 35px; height: 35px; line-height: 35px; font-size: 0.9rem; }
-            .bingo-fullscreen-container .bingo-cell { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
     <div id="loadingScreen" class="loading-screen">
         <div class="loading-spinner"></div>
-        <div class="loading-text">🎰 Florida Pro Bingo</div>
+        <div class="loading-text">🎰 Florida Pro</div>
         <div class="loading-subtext">Conectando con el servidor...</div>
         <div class="loading-progress">
             <div id="loadingProgressBar" class="loading-progress-bar"></div>
@@ -1157,8 +1016,8 @@
 
     <div id="authScreen" class="auth-container">
         <div class="auth-card">
-            <h2>🎰 Florida Pro Bingo</h2>
-            <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos + Bingo | Sistema de Referidos</p>
+            <h2>🎰 Florida Pro</h2>
+            <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos + Sistema de Referidos</p>
             <div class="input-group">
                 <label>📧 Correo electrónico</label>
                 <input type="email" id="authEmail" placeholder="tu@email.com">
@@ -1183,12 +1042,12 @@
             <div class="card">
                 <div class="header">
                     <div class="logo">
-                        <h1>🎰 Florida Pro Bingo <span class="live-badge">BINGO ACTIVO</span></h1>
-                        <p>Pronósticos 24h + Bingo en Vivo</p>
+                        <h1>🎰 Florida Pro <span class="live-badge">PRONÓSTICOS ACTIVOS</span></h1>
+                        <p>Pronósticos 24h</p>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
                         <span class="balance-display" id="balanceDisplay">💰 Saldo: 0 Cup</span>
-                        <span class="florida-badge">🎯 BINGO</span>
+                        <span class="florida-badge">🎯 PRONÓSTICOS</span>
                         <div class="theme-toggle" id="themeToggleBtn" title="Cambiar tema">
                             🌙
                         </div>
@@ -1213,7 +1072,6 @@
             <div class="card">
                 <div class="nav-menu">
                     <button class="nav-btn active" data-section="predictions">🎯 Pronósticos</button>
-                    <button class="nav-btn" data-section="bingo">🎰 BINGO</button>
                     <button class="nav-btn" data-section="riddle">🤔 Adivinanza</button>
                     <button class="nav-btn" data-section="dailyProb">📊 Probabilidades</button>
                     <button class="nav-btn" data-section="referrals">🎁 Referidos</button>
@@ -1227,38 +1085,6 @@
             <div id="predictionsSection">
                 <div class="card" id="predictionsContent">
                     <div class="text-center">Cargando pronósticos 24h...</div>
-                </div>
-            </div>
-
-            <div id="bingoSection" style="display: none;">
-                <div class="card">
-                    <h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎰 BINGO EN VIVO</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.75rem;">Compra cartones por 5 Cup c/u. Máximo 5 cartones por persona. Necesitamos 15 cartones vendidos para comenzar. El ganador se lleva el 80% del pozo.</p>
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
-                        <div class="bingo-jackpot">
-                            💰 POZO ACTUAL: <span id="jackpotAmount">0</span> Cup
-                        </div>
-                        <div>
-                            <span class="florida-badge" style="background: var(--success);">🎫 Cartones vendidos: <span id="ticketsSold">0</span>/15</span>
-                        </div>
-                    </div>
-
-                    <div id="bingoGameStatus" class="text-center" style="margin-bottom: 1rem;">
-                        <div class="update-info" id="gameStatusInfo">
-                            <span class="update-label">🎲 ESTADO DEL JUEGO</span>
-                            <span class="update-time" id="gameStatusText">Esperando jugadores...</span>
-                        </div>
-                    </div>
-
-                    <div id="bingoUserCards" style="margin-top: 1rem;"></div>
-
-                    <div id="buyCardSection" class="text-center" style="margin-top: 1rem;">
-                        <div id="myCardsCount" style="margin-bottom: 0.5rem; font-size: 0.8rem;"></div>
-                        <button class="btn btn-success" id="buyCardBtn" onclick="buyBingoCard()">🎫 Comprar Cartón (5 Cup)</button>
-                    </div>
-
-                    <div id="bingoGamePlay" style="display: none; margin-top: 1rem;"></div>
                 </div>
             </div>
 
@@ -1405,24 +1231,23 @@
                         <div class="payment-info">
                             <div style="font-size: 0.7rem; color: var(--text-secondary);">💳 Tarjeta para transferencia:</div>
                             <div class="payment-number" style="font-size: 1.3rem; font-family: monospace;">9227 0699 9771 1927</div>
-                            <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">📞 Móvil para confirmar:</div>
-                            <div class="payment-number" style="font-size: 1.3rem;">63868677</div>
-                            <div style="font-size: 0.65rem;">Beneficiario: Florida Pro Services</div>
-                            <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem; flex-wrap: wrap;">
+                            <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem;">
                                 <button class="copy-number-btn" onclick="copyToClipboard('9227 0699 9771 1927')">💳 Copiar Tarjeta</button>
-                                <button class="copy-number-btn" onclick="copyToClipboard('63868677')">📞 Copiar Móvil</button>
                             </div>
                         </div>
 
-                        <!-- Confirmación de transferencia -->
+                        <!-- Confirmación de transferencia con envío a Telegram -->
                         <div class="transfer-confirmation">
                             <div class="text-center" style="margin-bottom: 0.5rem;">
                                 <strong>✅ Confirmar transferencia</strong>
                             </div>
                             <p style="font-size: 0.75rem; margin-bottom: 0.5rem;">
                                 Por favor, confirma que has realizado la transferencia a la tarjeta <strong>9227 0699 9771 1927</strong> 
-                                o al móvil <strong>63868677</strong> con el comprobante correspondiente.
+                                y envía la captura al usuario de Telegram <strong>@sdesaroyador</strong>.
                             </p>
+                            <div class="admin-contact-warning">
+                                📱 <strong>Importante:</strong> Debes enviar la captura de tu transferencia a <strong>@sdesaroyador</strong> en Telegram para que sea verificada.
+                            </div>
                             <button class="btn btn-small" onclick="confirmTransfer()" style="width: auto; background: var(--success);">✅ Confirmar Transferencia</button>
                         </div>
 
@@ -1516,11 +1341,7 @@
         let unsubscribeResults = null;
         let unsubscribeRiddle = null;
         let unsubscribeDailyProb = null;
-        let unsubscribeBingoGame = null;
         let countdownInterval = null;
-        let currentBingoGame = null;
-        let userCards = [];
-        let isBingoFullscreen = false;
         
         let loadingProgress = 0;
         let loadingInterval;
@@ -1563,14 +1384,14 @@
             }
         }
         
-        // Función para confirmar transferencia
+        // Función para confirmar transferencia con envío a Telegram
         function confirmTransfer() {
             showDialog('✅ Transferencia Confirmada', 
                 'Has confirmado la transferencia.\n\n' +
                 'Datos de destino:\n' +
-                '💳 Tarjeta: 9227 0699 9771 1927\n' +
-                '📞 Móvil: 63868677\n\n' +
-                'Tu solicitud de depósito será procesada en las próximas 24 horas.\n\n' +
+                '💳 Tarjeta: 9227 0699 9771 1927\n\n' +
+                '📱 DEBES ENVIAR LA CAPTURA DE TU TRANSFERENCIA A: @sdesaroyador en Telegram\n\n' +
+                'Tu solicitud de depósito será procesada en las próximas 24 horas una vez que se verifique la captura.\n\n' +
                 'Recuerda incluir el NÚMERO DE TRANSACCIÓN en el campo correspondiente.'
             );
         }
@@ -1733,17 +1554,11 @@
                 document.getElementById('referralCodeGroup').style.display = 'block';
             } else {
                 authMode = 'login';
-                document.querySelector('.auth-card h2').innerText = '🎰 Florida Pro Bingo';
+                document.querySelector('.auth-card h2').innerText = '🎰 Florida Pro';
                 document.getElementById('authBtn').innerHTML = 'Iniciar Sesión';
                 document.getElementById('switchAuth').innerHTML = '¿No tienes cuenta? Regístrate';
                 document.getElementById('referralCodeGroup').style.display = 'none';
             }
-        }
-        
-        function selectPaymentMethod(method) {
-            selectedPaymentMethod = method;
-            document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
-            document.querySelector(`.payment-method[data-method="${method}"]`).classList.add('selected');
         }
         
         function generateReferralCode(email) {
@@ -1914,376 +1729,6 @@
             }
         }
         
-        // ======================== FUNCIONES DE BINGO ========================
-        function generateBingoCard() {
-            const numbers = [];
-            const used = new Set();
-            for (let i = 0; i < 15; i++) {
-                let num;
-                do {
-                    num = Math.floor(Math.random() * 100).toString().padStart(2, '0');
-                } while (used.has(num));
-                used.add(num);
-                numbers.push(num);
-            }
-            numbers.sort();
-            return { numbers, marked: [] };
-        }
-        
-        async function buyBingoCard() {
-            if (!currentUser) { showDialog('Error', 'Inicia sesión primero'); return; }
-            
-            const CARD_PRICE = 5;
-            const MAX_CARDS_PER_USER = 5;
-            
-            if (userBalance < CARD_PRICE) {
-                showDialog('Saldo insuficiente', `Necesitas ${CARD_PRICE} Cup para comprar un cartón. Tu saldo actual es ${userBalance} Cup.\n\nPor favor, deposita fondos en la sección "Depósito/Retiro".`);
-                return;
-            }
-            
-            const gameRef = db.collection('bingoGames').doc('current');
-            const gameDoc = await gameRef.get();
-            
-            if (!gameDoc.exists) {
-                const newCard = generateBingoCard();
-                await gameRef.set({
-                    active: false,
-                    tickets: [{
-                        userId: currentUser.email,
-                        card: newCard,
-                        purchasedAt: new Date().toISOString()
-                    }],
-                    jackpot: 0,
-                    totalTickets: 1,
-                    calledNumbers: [],
-                    winner: null,
-                    startedAt: null
-                });
-                await updateUserBalance(userBalance - CARD_PRICE);
-                showDialog('✅ Cartón comprado', 'Has comprado el primer cartón. Espera a que se completen 15 cartones para que comience el juego.');
-                loadBingoGame();
-                return;
-            }
-            
-            const game = gameDoc.data();
-            
-            if (game.active) {
-                showDialog('Juego en curso', 'Ya hay un juego de bingo activo. Espera a que termine para comprar otro cartón.');
-                return;
-            }
-            
-            if (game.winner) {
-                await gameRef.set({
-                    active: false,
-                    tickets: [],
-                    jackpot: 0,
-                    totalTickets: 0,
-                    calledNumbers: [],
-                    winner: null,
-                    startedAt: null
-                });
-            }
-            
-            const userTickets = game.tickets?.filter(t => t.userId === currentUser.email) || [];
-            if (userTickets.length >= MAX_CARDS_PER_USER) {
-                showDialog('Límite alcanzado', `Ya has comprado ${MAX_CARDS_PER_USER} cartones (máximo permitido). Espera al próximo juego.`);
-                return;
-            }
-            
-            const newCard = generateBingoCard();
-            const tickets = game.tickets || [];
-            tickets.push({
-                userId: currentUser.email,
-                card: newCard,
-                purchasedAt: new Date().toISOString()
-            });
-            
-            const totalTickets = tickets.length;
-            const jackpot = totalTickets * CARD_PRICE;
-            const prizePool = jackpot * 0.8;
-            
-            await gameRef.update({
-                tickets: tickets,
-                totalTickets: totalTickets,
-                jackpot: prizePool
-            });
-            
-            await updateUserBalance(userBalance - CARD_PRICE);
-            
-            if (totalTickets >= 15 && !game.active && !game.winner) {
-                await startBingoGame();
-            } else {
-                showDialog('✅ Cartón comprado', `Has comprado un cartón. Cartones vendidos: ${totalTickets}/15\n\nPozo actual: ${prizePool} Cup (80% del total)\n\nTus cartones: ${userTickets.length + 1}/${MAX_CARDS_PER_USER}`);
-            }
-            
-            loadBingoGame();
-        }
-        
-        async function startBingoGame() {
-            const gameRef = db.collection('bingoGames').doc('current');
-            const gameDoc = await gameRef.get();
-            if (!gameDoc.exists) return;
-            
-            const game = gameDoc.data();
-            if (game.active || game.winner) return;
-            
-            await gameRef.update({
-                active: true,
-                startedAt: new Date().toISOString(),
-                calledNumbers: []
-            });
-            
-            showDialog('🎰 ¡BINGO INICIADO!', `El juego ha comenzado con ${game.totalTickets} cartones.\nPozo: ${game.jackpot} Cup (80% del total)\n\nLas bolas comenzarán a salir automáticamente.`);
-            startCallingNumbers();
-        }
-        
-        let callingInterval = null;
-        
-        async function startCallingNumbers() {
-            if (callingInterval) clearInterval(callingInterval);
-            
-            callingInterval = setInterval(async () => {
-                const gameDoc = await db.collection('bingoGames').doc('current').get();
-                if (!gameDoc.exists) {
-                    clearInterval(callingInterval);
-                    callingInterval = null;
-                    return;
-                }
-                
-                const game = gameDoc.data();
-                if (!game.active) {
-                    clearInterval(callingInterval);
-                    callingInterval = null;
-                    return;
-                }
-                
-                if (game.calledNumbers && game.calledNumbers.length >= 30) {
-                    await checkForWinner();
-                    return;
-                }
-                
-                let newNumber;
-                do {
-                    newNumber = Math.floor(Math.random() * 100).toString().padStart(2, '0');
-                } while (game.calledNumbers && game.calledNumbers.includes(newNumber));
-                
-                const calledNumbers = [...(game.calledNumbers || []), newNumber];
-                await db.collection('bingoGames').doc('current').update({
-                    calledNumbers: calledNumbers
-                });
-                
-                await checkForWinner();
-                
-            }, 5000);
-        }
-        
-        async function checkForWinner() {
-            const gameDoc = await db.collection('bingoGames').doc('current').get();
-            if (!gameDoc.exists) return;
-            
-            const game = gameDoc.data();
-            if (!game.active) return;
-            
-            const calledNumbers = game.calledNumbers || [];
-            
-            for (const ticket of game.tickets) {
-                const cardNumbers = ticket.card.numbers;
-                const markedCount = cardNumbers.filter(num => calledNumbers.includes(num)).length;
-                
-                if (markedCount === 15) {
-                    await declareWinner(ticket.userId, game.jackpot);
-                    return;
-                }
-            }
-        }
-        
-        async function declareWinner(winnerEmail, prizeAmount) {
-            const gameRef = db.collection('bingoGames').doc('current');
-            const gameDoc = await gameRef.get();
-            if (!gameDoc.exists) return;
-            
-            const game = gameDoc.data();
-            if (!game.active) return;
-            
-            if (callingInterval) {
-                clearInterval(callingInterval);
-                callingInterval = null;
-            }
-            
-            await gameRef.update({
-                active: false,
-                winner: winnerEmail,
-                winnerPrize: prizeAmount,
-                endedAt: new Date().toISOString()
-            });
-            
-            const winnerWallet = await db.collection('wallets').doc(winnerEmail).get();
-            const currentBalance = winnerWallet.exists ? winnerWallet.data().balance || 0 : 0;
-            await db.collection('wallets').doc(winnerEmail).set({
-                balance: currentBalance + prizeAmount,
-                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true });
-            
-            await db.collection('bingoHistory').add({
-                winner: winnerEmail,
-                prize: prizeAmount,
-                tickets: game.totalTickets,
-                date: new Date().toISOString()
-            });
-            
-            if (currentUser && currentUser.email === winnerEmail) {
-                await loadUserBalance();
-                showDialog('🎉 ¡FELICIDADES!', `¡Has ganado el BINGO!\nPremio: ${prizeAmount} Cup (80% del pozo)\n\nEl premio ha sido agregado a tu saldo.`);
-            } else {
-                showDialog('🏆 BINGO TERMINADO', `El ganador es: ${winnerEmail}\nPremio: ${prizeAmount} Cup`);
-            }
-            
-            setTimeout(() => {
-                resetBingoGame();
-                if (isBingoFullscreen) exitBingoFullscreen();
-            }, 10000);
-        }
-        
-        async function resetBingoGame() {
-            await db.collection('bingoGames').doc('current').set({
-                active: false,
-                tickets: [],
-                jackpot: 0,
-                totalTickets: 0,
-                calledNumbers: [],
-                winner: null,
-                startedAt: null
-            });
-            loadBingoGame();
-        }
-        
-        function enterBingoFullscreen() {
-            isBingoFullscreen = true;
-            document.body.classList.add('bingo-fullscreen');
-            
-            const bingoSection = document.getElementById('bingoSection');
-            const gamePlay = document.getElementById('bingoGamePlay');
-            
-            if (bingoSection && gamePlay && gamePlay.innerHTML) {
-                const fullscreenContainer = document.createElement('div');
-                fullscreenContainer.id = 'bingoFullscreenContainer';
-                fullscreenContainer.className = 'bingo-fullscreen-container';
-                fullscreenContainer.innerHTML = `
-                    <button class="exit-fullscreen-btn" onclick="exitBingoFullscreen()">✕</button>
-                    ${gamePlay.innerHTML}
-                `;
-                document.body.appendChild(fullscreenContainer);
-            }
-        }
-        
-        function exitBingoFullscreen() {
-            isBingoFullscreen = false;
-            document.body.classList.remove('bingo-fullscreen');
-            const container = document.getElementById('bingoFullscreenContainer');
-            if (container) container.remove();
-        }
-        
-        function loadBingoGame() {
-            const gameRef = db.collection('bingoGames').doc('current');
-            if (unsubscribeBingoGame) unsubscribeBingoGame();
-            
-            unsubscribeBingoGame = gameRef.onSnapshot(async (doc) => {
-                if (!doc.exists) return;
-                currentBingoGame = doc.data();
-                updateBingoUI();
-            });
-        }
-        
-        async function updateBingoUI() {
-            if (!currentBingoGame) return;
-            
-            const jackpotSpan = document.getElementById('jackpotAmount');
-            const ticketsSpan = document.getElementById('ticketsSold');
-            const statusText = document.getElementById('gameStatusText');
-            const gamePlayDiv = document.getElementById('bingoGamePlay');
-            const buyCardDiv = document.getElementById('buyCardSection');
-            const myCardsCountSpan = document.getElementById('myCardsCount');
-            
-            const CARD_PRICE = 5;
-            const MAX_CARDS_PER_USER = 5;
-            
-            if (jackpotSpan) jackpotSpan.innerText = currentBingoGame.jackpot || 0;
-            if (ticketsSpan) ticketsSpan.innerText = currentBingoGame.totalTickets || 0;
-            
-            if (myCardsCountSpan && currentUser) {
-                const userTickets = currentBingoGame.tickets?.filter(t => t.userId === currentUser.email) || [];
-                myCardsCountSpan.innerHTML = `🎫 Tus cartones: ${userTickets.length}/${MAX_CARDS_PER_USER}`;
-            }
-            
-            if (currentBingoGame.winner) {
-                if (statusText) statusText.innerHTML = `🏆 JUEGO TERMINADO - Ganador: ${currentBingoGame.winner} | Premio: ${currentBingoGame.winnerPrize} Cup`;
-                if (buyCardDiv) buyCardDiv.style.display = 'block';
-                if (gamePlayDiv) gamePlayDiv.style.display = 'none';
-                if (isBingoFullscreen) exitBingoFullscreen();
-                return;
-            }
-            
-            if (currentBingoGame.active) {
-                if (statusText) statusText.innerHTML = `🎲 JUEGO EN CURSO | Bolas cantadas: ${currentBingoGame.calledNumbers?.length || 0}/30`;
-                if (buyCardDiv) buyCardDiv.style.display = 'none';
-                if (gamePlayDiv) gamePlayDiv.style.display = 'block';
-                
-                const calledBalls = currentBingoGame.calledNumbers || [];
-                const userTickets = currentBingoGame.tickets?.filter(t => t.userId === currentUser?.email) || [];
-                
-                let gameHTML = `
-                    <div class="bingo-card">
-                        <h3 class="text-center" style="font-size: 1rem;">🎯 BOLAS CANTAUTAS (${calledBalls.length}/30)</h3>
-                        <div class="server-balls" id="calledBallsContainer">
-                            ${calledBalls.map(num => `<div class="bingo-ball called">${num}</div>`).join('')}
-                        </div>
-                        
-                        <h3 class="text-center" style="font-size: 1rem; margin-top: 1rem;">📋 TUS CARTONES (${userTickets.length})</h3>
-                        <div id="userCardsContainer">
-                            ${userTickets.length > 0 ? userTickets.map((ticket, idx) => {
-                                const calledSet = new Set(calledBalls);
-                                return `
-                                    <div class="bingo-card" style="margin-top: 1rem;">
-                                        <h4 class="text-center">Cartón ${idx + 1}</h4>
-                                        <div class="bingo-grid">
-                                            ${ticket.card.numbers.map(num => `
-                                                <div class="bingo-cell ${calledSet.has(num) ? 'marked' : ''}">
-                                                    ${num}
-                                                </div>
-                                            `).join('')}
-                                        </div>
-                                        <div class="text-center" style="font-size: 0.7rem;">
-                                            ✅ Marcados: ${ticket.card.numbers.filter(n => calledSet.has(n)).length}/15
-                                        </div>
-                                    </div>
-                                `;
-                            }).join('') : '<div class="text-center">No tienes cartones en este juego</div>'}
-                        </div>
-                        
-                        <div class="text-center" style="margin-top: 1rem;">
-                            <button class="btn btn-outline" onclick="exitBingoFullscreen()" style="width: auto;">✕ Salir del juego</button>
-                            <button class="btn btn-primary" onclick="enterBingoFullscreen()" style="width: auto; margin-left: 0.5rem;">🖥️ Ver en pantalla completa</button>
-                        </div>
-                    </div>
-                `;
-                
-                gamePlayDiv.innerHTML = gameHTML;
-                
-                if (!isBingoFullscreen && userTickets.length > 0) {
-                    setTimeout(() => enterBingoFullscreen(), 500);
-                }
-                
-            } else {
-                if (currentBingoGame.totalTickets >= 15) {
-                    if (statusText) statusText.innerHTML = `✅ Suficientes cartones (${currentBingoGame.totalTickets}/15). ¡El juego comenzará automáticamente!`;
-                } else {
-                    if (statusText) statusText.innerHTML = `⏳ Esperando jugadores... (${currentBingoGame.totalTickets || 0}/15 cartones) | Cartón: ${CARD_PRICE} Cup | Máx: ${MAX_CARDS_PER_USER} por persona`;
-                }
-                if (buyCardDiv) buyCardDiv.style.display = 'block';
-                if (gamePlayDiv) gamePlayDiv.style.display = 'none';
-            }
-        }
-        
         // ======================== FUNCIONES DE DEPÓSITO Y RETIRO ========================
         function showDepositForm() {
             document.getElementById('depositForm').style.display = 'block';
@@ -2334,7 +1779,7 @@
                 document.getElementById('transferMessage').value = '';
                 document.getElementById('depositAmount').value = '50';
                 
-                showDialog('✅ Solicitud enviada', `Tu solicitud de depósito por ${amount} Cup ha sido registrada.\n\n📌 Número de transacción: ${transactionNumber}\n\nSerá verificada por el administrador en menos de 24 horas.\n\nUna vez aprobado, el saldo se agregará automáticamente a tu cuenta.\n\n💳 Tarjeta: 9227 0699 9771 1927\n📞 Móvil: 63868677`);
+                showDialog('✅ Solicitud enviada', `Tu solicitud de depósito por ${amount} Cup ha sido registrada.\n\n📌 Número de transacción: ${transactionNumber}\n\n⚠️ IMPORTANTE: Debes enviar la CAPTURA de tu transferencia al usuario de Telegram @sdesaroyador.\n\nSerá verificada por el administrador en menos de 24 horas.\n\nUna vez aprobado, el saldo se agregará automáticamente a tu cuenta.\n\n💳 Tarjeta: 9227 0699 9771 1927`);
                 
                 loadTransactions();
                 
@@ -2675,7 +2120,7 @@
                 const uniqueHistory = Array.from(historyMap.values()).sort((a, b) => b.date.localeCompare(a.date));
                 tbody.innerHTML = '';
                 if (uniqueHistory.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td>';
+                    tbody.innerHTML = '</tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td>';
                 } else {
                     uniqueHistory.forEach(item => {
                         const row = tbody.insertRow();
@@ -2687,7 +2132,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar</td>';
             }
         }
         
@@ -2779,7 +2224,6 @@
         
         function showSection(section) {
             document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
-            document.getElementById('bingoSection').style.display = section === 'bingo' ? 'block' : 'none';
             document.getElementById('riddleSection').style.display = section === 'riddle' ? 'block' : 'none';
             document.getElementById('dailyProbSection').style.display = section === 'dailyProb' ? 'block' : 'none';
             document.getElementById('referralsSection').style.display = section === 'referrals' ? 'block' : 'none';
@@ -2797,7 +2241,6 @@
             if (section === 'payment') { loadTransactions(); loadUserBalance(); document.getElementById('membershipOptions').style.display = 'none'; }
             if (section === 'riddle') loadRiddle();
             if (section === 'dailyProb') loadDailyProbabilities();
-            if (section === 'bingo') loadBingoGame();
         }
         
         async function handleAuth() {
@@ -2821,7 +2264,7 @@
                         balance: 0,
                         createdAt: new Date().toISOString()
                     });
-                    let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Florida Pro Bingo!\n\n';
+                    let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Florida Pro!\n\n';
                     message += `📋 Tu código de invitación: ${newReferralCode}\n`;
                     message += '¡Invita amigos y gana días gratis! Cada 10 referidos activos = 30 días de membresía gratis.\n\n';
                     if (referrer) message += `🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él ganará puntos para su recompensa.`;
@@ -2848,21 +2291,18 @@
             if (unsubscribeResults) unsubscribeResults();
             if (unsubscribeRiddle) unsubscribeRiddle();
             if (unsubscribeDailyProb) unsubscribeDailyProb();
-            if (unsubscribeBingoGame) unsubscribeBingoGame();
             if (countdownInterval) clearInterval(countdownInterval);
-            if (callingInterval) clearInterval(callingInterval);
             auth.signOut();
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('authScreen').style.display = 'flex';
             authMode = 'login';
-            document.querySelector('.auth-card h2').innerText = '🎰 Florida Pro Bingo';
+            document.querySelector('.auth-card h2').innerText = '🎰 Florida Pro';
             document.getElementById('authBtn').innerHTML = 'Iniciar Sesión';
             document.getElementById('switchAuth').innerHTML = '¿No tienes cuenta? Regístrate';
             document.getElementById('referralCodeGroup').style.display = 'none';
             document.getElementById('authEmail').value = '';
             document.getElementById('authPassword').value = '';
             document.getElementById('referralCodeInput').value = '';
-            if (isBingoFullscreen) exitBingoFullscreen();
         }
         
         document.querySelector('.nav-menu')?.addEventListener('click', (e) => {
@@ -2912,13 +2352,10 @@
                 if (unsubscribeResults) unsubscribeResults();
                 if (unsubscribeRiddle) unsubscribeRiddle();
                 if (unsubscribeDailyProb) unsubscribeDailyProb();
-                if (unsubscribeBingoGame) unsubscribeBingoGame();
                 if (countdownInterval) clearInterval(countdownInterval);
-                if (callingInterval) clearInterval(callingInterval);
                 document.getElementById('dashboardScreen').style.display = 'none';
                 document.getElementById('authScreen').style.display = 'flex';
                 currentUser = null;
-                if (isBingoFullscreen) exitBingoFullscreen();
             }
         });
     </script>
