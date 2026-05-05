@@ -1,9 +1,9 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Florida Pro | Pronósticos</title>
+    <title>Florida Pro | Pronósticos + 50 cup por referido</title>
     
     <style>
         * {
@@ -785,6 +785,15 @@
             display: inline-block;
         }
 
+        .badge-rewarded {
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            display: inline-block;
+        }
+
         .modal-overlay {
             display: none;
             position: fixed;
@@ -1017,7 +1026,7 @@
     <div id="authScreen" class="auth-container">
         <div class="auth-card">
             <h2>🎰 Florida Pro</h2>
-            <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos + Sistema de Referidos</p>
+            <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos + Sistema de Referidos (50 cup por referido activo)</p>
             <div class="input-group">
                 <label>📧 Correo electrónico</label>
                 <input type="email" id="authEmail" placeholder="tu@email.com">
@@ -1026,13 +1035,13 @@
                 <label>🔐 Contraseña</label>
                 <input type="password" id="authPassword" placeholder="••••••">
             </div>
-            <div class="input-group" id="referralCodeGroup" style="display: none;">
-                <label>🎁 Código de invitación (opcional)</label>
-                <input type="text" id="referralCodeInput" placeholder="Código de un amigo">
+            <div class="input-group" id="referralCodeGroup">
+                <label>🎁 Código de invitación (OBLIGATORIO)</label>
+                <input type="text" id="referralCodeInput" placeholder="Código de un amigo" required>
             </div>
-            <button class="btn" id="authBtn" onclick="handleAuth()">Iniciar Sesión</button>
+            <button class="btn" id="authBtn" onclick="handleAuth()">Registrarse</button>
             <div onclick="toggleAuthMode()" id="switchAuth" style="text-align: center; margin-top: 1rem; color: var(--primary); cursor: pointer; font-size: 0.8rem;">
-                ¿No tienes cuenta? Regístrate
+                ¿Ya tienes cuenta? Inicia sesión
             </div>
         </div>
     </div>
@@ -1043,7 +1052,7 @@
                 <div class="header">
                     <div class="logo">
                         <h1>🎰 Florida Pro <span class="live-badge">PRONÓSTICOS ACTIVOS</span></h1>
-                        <p>Pronósticos 24h</p>
+                        <p>Pronósticos 24h | 50 cup por referido que pague membresía</p>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
                         <span class="balance-display" id="balanceDisplay">💰 Saldo: 0 Cup</span>
@@ -1067,6 +1076,7 @@
                 <div class="stat-card"><div class="stat-number" id="winRate">0%</div><div class="stat-label">⭐ Precisión</div></div>
                 <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
                 <div class="stat-card"><div class="stat-number" id="referralsCount">0</div><div class="stat-label">👥 Referidos</div></div>
+                <div class="stat-card"><div class="stat-number" id="cupEarnedStat">0</div><div class="stat-label">💰 cup ganados</div></div>
             </div>
 
             <div class="card">
@@ -1074,7 +1084,7 @@
                     <button class="nav-btn active" data-section="predictions">🎯 Pronósticos</button>
                     <button class="nav-btn" data-section="riddle">🤔 Adivinanza</button>
                     <button class="nav-btn" data-section="dailyProb">📊 Probabilidades</button>
-                    <button class="nav-btn" data-section="referrals">🎁 Referidos</button>
+                    <button class="nav-btn" data-section="referrals">🎁 Referidos (50 cup)</button>
                     <button class="nav-btn" data-section="history">🏆 Historial</button>
                     <button class="nav-btn" data-section="comments">💬 Comentarios</button>
                     <button class="nav-btn" data-section="profile">👤 Perfil</button>
@@ -1122,10 +1132,10 @@
 
             <div id="referralsSection" style="display: none;">
                 <div class="card referral-card">
-                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana Días Gratis</h2>
+                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
                     <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">
-                        Comparte tu código de invitación. Por cada 10 amigos que se registren y activen su membresía, 
-                        recibirás <strong>30 DÍAS GRATIS de pronóstico</strong> automáticamente.
+                        Comparte tu código de invitación. Por cada amigo que se registre y <strong>pague una membresía ACTIVA</strong> (de cualquier costo), 
+                        recibirás <strong>50 cup COMPLETAMENTE RETIRABLES</strong> en tu cuenta.
                     </p>
                     
                     <div class="referral-code-box">
@@ -1133,13 +1143,9 @@
                         <div>
                             <span class="referral-code" id="userReferralCode">Cargando...</span>
                             <button class="copy-btn" onclick="copyReferralCode()">📋 Copiar</button>
+                            <button class="copy-btn" onclick="shareTelegramLink()" style="margin-left: 0.5rem;">📲 Invitar por Telegram</button>
                         </div>
                     </div>
-
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="referralProgress" style="width: 0%"></div>
-                    </div>
-                    <div class="text-center" id="progressText" style="font-size: 0.75rem; margin-bottom: 1rem;">0/10 referidos activos</div>
 
                     <div class="referral-stats">
                         <div class="referral-stat">
@@ -1147,12 +1153,12 @@
                             <div class="stat-label">Total Referidos</div>
                         </div>
                         <div class="referral-stat">
-                            <div class="referral-stat-number" id="activeReferrals">0</div>
+                            <div class="referral-stat-number" id="activeReferralsCount">0</div>
                             <div class="stat-label">Activos con Membresía</div>
                         </div>
                         <div class="referral-stat">
-                            <div class="referral-stat-number" id="bonusDays">0</div>
-                            <div class="stat-label">Días Gratis Ganados</div>
+                            <div class="referral-stat-number" id="referralCupEarned">0</div>
+                            <div class="stat-label">💰 cup ganados (50 c/u)</div>
                         </div>
                     </div>
                 </div>
@@ -1161,8 +1167,10 @@
                     <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
                     <div class="table-responsive">
                         <table id="referralsTable">
-                            <thead><tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Estado</th></tr></thead>
-                            <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos......</tbody>
+                            <thead>
+                                <tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></tr>
+                            </thead>
+                            <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</tbody>
                         </table>
                     </div>
                 </div>
@@ -1174,7 +1182,7 @@
                     <div class="table-responsive">
                         <table id="historyTable">
                             <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
-                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial......</tbody>
+                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...</tbody>
                         </table>
                     </div>
                 </div>
@@ -1334,7 +1342,7 @@
         let currentUser = null;
         let userMembership = null;
         let userBalance = 0;
-        let authMode = 'login';
+        let authMode = 'register'; // Cambiado a register por defecto para mostrar el campo de referido
         let selectedPaymentMethod = 'transfer';
         let unsubscribePredictions = null;
         let unsubscribeProbabilities = null;
@@ -1374,7 +1382,7 @@
         }
         // ======================================================================
         
-        // Función para copiar al portapapeles
+        // Copiar al portapapeles
         async function copyToClipboard(text) {
             try {
                 await navigator.clipboard.writeText(text);
@@ -1383,8 +1391,19 @@
                 showDialog('Error', 'No se pudo copiar el texto');
             }
         }
+
+        // Nueva función para compartir enlace de Telegram con código predefinido
+        function shareTelegramLink() {
+            const code = document.getElementById('userReferralCode').innerText;
+            if (code && code !== 'Cargando...') {
+                const telegramLink = `https://t.me/pronostico1_bot?start=${code}`;
+                window.open(telegramLink, '_blank');
+                showDialog('📲 Invitar por Telegram', `Comparte este enlace con tus amigos:\n\n${telegramLink}\n\nAl hacer clic, abrirá el bot @pronostico1_bot con tu código de referido automáticamente.`);
+            } else {
+                showDialog('Error', 'Código de referido no disponible aún. Espera un momento.');
+            }
+        }
         
-        // Función para confirmar transferencia con envío a Telegram
         function confirmTransfer() {
             showDialog('✅ Transferencia Confirmada', 
                 'Has confirmado la transferencia.\n\n' +
@@ -1396,7 +1415,6 @@
             );
         }
         
-        // Mostrar opciones de membresía
         function showMembershipOptions() {
             const optionsDiv = document.getElementById('membershipOptions');
             if (optionsDiv.style.display === 'none') {
@@ -1406,11 +1424,8 @@
             }
         }
         
-        // Comprar membresía con saldo
         async function buyMembershipWithBalance(price, months) {
             if (!currentUser) { showDialog('Error', 'Inicia sesión primero'); return; }
-            
-            const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             
             if (userBalance < price) {
                 showDialog('Saldo insuficiente', `Necesitas ${price} Cup para comprar ${months} ${months === 1 ? 'mes' : 'meses'} de membresía. Tu saldo actual es ${userBalance} Cup.\n\nPor favor, deposita fondos en la sección "Depósito/Retiro".`);
@@ -1573,6 +1588,26 @@
             showDialog('¡Copiado!', 'Código de invitación copiado al portapapeles');
         }
         
+        // Verificar si un código de referido existe y no es del mismo usuario
+        async function validateReferralCode(code, newUserEmail) {
+            if (!code) return false;
+            try {
+                const usersRef = db.collection('members');
+                const query = await usersRef.where('referralCode', '==', code).get();
+                if (!query.empty) {
+                    const referrerDoc = query.docs[0];
+                    const referrerEmail = referrerDoc.data().email;
+                    // No permitir que un usuario se refiera a sí mismo
+                    if (referrerEmail === newUserEmail) return false;
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Error validando código de referido:', error);
+                return false;
+            }
+        }
+        
         async function processReferral(newUserEmail, referralCode) {
             if (!referralCode) return null;
             try {
@@ -1586,7 +1621,7 @@
                         referrerEmail: referrerEmail,
                         referredEmail: newUserEmail,
                         referredAt: new Date().toISOString(),
-                        status: 'pending',
+                        status: 'pending_cup',
                         membershipActive: false,
                         referralCode: referralCode
                     });
@@ -1598,13 +1633,83 @@
             return null;
         }
         
+        // NUEVA FUNCIÓN: Revisar referidos que pagaron membresía y dar 50 cup
+        async function checkAndRewardReferralsWithCup(userEmail) {
+            try {
+                const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get();
+                let totalEarned = 0;
+                let newlyRewardedCount = 0;
+                const referralList = [];
+                
+                for (const doc of referralsSnapshot.docs) {
+                    const referral = doc.data();
+                    const refId = doc.id;
+                    
+                    // Si ya fue recompensado con cup, saltar
+                    if (referral.status === 'rewarded_cup') continue;
+                    
+                    // Verificar si el referido tiene membresía activa
+                    const referredMember = await db.collection('members').doc(referral.referredEmail).get();
+                    if (referredMember.exists && referredMember.data().membershipActive) {
+                        const expires = new Date(referredMember.data().membershipExpires);
+                        if (expires > new Date()) {
+                            // Verificar si ya se le dió recompensa por este pago
+                            const rewardCheck = await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').get();
+                            
+                            if (!rewardCheck.exists) {
+                                // Acreditar 50 cup al referente
+                                const userRef = db.collection('wallets').doc(userEmail);
+                                const userDoc = await userRef.get();
+                                const currentBalance = userDoc.exists ? userDoc.data().balance || 0 : 0;
+                                await userRef.set({
+                                    balance: currentBalance + 50,
+                                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                                }, { merge: true });
+                                
+                                // Marcar como recompensado
+                                await db.collection('referrals').doc(refId).update({
+                                    status: 'rewarded_cup',
+                                    rewardedAt: new Date().toISOString(),
+                                    rewardAmount: 50
+                                });
+                                
+                                // Registrar en subcolección
+                                await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').set({
+                                    amount: 50,
+                                    awardedAt: new Date().toISOString(),
+                                    type: 'cup'
+                                });
+                                
+                                totalEarned += 50;
+                                newlyRewardedCount++;
+                                referralList.push(referral.referredEmail);
+                                console.log(`Recompensa de 50 cup entregada a ${userEmail} por referido ${referral.referredEmail}`);
+                            }
+                        }
+                    }
+                }
+                
+                if (totalEarned > 0) {
+                    await loadUserBalance();
+                    showDialog('🎉 ¡RECOMPENSA RECIBIDA!', `¡Felicidades! Has ganado ${totalEarned} cup (${newlyRewardedCount} referido(s) activo(s) con membresía: ${referralList.join(', ')}).\n\nEl saldo ha sido acreditado a tu cuenta y es completamente retirable.`);
+                    await updateReferralsUI();
+                    await loadProfile();
+                }
+                return totalEarned;
+            } catch (error) {
+                console.error('Error verificando recompensas de cup:', error);
+                return 0;
+            }
+        }
+        
+        // Mantener también la función original de días gratis
         async function checkAndRewardReferrals(userEmail) {
             try {
                 const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get();
                 let activeReferrals = [];
                 for (const doc of referralsSnapshot.docs) {
                     const referral = doc.data();
-                    if (referral.status === 'rewarded') continue;
+                    if (referral.statusDays === 'rewarded_days') continue;
                     const referredMember = await db.collection('members').doc(referral.referredEmail).get();
                     if (referredMember.exists && referredMember.data().membershipActive) {
                         const expires = new Date(referredMember.data().membershipExpires);
@@ -1629,17 +1734,17 @@
                     });
                     for (let i = 0; i < rewardCycles * 10 && i < activeReferrals.length; i++) {
                         await db.collection('referrals').doc(activeReferrals[i].id).update({
-                            status: 'rewarded',
+                            statusDays: 'rewarded_days',
                             rewardedAt: new Date().toISOString(),
                             rewardDays: 30
                         });
                     }
-                    showDialog('🎁 ¡RECOMPENSA RECIBIDA!', `¡Felicidades! Has ganado ${rewardCycles * 30} días gratis de membresía por tus ${rewardCycles * 10} referidos activos.\n\nTu membresía ha sido extendida automáticamente.`);
+                    showDialog('🎁 ¡RECOMPENSA DE DÍAS RECIBIDA!', `¡Felicidades! Has ganado ${rewardCycles * 30} días gratis de membresía por tus ${rewardCycles * 10} referidos activos.\n\nTu membresía ha sido extendida automáticamente.`);
                     await checkMembership(userEmail);
                 }
                 return { totalReferrals: referralsSnapshot.size, activeReferrals: activeCount, rewardCycles };
             } catch (error) {
-                console.error('Error verificando recompensas:', error);
+                console.error('Error verificando recompensas de días:', error);
                 return { totalReferrals: 0, activeReferrals: 0, rewardCycles: 0 };
             }
         }
@@ -1654,23 +1759,31 @@
                 
                 const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get();
                 let activeCount = 0;
+                let totalCupEarned = 0;
                 const referralsList = [];
+                
                 for (const doc of referralsSnapshot.docs) {
                     const referral = doc.data();
                     const referredMember = await db.collection('members').doc(referral.referredEmail).get();
                     const isActive = referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date();
                     if (isActive) activeCount++;
-                    referralsList.push({ email: referral.referredEmail, date: referral.referredAt, isActive: isActive, status: referral.status });
+                    if (referral.status === 'rewarded_cup') totalCupEarned += 50;
+                    
+                    referralsList.push({ 
+                        email: referral.referredEmail, 
+                        date: referral.referredAt, 
+                        isActive: isActive, 
+                        status: referral.status,
+                        rewarded: referral.status === 'rewarded_cup'
+                    });
                 }
                 const totalReferrals = referralsSnapshot.size;
-                const progressPercent = (activeCount / 10) * 100;
-                const bonusDays = Math.floor(activeCount / 10) * 30;
+                
                 document.getElementById('referralsCount').innerText = totalReferrals;
                 document.getElementById('totalReferrals').innerText = totalReferrals;
-                document.getElementById('activeReferrals').innerText = activeCount;
-                document.getElementById('bonusDays').innerText = bonusDays;
-                document.getElementById('referralProgress').style.width = `${Math.min(progressPercent, 100)}%`;
-                document.getElementById('progressText').innerHTML = `${activeCount}/10 referidos activos ${bonusDays > 0 ? `🎉 (${bonusDays} días gratis ganados)` : ''}`;
+                document.getElementById('activeReferralsCount').innerText = activeCount;
+                document.getElementById('referralCupEarned').innerText = totalCupEarned;
+                document.getElementById('cupEarnedStat').innerText = totalCupEarned;
                 
                 const tbody = document.getElementById('referralsTableBody');
                 tbody.innerHTML = '';
@@ -1682,10 +1795,13 @@
                         row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`;
                         row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString();
                         row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>';
-                        row.insertCell(3).innerHTML = ref.status === 'rewarded' ? '🎁 Recompensado' : '⏳ Pendiente';
+                        row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-');
                     });
                 }
+                
+                await checkAndRewardReferralsWithCup(currentUser.email);
                 await checkAndRewardReferrals(currentUser.email);
+                
             } catch (error) {
                 console.error('Error actualizando referidos:', error);
             }
@@ -2120,7 +2236,7 @@
                 const uniqueHistory = Array.from(historyMap.values()).sort((a, b) => b.date.localeCompare(a.date));
                 tbody.innerHTML = '';
                 if (uniqueHistory.length === 0) {
-                    tbody.innerHTML = '</tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td>';
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td>';
                 } else {
                     uniqueHistory.forEach(item => {
                         const row = tbody.insertRow();
@@ -2132,7 +2248,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar</td>';
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar</td></tr>';
             }
         }
         
@@ -2201,7 +2317,9 @@
                 <p><strong>📅 Membresía vence:</strong> ${expires}</p>
                 <p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0} | <strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p>
                 <p><strong>🎁 Código de invitación:</strong> <code style="background: var(--primary); color: white; padding: 0.2rem 0.5rem; border-radius: 8px;">${referralCode}</code></p>
+                <button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--primary); width: auto;">📲 Compartir enlace de Telegram</button>
             </div>
+            ${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}
             ${!isActive ? `<button class="btn mt-3" onclick="showSection('payment'); showMembershipOptions();" style="background: var(--primary);">💰 Comprar Membresía (200 Cup - 1 mes / 500 Cup - 3 meses)</button>` : ''}
             ${isActive ? `<button class="btn mt-3" onclick="showSection('payment'); showMembershipOptions();" style="background: var(--primary);">📅 Extender Membresía</button>` : ''}`;
         }
@@ -2248,10 +2366,32 @@
             const password = document.getElementById('authPassword').value;
             const referralCode = document.getElementById('referralCodeInput').value.trim();
             if (!email || !password) { showDialog('Error', 'Completa todos los campos'); return; }
-            try {
-                if (authMode === 'login') {
+            
+            if (authMode === 'login') {
+                try {
                     await auth.signInWithEmailAndPassword(email, password);
-                } else {
+                } catch (error) {
+                    let msg = error.message;
+                    if (error.code === 'auth/invalid-email') msg = 'Email inválido';
+                    if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta';
+                    if (error.code === 'auth/user-not-found') msg = 'Usuario no encontrado';
+                    showDialog('Error', msg);
+                }
+            } else {
+                // REGISTRO: código de referido OBLIGATORIO
+                if (!referralCode) {
+                    showDialog('Error', 'El código de invitación es OBLIGATORIO para registrarte.\n\nSolicita un código a un amigo o al administrador @sdesaroyador');
+                    return;
+                }
+                
+                // Validar que el código exista en Firestore
+                const isValid = await validateReferralCode(referralCode, email);
+                if (!isValid) {
+                    showDialog('Error', 'El código de invitación ingresado NO es válido.\n\nVerifica el código o solicita uno nuevo a tu referidor.');
+                    return;
+                }
+                
+                try {
                     const userCred = await auth.createUserWithEmailAndPassword(email, password);
                     const newReferralCode = generateReferralCode(email);
                     const referrer = await processReferral(email, referralCode);
@@ -2264,24 +2404,23 @@
                         balance: 0,
                         createdAt: new Date().toISOString()
                     });
+                    
                     let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Florida Pro!\n\n';
                     message += `📋 Tu código de invitación: ${newReferralCode}\n`;
-                    message += '¡Invita amigos y gana días gratis! Cada 10 referidos activos = 30 días de membresía gratis.\n\n';
-                    if (referrer) message += `🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él ganará puntos para su recompensa.`;
+                    message += '¡Invita amigos! Por cada referido que pague membresía, recibirás 50 cup COMPLETAMENTE RETIRABLES.\n\nAdemás, cada 10 referidos activos = 30 días de membresía gratis.\n\n';
+                    if (referrer) message += `🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él recibirá 50 cup.`;
                     showDialog('✅ Registro Exitoso', message);
                     document.getElementById('authPassword').value = '';
                     document.getElementById('referralCodeInput').value = '';
                     await auth.signOut();
                     await auth.signInWithEmailAndPassword(email, password);
+                } catch (error) {
+                    let msg = error.message;
+                    if (error.code === 'auth/email-already-in-use') msg = 'Email ya registrado';
+                    if (error.code === 'auth/weak-password') msg = 'Contraseña débil (mínimo 6 caracteres)';
+                    if (error.code === 'auth/invalid-email') msg = 'Email inválido';
+                    showDialog('Error', msg);
                 }
-            } catch (error) {
-                let msg = error.message;
-                if (error.code === 'auth/email-already-in-use') msg = 'Email ya registrado';
-                if (error.code === 'auth/weak-password') msg = 'Contraseña débil (mínimo 6 caracteres)';
-                if (error.code === 'auth/invalid-email') msg = 'Email inválido';
-                if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta';
-                if (error.code === 'auth/user-not-found') msg = 'Usuario no encontrado';
-                showDialog('Error', msg);
             }
         }
         
@@ -2295,11 +2434,11 @@
             auth.signOut();
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('authScreen').style.display = 'flex';
-            authMode = 'login';
-            document.querySelector('.auth-card h2').innerText = '🎰 Florida Pro';
-            document.getElementById('authBtn').innerHTML = 'Iniciar Sesión';
-            document.getElementById('switchAuth').innerHTML = '¿No tienes cuenta? Regístrate';
-            document.getElementById('referralCodeGroup').style.display = 'none';
+            authMode = 'register';
+            document.querySelector('.auth-card h2').innerText = 'Crear Cuenta';
+            document.getElementById('authBtn').innerHTML = 'Registrarse';
+            document.getElementById('switchAuth').innerHTML = '¿Ya tienes cuenta? Inicia sesión';
+            document.getElementById('referralCodeGroup').style.display = 'block';
             document.getElementById('authEmail').value = '';
             document.getElementById('authPassword').value = '';
             document.getElementById('referralCodeInput').value = '';
