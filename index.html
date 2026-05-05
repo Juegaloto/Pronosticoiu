@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Florida Pro | Pronósticos + 50 cup por referido</title>
+    <title>Pronóstico Pro | Pronósticos + 50 cup por referido</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -12,87 +15,132 @@
             box-sizing: border-box;
         }
 
-        /* TEMA CLARO (por defecto) */
+        /* TEMA CLARO (por defecto) - Rediseñado */
         :root {
-            --primary: #f59e0b;
-            --primary-dark: #ea580c;
-            --primary-light: #fbbf24;
-            --secondary: #e9c46a;
-            --accent: #f97316;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #f59e0b;
+            --accent: #8b5cf6;
             --danger: #ef4444;
             --danger-dark: #dc2626;
             --success: #10b981;
+            --info: #3b82f6;
             --white: #ffffff;
-            --gray-bg: #fff7ed;
-            --text-primary: #431407;
-            --text-secondary: #9a3412;
-            --border: #fed7aa;
-            --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
-            --riddle-bg: #fef3c7;
-            --card-bg: #ffffff;
-            --body-bg-start: #fff7ed;
-            --body-bg-end: #ffedd5;
+            --gray-bg: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-hover: 0 25px 30px -12px rgba(99, 102, 241, 0.25);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --body-bg-start: #f1f5f9;
+            --body-bg-end: #e2e8f0;
             --input-bg: #ffffff;
-            --table-hover: #fef3c7;
+            --table-hover: #f1f5f9;
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-secondary: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.2);
         }
 
-        /* TEMA OSCURO */
+        /* TEMA OSCURO - Rediseñado */
         body.dark {
-            --primary: #f59e0b;
-            --primary-dark: #fbbf24;
-            --primary-light: #f59e0b;
-            --secondary: #e9c46a;
-            --accent: #f97316;
-            --danger: #ef4444;
-            --danger-dark: #dc2626;
-            --success: #10b981;
+            --primary: #818cf8;
+            --primary-dark: #6366f1;
+            --primary-light: #a5b4fc;
+            --secondary: #fbbf24;
+            --accent: #a78bfa;
+            --danger: #f87171;
+            --danger-dark: #ef4444;
+            --success: #34d399;
             --white: #1e293b;
             --gray-bg: #334155;
-            --text-primary: #fef3c7;
-            --text-secondary: #ffedd5;
-            --border: #f59e0b;
-            --shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.3);
-            --riddle-bg: #422006;
-            --card-bg: #0f172a;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #475569;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4);
+            --shadow-hover: 0 25px 30px -12px rgba(99, 102, 241, 0.3);
+            --card-bg: #1e293b;
             --body-bg-start: #0f172a;
             --body-bg-end: #1e293b;
-            --input-bg: #1e293b;
+            --input-bg: #334155;
             --table-hover: #334155;
+            --gradient-primary: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+            --gradient-secondary: linear-gradient(135deg, #fbbf24 0%, #f87171 100%);
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.05);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, var(--body-bg-start) 0%, var(--body-bg-end) 100%);
+            background: var(--body-bg-start);
             color: var(--text-primary);
             line-height: 1.5;
             min-height: 100vh;
             transition: background 0.3s ease, color 0.2s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Fondo animado con partículas sutiles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 1.5rem;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .card {
-            background: var(--card-bg);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 24px;
             padding: 1.5rem;
             margin-bottom: 1.25rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            transition: all 0.2s;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .card:hover {
+            transform: translateY(-4px);
             box-shadow: var(--shadow-hover);
+            border-color: rgba(99, 102, 241, 0.3);
         }
 
         .btn {
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
@@ -100,12 +148,37 @@
             font-size: 0.875rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn:hover {
-            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         .btn-small {
@@ -121,16 +194,17 @@
         }
 
         .btn-outline:hover {
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: white;
+            border-color: transparent;
         }
 
         .btn-success {
-            background: var(--success);
+            background: linear-gradient(135deg, var(--success), #059669);
         }
         
         .btn-success:hover {
-            background: #0d9488;
+            background: linear-gradient(135deg, #059669, var(--success));
         }
 
         .header {
@@ -142,9 +216,13 @@
         }
 
         .logo h1 {
-            color: var(--primary-dark);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
 
         .logo p {
@@ -153,12 +231,13 @@
         }
 
         .florida-badge {
-            background: var(--primary);
+            background: var(--gradient-secondary);
             color: white;
             padding: 0.25rem 0.75rem;
             border-radius: 30px;
             font-size: 0.7rem;
             font-weight: 600;
+            box-shadow: var(--shadow-sm);
         }
 
         .theme-toggle {
@@ -194,7 +273,7 @@
             background: transparent;
             color: var(--text-secondary);
             padding: 0.5rem 1rem;
-            border-radius: 30px;
+            border-radius: 40px;
             cursor: pointer;
             border: none;
             font-weight: 500;
@@ -203,8 +282,14 @@
         }
 
         .nav-btn.active {
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-btn:hover:not(.active) {
+            background: var(--gray-bg);
+            color: var(--primary);
         }
 
         .update-info {
@@ -225,7 +310,10 @@
         .update-time {
             font-size: 0.9rem;
             font-weight: 700;
-            color: var(--primary-dark);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .update-date {
@@ -237,7 +325,7 @@
 
         .update-badge {
             display: inline-block;
-            background: var(--success);
+            background: var(--gradient-primary);
             color: white;
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
@@ -246,12 +334,30 @@
         }
 
         .countdown-timer {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--gradient-primary);
             color: white;
             padding: 0.75rem;
-            border-radius: 16px;
+            border-radius: 20px;
             text-align: center;
             margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-timer::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translate(-30%, -30%) rotate(0deg); }
+            100% { transform: translate(30%, 30%) rotate(360deg); }
         }
 
         .countdown-label {
@@ -267,7 +373,7 @@
         }
 
         .today-badge {
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: white;
             display: inline-block;
             padding: 0.2rem 0.8rem;
@@ -284,50 +390,55 @@
         }
 
         .number-card {
-            background: var(--gray-bg);
+            background: var(--card-bg);
             border-radius: 14px;
             padding: 0.75rem 0.25rem;
             text-align: center;
             border: 1px solid var(--border);
-            transition: all 0.2s;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .number-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
         }
 
         .number-card.strong {
-            background: #fed7aa;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
             border-left: 4px solid var(--primary);
-        }
-        body.dark .number-card.strong {
-            background: #422006;
-            color: #ffedd5;
         }
 
         .number-card.medium {
-            background: #fef3c7;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(239, 68, 68, 0.1));
             border-left: 4px solid var(--secondary);
-        }
-        body.dark .number-card.medium {
-            background: #2d1a02;
-            color: #ffedd5;
         }
 
         .number-card.winner {
             border: 2px solid var(--secondary);
-            background: #fef3c7;
-            animation: pulse 1s infinite;
-        }
-        body.dark .number-card.winner {
-            background: #533603;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
+            animation: winnerPulse 1s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        @keyframes winnerPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+            }
+            50% { 
+                transform: scale(1.02);
+                box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+            }
         }
 
         .number {
             font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-dark);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .probability {
@@ -337,35 +448,28 @@
         }
 
         .result-box {
-            background: var(--gray-bg);
-            border-radius: 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
             padding: 1rem;
             margin-top: 1rem;
             text-align: center;
+            transition: all 0.3s;
         }
 
         .result-winner {
-            background: #fef3c7;
-            border: 1px solid var(--primary);
-        }
-        body.dark .result-winner {
-            background: #2d1a02;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+            border: 1px solid var(--success);
         }
 
         .result-waiting {
-            background: #fff7ed;
+            background: var(--glass-bg);
             border: 2px dashed var(--secondary);
-        }
-        body.dark .result-waiting {
-            background: #1e293b;
         }
 
         .result-fallo {
-            background: #fee2e2;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
             border: 1px solid var(--danger);
-        }
-        body.dark .result-fallo {
-            background: #2d1a02;
         }
 
         .result-title {
@@ -376,18 +480,23 @@
 
         .result-value {
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .waiting-alert {
-            background: var(--secondary);
-            color: var(--text-primary);
+            background: var(--gradient-secondary);
+            color: white;
             padding: 0.5rem;
             border-radius: 30px;
             font-size: 0.7rem;
             display: inline-block;
             margin-top: 0.5rem;
             animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         .stats-grid {
@@ -398,31 +507,40 @@
         }
 
         .stat-card {
-            background: var(--card-bg);
-            border-radius: 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
             padding: 1rem;
             text-align: center;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
         }
 
         .stat-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-dark);
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .stat-label {
             font-size: 0.7rem;
             color: var(--text-secondary);
+            margin-top: 0.25rem;
         }
 
         .riddle-card {
-            background: linear-gradient(135deg, #fef3c7, #ffedd5);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
             border: 2px solid var(--primary);
             text-align: center;
-        }
-        body.dark .riddle-card {
-            background: linear-gradient(135deg, #422006, #2d1a02);
         }
 
         .riddle-question {
@@ -430,21 +548,18 @@
             font-weight: 600;
             color: var(--primary-dark);
             margin-bottom: 1rem;
-            background: white;
+            background: var(--card-bg);
             padding: 1rem;
-            border-radius: 16px;
+            border-radius: 20px;
             display: inline-block;
             width: 100%;
         }
-        body.dark .riddle-question {
-            background: #1e293b;
-        }
 
         .riddle-answer {
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: white;
             padding: 0.75rem;
-            border-radius: 12px;
+            border-radius: 16px;
             margin-top: 1rem;
             font-size: 0.9rem;
             display: none;
@@ -452,6 +567,12 @@
 
         .riddle-answer.show {
             display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .riddle-date {
@@ -467,7 +588,8 @@
         }
 
         .probabilities-card {
-            background: var(--gray-bg);
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
         }
 
         .probabilities-header {
@@ -478,14 +600,13 @@
         .probabilities-title {
             font-size: 1rem;
             font-weight: 700;
-            color: var(--primary-dark);
-            background: #fef3c7;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             display: inline-block;
             padding: 0.3rem 1rem;
             border-radius: 30px;
-        }
-        body.dark .probabilities-title {
-            background: #422006;
         }
 
         .probabilities-list {
@@ -498,17 +619,23 @@
         .prob-item {
             text-align: center;
             padding: 0.5rem 1rem;
-            background: white;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            transition: all 0.3s;
         }
-        body.dark .prob-item {
-            background: #1e293b;
+
+        .prob-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         .prob-number {
             font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary-dark);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .prob-percent {
@@ -522,7 +649,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            background: var(--gradient-primary);
             z-index: 20000;
             display: flex;
             justify-content: center;
@@ -530,15 +657,12 @@
             flex-direction: column;
             transition: opacity 0.5s ease;
         }
-        body.dark .loading-screen {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        }
 
         .loading-spinner {
             width: 60px;
             height: 60px;
-            border: 4px solid var(--border);
-            border-top: 4px solid var(--primary);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 1.5rem;
@@ -551,20 +675,20 @@
 
         .loading-text {
             font-size: 1.2rem;
-            color: var(--primary-dark);
-            font-weight: 600;
+            color: white;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
         .loading-subtext {
             font-size: 0.8rem;
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .loading-progress {
             width: 200px;
             height: 4px;
-            background: var(--border);
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 4px;
             margin-top: 1rem;
             overflow: hidden;
@@ -573,40 +697,37 @@
         .loading-progress-bar {
             width: 0%;
             height: 100%;
-            background: var(--primary);
+            background: white;
             border-radius: 4px;
             transition: width 0.3s ease;
         }
 
         .referral-card {
-            background: linear-gradient(135deg, #fff7ed, #ffedd5);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
             border: 2px solid var(--primary);
-        }
-        body.dark .referral-card {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
         }
 
         .referral-code-box {
-            background: white;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border-radius: 16px;
             padding: 0.75rem;
             text-align: center;
             margin: 1rem 0;
         }
-        body.dark .referral-code-box {
-            background: #334155;
-        }
 
         .referral-code {
             font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-dark);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             letter-spacing: 2px;
             font-family: monospace;
         }
 
         .copy-btn {
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: white;
             border: none;
             padding: 0.3rem 0.8rem;
@@ -614,21 +735,24 @@
             font-size: 0.7rem;
             cursor: pointer;
             margin-left: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
         }
 
         .progress-bar {
-            background: #e0e0e0;
+            background: var(--gray-bg);
             border-radius: 20px;
             height: 12px;
             overflow: hidden;
             margin: 1rem 0;
         }
-        body.dark .progress-bar {
-            background: #1e293b;
-        }
 
         .progress-fill {
-            background: var(--primary);
+            background: var(--gradient-primary);
             height: 100%;
             border-radius: 20px;
             transition: width 0.5s ease;
@@ -645,19 +769,25 @@
 
         .referral-stat {
             flex: 1;
-            background: white;
+            background: var(--card-bg);
             padding: 0.75rem;
-            border-radius: 12px;
+            border-radius: 16px;
             text-align: center;
+            transition: all 0.3s;
         }
-        body.dark .referral-stat {
-            background: #1e293b;
+
+        .referral-stat:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         .referral-stat-number {
             font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-dark);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .comments-section {
@@ -665,11 +795,18 @@
         }
 
         .comment-card {
-            background: var(--gray-bg);
-            border-radius: 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
             padding: 1rem;
             margin-bottom: 1rem;
             border-left: 4px solid var(--primary);
+            transition: all 0.3s;
+        }
+
+        .comment-card:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
         }
 
         .comment-header {
@@ -683,7 +820,10 @@
 
         .comment-user {
             font-weight: 700;
-            color: var(--primary-dark);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             font-size: 0.85rem;
         }
 
@@ -700,7 +840,7 @@
 
         .comment-number {
             display: inline-block;
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: white;
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
@@ -709,8 +849,9 @@
         }
 
         .new-comment-form {
-            background: var(--gray-bg);
-            border-radius: 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
             padding: 1rem;
             margin-top: 1rem;
         }
@@ -720,16 +861,20 @@
             width: 100%;
             padding: 0.75rem;
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 0.85rem;
             font-family: inherit;
             margin-bottom: 0.75rem;
             background: var(--input-bg);
             color: var(--text-primary);
+            transition: all 0.3s;
         }
 
-        .new-comment-form textarea {
-            resize: vertical;
+        .new-comment-form textarea:focus,
+        .new-comment-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
 
         .new-comment-form .form-row {
@@ -759,8 +904,11 @@
         }
 
         th {
-            color: var(--primary-dark);
-            font-weight: 600;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
         }
 
         tr:hover {
@@ -768,7 +916,7 @@
         }
 
         .badge-win {
-            background: var(--success);
+            background: linear-gradient(135deg, var(--success), #059669);
             color: white;
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
@@ -777,8 +925,8 @@
         }
 
         .badge-pending {
-            background: var(--secondary);
-            color: var(--text-primary);
+            background: var(--gradient-secondary);
+            color: white;
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
             font-size: 0.7rem;
@@ -786,7 +934,7 @@
         }
 
         .badge-rewarded {
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: white;
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
@@ -801,8 +949,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -810,17 +958,28 @@
 
         .modal-content {
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 28px;
             padding: 1.5rem;
             max-width: 500px;
             width: 90%;
             text-align: center;
-            color: var(--text-primary);
+            animation: modalPop 0.3s ease-out;
+        }
+
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .payment-info {
             background: var(--gray-bg);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 1rem;
             margin: 1rem 0;
             text-align: center;
@@ -829,7 +988,10 @@
         .payment-number {
             font-size: 0.9rem;
             font-weight: 700;
-            color: var(--primary-dark);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .text-center { text-align: center; }
@@ -837,7 +999,7 @@
         .mb-2 { margin-bottom: 0.5rem; }
 
         .live-badge {
-            background: var(--primary);
+            background: var(--gradient-secondary);
             color: white;
             padding: 0.2rem 0.5rem;
             border-radius: 20px;
@@ -851,24 +1013,39 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            background: var(--gradient-primary);
             padding: 1rem;
+            position: relative;
         }
-        body.dark .auth-container {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="3" fill="white" opacity="0.1"/><circle cx="50" cy="80" r="2" fill="white" opacity="0.1"/><circle cx="90" cy="90" r="4" fill="white" opacity="0.1"/></svg>');
+            background-size: 50px 50px;
+            opacity: 0.5;
+            pointer-events: none;
         }
 
         .auth-card {
-            background: var(--card-bg);
-            border-radius: 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 32px;
             padding: 2rem;
             width: 100%;
             max-width: 400px;
-            box-shadow: var(--shadow-hover);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--glass-border);
+            z-index: 1;
         }
 
         .auth-card h2 {
-            color: var(--primary-dark);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             text-align: center;
             font-size: 1.75rem;
         }
@@ -882,6 +1059,7 @@
             margin-bottom: 0.25rem;
             font-size: 0.75rem;
             color: var(--text-secondary);
+            font-weight: 500;
         }
 
         .input-group input, 
@@ -890,15 +1068,18 @@
             padding: 0.75rem;
             background: var(--input-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 0.9rem;
             font-family: inherit;
             color: var(--text-primary);
+            transition: all 0.3s;
         }
 
-        .input-group textarea {
-            resize: vertical;
-            min-height: 100px;
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
 
         .payment-methods {
@@ -911,7 +1092,7 @@
         .payment-method {
             flex: 1;
             background: var(--gray-bg);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 0.75rem;
             text-align: center;
             cursor: pointer;
@@ -921,14 +1102,12 @@
 
         .payment-method.selected {
             border-color: var(--primary);
-            background: #fef3c7;
-        }
-        body.dark .payment-method.selected {
-            background: #422006;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
         }
 
         .payment-method:hover {
             border-color: var(--primary);
+            transform: translateY(-2px);
         }
 
         .payment-method-icon {
@@ -937,54 +1116,46 @@
         }
 
         .transfer-example {
-            background: #fef3c7;
+            background: var(--gray-bg);
             padding: 0.75rem;
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 0.7rem;
             margin-bottom: 1rem;
             text-align: left;
         }
-        body.dark .transfer-example {
-            background: #422006;
-            color: #ffedd5;
-        }
 
         .transfer-example code {
             display: block;
-            background: white;
+            background: var(--card-bg);
             padding: 0.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-top: 0.25rem;
             font-size: 0.7rem;
             word-break: break-all;
-            color: black;
-        }
-        body.dark .transfer-example code {
-            background: #1e293b;
-            color: #ffedd5;
         }
 
         .admin-contact-warning {
-            background: var(--danger);
+            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
             color: white;
             padding: 0.5rem;
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 0.7rem;
             text-align: center;
             margin-bottom: 1rem;
         }
 
         .balance-display {
-            background: var(--success);
+            background: linear-gradient(135deg, var(--success), #059669);
             color: white;
             padding: 0.3rem 0.8rem;
             border-radius: 30px;
             font-weight: 600;
             font-size: 0.8rem;
+            box-shadow: var(--shadow-sm);
         }
 
         .copy-number-btn {
-            background: var(--primary);
+            background: var(--gradient-primary);
             color: white;
             border: none;
             padding: 0.3rem 0.8rem;
@@ -992,11 +1163,16 @@
             font-size: 0.7rem;
             cursor: pointer;
             margin-top: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .copy-number-btn:hover {
+            transform: scale(1.05);
         }
         
         .transfer-confirmation {
             background: var(--gray-bg);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 1rem;
             margin: 1rem 0;
             border: 1px solid var(--primary);
@@ -1016,7 +1192,7 @@
 <body>
     <div id="loadingScreen" class="loading-screen">
         <div class="loading-spinner"></div>
-        <div class="loading-text">🎰 Florida Pro</div>
+        <div class="loading-text">🎰 Pronóstico Pro</div>
         <div class="loading-subtext">Conectando con el servidor...</div>
         <div class="loading-progress">
             <div id="loadingProgressBar" class="loading-progress-bar"></div>
@@ -1025,7 +1201,7 @@
 
     <div id="authScreen" class="auth-container">
         <div class="auth-card">
-            <h2>🎰 Florida Pro</h2>
+            <h2>🎰 Pronóstico Pro</h2>
             <p class="text-center" style="color: var(--text-secondary); margin: 0.5rem 0 1.5rem;">Pronósticos + Sistema de Referidos (50 cup por referido activo)</p>
             <div class="input-group">
                 <label>📧 Correo electrónico</label>
@@ -1040,7 +1216,7 @@
                 <input type="text" id="referralCodeInput" placeholder="Código de un amigo" required>
             </div>
             <button class="btn" id="authBtn" onclick="handleAuth()">Registrarse</button>
-            <div onclick="toggleAuthMode()" id="switchAuth" style="text-align: center; margin-top: 1rem; color: var(--primary); cursor: pointer; font-size: 0.8rem;">
+            <div onclick="toggleAuthMode()" id="switchAuth" style="text-align: center; margin-top: 1rem; cursor: pointer; font-size: 0.8rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 600;">
                 ¿Ya tienes cuenta? Inicia sesión
             </div>
         </div>
@@ -1051,7 +1227,7 @@
             <div class="card">
                 <div class="header">
                     <div class="logo">
-                        <h1>🎰 Florida Pro <span class="live-badge">PRONÓSTICOS ACTIVOS</span></h1>
+                        <h1>🎰 Pronóstico Pro <span class="live-badge">PRONÓSTICOS ACTIVOS</span></h1>
                         <p>Pronósticos 24h | 50 cup por referido que pague membresía</p>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
@@ -1100,7 +1276,7 @@
 
             <div id="riddleSection" style="display: none;">
                 <div class="card riddle-card">
-                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🤔 Adivinanza del Día</h2>
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent;">🤔 Adivinanza del Día</h2>
                     <div id="riddleContent" class="text-center">
                         <div class="riddle-question" id="riddleQuestion">Cargando adivinanza...</div>
                         <button class="btn btn-small show-answer-btn" onclick="toggleRiddleAnswer()">🔍 Ver respuesta</button>
@@ -1132,7 +1308,7 @@
 
             <div id="referralsSection" style="display: none;">
                 <div class="card referral-card">
-                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
                     <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">
                         Comparte tu código de invitación. Por cada amigo que se registre y <strong>pague una membresía ACTIVA</strong> (de cualquier costo), 
                         recibirás <strong>50 cup COMPLETAMENTE RETIRABLES</strong> en tu cuenta.
@@ -1178,7 +1354,7 @@
 
             <div id="historySection" style="display: none;">
                 <div class="card">
-                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent;">🏆 Historial de Resultados</h2>
                     <div class="table-responsive">
                         <table id="historyTable">
                             <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
@@ -1190,7 +1366,7 @@
 
             <div id="commentsSection" style="display: none;">
                 <div class="card">
-                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">💬 Comentarios y Jugadas</h2>
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent;">💬 Comentarios y Jugadas</h2>
                     <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
                     <div id="commentsList" class="comments-section"><div class="text-center">Cargando comentarios...</div></div>
                     <div class="new-comment-form">
@@ -1211,7 +1387,7 @@
 
             <div id="paymentSection" style="display: none;">
                 <div class="card">
-                    <h2 style="color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem;">💰 Depósito / Retiro</h2>
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent;">💰 Depósito / Retiro</h2>
                     
                     <div class="stats-grid">
                         <div class="stat-card"><div class="stat-number" id="walletBalance">0</div><div class="stat-label">💰 Saldo Disponible</div></div>
@@ -1342,7 +1518,7 @@
         let currentUser = null;
         let userMembership = null;
         let userBalance = 0;
-        let authMode = 'register'; // Cambiado a register por defecto para mostrar el campo de referido
+        let authMode = 'register';
         let selectedPaymentMethod = 'transfer';
         let unsubscribePredictions = null;
         let unsubscribeProbabilities = null;
@@ -1354,7 +1530,6 @@
         let loadingProgress = 0;
         let loadingInterval;
         
-        // ======================== FUNCIÓN CLARO/OSCURO ========================
         function initTheme() {
             const savedTheme = localStorage.getItem('floridaTheme');
             const themeBtn = document.getElementById('themeToggleBtn');
@@ -1380,9 +1555,7 @@
                 if (btn) btn.innerHTML = '☀️';
             }
         }
-        // ======================================================================
         
-        // Copiar al portapapeles
         async function copyToClipboard(text) {
             try {
                 await navigator.clipboard.writeText(text);
@@ -1392,7 +1565,6 @@
             }
         }
 
-        // Nueva función para compartir enlace de Telegram con código predefinido
         function shareTelegramLink() {
             const code = document.getElementById('userReferralCode').innerText;
             if (code && code !== 'Cargando...') {
@@ -1588,7 +1760,6 @@
             showDialog('¡Copiado!', 'Código de invitación copiado al portapapeles');
         }
         
-        // Verificar si un código de referido existe y no es del mismo usuario
         async function validateReferralCode(code, newUserEmail) {
             if (!code) return false;
             try {
@@ -1597,7 +1768,6 @@
                 if (!query.empty) {
                     const referrerDoc = query.docs[0];
                     const referrerEmail = referrerDoc.data().email;
-                    // No permitir que un usuario se refiera a sí mismo
                     if (referrerEmail === newUserEmail) return false;
                     return true;
                 }
@@ -1633,7 +1803,6 @@
             return null;
         }
         
-        // NUEVA FUNCIÓN: Revisar referidos que pagaron membresía y dar 50 cup
         async function checkAndRewardReferralsWithCup(userEmail) {
             try {
                 const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get();
@@ -1645,19 +1814,15 @@
                     const referral = doc.data();
                     const refId = doc.id;
                     
-                    // Si ya fue recompensado con cup, saltar
                     if (referral.status === 'rewarded_cup') continue;
                     
-                    // Verificar si el referido tiene membresía activa
                     const referredMember = await db.collection('members').doc(referral.referredEmail).get();
                     if (referredMember.exists && referredMember.data().membershipActive) {
                         const expires = new Date(referredMember.data().membershipExpires);
                         if (expires > new Date()) {
-                            // Verificar si ya se le dió recompensa por este pago
                             const rewardCheck = await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').get();
                             
                             if (!rewardCheck.exists) {
-                                // Acreditar 50 cup al referente
                                 const userRef = db.collection('wallets').doc(userEmail);
                                 const userDoc = await userRef.get();
                                 const currentBalance = userDoc.exists ? userDoc.data().balance || 0 : 0;
@@ -1666,14 +1831,12 @@
                                     lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
                                 }, { merge: true });
                                 
-                                // Marcar como recompensado
                                 await db.collection('referrals').doc(refId).update({
                                     status: 'rewarded_cup',
                                     rewardedAt: new Date().toISOString(),
                                     rewardAmount: 50
                                 });
                                 
-                                // Registrar en subcolección
                                 await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').set({
                                     amount: 50,
                                     awardedAt: new Date().toISOString(),
@@ -1683,7 +1846,6 @@
                                 totalEarned += 50;
                                 newlyRewardedCount++;
                                 referralList.push(referral.referredEmail);
-                                console.log(`Recompensa de 50 cup entregada a ${userEmail} por referido ${referral.referredEmail}`);
                             }
                         }
                     }
@@ -1702,7 +1864,6 @@
             }
         }
         
-        // Mantener también la función original de días gratis
         async function checkAndRewardReferrals(userEmail) {
             try {
                 const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get();
@@ -1807,7 +1968,6 @@
             }
         }
         
-        // ======================== FUNCIONES DE SALDO ========================
         async function loadUserBalance() {
             if (!currentUser) return;
             try {
@@ -1845,7 +2005,6 @@
             }
         }
         
-        // ======================== FUNCIONES DE DEPÓSITO Y RETIRO ========================
         function showDepositForm() {
             document.getElementById('depositForm').style.display = 'block';
             document.getElementById('withdrawForm').style.display = 'none';
@@ -1998,7 +2157,6 @@
             }
         }
         
-        // ======================== FUNCIONES EXISTENTES (PRONÓSTICOS, ETC) ========================
         function formatTime12Hour(dateString) {
             if (!dateString) return 'No disponible';
             const date = new Date(dateString);
@@ -2041,9 +2199,9 @@
                            <span class="update-badge" style="background: var(--primary);">🌙 Se renueva a las 12:00 AM</span>
                        </div>
                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
-                            <span style="background: #fed7aa; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
-                            <span style="background: #fef3c7; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
-                            <span style="background: #d1fae5; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">⏰ Pronóstico 24h activo</span>
+                            <span style="background: rgba(99,102,241,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
+                            <span style="background: rgba(245,158,11,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
+                            <span style="background: rgba(16,185,129,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">⏰ Pronóstico 24h activo</span>
                         </div>
                        <div class="numbers-grid" id="numbersGrid"></div>`;
             
@@ -2378,13 +2536,11 @@
                     showDialog('Error', msg);
                 }
             } else {
-                // REGISTRO: código de referido OBLIGATORIO
                 if (!referralCode) {
                     showDialog('Error', 'El código de invitación es OBLIGATORIO para registrarte.\n\nSolicita un código a un amigo o al administrador @sdesaroyador');
                     return;
                 }
                 
-                // Validar que el código exista en Firestore
                 const isValid = await validateReferralCode(referralCode, email);
                 if (!isValid) {
                     showDialog('Error', 'El código de invitación ingresado NO es válido.\n\nVerifica el código o solicita uno nuevo a tu referidor.');
