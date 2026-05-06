@@ -15,7 +15,6 @@
             box-sizing: border-box;
         }
 
-        /* TEMA CLARO (por defecto) - Rediseñado */
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
@@ -47,7 +46,6 @@
             --glass-border: rgba(255, 255, 255, 0.2);
         }
 
-        /* TEMA OSCURO - Rediseñado */
         body.dark {
             --primary: #818cf8;
             --primary-dark: #6366f1;
@@ -89,7 +87,6 @@
             overflow-x: hidden;
         }
 
-        /* Fondo animado con partículas sutiles */
         body::before {
             content: '';
             position: fixed;
@@ -500,13 +497,15 @@
         }
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 1rem;
             margin-bottom: 1.25rem;
         }
 
         .stat-card {
+            flex: 1;
+            min-width: 100px;
             background: var(--glass-bg);
             backdrop-filter: blur(8px);
             border-radius: 20px;
@@ -1400,7 +1399,6 @@
                         <button class="btn btn-success" onclick="showMembershipOptions()" style="flex: 1;">⭐ Comprar Membresía</button>
                     </div>
 
-                    <!-- Opciones de membresía -->
                     <div id="membershipOptions" style="display: none; margin-bottom: 1rem;">
                         <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">⭐ Elige tu membresía</h3>
                         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
@@ -1420,7 +1418,6 @@
                             </div>
                         </div>
 
-                        <!-- Confirmación de transferencia con envío a Telegram -->
                         <div class="transfer-confirmation">
                             <div class="text-center" style="margin-bottom: 0.5rem;">
                                 <strong>✅ Confirmar transferencia</strong>
@@ -1529,6 +1526,11 @@
         
         let loadingProgress = 0;
         let loadingInterval;
+        
+        // Variables para almacenar el estado actual del pronóstico y evitar que desaparezca
+        let currentDisplayedNumbers = [];
+        let currentDisplayedStrong = [];
+        let currentDisplayedMedium = [];
         
         function initTheme() {
             const savedTheme = localStorage.getItem('floridaTheme');
@@ -1700,9 +1702,10 @@
             const diff = midnight - now;
             
             if (diff <= 0) {
-                if (document.getElementById('dashboardScreen').style.display !== 'none') {
-                    location.reload();
-                }
+                // No recargamos automáticamente para evitar que desaparezca el pronóstico
+                // Solo actualizamos el contador
+                const timerElement = document.getElementById('countdownTimer');
+                if (timerElement) timerElement.innerHTML = '00:00:00';
                 return;
             }
             
@@ -1716,17 +1719,6 @@
         }
         
         function scheduleMidnightUpdate() {
-            const now = new Date();
-            const midnight = new Date(now);
-            midnight.setHours(24, 0, 0, 0);
-            const timeToMidnight = midnight - now;
-            
-            setTimeout(() => {
-                if (document.getElementById('dashboardScreen').style.display !== 'none') {
-                    location.reload();
-                }
-            }, timeToMidnight);
-            
             if (countdownInterval) clearInterval(countdownInterval);
             countdownInterval = setInterval(updateCountdown, 1000);
             updateCountdown();
@@ -2110,7 +2102,7 @@
                 document.getElementById('withdrawCardNumber').value = '';
                 document.getElementById('withdrawPhone').value = '';
                 
-                showDialog('✅ Solicitud enviada', `Tu solicitud de retiro por ${amount} Cup ha sido registrada.\n\nSerá procesada por el administrador en menos de 24 horas.\n\nLos fondos serán transferidos a tu tarjeta: ${cardNumber.substring(0, 4)}****${cardNumber.substring(cardNumber.length - 4)}`);
+                showDialog('✅ Solicitud enviada', `Tu solicitud de retiro por ${amount} Cup ha sido registrada.\n\nSerá procesada por el administrador en menos de 24 horas.\n\nLos fondos serán transferidos a tu tarjeta: ${cardNumber.substring(0, 4)}****${cardNumber.substring(cardNumber.length - 4)}\n\nTu saldo permanecerá intacto hasta que la solicitud sea aprobada.`);
                 
                 loadTransactions();
                 
@@ -2175,17 +2167,48 @@
             return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
         
+        // ============================================================
+        // FUNCIÓN RENDER PREDICTIONS CORREGIDA
+        // AHORA NO PERMITE QUE LOS NÚMEROS DESAPAREZCAN
+        // ============================================================
         function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
+            
             if (!isActive) {
                 container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p style="margin: 1rem 0;">Necesitas una membresía activa para acceder a los pronósticos</p><button class="btn" onclick="showSection('payment'); showMembershipOptions();" style="background: var(--primary);">💰 Activar Membresía</button></div>`;
                 return;
             }
-            if (!numbers || numbers.length === 0) {
-                container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Se actualizan automáticamente a las 12:00 AM</p></div>`;
+            
+            // 🔥 SOLUCIÓN CLAVE: Si ya teníamos números mostrados y los nuevos están vacíos,
+            // NO reemplazamos la vista para que no "desaparezca" el pronóstico
+            const hasExistingNumbers = currentDisplayedNumbers.length > 0;
+            const hasNewNumbers = numbers && numbers.length > 0;
+            
+            // Si no hay números nuevos PERO ya teníamos números mostrados, mantenemos los que tenemos
+            if (!hasNewNumbers && hasExistingNumbers) {
+                console.log("🛡️ PROTECCIÓN: Manteniendo pronóstico anterior porque el nuevo está vacío");
+                // Solo actualizamos los resultados (afternoonWinner, nightWinner) si es necesario
+                updateResultsOnly(afternoonWinner, nightWinner);
                 return;
             }
+            
+            // Si no hay números nuevos Y tampoco teníamos guardados, mostrar mensaje de espera
+            if (!hasNewNumbers && !hasExistingNumbers) {
+                container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Los números para hoy se actualizarán próximamente.</p><p class="update-label" style="margin-top: 1rem;">🔄 Espera la actualización del administrador.</p></div>`;
+                return;
+            }
+            
+            // Si llegamos aquí, tenemos números para mostrar
+            if (hasNewNumbers) {
+                currentDisplayedNumbers = [...numbers];
+                currentDisplayedStrong = strongNumbers ? [...strongNumbers] : [];
+                currentDisplayedMedium = mediumNumbers ? [...mediumNumbers] : [];
+            }
+            
+            const numbersToShow = hasNewNumbers ? numbers : currentDisplayedNumbers;
+            const strongToShow = strongNumbers && strongNumbers.length > 0 ? strongNumbers : currentDisplayedStrong;
+            const mediumToShow = mediumNumbers && mediumNumbers.length > 0 ? mediumNumbers : currentDisplayedMedium;
             
             const displayTime = lastUpdateFormatted || formatTime12Hour(lastUpdate);
             const displayDate = formatDate(lastUpdate);
@@ -2205,21 +2228,37 @@
                         </div>
                        <div class="numbers-grid" id="numbersGrid"></div>`;
             
+            // Resultado Sorteo Mediodía
             let afternoonClass = 'result-box result-waiting';
             let afternoonText = '⏳ ESPERANDO RESULTADO...';
             let afternoonAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
             if (afternoonWinner) {
-                if (afternoonWinner === 'fallo') { afternoonClass = 'result-box result-fallo'; afternoonText = '❌ FALLO - No hubo número ganador'; afternoonAlert = ''; }
-                else { afternoonClass = 'result-box result-winner'; afternoonText = `🎯 NÚMERO GANADOR: ${afternoonWinner}`; afternoonAlert = ''; }
+                if (afternoonWinner === 'fallo') { 
+                    afternoonClass = 'result-box result-fallo'; 
+                    afternoonText = '❌ FALLO - No hubo número ganador'; 
+                    afternoonAlert = ''; 
+                } else { 
+                    afternoonClass = 'result-box result-winner'; 
+                    afternoonText = `🎯 NÚMERO GANADOR: ${afternoonWinner}`; 
+                    afternoonAlert = ''; 
+                }
             }
             html += `<div class="${afternoonClass}"><div class="result-title">🌅 SORTEO MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`;
             
+            // Resultado Sorteo Noche
             let nightClass = 'result-box result-waiting';
             let nightText = '⏳ ESPERANDO RESULTADO...';
             let nightAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
             if (nightWinner) {
-                if (nightWinner === 'fallo') { nightClass = 'result-box result-fallo'; nightText = '❌ FALLO - No hubo número ganador'; nightAlert = ''; }
-                else { nightClass = 'result-box result-winner'; nightText = `🎯 NÚMERO GANADOR: ${nightWinner}`; nightAlert = ''; }
+                if (nightWinner === 'fallo') { 
+                    nightClass = 'result-box result-fallo'; 
+                    nightText = '❌ FALLO - No hubo número ganador'; 
+                    nightAlert = ''; 
+                } else { 
+                    nightClass = 'result-box result-winner'; 
+                    nightText = `🎯 NÚMERO GANADOR: ${nightWinner}`; 
+                    nightAlert = ''; 
+                }
             }
             html += `<div class="${nightClass}"><div class="result-title">🌙 SORTEO NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div>${nightAlert}</div>`;
             container.innerHTML = html;
@@ -2227,18 +2266,102 @@
             const grid = document.getElementById('numbersGrid');
             if (grid) {
                 grid.innerHTML = '';
-                numbers.forEach(num => {
+                numbersToShow.forEach(num => {
                     let className = 'number-card';
-                    if (strongNumbers && strongNumbers.includes(num)) className += ' strong';
-                    else if (mediumNumbers && mediumNumbers.includes(num)) className += ' medium';
-                    if (afternoonWinner === num || nightWinner === num) className += ' winner';
+                    if (strongToShow && strongToShow.includes(num)) className += ' strong';
+                    else if (mediumToShow && mediumToShow.includes(num)) className += ' medium';
+                    if ((afternoonWinner && afternoonWinner === num) || (nightWinner && nightWinner === num)) className += ' winner';
                     let probText = '';
-                    if (strongNumbers && strongNumbers.includes(num)) probText = '<div class="probability">🔥 68%</div>';
-                    else if (mediumNumbers && mediumNumbers.includes(num)) probText = '<div class="probability">📊 50%</div>';
+                    if (strongToShow && strongToShow.includes(num)) probText = '<div class="probability">🔥 68%</div>';
+                    else if (mediumToShow && mediumToShow.includes(num)) probText = '<div class="probability">📊 50%</div>';
                     const card = document.createElement('div');
                     card.className = className;
                     card.innerHTML = `<div class="number">${num}</div>${probText}`;
                     grid.appendChild(card);
+                });
+            }
+        }
+        
+        // Función auxiliar para actualizar SOLO los resultados sin tocar los números
+        function updateResultsOnly(afternoonWinner, nightWinner) {
+            // Actualizar solo los bloques de resultados si existen
+            const container = document.getElementById('predictionsContent');
+            if (!container) return;
+            
+            // Buscar y actualizar el bloque de mediodía
+            const afternoonDiv = container.querySelector('.result-box:first-of-type');
+            if (afternoonDiv && afternoonWinner !== undefined) {
+                let afternoonClass = 'result-box result-waiting';
+                let afternoonText = '⏳ ESPERANDO RESULTADO...';
+                let afternoonAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
+                if (afternoonWinner) {
+                    if (afternoonWinner === 'fallo') { 
+                        afternoonClass = 'result-box result-fallo'; 
+                        afternoonText = '❌ FALLO - No hubo número ganador'; 
+                        afternoonAlert = ''; 
+                    } else { 
+                        afternoonClass = 'result-box result-winner'; 
+                        afternoonText = `🎯 NÚMERO GANADOR: ${afternoonWinner}`; 
+                        afternoonAlert = ''; 
+                    }
+                }
+                afternoonDiv.className = afternoonClass;
+                const valueSpan = afternoonDiv.querySelector('.result-value');
+                if (valueSpan) valueSpan.innerHTML = afternoonText;
+                const alertDiv = afternoonDiv.querySelector('.waiting-alert');
+                if (alertDiv && afternoonAlert === '') alertDiv.remove();
+                if (!alertDiv && afternoonAlert !== '') {
+                    const newAlert = document.createElement('div');
+                    newAlert.className = 'waiting-alert';
+                    newAlert.innerHTML = '🔄 El administrador aún no ha publicado el resultado de este sorteo';
+                    afternoonDiv.appendChild(newAlert);
+                }
+            }
+            
+            // Buscar y actualizar el bloque de noche
+            const nightDiv = container.querySelector('.result-box:last-of-type');
+            if (nightDiv && nightWinner !== undefined) {
+                let nightClass = 'result-box result-waiting';
+                let nightText = '⏳ ESPERANDO RESULTADO...';
+                let nightAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
+                if (nightWinner) {
+                    if (nightWinner === 'fallo') { 
+                        nightClass = 'result-box result-fallo'; 
+                        nightText = '❌ FALLO - No hubo número ganador'; 
+                        nightAlert = ''; 
+                    } else { 
+                        nightClass = 'result-box result-winner'; 
+                        nightText = `🎯 NÚMERO GANADOR: ${nightWinner}`; 
+                        nightAlert = ''; 
+                    }
+                }
+                nightDiv.className = nightClass;
+                const valueSpan = nightDiv.querySelector('.result-value');
+                if (valueSpan) valueSpan.innerHTML = nightText;
+                const alertDiv = nightDiv.querySelector('.waiting-alert');
+                if (alertDiv && nightAlert === '') alertDiv.remove();
+                if (!alertDiv && nightAlert !== '') {
+                    const newAlert = document.createElement('div');
+                    newAlert.className = 'waiting-alert';
+                    newAlert.innerHTML = '🔄 El administrador aún no ha publicado el resultado de este sorteo';
+                    nightDiv.appendChild(newAlert);
+                }
+            }
+            
+            // Destacar números ganadores en la cuadrícula
+            const grid = document.getElementById('numbersGrid');
+            if (grid) {
+                const numberCards = grid.querySelectorAll('.number-card');
+                numberCards.forEach(card => {
+                    const numberSpan = card.querySelector('.number');
+                    if (numberSpan) {
+                        const num = numberSpan.innerText;
+                        if ((afternoonWinner && afternoonWinner === num) || (nightWinner && nightWinner === num)) {
+                            card.classList.add('winner');
+                        } else {
+                            card.classList.remove('winner');
+                        }
+                    }
                 });
             }
         }
@@ -2254,6 +2377,7 @@
                     renderPredictions(numbers, window.currentStrong, window.currentMedium, window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
                 }
             });
+            
             if (unsubscribeProbabilities) unsubscribeProbabilities();
             unsubscribeProbabilities = db.collection('probabilities').doc(today).onSnapshot((doc) => {
                 const strongNumbers = doc.exists ? doc.data().strongNumbers : [];
@@ -2265,8 +2389,9 @@
                     const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
                     const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
                     renderPredictions(numbers, strongNumbers, mediumNumbers, window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
-                });
+                }).catch(err => console.error("Error getting dailyNumbers:", err));
             });
+            
             if (unsubscribeResults) unsubscribeResults();
             unsubscribeResults = db.collection('dailyResults').doc(today).onSnapshot((doc) => {
                 const afternoonWinner = doc.exists ? doc.data().afternoonWinner : null;
@@ -2280,7 +2405,7 @@
                     const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
                     const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
                     renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted);
-                });
+                }).catch(err => console.error("Error getting data for results:", err));
             });
             
             if (unsubscribeRiddle) unsubscribeRiddle();
@@ -2394,7 +2519,7 @@
                 const uniqueHistory = Array.from(historyMap.values()).sort((a, b) => b.date.localeCompare(a.date));
                 tbody.innerHTML = '';
                 if (uniqueHistory.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td>';
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td></tr>';
                 } else {
                     uniqueHistory.forEach(item => {
                         const row = tbody.insertRow();
