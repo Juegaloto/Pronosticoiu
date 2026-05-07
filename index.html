@@ -6,7 +6,7 @@
     <title>Pronóstico Pro | Pronósticos + 50 cup por referido</title>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -16,73 +16,71 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --primary-light: #818cf8;
-            --secondary: #f59e0b;
-            --accent: #8b5cf6;
-            --danger: #ef4444;
-            --danger-dark: #dc2626;
-            --success: #10b981;
-            --info: #3b82f6;
-            --white: #ffffff;
-            --gray-bg: #f8fafc;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --border: #e2e8f0;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-            --shadow-hover: 0 25px 30px -12px rgba(99, 102, 241, 0.25);
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --body-bg-start: #f1f5f9;
-            --body-bg-end: #e2e8f0;
-            --input-bg: #ffffff;
-            --table-hover: #f1f5f9;
-            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            --gradient-secondary: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --primary: #007AFF;
+            --primary-dark: #0055B3;
+            --primary-light: #5E9EFF;
+            --secondary: #FF9F0A;
+            --accent: #AF52DE;
+            --danger: #FF3B30;
+            --danger-dark: #D70015;
+            --success: #34C759;
+            --info: #5E5CE6;
+            --white: #FFFFFF;
+            --gray-bg: rgba(120, 120, 128, 0.12);
+            --text-primary: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --border: rgba(60, 60, 67, 0.08);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 0 0.5px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.02);
+            --shadow-xl: 0 24px 56px rgba(0, 0, 0, 0.16);
+            --shadow-hover: 0 24px 48px rgba(0, 122, 255, 0.2), 0 0 0 1px rgba(0, 122, 255, 0.2);
+            --card-bg: rgba(255, 255, 255, 0.78);
+            --body-bg-start: #E5E5EA;
+            --body-bg-end: #F2F2F7;
+            --input-bg: rgba(255, 255, 255, 0.92);
+            --table-hover: rgba(0, 0, 0, 0.04);
+            --gradient-primary: linear-gradient(135deg, #007AFF 0%, #5E5CE6 100%);
+            --gradient-secondary: linear-gradient(135deg, #FF9F0A 0%, #FF3B30 100%);
+            --glass-bg: rgba(255, 255, 255, 0.68);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --blur-amount: 20px;
+            --gold-color: #FFD36B;
         }
 
         body.dark {
-            --primary: #818cf8;
-            --primary-dark: #6366f1;
-            --primary-light: #a5b4fc;
-            --secondary: #fbbf24;
-            --accent: #a78bfa;
-            --danger: #f87171;
-            --danger-dark: #ef4444;
-            --success: #34d399;
-            --white: #1e293b;
-            --gray-bg: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border: #475569;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4);
-            --shadow-hover: 0 25px 30px -12px rgba(99, 102, 241, 0.3);
-            --card-bg: #1e293b;
-            --body-bg-start: #0f172a;
-            --body-bg-end: #1e293b;
-            --input-bg: #334155;
-            --table-hover: #334155;
-            --gradient-primary: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
-            --gradient-secondary: linear-gradient(135deg, #fbbf24 0%, #f87171 100%);
-            --glass-bg: rgba(30, 41, 59, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.05);
+            --primary: #0A84FF;
+            --primary-dark: #0063CE;
+            --primary-light: #409CFF;
+            --secondary: #FF9F0A;
+            --accent: #BF5AF2;
+            --danger: #FF453A;
+            --danger-dark: #FF3B30;
+            --success: #32D74B;
+            --white: #1C1C1E;
+            --gray-bg: rgba(120, 120, 128, 0.24);
+            --text-primary: #FFFFFF;
+            --text-secondary: #8E8E93;
+            --border: rgba(84, 84, 88, 0.34);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+            --card-bg: rgba(28, 28, 30, 0.82);
+            --body-bg-start: #000000;
+            --body-bg-end: #1C1C1E;
+            --input-bg: rgba(44, 44, 46, 0.92);
+            --table-hover: rgba(255, 255, 255, 0.05);
+            --glass-bg: rgba(28, 28, 30, 0.72);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Helvetica, sans-serif;
             background: var(--body-bg-start);
             color: var(--text-primary);
             line-height: 1.5;
             min-height: 100vh;
-            transition: background 0.3s ease, color 0.2s ease;
+            transition: background 0.35s cubic-bezier(0.25, 1, 0.5, 1), color 0.2s ease;
             position: relative;
             overflow-x: hidden;
         }
@@ -94,8 +92,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 40%, rgba(0, 122, 255, 0.06) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 70%, rgba(94, 92, 230, 0.04) 0%, transparent 60%);
             pointer-events: none;
             z-index: -1;
         }
@@ -103,14 +101,14 @@
         .container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 1.5rem;
-            animation: fadeInUp 0.6s ease-out;
+            padding: 20px;
+            animation: fadeInUp 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(14px);
             }
             to {
                 opacity: 1;
@@ -120,35 +118,37 @@
 
         .card {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 1.5rem;
-            margin-bottom: 1.25rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 28px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+            border: 0.5px solid var(--glass-border);
+            transition: all 0.35s cubic-bezier(0.25, 0.1, 0.2, 1);
         }
 
         .card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-hover);
-            border-color: rgba(99, 102, 241, 0.3);
+            border-color: rgba(0, 122, 255, 0.3);
         }
 
         .btn {
             background: var(--gradient-primary);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            font-size: 0.875rem;
-            font-weight: 600;
+            padding: 14px 24px;
+            border-radius: 18px;
+            font-size: 0.9375rem;
+            font-weight: 590;
+            letter-spacing: -0.01em;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             width: 100%;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
         .btn::before {
@@ -161,47 +161,49 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.3);
             transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            transition: width 0.5s, height 0.5s;
         }
 
         .btn:active::before {
-            width: 300px;
-            height: 300px;
+            width: 240px;
+            height: 240px;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+            transform: scale(0.98);
+            box-shadow: 0 6px 14px rgba(0, 122, 255, 0.3);
         }
 
         .btn:active {
-            transform: translateY(0);
+            transform: scale(0.96);
         }
 
         .btn-small {
             width: auto;
-            padding: 0.4rem 1rem;
-            font-size: 0.75rem;
+            padding: 10px 20px;
+            font-size: 0.8125rem;
+            border-radius: 40px;
         }
 
         .btn-outline {
             background: transparent;
-            border: 2px solid var(--primary);
+            border: 1.5px solid var(--primary);
             color: var(--primary);
+            box-shadow: none;
         }
 
         .btn-outline:hover {
-            background: var(--gradient-primary);
+            background: var(--primary);
             color: white;
             border-color: transparent;
         }
 
         .btn-success {
-            background: linear-gradient(135deg, var(--success), #059669);
+            background: linear-gradient(135deg, var(--success), #248A3D);
         }
         
         .btn-success:hover {
-            background: linear-gradient(135deg, #059669, var(--success));
+            background: linear-gradient(135deg, #248A3D, var(--success));
         }
 
         .header {
@@ -209,7 +211,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 12px;
         }
 
         .logo h1 {
@@ -217,83 +219,154 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-size: 1.65rem;
+            font-weight: 620;
             letter-spacing: -0.02em;
         }
 
         .logo p {
             font-size: 0.75rem;
             color: var(--text-secondary);
+            font-weight: 400;
         }
 
         .florida-badge {
             background: var(--gradient-secondary);
             color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 30px;
+            padding: 6px 14px;
+            border-radius: 40px;
             font-size: 0.7rem;
-            font-weight: 600;
+            font-weight: 590;
             box-shadow: var(--shadow-sm);
         }
 
         .theme-toggle {
             background: var(--gray-bg);
-            border: 1px solid var(--border);
+            border: 0.5px solid var(--border);
             border-radius: 40px;
-            padding: 0.3rem 0.8rem;
+            padding: 8px 16px;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 6px;
             transition: all 0.2s;
             font-weight: 500;
+            backdrop-filter: blur(8px);
         }
         .theme-toggle:hover {
             background: var(--primary-light);
-            color: #1e293b;
-            transform: scale(1.05);
-        }
-        body.dark .theme-toggle:hover {
-            color: #0f172a;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .nav-btn {
-            background: transparent;
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
-            border-radius: 40px;
-            cursor: pointer;
-            border: none;
-            font-weight: 500;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-        }
-
-        .nav-btn.active {
-            background: var(--gradient-primary);
             color: white;
-            box-shadow: var(--shadow-md);
+            transform: scale(0.97);
         }
 
-        .nav-btn:hover:not(.active) {
-            background: var(--gray-bg);
-            color: var(--primary);
+        /* Navegación estilo tarjetas cuadradas grandes */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 4px;
+        }
+
+        .nav-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 24px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            border: 0.5px solid var(--glass-border);
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.2, 1);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--gold-color);
+        }
+
+        .nav-card.active {
+            background: var(--gradient-primary);
+            border-color: var(--gold-color);
+        }
+
+        .nav-card.active .nav-icon svg {
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .nav-card.active .nav-label {
+            color: white;
+        }
+
+        .nav-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .nav-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--gold-color);
+            stroke-width: 1.8;
+            fill: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-card.active .nav-icon svg {
+            stroke: white;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .nav-label {
+            font-size: 0.8rem;
+            font-weight: 590;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        @media (max-width: 640px) {
+            .nav-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+            .nav-card {
+                padding: 14px 8px;
+            }
+            .nav-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+            .nav-label {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            .nav-card {
+                padding: 12px 6px;
+            }
+            .nav-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+            .nav-label {
+                font-size: 0.65rem;
+            }
         }
 
         .update-info {
             background: var(--gray-bg);
-            padding: 0.75rem;
-            border-radius: 16px;
-            margin-bottom: 1rem;
+            padding: 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
             text-align: center;
             border-left: 4px solid var(--primary);
         }
@@ -313,32 +386,16 @@
             color: transparent;
         }
 
-        .update-date {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            display: block;
-            margin-top: 0.2rem;
-        }
-
-        .update-badge {
-            display: inline-block;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            margin-left: 0.5rem;
-        }
-
         .countdown-timer {
             background: var(--gradient-primary);
             color: white;
-            padding: 0.75rem;
-            border-radius: 20px;
+            padding: 16px;
+            border-radius: 24px;
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 20px;
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-md);
         }
 
         .countdown-timer::before {
@@ -348,7 +405,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
             animation: shimmer 3s infinite;
         }
 
@@ -359,79 +416,75 @@
 
         .countdown-label {
             font-size: 0.7rem;
-            opacity: 0.9;
+            opacity: 0.85;
+            letter-spacing: 0.3px;
         }
 
         .countdown-time {
-            font-size: 1.2rem;
-            font-weight: 700;
-            font-family: monospace;
-            letter-spacing: 2px;
+            font-size: 1.4rem;
+            font-weight: 620;
+            font-family: 'Inter', monospace;
+            letter-spacing: 1px;
         }
 
         .today-badge {
             background: var(--gradient-primary);
             color: white;
             display: inline-block;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
+            padding: 4px 14px;
+            border-radius: 40px;
             font-size: 0.7rem;
-            margin-bottom: 0.75rem;
+            margin-bottom: 12px;
         }
 
         .numbers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
-            gap: 0.75rem;
-            margin: 1.25rem 0;
+            grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
         }
 
         .number-card {
             background: var(--card-bg);
-            border-radius: 14px;
-            padding: 0.75rem 0.25rem;
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 14px 4px;
             text-align: center;
-            border: 1px solid var(--border);
-            transition: all 0.3s;
+            border: 0.5px solid var(--border);
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             cursor: pointer;
         }
 
         .number-card:hover {
-            transform: translateY(-4px) scale(1.02);
+            transform: translateY(-5px) scale(1.02);
             box-shadow: var(--shadow-lg);
             border-color: var(--primary);
         }
 
         .number-card.strong {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.12), rgba(94, 92, 230, 0.12));
             border-left: 4px solid var(--primary);
         }
 
         .number-card.medium {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(239, 68, 68, 0.1));
+            background: linear-gradient(135deg, rgba(255, 159, 10, 0.1), rgba(255, 59, 48, 0.08));
             border-left: 4px solid var(--secondary);
         }
 
         .number-card.winner {
             border: 2px solid var(--secondary);
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
-            animation: winnerPulse 1s infinite;
+            background: linear-gradient(135deg, rgba(255, 159, 10, 0.18), rgba(255, 59, 48, 0.12));
+            animation: winnerPulse 1.4s infinite;
         }
 
         @keyframes winnerPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
-            }
-            50% { 
-                transform: scale(1.02);
-                box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 159, 10, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 0 0 6px rgba(255, 159, 10, 0); }
         }
 
         .number {
-            font-size: 1.3rem;
-            font-weight: 800;
+            font-size: 1.4rem;
+            font-weight: 700;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             background-clip: text;
@@ -441,38 +494,38 @@
         .probability {
             font-size: 0.6rem;
             color: var(--text-secondary);
-            margin-top: 0.2rem;
+            margin-top: 4px;
         }
 
         .result-box {
             background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 1rem;
-            margin-top: 1rem;
+            backdrop-filter: blur(12px);
+            border-radius: 26px;
+            padding: 16px;
+            margin-top: 16px;
             text-align: center;
-            transition: all 0.3s;
+            transition: all 0.25s;
         }
 
         .result-winner {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
-            border: 1px solid var(--success);
+            background: linear-gradient(135deg, rgba(52, 199, 89, 0.12), rgba(50, 215, 75, 0.08));
+            border: 0.5px solid var(--success);
         }
 
         .result-waiting {
             background: var(--glass-bg);
-            border: 2px dashed var(--secondary);
+            border: 1px dashed var(--secondary);
         }
 
         .result-fallo {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
-            border: 1px solid var(--danger);
+            background: linear-gradient(135deg, rgba(255, 69, 58, 0.08), rgba(215, 0, 21, 0.08));
+            border: 0.5px solid var(--danger);
         }
 
         .result-title {
             font-weight: 600;
             font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
         }
 
         .result-value {
@@ -483,11 +536,11 @@
         .waiting-alert {
             background: var(--gradient-secondary);
             color: white;
-            padding: 0.5rem;
+            padding: 6px 12px;
             border-radius: 30px;
             font-size: 0.7rem;
             display: inline-block;
-            margin-top: 0.5rem;
+            margin-top: 8px;
             animation: pulse 1s infinite;
         }
 
@@ -499,19 +552,19 @@
         .stats-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.25rem;
+            gap: 14px;
+            margin-bottom: 20px;
         }
 
         .stat-card {
             flex: 1;
             min-width: 100px;
             background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 1rem;
+            backdrop-filter: blur(var(--blur-amount));
+            border-radius: 24px;
+            padding: 16px 8px;
             text-align: center;
-            border: 1px solid var(--glass-border);
+            border: 0.5px solid var(--glass-border);
             transition: all 0.3s;
         }
 
@@ -522,8 +575,8 @@
         }
 
         .stat-number {
-            font-size: 1.8rem;
-            font-weight: 800;
+            font-size: 1.9rem;
+            font-weight: 700;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             background-clip: text;
@@ -533,12 +586,12 @@
         .stat-label {
             font-size: 0.7rem;
             color: var(--text-secondary);
-            margin-top: 0.25rem;
+            margin-top: 4px;
         }
 
         .riddle-card {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.08), rgba(94, 92, 230, 0.08));
+            border: 1px solid var(--primary);
             text-align: center;
         }
 
@@ -557,8 +610,8 @@
         .riddle-answer {
             background: var(--gradient-primary);
             color: white;
-            padding: 0.75rem;
-            border-radius: 16px;
+            padding: 12px;
+            border-radius: 20px;
             margin-top: 1rem;
             font-size: 0.9rem;
             display: none;
@@ -574,40 +627,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .riddle-date {
-            font-size: 0.65rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        .show-answer-btn {
-            background: var(--primary-dark);
-            margin-top: 0.5rem;
-            width: auto;
-        }
-
-        .probabilities-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-        }
-
-        .probabilities-header {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .probabilities-title {
-            font-size: 1rem;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
-        }
-
         .probabilities-list {
             display: flex;
             gap: 1rem;
@@ -617,9 +636,9 @@
 
         .prob-item {
             text-align: center;
-            padding: 0.5rem 1rem;
+            padding: 8px 16px;
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 20px;
             transition: all 0.3s;
         }
 
@@ -637,9 +656,369 @@
             color: transparent;
         }
 
-        .prob-percent {
+        .referral-card {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.05), rgba(94, 92, 230, 0.05));
+            border: 1px solid var(--primary);
+        }
+
+        .referral-code-box {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 16px;
+            text-align: center;
+            margin: 16px 0;
+            backdrop-filter: blur(8px);
+        }
+
+        .referral-code {
+            font-size: 1.4rem;
+            font-weight: 620;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            font-family: monospace;
+        }
+
+        .copy-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 40px;
             font-size: 0.7rem;
+            cursor: pointer;
+            margin-left: 8px;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .referral-stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .referral-stat {
+            flex: 1;
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            padding: 14px;
+            border-radius: 24px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .referral-stat:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .referral-stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .comments-section {
+            margin-top: 1rem;
+        }
+
+        .comment-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 16px;
+            margin-bottom: 14px;
+            border-left: 3px solid var(--primary);
+            transition: all 0.2s;
+        }
+
+        .comment-card:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .comment-user {
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 0.85rem;
+        }
+
+        .comment-date {
+            font-size: 0.65rem;
             color: var(--text-secondary);
+        }
+
+        .comment-text {
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .new-comment-form {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 16px;
+            margin-top: 1rem;
+        }
+
+        .new-comment-form textarea,
+        .new-comment-form input {
+            width: 100%;
+            padding: 12px;
+            border: 0.5px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            margin-bottom: 12px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        .new-comment-form textarea:focus,
+        .new-comment-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 0.5px solid var(--border);
+            font-size: 0.8rem;
+        }
+
+        th {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: var(--table-hover);
+        }
+
+        .badge-win {
+            background: linear-gradient(135deg, var(--success), #248A3D);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            display: inline-block;
+        }
+
+        .badge-pending {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            display: inline-block;
+        }
+
+        .badge-rewarded {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            display: inline-block;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            backdrop-filter: blur(28px);
+            border-radius: 32px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: modalPop 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            border: 0.5px solid var(--glass-border);
+        }
+
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .payment-info {
+            background: var(--gray-bg);
+            border-radius: 20px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .payment-number {
+            font-size: 0.9rem;
+            font-weight: 700;
+            font-family: monospace;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .text-center { text-align: center; }
+        .mt-3 { margin-top: 1rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+
+        .live-badge {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            margin-left: 8px;
+            animation: pulse 1s infinite;
+        }
+
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--gradient-primary);
+            padding: 1rem;
+            position: relative;
+        }
+
+        .auth-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(28px);
+            border-radius: 40px;
+            padding: 32px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow-xl);
+            border: 0.5px solid var(--glass-border);
+            z-index: 1;
+        }
+
+        .auth-card h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .input-group input, 
+        .input-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--input-bg);
+            border: 0.5px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.9375rem;
+            font-family: inherit;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+        }
+
+        .balance-display {
+            background: linear-gradient(135deg, var(--success), #248A3D);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .copy-number-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.2s;
+        }
+
+        .transfer-confirmation {
+            background: var(--gray-bg);
+            border-radius: 20px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 0.5px solid var(--primary);
         }
 
         .loading-screen {
@@ -675,7 +1054,7 @@
         .loading-text {
             font-size: 1.2rem;
             color: white;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
@@ -701,490 +1080,13 @@
             transition: width 0.3s ease;
         }
 
-        .referral-card {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
-            border: 2px solid var(--primary);
-        }
-
-        .referral-code-box {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 0.75rem;
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .referral-code {
-            font-size: 1.3rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 2px;
-            font-family: monospace;
-        }
-
-        .copy-btn {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            margin-left: 0.5rem;
-            transition: all 0.2s;
-        }
-
-        .copy-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-md);
-        }
-
-        .progress-bar {
-            background: var(--gray-bg);
-            border-radius: 20px;
-            height: 12px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-
-        .progress-fill {
-            background: var(--gradient-primary);
-            height: 100%;
-            border-radius: 20px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-
-        .referral-stats {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-        }
-
-        .referral-stat {
-            flex: 1;
-            background: var(--card-bg);
-            padding: 0.75rem;
-            border-radius: 16px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .referral-stat:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .referral-stat-number {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .comments-section {
-            margin-top: 1rem;
-        }
-
-        .comment-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary);
-            transition: all 0.3s;
-        }
-
-        .comment-card:hover {
-            transform: translateX(4px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .comment-user {
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-size: 0.85rem;
-        }
-
-        .comment-date {
-            font-size: 0.65rem;
-            color: var(--text-secondary);
-        }
-
-        .comment-text {
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-            word-break: break-word;
-        }
-
-        .comment-number {
-            display: inline-block;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            margin-top: 0.3rem;
-        }
-
-        .new-comment-form {
-            background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 1rem;
-            margin-top: 1rem;
-        }
-
-        .new-comment-form textarea,
-        .new-comment-form input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            font-size: 0.85rem;
-            font-family: inherit;
-            margin-bottom: 0.75rem;
-            background: var(--input-bg);
-            color: var(--text-primary);
-            transition: all 0.3s;
-        }
-
-        .new-comment-form textarea:focus,
-        .new-comment-form input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-
-        .new-comment-form .form-row {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .form-row input {
-            flex: 1;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.8rem;
-        }
-
-        th {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 700;
-        }
-
-        tr:hover {
-            background: var(--table-hover);
-        }
-
-        .badge-win {
-            background: linear-gradient(135deg, var(--success), #059669);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: inline-block;
-        }
-
-        .badge-pending {
-            background: var(--gradient-secondary);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: inline-block;
-        }
-
-        .badge-rewarded {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: inline-block;
-        }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            border-radius: 28px;
-            padding: 1.5rem;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            animation: modalPop 0.3s ease-out;
-        }
-
-        @keyframes modalPop {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .payment-info {
-            background: var(--gray-bg);
-            border-radius: 20px;
-            padding: 1rem;
-            margin: 1rem 0;
-            text-align: center;
-        }
-
-        .payment-number {
-            font-size: 0.9rem;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .text-center { text-align: center; }
-        .mt-3 { margin-top: 1rem; }
-        .mb-2 { margin-bottom: 0.5rem; }
-
-        .live-badge {
-            background: var(--gradient-secondary);
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            margin-left: 0.5rem;
-            animation: pulse 1s infinite;
-        }
-
-        .auth-container {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: var(--gradient-primary);
-            padding: 1rem;
-            position: relative;
-        }
-
-        .auth-container::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="3" fill="white" opacity="0.1"/><circle cx="50" cy="80" r="2" fill="white" opacity="0.1"/><circle cx="90" cy="90" r="4" fill="white" opacity="0.1"/></svg>');
-            background-size: 50px 50px;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .auth-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            border-radius: 32px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: var(--shadow-xl);
-            border: 1px solid var(--glass-border);
-            z-index: 1;
-        }
-
-        .auth-card h2 {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-align: center;
-            font-size: 1.75rem;
-        }
-
-        .input-group {
-            margin-bottom: 1rem;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 0.25rem;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .input-group input, 
-        .input-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--input-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            font-size: 0.9rem;
-            font-family: inherit;
-            color: var(--text-primary);
-            transition: all 0.3s;
-        }
-
-        .input-group input:focus,
-        .input-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-
-        .payment-methods {
-            display: flex;
-            gap: 1rem;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-        }
-
-        .payment-method {
-            flex: 1;
-            background: var(--gray-bg);
-            border-radius: 16px;
-            padding: 0.75rem;
-            text-align: center;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .payment-method.selected {
-            border-color: var(--primary);
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-        }
-
-        .payment-method:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .payment-method-icon {
-            font-size: 1.5rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .transfer-example {
-            background: var(--gray-bg);
-            padding: 0.75rem;
-            border-radius: 16px;
-            font-size: 0.7rem;
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        .transfer-example code {
-            display: block;
-            background: var(--card-bg);
-            padding: 0.5rem;
-            border-radius: 12px;
-            margin-top: 0.25rem;
-            font-size: 0.7rem;
-            word-break: break-all;
-        }
-
-        .admin-contact-warning {
-            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
-            color: white;
-            padding: 0.5rem;
-            border-radius: 16px;
-            font-size: 0.7rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .balance-display {
-            background: linear-gradient(135deg, var(--success), #059669);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .copy-number-btn {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            transition: all 0.2s;
-        }
-
-        .copy-number-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        .transfer-confirmation {
-            background: var(--gray-bg);
-            border-radius: 20px;
-            padding: 1rem;
-            margin: 1rem 0;
-            border: 1px solid var(--primary);
-        }
-
         @media (max-width: 640px) {
-            .container { padding: 1rem; }
-            .card { padding: 1rem; }
-            .numbers-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 0.5rem; }
-            .number { font-size: 1rem; }
+            .container { padding: 14px; }
+            .card { padding: 16px; border-radius: 24px; }
+            .numbers-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 10px; }
+            .number { font-size: 1.2rem; }
             .result-value { font-size: 1.2rem; }
             .referral-code { font-size: 1rem; }
-            .riddle-question { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -1215,7 +1117,7 @@
                 <input type="text" id="referralCodeInput" placeholder="Código de un amigo" required>
             </div>
             <button class="btn" id="authBtn" onclick="handleAuth()">Registrarse</button>
-            <div onclick="toggleAuthMode()" id="switchAuth" style="text-align: center; margin-top: 1rem; cursor: pointer; font-size: 0.8rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 600;">
+            <div onclick="toggleAuthMode()" id="switchAuth" style="text-align: center; margin-top: 1rem; cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--primary);">
                 ¿Ya tienes cuenta? Inicia sesión
             </div>
         </div>
@@ -1232,10 +1134,8 @@
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
                         <span class="balance-display" id="balanceDisplay">💰 Saldo: 0 Cup</span>
                         <span class="florida-badge">🎯 PRONÓSTICOS</span>
-                        <div class="theme-toggle" id="themeToggleBtn" title="Cambiar tema">
-                            🌙
-                        </div>
-                        <button class="btn" onclick="logout()" style="width: auto; padding: 0.4rem 1rem; background: var(--danger); font-size: 0.75rem;">Salir</button>
+                        <div class="theme-toggle" id="themeToggleBtn" title="Cambiar tema">🌙</div>
+                        <button class="btn" onclick="logout()" style="width: auto; padding: 6px 18px; background: var(--danger); font-size: 0.75rem;">Salir</button>
                     </div>
                 </div>
             </div>
@@ -1254,16 +1154,106 @@
                 <div class="stat-card"><div class="stat-number" id="cupEarnedStat">0</div><div class="stat-label">💰 cup ganados</div></div>
             </div>
 
-            <div class="card">
-                <div class="nav-menu">
-                    <button class="nav-btn active" data-section="predictions">🎯 Pronósticos</button>
-                    <button class="nav-btn" data-section="riddle">🤔 Adivinanza</button>
-                    <button class="nav-btn" data-section="dailyProb">📊 Probabilidades</button>
-                    <button class="nav-btn" data-section="referrals">🎁 Referidos (50 cup)</button>
-                    <button class="nav-btn" data-section="history">🏆 Historial</button>
-                    <button class="nav-btn" data-section="comments">💬 Comentarios</button>
-                    <button class="nav-btn" data-section="profile">👤 Perfil</button>
-                    <button class="nav-btn" data-section="payment">💰 Depósito/Retiro</button>
+            <!-- Navegación estilo tarjetas cuadradas grandes con SVG dorados -->
+            <div class="card" style="padding: 20px;">
+                <div class="nav-grid">
+                    <div class="nav-card" data-section="predictions">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" fill="none"/>
+                                <line x1="12" y1="2" x2="12" y2="5" stroke="currentColor"/>
+                                <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor"/>
+                                <line x1="2" y1="12" x2="5" y2="12" stroke="currentColor"/>
+                                <line x1="19" y1="12" x2="22" y2="12" stroke="currentColor"/>
+                                <path d="M12 8 L12 12 L15 15" stroke="currentColor" fill="none"/>
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" fill="none"/>
+                            </svg>
+                        </div>
+                        <span class="nav-label">Pronósticos</span>
+                    </div>
+                    <div class="nav-card" data-section="riddle">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z" stroke="currentColor" fill="none"/>
+                                <line x1="12" y1="22" x2="12" y2="17" stroke="currentColor"/>
+                                <circle cx="12" cy="9" r="1.5" stroke="currentColor" fill="none"/>
+                                <path d="M12 7v2" stroke="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="nav-label">Adivinanza</span>
+                    </div>
+                    <div class="nav-card" data-section="dailyProb">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                                <rect x="4" y="10" width="3" height="10" rx="0.5" stroke="currentColor" fill="none"/>
+                                <rect x="10" y="6" width="3" height="14" rx="0.5" stroke="currentColor" fill="none"/>
+                                <rect x="16" y="2" width="3" height="18" rx="0.5" stroke="currentColor" fill="none"/>
+                                <line x1="4" y1="3" x2="20" y2="3" stroke="currentColor"/>
+                                <line x1="4" y1="21" x2="20" y2="21" stroke="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="nav-label">Probabilidades</span>
+                    </div>
+                    <div class="nav-card" data-section="referrals">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                                <rect x="3" y="8" width="18" height="13" rx="2" stroke="currentColor" fill="none"/>
+                                <path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" fill="none"/>
+                                <polyline points="12 12 12 16 16 14" stroke="currentColor" fill="none"/>
+                                <line x1="12" y1="16" x2="8" y2="14" stroke="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="nav-label">Referidos (50 cup)</span>
+                    </div>
+                    <div class="nav-card" data-section="history">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                                <circle cx="12" cy="12" r="9" stroke="currentColor" fill="none"/>
+                                <polyline points="12 7 12 12 15 15" stroke="currentColor" fill="none"/>
+                                <path d="M12 3L12 5" stroke="currentColor"/>
+                                <path d="M19 12L21 12" stroke="currentColor"/>
+                                <path d="M12 19L12 21" stroke="currentColor"/>
+                                <path d="M5 12L3 12" stroke="currentColor"/>
+                                <circle cx="10" cy="17" r="0.8" stroke="currentColor" fill="currentColor"/>
+                                <circle cx="14" cy="7" r="0.8" stroke="currentColor" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="nav-label">Historial</span>
+                    </div>
+                    <div class="nav-card" data-section="comments">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                                <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H5l4-4a8.5 8.5 0 1 1 12-4.5z" stroke="currentColor" fill="none"/>
+                                <circle cx="8" cy="11" r="1.2" stroke="currentColor" fill="currentColor"/>
+                                <circle cx="12.5" cy="11" r="1.2" stroke="currentColor" fill="currentColor"/>
+                                <circle cx="17" cy="11" r="1.2" stroke="currentColor" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="nav-label">Comentarios</span>
+                    </div>
+                    <div class="nav-card" data-section="profile">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                                <circle cx="12" cy="8" r="4" stroke="currentColor" fill="none"/>
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" fill="none"/>
+                                <path d="M12 12 L12 4" stroke="currentColor"/>
+                                <path d="M9 7 L12 4 L15 7" stroke="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="nav-label">Perfil</span>
+                    </div>
+                    <div class="nav-card" data-section="payment">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                                <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" fill="none"/>
+                                <line x1="2" y1="10" x2="22" y2="10" stroke="currentColor"/>
+                                <path d="M16 15h3" stroke="currentColor"/>
+                                <circle cx="18.5" cy="15" r="0.8" stroke="currentColor" fill="currentColor"/>
+                                <path d="M7 13 L7 17" stroke="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="nav-label">Depósito/Retiro</span>
+                    </div>
                 </div>
             </div>
 
@@ -1275,7 +1265,7 @@
 
             <div id="riddleSection" style="display: none;">
                 <div class="card riddle-card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent;">🤔 Adivinanza del Día</h2>
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">🤔 Adivinanza del Día</h2>
                     <div id="riddleContent" class="text-center">
                         <div class="riddle-question" id="riddleQuestion">Cargando adivinanza...</div>
                         <button class="btn btn-small show-answer-btn" onclick="toggleRiddleAnswer()">🔍 Ver respuesta</button>
@@ -1307,7 +1297,7 @@
 
             <div id="referralsSection" style="display: none;">
                 <div class="card referral-card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
                     <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">
                         Comparte tu código de invitación. Por cada amigo que se registre y <strong>pague una membresía ACTIVA</strong> (de cualquier costo), 
                         recibirás <strong>50 cup COMPLETAMENTE RETIRABLES</strong> en tu cuenta.
@@ -1345,7 +1335,7 @@
                             <thead>
                                 <tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></tr>
                             </thead>
-                            <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</tbody>
+                            <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -1353,11 +1343,11 @@
 
             <div id="historySection" style="display: none;">
                 <div class="card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent;">🏆 Historial de Resultados</h2>
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
                     <div class="table-responsive">
                         <table id="historyTable">
                             <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
-                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...</tbody>
+                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -1365,7 +1355,7 @@
 
             <div id="commentsSection" style="display: none;">
                 <div class="card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent;">💬 Comentarios y Jugadas</h2>
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">💬 Comentarios y Jugadas</h2>
                     <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
                     <div id="commentsList" class="comments-section"><div class="text-center">Cargando comentarios...</div></div>
                     <div class="new-comment-form">
@@ -1386,7 +1376,7 @@
 
             <div id="paymentSection" style="display: none;">
                 <div class="card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent;">💰 Depósito / Retiro</h2>
+                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">💰 Depósito / Retiro</h2>
                     
                     <div class="stats-grid">
                         <div class="stat-card"><div class="stat-number" id="walletBalance">0</div><div class="stat-label">💰 Saldo Disponible</div></div>
@@ -1426,7 +1416,7 @@
                                 Por favor, confirma que has realizado la transferencia a la tarjeta <strong>9227 0699 9771 1927</strong> 
                                 y envía la captura al usuario de Telegram <strong>@sdesaroyador</strong>.
                             </p>
-                            <div class="admin-contact-warning">
+                            <div class="admin-contact-warning" style="background: linear-gradient(135deg, var(--danger), var(--danger-dark)); color: white; padding: 8px; border-radius: 16px; font-size: 0.7rem; text-align: center; margin-bottom: 1rem;">
                                 📱 <strong>Importante:</strong> Debes enviar la captura de tu transferencia a <strong>@sdesaroyador</strong> en Telegram para que sea verificada.
                             </div>
                             <button class="btn btn-small" onclick="confirmTransfer()" style="width: auto; background: var(--success);">✅ Confirmar Transferencia</button>
@@ -1442,9 +1432,9 @@
                             <input type="text" id="transactionNumber" placeholder="Ej: KW600UIE4C999" required>
                         </div>
 
-                        <div class="transfer-example">
+                        <div class="transfer-example" style="background: var(--gray-bg); padding: 12px; border-radius: 16px; font-size: 0.7rem; margin-bottom: 1rem; text-align: left;">
                             📋 <strong>Ejemplo de transferencia:</strong>
-                            <code>Se ha realizado una transferencia a la tarjeta 9227 0699 9771 1927 de 250.00 CUP. Nro. Transaccion: KW600UIE4C999. Fecha: 29/4/2026</code>
+                            <code style="display: block; background: var(--card-bg); padding: 8px; border-radius: 12px; margin-top: 4px; font-size: 0.7rem; word-break: break-all;">Se ha realizado una transferencia a la tarjeta 9227 0699 9771 1927 de 250.00 CUP. Nro. Transaccion: KW600UIE4C999. Fecha: 29/4/2026</code>
                         </div>
 
                         <div class="input-group">
@@ -1527,11 +1517,11 @@
         let loadingProgress = 0;
         let loadingInterval;
         
-        // Variables para almacenar el estado actual del pronóstico y evitar que desaparezca
         let currentDisplayedNumbers = [];
         let currentDisplayedStrong = [];
         let currentDisplayedMedium = [];
         
+        // --- Funciones auxiliares ---
         function initTheme() {
             const savedTheme = localStorage.getItem('floridaTheme');
             const themeBtn = document.getElementById('themeToggleBtn');
@@ -1702,8 +1692,6 @@
             const diff = midnight - now;
             
             if (diff <= 0) {
-                // No recargamos automáticamente para evitar que desaparezca el pronóstico
-                // Solo actualizamos el contador
                 const timerElement = document.getElementById('countdownTimer');
                 if (timerElement) timerElement.innerHTML = '00:00:00';
                 return;
@@ -1783,7 +1771,8 @@
                         referrerEmail: referrerEmail,
                         referredEmail: newUserEmail,
                         referredAt: new Date().toISOString(),
-                        status: 'pending_cup',
+                        status: 'pending_cup',      // para recompensa de 50 cup
+                        statusDays: 'pending_days', // para recompensa de días gratis
                         membershipActive: false,
                         referralCode: referralCode
                     });
@@ -2167,10 +2156,6 @@
             return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
         
-        // ============================================================
-        // FUNCIÓN RENDER PREDICTIONS CORREGIDA
-        // AHORA NO PERMITE QUE LOS NÚMEROS DESAPAREZCAN
-        // ============================================================
         function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
@@ -2180,35 +2165,26 @@
                 return;
             }
             
-            // 🔥 SOLUCIÓN CLAVE: Si ya teníamos números mostrados y los nuevos están vacíos,
-            // NO reemplazamos la vista para que no "desaparezca" el pronóstico
+            // Validar si tenemos números nuevos o debemos mantener los anteriores
+            const hasNewNumbers = numbers && Array.isArray(numbers) && numbers.length > 0;
             const hasExistingNumbers = currentDisplayedNumbers.length > 0;
-            const hasNewNumbers = numbers && numbers.length > 0;
             
-            // Si no hay números nuevos PERO ya teníamos números mostrados, mantenemos los que tenemos
-            if (!hasNewNumbers && hasExistingNumbers) {
-                console.log("🛡️ PROTECCIÓN: Manteniendo pronóstico anterior porque el nuevo está vacío");
-                // Solo actualizamos los resultados (afternoonWinner, nightWinner) si es necesario
-                updateResultsOnly(afternoonWinner, nightWinner);
-                return;
-            }
-            
-            // Si no hay números nuevos Y tampoco teníamos guardados, mostrar mensaje de espera
+            // Si no hay números nuevos y tampoco hay números anteriores, mostrar mensaje
             if (!hasNewNumbers && !hasExistingNumbers) {
                 container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Los números para hoy se actualizarán próximamente.</p><p class="update-label" style="margin-top: 1rem;">🔄 Espera la actualización del administrador.</p></div>`;
                 return;
             }
             
-            // Si llegamos aquí, tenemos números para mostrar
+            // Si hay números nuevos, actualizar la caché
             if (hasNewNumbers) {
                 currentDisplayedNumbers = [...numbers];
-                currentDisplayedStrong = strongNumbers ? [...strongNumbers] : [];
-                currentDisplayedMedium = mediumNumbers ? [...mediumNumbers] : [];
+                currentDisplayedStrong = (strongNumbers && strongNumbers.length) ? [...strongNumbers] : [];
+                currentDisplayedMedium = (mediumNumbers && mediumNumbers.length) ? [...mediumNumbers] : [];
             }
             
             const numbersToShow = hasNewNumbers ? numbers : currentDisplayedNumbers;
-            const strongToShow = strongNumbers && strongNumbers.length > 0 ? strongNumbers : currentDisplayedStrong;
-            const mediumToShow = mediumNumbers && mediumNumbers.length > 0 ? mediumNumbers : currentDisplayedMedium;
+            const strongToShow = (strongNumbers && strongNumbers.length) ? strongNumbers : currentDisplayedStrong;
+            const mediumToShow = (mediumNumbers && mediumNumbers.length) ? mediumNumbers : currentDisplayedMedium;
             
             const displayTime = lastUpdateFormatted || formatTime12Hour(lastUpdate);
             const displayDate = formatDate(lastUpdate);
@@ -2222,13 +2198,12 @@
                            <span class="update-badge" style="background: var(--primary);">🌙 Se renueva a las 12:00 AM</span>
                        </div>
                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
-                            <span style="background: rgba(99,102,241,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
-                            <span style="background: rgba(245,158,11,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
-                            <span style="background: rgba(16,185,129,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">⏰ Pronóstico 24h activo</span>
+                            <span style="background: rgba(0,122,255,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
+                            <span style="background: rgba(255,159,10,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
+                            <span style="background: rgba(52,199,89,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">⏰ Pronóstico 24h activo</span>
                         </div>
                        <div class="numbers-grid" id="numbersGrid"></div>`;
             
-            // Resultado Sorteo Mediodía
             let afternoonClass = 'result-box result-waiting';
             let afternoonText = '⏳ ESPERANDO RESULTADO...';
             let afternoonAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
@@ -2245,7 +2220,6 @@
             }
             html += `<div class="${afternoonClass}"><div class="result-title">🌅 SORTEO MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`;
             
-            // Resultado Sorteo Noche
             let nightClass = 'result-box result-waiting';
             let nightText = '⏳ ESPERANDO RESULTADO...';
             let nightAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
@@ -2282,13 +2256,10 @@
             }
         }
         
-        // Función auxiliar para actualizar SOLO los resultados sin tocar los números
         function updateResultsOnly(afternoonWinner, nightWinner) {
-            // Actualizar solo los bloques de resultados si existen
             const container = document.getElementById('predictionsContent');
             if (!container) return;
             
-            // Buscar y actualizar el bloque de mediodía
             const afternoonDiv = container.querySelector('.result-box:first-of-type');
             if (afternoonDiv && afternoonWinner !== undefined) {
                 let afternoonClass = 'result-box result-waiting';
@@ -2318,7 +2289,6 @@
                 }
             }
             
-            // Buscar y actualizar el bloque de noche
             const nightDiv = container.querySelector('.result-box:last-of-type');
             if (nightDiv && nightWinner !== undefined) {
                 let nightClass = 'result-box result-waiting';
@@ -2348,7 +2318,6 @@
                 }
             }
             
-            // Destacar números ganadores en la cuadrícula
             const grid = document.getElementById('numbersGrid');
             if (grid) {
                 const numberCards = grid.querySelectorAll('.number-card');
@@ -2373,9 +2342,9 @@
                 const numbers = doc.exists ? doc.data().numbers : [];
                 const lastUpdate = doc.exists ? doc.data().lastUpdate : null;
                 const lastUpdateFormatted = doc.exists ? doc.data().lastUpdateFormatted : null;
-                if (window.currentStrong && window.currentMedium && window.currentAfternoon !== undefined && window.currentNight !== undefined) {
-                    renderPredictions(numbers, window.currentStrong, window.currentMedium, window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
-                }
+                // Usamos los valores globales actuales de strong/medium y resultados
+                renderPredictions(numbers, window.currentStrong || [], window.currentMedium || [], 
+                                 window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
             });
             
             if (unsubscribeProbabilities) unsubscribeProbabilities();
@@ -2388,7 +2357,8 @@
                     const numbers = numDoc.exists ? numDoc.data().numbers : [];
                     const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
                     const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
-                    renderPredictions(numbers, strongNumbers, mediumNumbers, window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
+                    renderPredictions(numbers, strongNumbers, mediumNumbers, 
+                                     window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
                 }).catch(err => console.error("Error getting dailyNumbers:", err));
             });
             
@@ -2495,43 +2465,54 @@
             }
         }
         
+        // --- HISTORIAL CORREGIDO: usa dailyResults de días anteriores ---
         async function loadHistory() {
             if (!currentUser) return;
             const tbody = document.getElementById('historyTableBody');
             try {
-                const userDoc = await db.collection('members').doc(currentUser.email).get();
-                if (userDoc.exists) {
-                    const wins = userDoc.data()?.wins || 0;
-                    const losses = userDoc.data()?.losses || 0;
-                    const total = wins + losses;
-                    const winRate = total > 0 ? Math.round((wins / total) * 100) : 0;
-                    document.getElementById('totalWins').innerText = wins;
-                    document.getElementById('winRate').innerText = `${winRate}%`;
+                // Obtener los últimos 50 documentos de dailyResults ordenados por fecha descendente
+                const historySnapshot = await db.collection('dailyResults')
+                    .orderBy('timestamp', 'desc')
+                    .limit(50)
+                    .get();
+                
+                if (historySnapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td></tr>';
+                    return;
                 }
-                const historyMap = new Map();
-                const historySnapshot = await db.collection('resultsHistory').orderBy('timestamp', 'desc').limit(50).get();
+                
+                tbody.innerHTML = '';
                 historySnapshot.forEach(doc => {
                     const data = doc.data();
-                    const date = data.date || 'Fecha no disponible';
-                    if (data.afternoonWinner && !historyMap.has(`${date}_afternoon`)) historyMap.set(`${date}_afternoon`, { date: date, type: 'afternoon', winner: data.afternoonWinner });
-                    if (data.nightWinner && !historyMap.has(`${date}_night`)) historyMap.set(`${date}_night`, { date: date, type: 'night', winner: data.nightWinner });
-                });
-                const uniqueHistory = Array.from(historyMap.values()).sort((a, b) => b.date.localeCompare(a.date));
-                tbody.innerHTML = '';
-                if (uniqueHistory.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td></tr>';
-                } else {
-                    uniqueHistory.forEach(item => {
+                    const dateStr = data.date || doc.id; // el id suele ser YYYY-MM-DD
+                    
+                    // Mediodía
+                    if (data.afternoonWinner) {
                         const row = tbody.insertRow();
-                        row.insertCell(0).innerText = item.date;
-                        row.insertCell(1).innerHTML = item.type === 'afternoon' ? '🌅 <strong>Mediodía</strong><br><span style="font-size:0.7rem;">(1:35 PM)</span>' : '🌙 <strong>Noche</strong><br><span style="font-size:0.7rem;">(9:50 PM)</span>';
-                        row.insertCell(2).innerHTML = item.winner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary-dark); font-weight:700;">${item.winner}</span>`;
+                        row.insertCell(0).innerText = dateStr;
+                        row.insertCell(1).innerHTML = '🌅 <strong>Mediodía</strong><br><span style="font-size:0.7rem;">(1:35 PM)</span>';
+                        row.insertCell(2).innerHTML = data.afternoonWinner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary-dark); font-weight:700;">${data.afternoonWinner}</span>`;
                         row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
-                    });
-                }
+                    }
+                    
+                    // Noche
+                    if (data.nightWinner) {
+                        const row = tbody.insertRow();
+                        row.insertCell(0).innerText = dateStr;
+                        row.insertCell(1).innerHTML = '🌙 <strong>Noche</strong><br><span style="font-size:0.7rem;">(9:50 PM)</span>';
+                        row.insertCell(2).innerHTML = data.nightWinner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary-dark); font-weight:700;">${data.nightWinner}</span>`;
+                        row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
+                    }
+                });
+                
+                // Estadísticas de wins/losses del usuario (simuladas, no se implementa acierto real)
+                // Mantenemos siempre 0 para no confundir
+                document.getElementById('totalWins').innerText = '0';
+                document.getElementById('winRate').innerText = '0%';
+                
             } catch (error) {
-                console.error('Error:', error);
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar</td></tr>';
+                console.error('Error cargando historial:', error);
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar historial</td></tr>';
             }
         }
         
@@ -2550,7 +2531,7 @@
                     const commentDiv = document.createElement('div');
                     commentDiv.className = 'comment-card';
                     let numberHtml = '';
-                    if (comment.number) numberHtml = `<div class="comment-number">🎯 Número jugado: <span>${comment.number}</span> ${comment.draw ? `(${comment.draw})` : ''}</div>`;
+                    if (comment.number) numberHtml = `<div class="comment-number" style="display:inline-block; background:var(--gradient-primary); color:white; padding:4px 12px; border-radius:20px; font-size:0.7rem; margin-top:8px;">🎯 Número jugado: ${escapeHtml(comment.number)} ${comment.draw ? `(${escapeHtml(comment.draw)})` : ''}</div>`;
                     commentDiv.innerHTML = `<div class="comment-header"><span class="comment-user">👤 ${escapeHtml(comment.userEmail || 'Usuario')}</span><span class="comment-date">📅 ${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Reciente'}</span></div><div class="comment-text">${escapeHtml(comment.message)}</div>${numberHtml}`;
                     container.appendChild(commentDiv);
                 });
@@ -2595,11 +2576,11 @@
                 <div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div>
                 <div class="stat-card"><div class="stat-number">${userBalance}</div><div class="stat-label">💰 Saldo Cup</div></div>
             </div>
-            <div style="background: var(--gray-bg); border-radius: 16px; padding: 1rem;">
+            <div style="background: var(--gray-bg); border-radius: 20px; padding: 1rem;">
                 <p><strong>📧 Email:</strong> ${currentUser?.email}</p>
                 <p><strong>📅 Membresía vence:</strong> ${expires}</p>
                 <p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0} | <strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p>
-                <p><strong>🎁 Código de invitación:</strong> <code style="background: var(--primary); color: white; padding: 0.2rem 0.5rem; border-radius: 8px;">${referralCode}</code></p>
+                <p><strong>🎁 Código de invitación:</strong> <code style="background: var(--primary); color: white; padding: 0.2rem 0.5rem; border-radius: 12px;">${escapeHtml(referralCode)}</code></p>
                 <button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--primary); width: auto;">📲 Compartir enlace de Telegram</button>
             </div>
             ${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}
@@ -2632,9 +2613,15 @@
             document.getElementById('commentsSection').style.display = section === 'comments' ? 'block' : 'none';
             document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
             document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none';
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.querySelector(`.nav-btn[data-section="${section}"]`);
-            if (activeBtn) activeBtn.classList.add('active');
+            
+            document.querySelectorAll('.nav-card').forEach(card => {
+                if (card.dataset.section === section) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+            
             if (section === 'profile') loadProfile();
             if (section === 'history') loadHistory();
             if (section === 'comments') loadComments();
@@ -2725,9 +2712,11 @@
             document.getElementById('referralCodeInput').value = '';
         }
         
-        document.querySelector('.nav-menu')?.addEventListener('click', (e) => {
-            const btn = e.target.closest('.nav-btn');
-            if (btn && btn.dataset.section) showSection(btn.dataset.section);
+        document.querySelectorAll('.nav-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const section = card.dataset.section;
+                if (section) showSection(section);
+            });
         });
         
         animateLoading();
