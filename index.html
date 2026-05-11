@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCT<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -384,47 +384,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-        }
-
-        .countdown-timer {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 16px;
-            border-radius: 24px;
-            text-align: center;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-        }
-
-        .countdown-timer::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translate(-30%, -30%) rotate(0deg); }
-            100% { transform: translate(30%, 30%) rotate(360deg); }
-        }
-
-        .countdown-label {
-            font-size: 0.7rem;
-            opacity: 0.85;
-            letter-spacing: 0.3px;
-        }
-
-        .countdown-time {
-            font-size: 1.4rem;
-            font-weight: 620;
-            font-family: 'Inter', monospace;
-            letter-spacing: 1px;
         }
 
         .today-badge {
@@ -1140,12 +1099,6 @@
                 </div>
             </div>
 
-            <div class="countdown-timer">
-                <div class="countdown-label">🔄 PRÓXIMA ACTUALIZACIÓN AUTOMÁTICA</div>
-                <div class="countdown-time" id="countdownTimer">--:--:--</div>
-                <div class="countdown-label" style="font-size: 0.65rem; margin-top: 0.25rem;">⏰ Los pronósticos se renuevan automáticamente a las 12:00 AM</div>
-            </div>
-
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-number" id="totalWins">0</div><div class="stat-label">🏆 Premios</div></div>
                 <div class="stat-card"><div class="stat-number" id="winRate">0%</div><div class="stat-label">⭐ Precisión</div></div>
@@ -1259,7 +1212,7 @@
 
             <div id="predictionsSection">
                 <div class="card" id="predictionsContent">
-                    <div class="text-center">Cargando pronósticos 24h...</div>
+                    <div class="text-center">Cargando pronósticos...</div>
                 </div>
             </div>
 
@@ -1335,7 +1288,8 @@
                             <thead>
                                 <tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></tr>
                             </thead>
-                            <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</td></tr></tbody>
+                            <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</td></tr>
+                        </tbody>
                         </table>
                     </div>
                 </div>
@@ -1507,19 +1461,25 @@
         let userBalance = 0;
         let authMode = 'register';
         let selectedPaymentMethod = 'transfer';
+        
+        // Listeners
         let unsubscribePredictions = null;
         let unsubscribeProbabilities = null;
         let unsubscribeResults = null;
         let unsubscribeRiddle = null;
         let unsubscribeDailyProb = null;
-        let countdownInterval = null;
         
         let loadingProgress = 0;
         let loadingInterval;
         
-        let currentDisplayedNumbers = [];
-        let currentDisplayedStrong = [];
-        let currentDisplayedMedium = [];
+        // Caché de pronósticos
+        let cachedNumbers = [];
+        let cachedStrong = [];
+        let cachedMedium = [];
+        let cachedAfternoonWinner = null;
+        let cachedNightWinner = null;
+        let cachedLastUpdate = null;
+        let cachedLastUpdateFormatted = null;
         
         // --- Funciones auxiliares ---
         function initTheme() {
@@ -1685,31 +1645,22 @@
             return today.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
         
-        function updateCountdown() {
-            const now = new Date();
-            const midnight = new Date(now);
-            midnight.setHours(24, 0, 0, 0);
-            const diff = midnight - now;
-            
-            if (diff <= 0) {
-                const timerElement = document.getElementById('countdownTimer');
-                if (timerElement) timerElement.innerHTML = '00:00:00';
-                return;
-            }
-            
-            const hours = Math.floor(diff / 3600000);
-            const minutes = Math.floor((diff % 3600000) / 60000);
-            const seconds = Math.floor((diff % 60000) / 1000);
-            const timerElement = document.getElementById('countdownTimer');
-            if (timerElement) {
-                timerElement.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
+        function formatTime12Hour(dateString) {
+            if (!dateString) return 'No disponible';
+            const date = new Date(dateString);
+            let hours = date.getHours();
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            return `${hours}:${minutes} ${ampm}`;
         }
         
-        function scheduleMidnightUpdate() {
-            if (countdownInterval) clearInterval(countdownInterval);
-            countdownInterval = setInterval(updateCountdown, 1000);
-            updateCountdown();
+        function formatDate(dateString) {
+            if (!dateString) return getCurrentDateFormatted();
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return getCurrentDateFormatted();
+            return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
         
         function toggleAuthMode() {
@@ -1771,8 +1722,8 @@
                         referrerEmail: referrerEmail,
                         referredEmail: newUserEmail,
                         referredAt: new Date().toISOString(),
-                        status: 'pending_cup',      // para recompensa de 50 cup
-                        statusDays: 'pending_days', // para recompensa de días gratis
+                        status: 'pending_cup',
+                        statusDays: 'pending_days',
                         membershipActive: false,
                         referralCode: referralCode
                     });
@@ -2138,24 +2089,6 @@
             }
         }
         
-        function formatTime12Hour(dateString) {
-            if (!dateString) return 'No disponible';
-            const date = new Date(dateString);
-            let hours = date.getHours();
-            const minutes = date.getMinutes().toString().padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            return `${hours}:${minutes} ${ampm}`;
-        }
-        
-        function formatDate(dateString) {
-            if (!dateString) return getCurrentDateFormatted();
-            const date = new Date(dateString);
-            if (isNaN(date.getTime())) return getCurrentDateFormatted();
-            return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        }
-        
         function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
@@ -2165,56 +2098,69 @@
                 return;
             }
             
-            // Validar si tenemos números nuevos o debemos mantener los anteriores
-            const hasNewNumbers = numbers && Array.isArray(numbers) && numbers.length > 0;
-            const hasExistingNumbers = currentDisplayedNumbers.length > 0;
+            // Si hay nuevos datos, actualizar caché
+            let finalNumbers = numbers;
+            let finalStrong = strongNumbers;
+            let finalMedium = mediumNumbers;
+            let finalAfternoon = afternoonWinner;
+            let finalNight = nightWinner;
+            let finalLastUpdate = lastUpdate;
+            let finalLastUpdateFormatted = lastUpdateFormatted;
             
-            // Si no hay números nuevos y tampoco hay números anteriores, mostrar mensaje
-            if (!hasNewNumbers && !hasExistingNumbers) {
-                container.innerHTML = `<div class="text-center"><h3>⏳ Pronósticos no disponibles</h3><p>Los números para hoy se actualizarán próximamente.</p><p class="update-label" style="margin-top: 1rem;">🔄 Espera la actualización del administrador.</p></div>`;
+            if (finalNumbers && Array.isArray(finalNumbers) && finalNumbers.length > 0) {
+                // Nuevos datos: actualizar caché
+                cachedNumbers = [...finalNumbers];
+                cachedStrong = finalStrong && finalStrong.length ? [...finalStrong] : [];
+                cachedMedium = finalMedium && finalMedium.length ? [...finalMedium] : [];
+                if (finalAfternoon !== undefined) cachedAfternoonWinner = finalAfternoon;
+                if (finalNight !== undefined) cachedNightWinner = finalNight;
+                if (finalLastUpdate) cachedLastUpdate = finalLastUpdate;
+                if (finalLastUpdateFormatted) cachedLastUpdateFormatted = finalLastUpdateFormatted;
+            } else if (cachedNumbers.length > 0) {
+                // No hay nuevos, usar caché
+                finalNumbers = cachedNumbers;
+                finalStrong = cachedStrong;
+                finalMedium = cachedMedium;
+                if (afternoonWinner === undefined || afternoonWinner === null) finalAfternoon = cachedAfternoonWinner;
+                if (nightWinner === undefined || nightWinner === null) finalNight = cachedNightWinner;
+                if (!lastUpdate) finalLastUpdate = cachedLastUpdate;
+                if (!lastUpdateFormatted) finalLastUpdateFormatted = cachedLastUpdateFormatted;
+            }
+            
+            if (!finalNumbers || finalNumbers.length === 0) {
+                container.innerHTML = `<div class="text-center"><h3>⏳ Esperando pronósticos del administrador</h3><p>Los números se mostrarán aquí cuando el administrador los publique.</p><p class="update-label" style="margin-top: 1rem;">🔄 Los pronósticos se mantendrán hasta que se publique una nueva actualización.</p></div>`;
                 return;
             }
             
-            // Si hay números nuevos, actualizar la caché
-            if (hasNewNumbers) {
-                currentDisplayedNumbers = [...numbers];
-                currentDisplayedStrong = (strongNumbers && strongNumbers.length) ? [...strongNumbers] : [];
-                currentDisplayedMedium = (mediumNumbers && mediumNumbers.length) ? [...mediumNumbers] : [];
-            }
-            
-            const numbersToShow = hasNewNumbers ? numbers : currentDisplayedNumbers;
-            const strongToShow = (strongNumbers && strongNumbers.length) ? strongNumbers : currentDisplayedStrong;
-            const mediumToShow = (mediumNumbers && mediumNumbers.length) ? mediumNumbers : currentDisplayedMedium;
-            
-            const displayTime = lastUpdateFormatted || formatTime12Hour(lastUpdate);
-            const displayDate = formatDate(lastUpdate);
+            const displayTime = (finalLastUpdateFormatted && finalLastUpdateFormatted !== 'No disponible') ? finalLastUpdateFormatted : formatTime12Hour(finalLastUpdate);
+            const displayDate = formatDate(finalLastUpdate);
             const currentDate = getCurrentDateFormatted();
             
-            let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día (24h) <span class="live-badge">VÁLIDO HASTA 11:59 PM</span></h2>
+            let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día (24h) <span class="live-badge">ACTIVO HASTA NUEVO PRONÓSTICO</span></h2>
                        <div class="update-info">
                            <span class="update-label">📅 Pronóstico válido para hoy: ${currentDate}</span>
                            <span class="update-time">🕒 Última actualización del admin: ${displayTime}</span>
                            <span class="update-date">📆 Pronóstico subido el: ${displayDate}</span>
-                           <span class="update-badge" style="background: var(--primary);">🌙 Se renueva a las 12:00 AM</span>
+                           <span class="update-badge" style="background: var(--primary);">🔄 Se mantiene hasta nueva actualización manual</span>
                        </div>
                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
                             <span style="background: rgba(0,122,255,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
                             <span style="background: rgba(255,159,10,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
-                            <span style="background: rgba(52,199,89,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">⏰ Pronóstico 24h activo</span>
+                            <span style="background: rgba(52,199,89,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">⏰ Pronóstico activo 24/7</span>
                         </div>
                        <div class="numbers-grid" id="numbersGrid"></div>`;
             
             let afternoonClass = 'result-box result-waiting';
             let afternoonText = '⏳ ESPERANDO RESULTADO...';
             let afternoonAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
-            if (afternoonWinner) {
-                if (afternoonWinner === 'fallo') { 
+            if (finalAfternoon) {
+                if (finalAfternoon === 'fallo') { 
                     afternoonClass = 'result-box result-fallo'; 
                     afternoonText = '❌ FALLO - No hubo número ganador'; 
                     afternoonAlert = ''; 
                 } else { 
                     afternoonClass = 'result-box result-winner'; 
-                    afternoonText = `🎯 NÚMERO GANADOR: ${afternoonWinner}`; 
+                    afternoonText = `🎯 NÚMERO GANADOR: ${finalAfternoon}`; 
                     afternoonAlert = ''; 
                 }
             }
@@ -2223,14 +2169,14 @@
             let nightClass = 'result-box result-waiting';
             let nightText = '⏳ ESPERANDO RESULTADO...';
             let nightAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
-            if (nightWinner) {
-                if (nightWinner === 'fallo') { 
+            if (finalNight) {
+                if (finalNight === 'fallo') { 
                     nightClass = 'result-box result-fallo'; 
                     nightText = '❌ FALLO - No hubo número ganador'; 
                     nightAlert = ''; 
                 } else { 
                     nightClass = 'result-box result-winner'; 
-                    nightText = `🎯 NÚMERO GANADOR: ${nightWinner}`; 
+                    nightText = `🎯 NÚMERO GANADOR: ${finalNight}`; 
                     nightAlert = ''; 
                 }
             }
@@ -2240,14 +2186,14 @@
             const grid = document.getElementById('numbersGrid');
             if (grid) {
                 grid.innerHTML = '';
-                numbersToShow.forEach(num => {
+                finalNumbers.forEach(num => {
                     let className = 'number-card';
-                    if (strongToShow && strongToShow.includes(num)) className += ' strong';
-                    else if (mediumToShow && mediumToShow.includes(num)) className += ' medium';
-                    if ((afternoonWinner && afternoonWinner === num) || (nightWinner && nightWinner === num)) className += ' winner';
+                    if (finalStrong && finalStrong.includes(num)) className += ' strong';
+                    else if (finalMedium && finalMedium.includes(num)) className += ' medium';
+                    if ((finalAfternoon && finalAfternoon === num) || (finalNight && finalNight === num)) className += ' winner';
                     let probText = '';
-                    if (strongToShow && strongToShow.includes(num)) probText = '<div class="probability">🔥 68%</div>';
-                    else if (mediumToShow && mediumToShow.includes(num)) probText = '<div class="probability">📊 50%</div>';
+                    if (finalStrong && finalStrong.includes(num)) probText = '<div class="probability">🔥 68%</div>';
+                    else if (finalMedium && finalMedium.includes(num)) probText = '<div class="probability">📊 50%</div>';
                     const card = document.createElement('div');
                     card.className = className;
                     card.innerHTML = `<div class="number">${num}</div>${probText}`;
@@ -2256,149 +2202,49 @@
             }
         }
         
-        function updateResultsOnly(afternoonWinner, nightWinner) {
-            const container = document.getElementById('predictionsContent');
-            if (!container) return;
-            
-            const afternoonDiv = container.querySelector('.result-box:first-of-type');
-            if (afternoonDiv && afternoonWinner !== undefined) {
-                let afternoonClass = 'result-box result-waiting';
-                let afternoonText = '⏳ ESPERANDO RESULTADO...';
-                let afternoonAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
-                if (afternoonWinner) {
-                    if (afternoonWinner === 'fallo') { 
-                        afternoonClass = 'result-box result-fallo'; 
-                        afternoonText = '❌ FALLO - No hubo número ganador'; 
-                        afternoonAlert = ''; 
-                    } else { 
-                        afternoonClass = 'result-box result-winner'; 
-                        afternoonText = `🎯 NÚMERO GANADOR: ${afternoonWinner}`; 
-                        afternoonAlert = ''; 
-                    }
-                }
-                afternoonDiv.className = afternoonClass;
-                const valueSpan = afternoonDiv.querySelector('.result-value');
-                if (valueSpan) valueSpan.innerHTML = afternoonText;
-                const alertDiv = afternoonDiv.querySelector('.waiting-alert');
-                if (alertDiv && afternoonAlert === '') alertDiv.remove();
-                if (!alertDiv && afternoonAlert !== '') {
-                    const newAlert = document.createElement('div');
-                    newAlert.className = 'waiting-alert';
-                    newAlert.innerHTML = '🔄 El administrador aún no ha publicado el resultado de este sorteo';
-                    afternoonDiv.appendChild(newAlert);
-                }
-            }
-            
-            const nightDiv = container.querySelector('.result-box:last-of-type');
-            if (nightDiv && nightWinner !== undefined) {
-                let nightClass = 'result-box result-waiting';
-                let nightText = '⏳ ESPERANDO RESULTADO...';
-                let nightAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
-                if (nightWinner) {
-                    if (nightWinner === 'fallo') { 
-                        nightClass = 'result-box result-fallo'; 
-                        nightText = '❌ FALLO - No hubo número ganador'; 
-                        nightAlert = ''; 
-                    } else { 
-                        nightClass = 'result-box result-winner'; 
-                        nightText = `🎯 NÚMERO GANADOR: ${nightWinner}`; 
-                        nightAlert = ''; 
-                    }
-                }
-                nightDiv.className = nightClass;
-                const valueSpan = nightDiv.querySelector('.result-value');
-                if (valueSpan) valueSpan.innerHTML = nightText;
-                const alertDiv = nightDiv.querySelector('.waiting-alert');
-                if (alertDiv && nightAlert === '') alertDiv.remove();
-                if (!alertDiv && nightAlert !== '') {
-                    const newAlert = document.createElement('div');
-                    newAlert.className = 'waiting-alert';
-                    newAlert.innerHTML = '🔄 El administrador aún no ha publicado el resultado de este sorteo';
-                    nightDiv.appendChild(newAlert);
-                }
-            }
-            
-            const grid = document.getElementById('numbersGrid');
-            if (grid) {
-                const numberCards = grid.querySelectorAll('.number-card');
-                numberCards.forEach(card => {
-                    const numberSpan = card.querySelector('.number');
-                    if (numberSpan) {
-                        const num = numberSpan.innerText;
-                        if ((afternoonWinner && afternoonWinner === num) || (nightWinner && nightWinner === num)) {
-                            card.classList.add('winner');
-                        } else {
-                            card.classList.remove('winner');
-                        }
-                    }
-                });
-            }
-        }
-        
         function setupRealtimeListeners() {
-            const today = new Date().toISOString().split('T')[0];
+            // Escuchar cambios en el documento maestro de pronósticos (actualizado solo por admin)
             if (unsubscribePredictions) unsubscribePredictions();
-            unsubscribePredictions = db.collection('dailyNumbers').doc(today).onSnapshot((doc) => {
-                const numbers = doc.exists ? doc.data().numbers : [];
-                const lastUpdate = doc.exists ? doc.data().lastUpdate : null;
-                const lastUpdateFormatted = doc.exists ? doc.data().lastUpdateFormatted : null;
-                // Usamos los valores globales actuales de strong/medium y resultados
-                renderPredictions(numbers, window.currentStrong || [], window.currentMedium || [], 
-                                 window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
-            });
-            
-            if (unsubscribeProbabilities) unsubscribeProbabilities();
-            unsubscribeProbabilities = db.collection('probabilities').doc(today).onSnapshot((doc) => {
-                const strongNumbers = doc.exists ? doc.data().strongNumbers : [];
-                const mediumNumbers = doc.exists ? doc.data().mediumNumbers : [];
-                window.currentStrong = strongNumbers;
-                window.currentMedium = mediumNumbers;
-                db.collection('dailyNumbers').doc(today).get().then(numDoc => {
-                    const numbers = numDoc.exists ? numDoc.data().numbers : [];
-                    const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
-                    const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
-                    renderPredictions(numbers, strongNumbers, mediumNumbers, 
-                                     window.currentAfternoon, window.currentNight, lastUpdate, lastUpdateFormatted);
-                }).catch(err => console.error("Error getting dailyNumbers:", err));
-            });
-            
-            if (unsubscribeResults) unsubscribeResults();
-            unsubscribeResults = db.collection('dailyResults').doc(today).onSnapshot((doc) => {
-                const afternoonWinner = doc.exists ? doc.data().afternoonWinner : null;
-                const nightWinner = doc.exists ? doc.data().nightWinner : null;
-                window.currentAfternoon = afternoonWinner;
-                window.currentNight = nightWinner;
-                Promise.all([db.collection('dailyNumbers').doc(today).get(), db.collection('probabilities').doc(today).get()]).then(([numDoc, probDoc]) => {
-                    const numbers = numDoc.exists ? numDoc.data().numbers : [];
-                    const strongNumbers = probDoc.exists ? probDoc.data().strongNumbers : [];
-                    const mediumNumbers = probDoc.exists ? probDoc.data().mediumNumbers : [];
-                    const lastUpdate = numDoc.exists ? numDoc.data().lastUpdate : null;
-                    const lastUpdateFormatted = numDoc.exists ? numDoc.data().lastUpdateFormatted : null;
+            unsubscribePredictions = db.collection('masterPredictions').doc('current').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const numbers = data.numbers || [];
+                    const strongNumbers = data.strongNumbers || [];
+                    const mediumNumbers = data.mediumNumbers || [];
+                    const afternoonWinner = data.afternoonWinner || null;
+                    const nightWinner = data.nightWinner || null;
+                    const lastUpdate = data.lastUpdate || null;
+                    const lastUpdateFormatted = data.lastUpdateFormatted || null;
+                    
                     renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted);
-                }).catch(err => console.error("Error getting data for results:", err));
+                } else {
+                    // Si no existe el documento, mostrar mensaje de espera (sin resetear caché)
+                    renderPredictions([], [], [], null, null, null, null);
+                }
             });
             
+            // Riddle
             if (unsubscribeRiddle) unsubscribeRiddle();
-            unsubscribeRiddle = db.collection('riddles').doc(today).onSnapshot(() => {
+            unsubscribeRiddle = db.collection('riddles').doc('current').onSnapshot(() => {
                 if (document.getElementById('riddleSection').style.display !== 'none') loadRiddle();
             });
             
+            // Daily Probabilities
             if (unsubscribeDailyProb) unsubscribeDailyProb();
-            unsubscribeDailyProb = db.collection('dailyProbabilities').doc(today).onSnapshot(() => {
+            unsubscribeDailyProb = db.collection('dailyProbabilities').doc('current').onSnapshot(() => {
                 if (document.getElementById('dailyProbSection').style.display !== 'none') loadDailyProbabilities();
             });
         }
         
         async function loadRiddle() {
-            const today = new Date().toISOString().split('T')[0];
             try {
-                const doc = await db.collection('riddles').doc(today).get();
+                const doc = await db.collection('riddles').doc('current').get();
                 if (doc.exists) {
                     const data = doc.data();
                     document.getElementById('riddleQuestion').innerHTML = data.question || 'No hay adivinanza para hoy';
                     currentRiddleAnswer = data.answer || 'Sin respuesta';
                     document.getElementById('riddleAnswer').innerHTML = currentRiddleAnswer;
-                    document.getElementById('riddleDate').innerHTML = `📅 Adivinanza del ${data.date || today}`;
+                    document.getElementById('riddleDate').innerHTML = `📅 Adivinanza del ${data.date || getCurrentDateFormatted()}`;
                 } else {
                     document.getElementById('riddleQuestion').innerHTML = '✨ No hay adivinanza disponible hoy. ¡Vuelve mañana!';
                     document.getElementById('riddleAnswer').innerHTML = '';
@@ -2419,16 +2265,14 @@
         }
         
         async function loadDailyProbabilities() {
-            const today = new Date().toISOString().split('T')[0];
             const currentDate = getCurrentDateFormatted();
-            
             const badgeElement = document.getElementById('probabilitiesTodayBadge');
             if (badgeElement) {
                 badgeElement.innerHTML = `📅 ${currentDate}`;
             }
             
             try {
-                const doc = await db.collection('dailyProbabilities').doc(today).get();
+                const doc = await db.collection('dailyProbabilities').doc('current').get();
                 if (doc.exists) {
                     const data = doc.data();
                     const numbers = data.numbers || [];
@@ -2465,12 +2309,10 @@
             }
         }
         
-        // --- HISTORIAL CORREGIDO: usa dailyResults de días anteriores ---
         async function loadHistory() {
             if (!currentUser) return;
             const tbody = document.getElementById('historyTableBody');
             try {
-                // Obtener los últimos 50 documentos de dailyResults ordenados por fecha descendente
                 const historySnapshot = await db.collection('dailyResults')
                     .orderBy('timestamp', 'desc')
                     .limit(50)
@@ -2484,9 +2326,8 @@
                 tbody.innerHTML = '';
                 historySnapshot.forEach(doc => {
                     const data = doc.data();
-                    const dateStr = data.date || doc.id; // el id suele ser YYYY-MM-DD
+                    const dateStr = data.date || doc.id;
                     
-                    // Mediodía
                     if (data.afternoonWinner) {
                         const row = tbody.insertRow();
                         row.insertCell(0).innerText = dateStr;
@@ -2495,7 +2336,6 @@
                         row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
                     }
                     
-                    // Noche
                     if (data.nightWinner) {
                         const row = tbody.insertRow();
                         row.insertCell(0).innerText = dateStr;
@@ -2505,14 +2345,12 @@
                     }
                 });
                 
-                // Estadísticas de wins/losses del usuario (simuladas, no se implementa acierto real)
-                // Mantenemos siempre 0 para no confundir
                 document.getElementById('totalWins').innerText = '0';
                 document.getElementById('winRate').innerText = '0%';
                 
             } catch (error) {
                 console.error('Error cargando historial:', error);
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar historial</td></tr>';
+                tbody.innerHTML = '</tr><td colspan="4" class="text-center">❌ Error al cargar historial</td></tr>';
             }
         }
         
@@ -2698,7 +2536,6 @@
             if (unsubscribeResults) unsubscribeResults();
             if (unsubscribeRiddle) unsubscribeRiddle();
             if (unsubscribeDailyProb) unsubscribeDailyProb();
-            if (countdownInterval) clearInterval(countdownInterval);
             auth.signOut();
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('authScreen').style.display = 'flex';
@@ -2751,7 +2588,6 @@
                 loadDailyProbabilities();
                 loadTransactions();
                 showSection('predictions');
-                scheduleMidnightUpdate();
                 initTheme();
                 const themeBtn = document.getElementById('themeToggleBtn');
                 if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
@@ -2761,7 +2597,6 @@
                 if (unsubscribeResults) unsubscribeResults();
                 if (unsubscribeRiddle) unsubscribeRiddle();
                 if (unsubscribeDailyProb) unsubscribeDailyProb();
-                if (countdownInterval) clearInterval(countdownInterval);
                 document.getElementById('dashboardScreen').style.display = 'none';
                 document.getElementById('authScreen').style.display = 'flex';
                 currentUser = null;
