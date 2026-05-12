@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Pronóstico Pro | IA Pro + 50 cup por referido</title>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     
     <style>
@@ -265,7 +264,6 @@
             transform: scale(0.97);
         }
 
-        /* Navegación estilo tarjetas cuadradas grandes */
         .nav-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -873,13 +871,14 @@
         }
 
         .payment-number {
-            font-size: 0.9rem;
+            font-size: 1.2rem;
             font-weight: 700;
             font-family: monospace;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            letter-spacing: 1px;
         }
 
         .text-center { text-align: center; }
@@ -1045,7 +1044,6 @@
             transition: width 0.3s ease;
         }
 
-        /* IA Pro Styles */
         .ia-card {
             background: linear-gradient(135deg, rgba(175, 82, 222, 0.1), rgba(255, 159, 10, 0.08));
             border: 1px solid var(--accent);
@@ -1112,7 +1110,6 @@
             margin-top: 4px;
         }
 
-        /* Decenas y Terminales Styles */
         .decenas-terminales-grid {
             display: flex;
             gap: 20px;
@@ -1163,6 +1160,43 @@
             padding: 8px;
             background: var(--gray-bg);
             border-radius: 16px;
+        }
+
+        .telegram-message-example {
+            background: var(--gray-bg);
+            border-radius: 16px;
+            padding: 12px;
+            margin: 12px 0;
+            text-align: left;
+            font-size: 0.75rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        .telegram-contact {
+            background: linear-gradient(135deg, var(--info), var(--primary-dark));
+            color: white;
+            padding: 10px;
+            border-radius: 16px;
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .membership-active-alert {
+            background: linear-gradient(135deg, var(--success), #248A3D);
+            color: white;
+            padding: 12px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .membership-expired-alert {
+            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+            color: white;
+            padding: 12px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 15px;
         }
 
         @media (max-width: 640px) {
@@ -1216,7 +1250,7 @@
                 <div class="header">
                     <div class="logo">
                         <h1>🎰 Pronóstico Pro <span class="live-badge">IA PRO ACTIVADA</span></h1>
-                        <p>Pronóstics IA + 50 cup por referido que pague membresía</p>
+                        <p>Pronósticos IA + 50 cup por referido que pague membresía</p>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
                         <span class="balance-display" id="balanceDisplay">💰 Saldo: 0 Cup</span>
@@ -1228,14 +1262,13 @@
             </div>
 
             <div class="stats-grid">
-                <div class="stat-card"><div class="stat-number" id="totalWins">0</div><div class="stat-label">🏆 Premios</div></div>
-                <div class="stat-card"><div class="stat-number" id="winRate">0%</div><div class="stat-label">⭐ Precisión</div></div>
                 <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
                 <div class="stat-card"><div class="stat-number" id="referralsCount">0</div><div class="stat-label">👥 Referidos</div></div>
                 <div class="stat-card"><div class="stat-number" id="cupEarnedStat">0</div><div class="stat-label">💰 cup ganados</div></div>
             </div>
 
-            <!-- Navegación estilo tarjetas cuadradas grandes -->
+            <div id="membershipAlert" class="membership-active-alert" style="display: none;"></div>
+
             <div class="card" style="padding: 20px;">
                 <div class="nav-grid">
                     <div class="nav-card" data-section="predictions">
@@ -1356,14 +1389,12 @@
                 </div>
             </div>
 
-            <!-- IA PRO SECTION -->
             <div id="iaProSection" style="display: none;">
                 <div class="card ia-card">
                     <h2 style="font-size: 1.2rem; margin-bottom: 0.5rem;">🤖 IA Pro - Predictor Inteligente</h2>
                     <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">
                         Ingresa los resultados anteriores de la lotería (ej: 23 45 67 89 12 34) y la IA generará:
                         <strong>12 números de 2 dígitos, 3 decenas y 3 terminales</strong> con alta probabilidad.
-                        Los resultados se mantendrán guardados hasta que ingreses un nuevo resultado.
                     </p>
                     
                     <div class="ia-input-group">
@@ -1379,12 +1410,12 @@
                         <div id="iaDecenasTerminalesGrid" class="decenas-terminales-grid"></div>
                         
                         <div class="ia-info">
-                            🤖 Estos números fueron generados mediante análisis de patrones de frecuencia, dígitos más comunes y tendencias. Se mantendrán hasta que ingreses un nuevo resultado.
+                            🤖 Estos números fueron generados mediante análisis de patrones de frecuencia, dígitos más comunes y tendencias.
                         </div>
                     </div>
                     
                     <div id="iaHistoryContainer" style="display: none; margin-top: 20px;">
-                        <h3 style="font-size: 0.9rem; margin-bottom: 8px;">📊 Último resultado ingresado:</h3>
+                        <h3 style="font-size: 0.9rem; margin-bottom: 8px;">📊 Últimos datos ingresados:</h3>
                         <div id="iaLastInput" class="ia-info" style="background: var(--gradient-ai); color: white;"></div>
                     </div>
                 </div>
@@ -1426,7 +1457,7 @@
                 <div class="card referral-card">
                     <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
                     <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">
-                        Comparte tu código de invitación. Por cada amigo que se registre y <strong>pague una membresía ACTIVA</strong> (de cualquier costo), 
+                        Comparte tu código de invitación. Por cada amigo que se registre y <strong>pague una membresía ACTIVA</strong> (200 cup mínimo), 
                         recibirás <strong>50 cup COMPLETAMENTE RETIRABLES</strong> en tu cuenta.
                     </p>
                     
@@ -1513,17 +1544,8 @@
                     </div>
 
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                        <button class="btn" onclick="showDepositForm()" style="flex: 1;">💵 DEPOSITAR</button>
+                        <button class="btn" onclick="showDepositForm()" style="flex: 1;">💵 DEPOSITAR (200 cup mínimo)</button>
                         <button class="btn btn-outline" onclick="showWithdrawForm()" style="flex: 1;">🏦 RETIRAR</button>
-                        <button class="btn btn-success" onclick="showMembershipOptions()" style="flex: 1;">⭐ Comprar Membresía</button>
-                    </div>
-
-                    <div id="membershipOptions" style="display: none; margin-bottom: 1rem;">
-                        <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">⭐ Elige tu membresía</h3>
-                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                            <button class="btn" onclick="buyMembershipWithBalance(200, 1)" style="flex: 1; background: var(--primary);">1 Mes - 200 Cup</button>
-                            <button class="btn" onclick="buyMembershipWithBalance(500, 3)" style="flex: 1; background: var(--primary-dark);">3 Meses - 500 Cup</button>
-                        </div>
                     </div>
 
                     <div id="depositForm" style="display: block;">
@@ -1531,44 +1553,47 @@
                         
                         <div class="payment-info">
                             <div style="font-size: 0.7rem; color: var(--text-secondary);">💳 Tarjeta para transferencia:</div>
-                            <div class="payment-number" style="font-size: 1.3rem; font-family: monospace;">9227 0699 9771 1927</div>
-                            <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem;">
-                                <button class="copy-number-btn" onclick="copyToClipboard('9227 0699 9771 1927')">💳 Copiar Tarjeta</button>
-                            </div>
+                            <div class="payment-number" style="font-size: 1.3rem; font-family: monospace; font-weight: 800;">9227 0699 9771 1927</div>
+                            <button class="copy-number-btn" onclick="copyCardNumber()">📋 Copiar número de tarjeta</button>
                         </div>
 
                         <div class="transfer-confirmation">
                             <div class="text-center" style="margin-bottom: 0.5rem;">
-                                <strong>✅ Confirmar transferencia</strong>
+                                <strong>✅ ¿Ya hiciste la transferencia?</strong>
                             </div>
-                            <p style="font-size: 0.75rem; margin-bottom: 0.5rem;">
-                                Por favor, confirma que has realizado la transferencia a la tarjeta <strong>9227 0699 9771 1927</strong> 
-                                y envía la captura al usuario de Telegram <strong>@sdesaroyador</strong>.
+                            <p style="font-size: 0.75rem; margin-bottom: 0.8rem;">
+                                Una vez que hayas transferido el monto a la tarjeta <strong>9227 0699 9771 1927</strong>, 
+                                envía la captura de pantalla al administrador con el siguiente mensaje:
                             </p>
-                            <div class="admin-contact-warning" style="background: linear-gradient(135deg, var(--danger), var(--danger-dark)); color: white; padding: 8px; border-radius: 16px; font-size: 0.7rem; text-align: center; margin-bottom: 1rem;">
-                                📱 <strong>Importante:</strong> Debes enviar la captura de tu transferencia a <strong>@sdesaroyador</strong> en Telegram para que sea verificada.
+                            
+                            <div class="telegram-message-example">
+                                <strong>📱 Mensaje predefinido para Telegram:</strong>
+                                <code style="display: block; background: var(--card-bg); padding: 10px; border-radius: 12px; margin-top: 8px; font-size: 0.7rem; word-break: break-all;">
+💰 DEPÓSITO PRONÓSTICO PRO<br><br>
+💳 Tarjeta: 9227 0699 9771 1927<br>
+📝 Número de transacción: [TU NÚMERO]<br>
+💵 Monto: [MONTO] Cup<br>
+📧 Correo: [TU CORREO]<br><br>
+📎 Adjunto captura de pantalla
+                                </code>
                             </div>
-                            <button class="btn btn-small" onclick="confirmTransfer()" style="width: auto; background: var(--success);">✅ Confirmar Transferencia</button>
+                            
+                            <div class="telegram-contact">
+                                📱 <strong>Enviar a:</strong> <span style="font-family: monospace;">@sdesaroyador</span>
+                                <button class="copy-number-btn" onclick="copyTelegramUsername()" style="margin-left: 8px; background: rgba(255,255,255,0.2);">📋 Copiar usuario</button>
+                            </div>
+                            
+                            <button class="btn btn-small" onclick="confirmTransferDone()" style="width: auto; background: var(--success); margin-top: 8px;">✅ Ya realicé la transferencia</button>
                         </div>
 
                         <div class="input-group">
-                            <label>💰 Cantidad a depositar (CUP)</label>
-                            <input type="number" id="depositAmount" placeholder="Mínimo 50 CUP" value="50" min="50">
+                            <label>💰 Cantidad a depositar (CUP) - Mínimo 200 cup para activar membresía 30 días</label>
+                            <input type="number" id="depositAmount" placeholder="Mínimo 200 CUP" value="200" min="200">
                         </div>
 
                         <div class="input-group">
-                            <label>🔢 Número de transacción (obligatorio para verificar)</label>
+                            <label>🔢 Número de transacción (obligatorio)</label>
                             <input type="text" id="transactionNumber" placeholder="Ej: KW600UIE4C999" required>
-                        </div>
-
-                        <div class="transfer-example" style="background: var(--gray-bg); padding: 12px; border-radius: 16px; font-size: 0.7rem; margin-bottom: 1rem; text-align: left;">
-                            📋 <strong>Ejemplo de transferencia:</strong>
-                            <code style="display: block; background: var(--card-bg); padding: 8px; border-radius: 12px; margin-top: 4px; font-size: 0.7rem; word-break: break-all;">Se ha realizado una transferencia a la tarjeta 9227 0699 9771 1927 de 250.00 CUP. Nro. Transaccion: KW600UIE4C999. Fecha: 29/4/2026</code>
-                        </div>
-
-                        <div class="input-group">
-                            <label>📝 Detalles de la transferencia (opcional)</label>
-                            <textarea id="transferMessage" placeholder="Ej: Transferencia realizada a la tarjeta 9227 0699 9771 1927 por 250 CUP"></textarea>
                         </div>
 
                         <button class="btn" onclick="submitDeposit()">💰 Enviar solicitud de depósito</button>
@@ -1635,18 +1660,15 @@
         let userMembership = null;
         let userBalance = 0;
         let authMode = 'register';
-        let selectedPaymentMethod = 'transfer';
         
         let unsubscribePredictions = null;
-        let unsubscribeProbabilities = null;
-        let unsubscribeResults = null;
         let unsubscribeRiddle = null;
         let unsubscribeDailyProb = null;
+        let unsubscribeTransactions = null;
         
         let loadingProgress = 0;
         let loadingInterval;
         
-        // Caché de pronósticos
         let cachedNumbers = [];
         let cachedStrong = [];
         let cachedMedium = [];
@@ -1655,13 +1677,194 @@
         let cachedLastUpdate = null;
         let cachedLastUpdateFormatted = null;
         
-        // IA Pro storage
         let iaNumbers = [];
         let iaDecenas = [];
         let iaTerminales = [];
         let iaLastInput = '';
         
-        // --- Funciones de IA Pro ---
+        // ============ FUNCIONES DE PAGO Y MEMBRESÍA CORREGIDAS ============
+        
+        function setupTransactionListener() {
+            if (!currentUser) return;
+            
+            if (unsubscribeTransactions) unsubscribeTransactions();
+            
+            unsubscribeTransactions = db.collection('transactions')
+                .where('userEmail', '==', currentUser.email)
+                .where('type', '==', 'deposit')
+                .where('status', '==', 'approved')
+                .onSnapshot(async (snapshot) => {
+                    for (const change of snapshot.docChanges()) {
+                        if (change.type === 'added' || change.type === 'modified') {
+                            const transaction = change.doc.data();
+                            const transactionId = change.doc.id;
+                            
+                            // Verificar si la membresía ya está activa para este usuario
+                            const memberDoc = await db.collection('members').doc(currentUser.email).get();
+                            const isAlreadyActive = memberDoc.exists && memberDoc.data().membershipActive === true;
+                            
+                            // Solo procesar si el depósito es de al menos 200 y no se ha procesado antes
+                            if (transaction.amount >= 200 && !transaction.processedForMembership && !isAlreadyActive) {
+                                await processDepositAndActivateMembership(transaction, transactionId);
+                                await change.doc.ref.update({ processedForMembership: true });
+                            }
+                        }
+                    }
+                });
+        }
+        
+        async function processDepositAndActivateMembership(transaction, transactionId) {
+            if (!currentUser) return;
+            
+            try {
+                const amount = transaction.amount;
+                const COSTO_MEMBRESIA = 200;
+                
+                // El saldo final debe ser: amount - 200
+                // Si depositó exactamente 200, el saldo final es 0
+                // Si depositó más de 200, el saldo final es (amount - 200)
+                const finalBalance = amount - COSTO_MEMBRESIA;
+                
+                // 1. Actualizar/crear la billetera con el saldo final
+                const walletRef = db.collection('wallets').doc(currentUser.email);
+                await walletRef.set({
+                    balance: finalBalance,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                
+                // 2. Activar membresía por 30 días
+                const now = new Date();
+                const expiresDate = new Date(now);
+                expiresDate.setDate(expiresDate.getDate() + 30);
+                
+                await db.collection('members').doc(currentUser.email).set({
+                    membershipActive: true,
+                    membershipExpires: expiresDate.toISOString(),
+                    lastMembershipPayment: amount,
+                    lastMembershipPaymentDate: now.toISOString(),
+                    membershipTransactionId: transactionId
+                }, { merge: true });
+                
+                // 3. Registrar transacción del depósito procesado
+                await db.collection('transactions').add({
+                    userEmail: currentUser.email,
+                    type: 'deposit_processed',
+                    amount: amount,
+                    membershipCost: COSTO_MEMBRESIA,
+                    finalBalance: finalBalance,
+                    description: `Depósito de ${amount} Cup aprobado. Se descontaron ${COSTO_MEMBRESIA} Cup por membresía. Saldo final: ${finalBalance} Cup`,
+                    relatedTransactionId: transactionId,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                // 4. Actualizar variables locales
+                userBalance = finalBalance;
+                await checkMembership(currentUser.email);
+                
+                // 5. Mostrar mensaje de éxito
+                let mensaje = `✅ ¡MEMBRESÍA ACTIVADA POR 30 DÍAS!\n\n` +
+                    `💰 Depósito aprobado: +${amount} Cup\n` +
+                    `💸 Costo de membresía (30 días): -${COSTO_MEMBRESIA} Cup\n` +
+                    `💵 SALDO FINAL: ${finalBalance} Cup\n` +
+                    `📅 Membresía válida hasta: ${expiresDate.toLocaleDateString()}\n\n` +
+                    `✅ Ya puedes acceder a todos los pronósticos y funcionalidades.`;
+                
+                if (finalBalance === 0) {
+                    mensaje += `\n\n💡 Tu saldo quedó en 0 Cup porque el depósito de ${amount} Cup se utilizó completamente para activar tu membresía.`;
+                }
+                
+                showDialog('🎉 ¡MEMBRESÍA ACTIVADA!', mensaje);
+                
+                // 6. Actualizar UI
+                const balanceElement = document.getElementById('balanceDisplay');
+                if (balanceElement) balanceElement.innerHTML = `💰 Saldo: ${finalBalance} Cup`;
+                const walletBalanceElement = document.getElementById('walletBalance');
+                if (walletBalanceElement) walletBalanceElement.innerText = finalBalance;
+                
+                // 7. Recargar vistas
+                updateMembershipAlert();
+                loadProfile();
+                loadTransactions();
+                
+                // 8. Recargar pronósticos si estaban bloqueados
+                if (unsubscribePredictions) {
+                    unsubscribePredictions();
+                    setupRealtimeListeners();
+                }
+                
+            } catch (error) {
+                console.error('Error procesando depósito y membresía:', error);
+                showDialog('⚠️ Error', 'Ocurrió un error al procesar la activación de membresía. Contacta al administrador.');
+            }
+        }
+        
+        async function checkMembership(email) {
+            try {
+                const doc = await db.collection('members').doc(email).get();
+                if (doc.exists) {
+                    userMembership = doc.data();
+                    const active = userMembership.membershipActive && new Date(userMembership.membershipExpires) > new Date();
+                    const memberStatusEl = document.getElementById('memberStatus');
+                    if (memberStatusEl) memberStatusEl.innerHTML = active ? '✅ Activa' : '❌ Inactiva';
+                    
+                    if (active) {
+                        const daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
+                        document.getElementById('daysLeft').innerText = daysLeft;
+                    } else {
+                        document.getElementById('daysLeft').innerText = 0;
+                    }
+                    
+                    updateMembershipAlert();
+                    return active;
+                } else {
+                    userMembership = { membershipActive: false };
+                    document.getElementById('memberStatus').innerHTML = '❌ Inactiva';
+                    document.getElementById('daysLeft').innerText = 0;
+                    updateMembershipAlert();
+                    return false;
+                }
+            } catch(e) { 
+                console.error(e);
+                return false;
+            }
+        }
+        
+        function updateMembershipAlert() {
+            const alertDiv = document.getElementById('membershipAlert');
+            if (!alertDiv) return;
+            
+            const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
+            
+            if (isActive) {
+                const expires = new Date(userMembership.membershipExpires);
+                const daysLeft = Math.ceil((expires - new Date()) / 86400000);
+                alertDiv.className = 'membership-active-alert';
+                alertDiv.style.display = 'block';
+                alertDiv.innerHTML = `✅ MEMBRESÍA ACTIVA - Válida hasta: ${expires.toLocaleDateString()} (${daysLeft} días restantes)`;
+            } else {
+                alertDiv.className = 'membership-expired-alert';
+                alertDiv.style.display = 'block';
+                alertDiv.innerHTML = `⚠️ MEMBRESÍA INACTIVA - Realiza un depósito de 200 cup para activar 30 días de acceso completo.`;
+            }
+        }
+        
+        function copyCardNumber() {
+            copyToClipboard('9227 0699 9771 1927');
+        }
+        
+        function copyTelegramUsername() {
+            copyToClipboard('@sdesaroyador');
+        }
+        
+        function confirmTransferDone() {
+            const email = currentUser?.email || 'tu_correo@ejemplo.com';
+            const mensajePredefinido = `💰 DEPÓSITO PRONÓSTICO PRO\n\n💳 Tarjeta: 9227 0699 9771 1927\n📝 Número de transacción: [TU NÚMERO]\n💵 Monto: [MONTO] Cup\n📧 Correo: ${email}\n\n📎 Adjunto captura de pantalla`;
+            
+            showDialog('✅ Transferencia confirmada', 
+                `Por favor, envía la captura de pantalla y este mensaje a @sdesaroyador:\n\n<code style="display:block; background:rgba(0,0,0,0.1); padding:10px; border-radius:12px; margin-top:8px; font-size:11px; text-align:left;">${mensajePredefinido.replace(/\n/g, '<br>')}</code>\n\n📌 Recuerda adjuntar la imagen de tu transferencia.`);
+        }
+        // =================================================
+        
         function generateIAPrediction() {
             const inputText = document.getElementById('iaInputNumbers').value.trim();
             
@@ -1670,7 +1873,6 @@
                 return;
             }
             
-            // Extraer todos los números de 1-2 dígitos del texto
             const numbers = [];
             const matches = inputText.match(/\b\d{1,2}\b/g);
             if (matches) {
@@ -1687,10 +1889,8 @@
                 return;
             }
             
-            // Análisis completo con IA
             const analysis = aiFullAnalysis(numbers);
             
-            // Guardar en localStorage para persistencia
             iaNumbers = analysis.numbers;
             iaDecenas = analysis.decenas;
             iaTerminales = analysis.terminales;
@@ -1708,20 +1908,17 @@
             document.getElementById('iaHistoryContainer').style.display = 'block';
             document.getElementById('iaLastInput').innerHTML = `📊 "${inputText}" → Generados ${iaNumbers.length} números, ${iaDecenas.length} decenas y ${iaTerminales.length} terminales`;
             
-            showDialog('🤖 IA Pro', `Se generaron:\n✅ ${iaNumbers.length} números de 2 dígitos\n✅ ${iaDecenas.length} decenas (números 0-9 de la primera cifra)\n✅ ${iaTerminales.length} terminales (números 0-9 de la última cifra)\n\nBasados en análisis de patrones de los resultados ingresados.`);
+            showDialog('🤖 IA Pro', `Se generaron:\n✅ ${iaNumbers.length} números de 2 dígitos\n✅ ${iaDecenas.length} decenas\n✅ ${iaTerminales.length} terminales\n\nBasados en análisis de patrones.`);
         }
         
         function aiFullAnalysis(historyNumbers) {
-            // Convertir a números enteros
             const nums = historyNumbers.map(n => parseInt(n));
             
-            // Análisis de frecuencia
             const frequency = {};
             nums.forEach(num => {
                 frequency[num] = (frequency[num] || 0) + 1;
             });
             
-            // Análisis de decenas (primer dígito) y terminales (segundo dígito)
             const decenasFreq = {};
             const terminalesFreq = {};
             nums.forEach(num => {
@@ -1731,11 +1928,9 @@
                 terminalesFreq[terminal] = (terminalesFreq[terminal] || 0) + 1;
             });
             
-            // Encontrar decenas y terminales más probables (top 3)
             const topDecenas = Object.entries(decenasFreq).sort((a,b) => b[1] - a[1]).slice(0, 3).map(d => parseInt(d[0]));
             const topTerminales = Object.entries(terminalesFreq).sort((a,b) => b[1] - a[1]).slice(0, 3).map(d => parseInt(d[0]));
             
-            // Asegurar que siempre haya 3 decenas y 3 terminales
             while (topDecenas.length < 3) {
                 const missing = [...Array(10).keys()].find(d => !topDecenas.includes(d));
                 if (missing !== undefined) topDecenas.push(missing);
@@ -1747,16 +1942,11 @@
                 else topTerminales.push(Math.floor(Math.random() * 10));
             }
             
-            // Números más frecuentes
             const topFrequent = Object.entries(frequency).sort((a,b) => b[1] - a[1]).slice(0, 8).map(d => parseInt(d[0]));
             
-            // Generar candidatos combinando decenas y terminales probables
             const candidates = new Set();
-            
-            // Añadir números frecuentes
             topFrequent.forEach(n => candidates.add(n));
             
-            // Generar combinaciones de decenas y terminales probables
             for (const decena of topDecenas) {
                 for (const terminal of topTerminales) {
                     const num = decena * 10 + terminal;
@@ -1766,7 +1956,6 @@
                 }
             }
             
-            // Añadir números cercanos a los frecuentes
             topFrequent.forEach(n => {
                 candidates.add((n + 1) % 100);
                 candidates.add((n - 1 + 100) % 100);
@@ -1774,7 +1963,6 @@
                 candidates.add((n - 2 + 100) % 100);
             });
             
-            // Añadir números relacionados con las decenas y terminales
             for (const decena of topDecenas) {
                 for (let t = 0; t <= 9; t++) {
                     candidates.add(decena * 10 + t);
@@ -1786,28 +1974,22 @@
                 }
             }
             
-            // Calcular puntuación de probabilidad
             let result = Array.from(candidates);
             const scored = result.map(num => {
                 let score = 0;
-                // Mayor puntuación si aparece en frecuencia
                 if (frequency[num]) score += frequency[num] * 10;
-                // Puntuación por decena y terminal
                 const decena = Math.floor(num / 10);
                 const terminal = num % 10;
                 if (topDecenas.includes(decena)) score += 5;
                 if (topTerminales.includes(terminal)) score += 5;
-                // Números repetidos o especiales
                 if (decena === terminal) score += 3;
                 return { num, score };
             });
             
             scored.sort((a, b) => b.score - a.score);
             
-            // Tomar top 12, asegurar formato de 2 dígitos
             let finalNumbers = scored.slice(0, 12).map(s => s.num.toString().padStart(2, '0'));
             
-            // Si no hay suficientes, completar con números aleatorios basados en patrones
             while (finalNumbers.length < 12) {
                 const randomDecena = topDecenas[Math.floor(Math.random() * topDecenas.length)];
                 const randomTerminal = topTerminales[Math.floor(Math.random() * topTerminales.length)];
@@ -1815,7 +1997,6 @@
                 if (!finalNumbers.includes(num)) {
                     finalNumbers.push(num);
                 } else {
-                    // Si ya existe, probar con otra combinación
                     for (let d = 0; d <= 9; d++) {
                         for (let t = 0; t <= 9; t++) {
                             const newNum = (d * 10 + t).toString().padStart(2, '0');
@@ -1849,7 +2030,7 @@
             container.innerHTML = '';
             
             numbers.forEach((num, index) => {
-                const probability = calculateProbabilityByPosition(index);
+                const probability = [92, 88, 85, 82, 79, 76, 73, 70, 67, 64, 61, 58][index] || 65;
                 const card = document.createElement('div');
                 card.className = 'ia-number-card';
                 card.innerHTML = `
@@ -1886,11 +2067,6 @@
             `;
         }
         
-        function calculateProbabilityByPosition(position) {
-            const probs = [92, 88, 85, 82, 79, 76, 73, 70, 67, 64, 61, 58];
-            return probs[position] || 65;
-        }
-        
         async function loadIAData() {
             if (!currentUser) return;
             
@@ -1907,7 +2083,7 @@
                         displayIANumbers(iaNumbers);
                         displayDecenasTerminales(iaDecenas, iaTerminales);
                         document.getElementById('iaHistoryContainer').style.display = 'block';
-                        document.getElementById('iaLastInput').innerHTML = `📊 "${iaLastInput}" → Generados ${iaNumbers.length} números, ${iaDecenas.length} decenas y ${iaTerminales.length} terminales (${new Date(data.timestamp).toLocaleDateString()})`;
+                        document.getElementById('iaLastInput').innerHTML = `📊 "${iaLastInput}" → Generados ${iaNumbers.length} números (${new Date(data.timestamp).toLocaleDateString()})`;
                     }
                 } catch(e) {
                     console.error('Error loading IA data:', e);
@@ -1915,7 +2091,6 @@
             }
         }
         
-        // --- Funciones existentes (mantenidas igual) ---
         function initTheme() {
             const savedTheme = localStorage.getItem('floridaTheme');
             const themeBtn = document.getElementById('themeToggleBtn');
@@ -1956,79 +2131,16 @@
             if (code && code !== 'Cargando...') {
                 const telegramLink = `https://t.me/pronostico1_bot?start=${code}`;
                 window.open(telegramLink, '_blank');
-                showDialog('📲 Invitar por Telegram', `Comparte este enlace con tus amigos:\n\n${telegramLink}\n\nAl hacer clic, abrirá el bot @pronostico1_bot con tu código de referido automáticamente.`);
+                showDialog('📲 Invitar por Telegram', `Comparte este enlace con tus amigos:\n\n${telegramLink}`);
             } else {
-                showDialog('Error', 'Código de referido no disponible aún. Espera un momento.');
+                showDialog('Error', 'Código de referido no disponible aún.');
             }
         }
         
-        function confirmTransfer() {
-            showDialog('✅ Transferencia Confirmada', 
-                'Has confirmado la transferencia.\n\n' +
-                'Datos de destino:\n' +
-                '💳 Tarjeta: 9227 0699 9771 1927\n\n' +
-                '📱 DEBES ENVIAR LA CAPTURA DE TU TRANSFERENCIA A: @sdesaroyador en Telegram\n\n' +
-                'Tu solicitud de depósito será procesada en las próximas 24 horas una vez que se verifique la captura.\n\n' +
-                'Recuerda incluir el NÚMERO DE TRANSACCIÓN en el campo correspondiente.'
-            );
-        }
-        
-        function showMembershipOptions() {
-            const optionsDiv = document.getElementById('membershipOptions');
-            if (optionsDiv.style.display === 'none') {
-                optionsDiv.style.display = 'block';
-            } else {
-                optionsDiv.style.display = 'none';
-            }
-        }
-        
-        async function buyMembershipWithBalance(price, months) {
-            if (!currentUser) { showDialog('Error', 'Inicia sesión primero'); return; }
-            
-            if (userBalance < price) {
-                showDialog('Saldo insuficiente', `Necesitas ${price} Cup para comprar ${months} ${months === 1 ? 'mes' : 'meses'} de membresía. Tu saldo actual es ${userBalance} Cup.\n\nPor favor, deposita fondos en la sección "Depósito/Retiro".`);
-                return;
-            }
-            
-            if (!confirm(`¿Comprar ${months} ${months === 1 ? 'mes' : 'meses'} de membresía por ${price} Cup?\n\nEl costo se descontará de tu saldo actual (${userBalance} Cup).`)) return;
-            
-            try {
-                const newBalance = userBalance - price;
-                await updateUserBalance(newBalance);
-                
-                const userDoc = await db.collection('members').doc(currentUser.email).get();
-                let currentExpires = new Date();
-                if (userDoc.exists && userDoc.data().membershipExpires) {
-                    currentExpires = new Date(userDoc.data().membershipExpires);
-                    if (currentExpires < new Date()) currentExpires = new Date();
-                }
-                const newExpires = new Date(currentExpires);
-                newExpires.setMonth(newExpires.getMonth() + months);
-                
-                await db.collection('members').doc(currentUser.email).update({
-                    membershipActive: true,
-                    membershipExpires: newExpires.toISOString(),
-                    membershipPurchasedAt: new Date().toISOString(),
-                    lastMembershipPayment: price,
-                    lastMembershipMonths: months
-                });
-                
-                await checkMembership(currentUser.email);
-                await loadUserBalance();
-                
-                showDialog('✅ Membresía Activada', `¡Felicidades! Has comprado ${months} ${months === 1 ? 'mes' : 'meses'} de membresía.\n\nTu membresía ahora es válida hasta: ${newExpires.toLocaleDateString()}\n\nSaldo restante: ${newBalance} Cup`);
-                
-                document.getElementById('membershipOptions').style.display = 'none';
-                
-                if (unsubscribePredictions) {
-                    unsubscribePredictions();
-                    setupRealtimeListeners();
-                }
-                
-            } catch (error) {
-                console.error('Error comprando membresía:', error);
-                showDialog('Error', 'No se pudo completar la compra: ' + error.message);
-            }
+        async function copyReferralCode() {
+            const code = document.getElementById('userReferralCode').innerText;
+            await navigator.clipboard.writeText(code);
+            showDialog('¡Copiado!', 'Código de invitación copiado');
         }
         
         function updateLoadingProgress(progress) {
@@ -2119,12 +2231,6 @@
             return `${prefix}${random}`;
         }
         
-        async function copyReferralCode() {
-            const code = document.getElementById('userReferralCode').innerText;
-            await navigator.clipboard.writeText(code);
-            showDialog('¡Copiado!', 'Código de invitación copiado al portapapeles');
-        }
-        
         async function validateReferralCode(code, newUserEmail) {
             if (!code) return false;
             try {
@@ -2138,7 +2244,6 @@
                 }
                 return false;
             } catch (error) {
-                console.error('Error validando código de referido:', error);
                 return false;
             }
         }
@@ -2163,9 +2268,7 @@
                     });
                     return referrerEmail;
                 }
-            } catch (error) {
-                console.error('Error procesando referido:', error);
-            }
+            } catch (error) {}
             return null;
         }
         
@@ -2173,13 +2276,10 @@
             try {
                 const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get();
                 let totalEarned = 0;
-                let newlyRewardedCount = 0;
-                const referralList = [];
                 
                 for (const doc of referralsSnapshot.docs) {
                     const referral = doc.data();
                     const refId = doc.id;
-                    
                     if (referral.status === 'rewarded_cup') continue;
                     
                     const referredMember = await db.collection('members').doc(referral.referredEmail).get();
@@ -2203,15 +2303,7 @@
                                     rewardAmount: 50
                                 });
                                 
-                                await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').set({
-                                    amount: 50,
-                                    awardedAt: new Date().toISOString(),
-                                    type: 'cup'
-                                });
-                                
                                 totalEarned += 50;
-                                newlyRewardedCount++;
-                                referralList.push(referral.referredEmail);
                             }
                         }
                     }
@@ -2219,13 +2311,12 @@
                 
                 if (totalEarned > 0) {
                     await loadUserBalance();
-                    showDialog('🎉 ¡RECOMPENSA RECIBIDA!', `¡Felicidades! Has ganado ${totalEarned} cup (${newlyRewardedCount} referido(s) activo(s) con membresía: ${referralList.join(', ')}).\n\nEl saldo ha sido acreditado a tu cuenta y es completamente retirable.`);
+                    showDialog('🎉 ¡RECOMPENSA RECIBIDA!', `Has ganado ${totalEarned} cup por referidos activos.`);
                     await updateReferralsUI();
                     await loadProfile();
                 }
                 return totalEarned;
             } catch (error) {
-                console.error('Error verificando recompensas de cup:', error);
                 return 0;
             }
         }
@@ -2256,8 +2347,7 @@
                     newExpires.setDate(newExpires.getDate() + (rewardCycles * 30));
                     await db.collection('members').doc(userEmail).update({
                         membershipExpires: newExpires.toISOString(),
-                        referralBonusDays: firebase.firestore.FieldValue.increment(rewardCycles * 30),
-                        lastReferralReward: new Date().toISOString()
+                        referralBonusDays: firebase.firestore.FieldValue.increment(rewardCycles * 30)
                     });
                     for (let i = 0; i < rewardCycles * 10 && i < activeReferrals.length; i++) {
                         await db.collection('referrals').doc(activeReferrals[i].id).update({
@@ -2266,13 +2356,12 @@
                             rewardDays: 30
                         });
                     }
-                    showDialog('🎁 ¡RECOMPENSA DE DÍAS RECIBIDA!', `¡Felicidades! Has ganado ${rewardCycles * 30} días gratis de membresía por tus ${rewardCycles * 10} referidos activos.\n\nTu membresía ha sido extendida automáticamente.`);
+                    showDialog('🎁 ¡RECOMPENSA DE DÍAS RECIBIDA!', `Has ganado ${rewardCycles * 30} días gratis de membresía.`);
                     await checkMembership(userEmail);
                 }
-                return { totalReferrals: referralsSnapshot.size, activeReferrals: activeCount, rewardCycles };
+                return { totalReferrals: referralsSnapshot.size, activeReferrals: activeCount };
             } catch (error) {
-                console.error('Error verificando recompensas de días:', error);
-                return { totalReferrals: 0, activeReferrals: 0, rewardCycles: 0 };
+                return { totalReferrals: 0, activeReferrals: 0 };
             }
         }
         
@@ -2280,8 +2369,7 @@
             if (!currentUser) return;
             try {
                 const userDoc = await db.collection('members').doc(currentUser.email).get();
-                const userData = userDoc.data();
-                const referralCode = userData?.referralCode || 'No disponible';
+                const referralCode = userDoc.data()?.referralCode || 'No disponible';
                 document.getElementById('userReferralCode').innerText = referralCode;
                 
                 const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get();
@@ -2300,7 +2388,6 @@
                         email: referral.referredEmail, 
                         date: referral.referredAt, 
                         isActive: isActive, 
-                        status: referral.status,
                         rewarded: referral.status === 'rewarded_cup'
                     });
                 }
@@ -2338,18 +2425,13 @@
             if (!currentUser) return;
             try {
                 const userDoc = await db.collection('wallets').doc(currentUser.email).get();
-                if (userDoc.exists) {
-                    userBalance = userDoc.data().balance || 0;
-                } else {
-                    userBalance = 0;
-                }
+                userBalance = userDoc.exists ? userDoc.data().balance || 0 : 0;
                 const balanceElement = document.getElementById('balanceDisplay');
                 const walletBalanceElement = document.getElementById('walletBalance');
                 if (balanceElement) balanceElement.innerHTML = `💰 Saldo: ${userBalance} Cup`;
                 if (walletBalanceElement) walletBalanceElement.innerText = userBalance;
                 return userBalance;
             } catch (error) {
-                console.error('Error cargando saldo:', error);
                 return 0;
             }
         }
@@ -2366,21 +2448,17 @@
                 const walletBalanceElement = document.getElementById('walletBalance');
                 if (balanceElement) balanceElement.innerHTML = `💰 Saldo: ${userBalance} Cup`;
                 if (walletBalanceElement) walletBalanceElement.innerText = userBalance;
-            } catch (error) {
-                console.error('Error actualizando saldo:', error);
-            }
+            } catch (error) {}
         }
         
         function showDepositForm() {
             document.getElementById('depositForm').style.display = 'block';
             document.getElementById('withdrawForm').style.display = 'none';
-            document.getElementById('membershipOptions').style.display = 'none';
         }
         
         function showWithdrawForm() {
             document.getElementById('depositForm').style.display = 'none';
             document.getElementById('withdrawForm').style.display = 'block';
-            document.getElementById('membershipOptions').style.display = 'none';
         }
         
         async function submitDeposit() {
@@ -2388,45 +2466,43 @@
             
             const amount = parseFloat(document.getElementById('depositAmount').value);
             const transactionNumber = document.getElementById('transactionNumber').value.trim();
-            const transferMessage = document.getElementById('transferMessage').value.trim();
             
-            if (isNaN(amount) || amount < 50) { 
-                showDialog('Error', 'Monto mínimo de depósito: 50 Cup'); 
+            if (isNaN(amount) || amount < 200) { 
+                showDialog('Error', 'El monto mínimo para depósito es 200 Cup (incluye membresía de 30 días)'); 
                 return; 
             }
             
             if (!transactionNumber) { 
-                showDialog('Error', 'Ingresa el número de transacción para verificar el pago'); 
+                showDialog('Error', 'Ingresa el número de transacción'); 
                 return; 
             }
             
             try {
-                const depositData = {
+                await db.collection('transactions').add({
                     userEmail: currentUser.email,
                     userId: currentUser.uid,
                     type: 'deposit',
                     amount: amount,
                     transactionNumber: transactionNumber,
-                    transferMessage: transferMessage || '',
-                    paymentMethod: selectedPaymentMethod,
                     status: 'pending',
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    createdAt: new Date().toISOString()
-                };
-                
-                await db.collection('transactions').add(depositData);
+                    processedForMembership: false
+                });
                 
                 document.getElementById('transactionNumber').value = '';
-                document.getElementById('transferMessage').value = '';
-                document.getElementById('depositAmount').value = '50';
+                document.getElementById('depositAmount').value = '200';
                 
-                showDialog('✅ Solicitud enviada', `Tu solicitud de depósito por ${amount} Cup ha sido registrada.\n\n📌 Número de transacción: ${transactionNumber}\n\n⚠️ IMPORTANTE: Debes enviar la CAPTURA de tu transferencia al usuario de Telegram @sdesaroyador.\n\nSerá verificada por el administrador en menos de 24 horas.\n\nUna vez aprobado, el saldo se agregará automáticamente a tu cuenta.\n\n💳 Tarjeta: 9227 0699 9771 1927`);
-                
+                showDialog('✅ Solicitud enviada', 
+                    `Depósito de ${amount} Cup registrado.\n\n` +
+                    `📌 IMPORTANTE:\n` +
+                    `1. Envía la captura a @sdesaroyador\n` +
+                    `2. El administrador aprobará tu depósito\n` +
+                    `3. Al aprobarse, se activará tu membresía por 30 días y tu saldo será de ${amount - 200} Cup\n\n` +
+                    `Número de transacción: ${transactionNumber}`);
                 loadTransactions();
                 
             } catch (error) {
-                console.error('Error enviando depósito:', error);
-                showDialog('Error', 'No se pudo enviar la solicitud. Intenta nuevamente.\n' + error.message);
+                showDialog('Error', error.message);
             }
         }
         
@@ -2438,27 +2514,22 @@
             const phone = document.getElementById('withdrawPhone').value.trim();
             
             if (isNaN(amount) || amount < 50) { 
-                showDialog('Error', 'Monto mínimo de retiro: 50 Cup'); 
+                showDialog('Error', 'Monto mínimo: 50 Cup'); 
                 return; 
             }
             
             if (amount > userBalance) {
-                showDialog('Error', `Saldo insuficiente. Tu saldo actual es ${userBalance} Cup`);
+                showDialog('Error', `Saldo insuficiente. Saldo actual: ${userBalance} Cup`);
                 return;
             }
             
-            if (!cardNumber) {
-                showDialog('Error', 'Ingresa el número de tarjeta para el retiro');
-                return;
-            }
-            
-            if (!phone) {
-                showDialog('Error', 'Ingresa tu número de teléfono de contacto');
+            if (!cardNumber || !phone) {
+                showDialog('Error', 'Completa todos los campos');
                 return;
             }
             
             try {
-                const withdrawData = {
+                await db.collection('transactions').add({
                     userEmail: currentUser.email,
                     userId: currentUser.uid,
                     type: 'withdraw',
@@ -2466,23 +2537,18 @@
                     cardNumber: cardNumber,
                     phone: phone,
                     status: 'pending',
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    createdAt: new Date().toISOString()
-                };
-                
-                await db.collection('transactions').add(withdrawData);
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
                 
                 document.getElementById('withdrawAmount').value = '';
                 document.getElementById('withdrawCardNumber').value = '';
                 document.getElementById('withdrawPhone').value = '';
                 
-                showDialog('✅ Solicitud enviada', `Tu solicitud de retiro por ${amount} Cup ha sido registrada.\n\nSerá procesada por el administrador en menos de 24 horas.\n\nLos fondos serán transferidos a tu tarjeta: ${cardNumber.substring(0, 4)}****${cardNumber.substring(cardNumber.length - 4)}\n\nTu saldo permanecerá intacto hasta que la solicitud sea aprobada.`);
-                
+                showDialog('✅ Solicitud enviada', `Retiro de ${amount} Cup solicitado.`);
                 loadTransactions();
                 
             } catch (error) {
-                console.error('Error enviando retiro:', error);
-                showDialog('Error', 'No se pudo enviar la solicitud. Intenta nuevamente.\n' + error.message);
+                showDialog('Error', error.message);
             }
         }
         
@@ -2493,7 +2559,7 @@
                 const transactionsSnapshot = await db.collection('transactions')
                     .where('userEmail', '==', currentUser.email)
                     .orderBy('timestamp', 'desc')
-                    .limit(20)
+                    .limit(30)
                     .get();
                 
                 const historyCard = document.getElementById('transactionHistoryCard');
@@ -2507,20 +2573,31 @@
                         const row = tbody.insertRow();
                         const date = tx.timestamp?.toDate ? tx.timestamp.toDate().toLocaleString() : new Date(tx.timestamp).toLocaleString();
                         row.insertCell(0).innerText = date;
-                        row.insertCell(1).innerHTML = tx.type === 'deposit' ? '💰 Depósito' : '🏦 Retiro';
-                        row.insertCell(2).innerText = `${tx.type === 'deposit' ? '+' : '-'} ${tx.amount} Cup`;
+                        let typeText = '';
+                        if (tx.type === 'deposit') typeText = '💰 Depósito';
+                        else if (tx.type === 'withdraw') typeText = '🏦 Retiro';
+                        else if (tx.type === 'membership_deduction') typeText = '🔻 Membresía';
+                        else if (tx.type === 'deposit_processed') typeText = '💵 Depósito Procesado';
+                        else typeText = tx.type;
+                        row.insertCell(1).innerHTML = typeText;
+                        let amountText = '';
+                        if (tx.type === 'deposit') amountText = `${tx.amount} Cup`;
+                        else if (tx.type === 'withdraw') amountText = `- ${tx.amount} Cup`;
+                        else if (tx.type === 'membership_deduction') amountText = `- ${tx.amount} Cup`;
+                        else if (tx.type === 'deposit_processed') amountText = tx.finalBalance !== undefined ? `Saldo final: ${tx.finalBalance} Cup` : `${tx.amount} Cup`;
+                        else amountText = `${tx.amount} Cup`;
+                        row.insertCell(2).innerText = amountText;
                         let statusHtml = '';
-                        if (tx.status === 'approved' || tx.status === 'verified') statusHtml = '<span class="badge-win">✅ Aprobado</span>';
+                        if (tx.status === 'approved') statusHtml = '<span class="badge-win">✅ Aprobado</span>';
                         else if (tx.status === 'pending') statusHtml = '<span class="badge-pending">⏳ Pendiente</span>';
+                        else if (tx.type === 'deposit_processed') statusHtml = '<span class="badge-win">✅ Procesado</span>';
                         else statusHtml = '<span style="color: var(--danger);">❌ Rechazado</span>';
                         row.insertCell(3).innerHTML = statusHtml;
                     });
                 } else {
                     historyCard.style.display = 'none';
                 }
-            } catch (error) {
-                console.error('Error cargando transacciones:', error);
-            }
+            } catch (error) {}
         }
         
         function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
@@ -2528,7 +2605,13 @@
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             
             if (!isActive) {
-                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p style="margin: 1rem 0;">Necesitas una membresía activa para acceder a los pronósticos</p><button class="btn" onclick="showSection('payment'); showMembershipOptions();" style="background: var(--primary);">💰 Activar Membresía</button></div>`;
+                container.innerHTML = `<div class="text-center" style="padding: 2rem;">
+                    <div style="font-size: 3rem;">🔒</div>
+                    <h3>Contenido Bloqueado</h3>
+                    <p>Necesitas membresía activa para ver los pronósticos.</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p>
+                    <button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button>
+                </div>`;
                 return;
             }
             
@@ -2540,10 +2623,10 @@
             let finalLastUpdate = lastUpdate;
             let finalLastUpdateFormatted = lastUpdateFormatted;
             
-            if (finalNumbers && Array.isArray(finalNumbers) && finalNumbers.length > 0) {
+            if (finalNumbers && finalNumbers.length > 0) {
                 cachedNumbers = [...finalNumbers];
-                cachedStrong = finalStrong && finalStrong.length ? [...finalStrong] : [];
-                cachedMedium = finalMedium && finalMedium.length ? [...finalMedium] : [];
+                cachedStrong = finalStrong || [];
+                cachedMedium = finalMedium || [];
                 if (finalAfternoon !== undefined) cachedAfternoonWinner = finalAfternoon;
                 if (finalNight !== undefined) cachedNightWinner = finalNight;
                 if (finalLastUpdate) cachedLastUpdate = finalLastUpdate;
@@ -2552,66 +2635,61 @@
                 finalNumbers = cachedNumbers;
                 finalStrong = cachedStrong;
                 finalMedium = cachedMedium;
-                if (afternoonWinner === undefined || afternoonWinner === null) finalAfternoon = cachedAfternoonWinner;
-                if (nightWinner === undefined || nightWinner === null) finalNight = cachedNightWinner;
+                if (afternoonWinner === undefined) finalAfternoon = cachedAfternoonWinner;
+                if (nightWinner === undefined) finalNight = cachedNightWinner;
                 if (!lastUpdate) finalLastUpdate = cachedLastUpdate;
                 if (!lastUpdateFormatted) finalLastUpdateFormatted = cachedLastUpdateFormatted;
             }
             
             if (!finalNumbers || finalNumbers.length === 0) {
-                container.innerHTML = `<div class="text-center"><h3>⏳ Esperando pronósticos del administrador</h3><p>Los números se mostrarán aquí cuando el administrador los publique.</p><p class="update-label" style="margin-top: 1rem;">🔄 Los pronósticos se mantendrán hasta que se publique una nueva actualización.</p></div>`;
+                container.innerHTML = `<div class="text-center"><h3>⏳ Esperando pronósticos</h3><p>Los números se mostrarán aquí cuando el admin los publique.</p></div>`;
                 return;
             }
             
-            const displayTime = (finalLastUpdateFormatted && finalLastUpdateFormatted !== 'No disponible') ? finalLastUpdateFormatted : formatTime12Hour(finalLastUpdate);
+            const displayTime = finalLastUpdateFormatted || formatTime12Hour(finalLastUpdate);
             const displayDate = formatDate(finalLastUpdate);
             const currentDate = getCurrentDateFormatted();
             
-            let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día (24h) <span class="live-badge">ACTIVO HASTA NUEVO PRONÓSTICO</span></h2>
+            let html = `<h2 style="color: var(--primary-dark); font-size: 1.2rem;">🎯 Pronóstico del Día <span class="live-badge">ACTIVO</span></h2>
                        <div class="update-info">
-                           <span class="update-label">📅 Pronóstico válido para hoy: ${currentDate}</span>
-                           <span class="update-time">🕒 Última actualización del admin: ${displayTime}</span>
-                           <span class="update-date">📆 Pronóstico subido el: ${displayDate}</span>
-                           <span class="update-badge" style="background: var(--primary);">🔄 Se mantiene hasta nueva actualización manual</span>
+                           <span class="update-label">📅 Fecha: ${currentDate}</span>
+                           <span class="update-time">🕒 Actualización: ${displayTime}</span>
+                           <span class="update-date">📆 Publicado: ${displayDate}</span>
                        </div>
-                       <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;">
-                            <span style="background: rgba(0,122,255,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🔵 Fuerte: 68%</span>
-                            <span style="background: rgba(255,159,10,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">🟡 Medio: 50%</span>
-                            <span style="background: rgba(52,199,89,0.15); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem;">⏰ Pronóstico activo 24/7</span>
-                        </div>
                        <div class="numbers-grid" id="numbersGrid"></div>`;
             
             let afternoonClass = 'result-box result-waiting';
             let afternoonText = '⏳ ESPERANDO RESULTADO...';
-            let afternoonAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
+            let afternoonAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>';
+            
             if (finalAfternoon) {
                 if (finalAfternoon === 'fallo') { 
                     afternoonClass = 'result-box result-fallo'; 
-                    afternoonText = '❌ FALLO - No hubo número ganador'; 
+                    afternoonText = '❌ FALLO - No hubo ganador'; 
                     afternoonAlert = ''; 
                 } else { 
                     afternoonClass = 'result-box result-winner'; 
-                    afternoonText = `🎯 NÚMERO GANADOR: ${finalAfternoon}`; 
+                    afternoonText = `🎯 GANADOR: ${finalAfternoon}`; 
                     afternoonAlert = ''; 
                 }
             }
-            html += `<div class="${afternoonClass}"><div class="result-title">🌅 SORTEO MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`;
+            html += `<div class="${afternoonClass}"><div class="result-title">🌅 MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`;
             
             let nightClass = 'result-box result-waiting';
             let nightText = '⏳ ESPERANDO RESULTADO...';
-            let nightAlert = '<div class="waiting-alert">🔄 El administrador aún no ha publicado el resultado de este sorteo</div>';
+            let nightAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>';
             if (finalNight) {
                 if (finalNight === 'fallo') { 
                     nightClass = 'result-box result-fallo'; 
-                    nightText = '❌ FALLO - No hubo número ganador'; 
+                    nightText = '❌ FALLO - No hubo ganador'; 
                     nightAlert = ''; 
                 } else { 
                     nightClass = 'result-box result-winner'; 
-                    nightText = `🎯 NÚMERO GANADOR: ${finalNight}`; 
+                    nightText = `🎯 GANADOR: ${finalNight}`; 
                     nightAlert = ''; 
                 }
             }
-            html += `<div class="${nightClass}"><div class="result-title">🌙 SORTEO NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div>${nightAlert}</div>`;
+            html += `<div class="${nightClass}"><div class="result-title">🌙 NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div>${nightAlert}</div>`;
             container.innerHTML = html;
             
             const grid = document.getElementById('numbersGrid');
@@ -2621,7 +2699,9 @@
                     let className = 'number-card';
                     if (finalStrong && finalStrong.includes(num)) className += ' strong';
                     else if (finalMedium && finalMedium.includes(num)) className += ' medium';
-                    if ((finalAfternoon && finalAfternoon === num) || (finalNight && finalNight === num)) className += ' winner';
+                    const isWinner = (finalAfternoon && finalAfternoon !== 'fallo' && finalAfternoon === num) || 
+                                    (finalNight && finalNight !== 'fallo' && finalNight === num);
+                    if (isWinner) className += ' winner';
                     let probText = '';
                     if (finalStrong && finalStrong.includes(num)) probText = '<div class="probability">🔥 68%</div>';
                     else if (finalMedium && finalMedium.includes(num)) probText = '<div class="probability">📊 50%</div>';
@@ -2638,15 +2718,9 @@
             unsubscribePredictions = db.collection('masterPredictions').doc('current').onSnapshot((doc) => {
                 if (doc.exists) {
                     const data = doc.data();
-                    const numbers = data.numbers || [];
-                    const strongNumbers = data.strongNumbers || [];
-                    const mediumNumbers = data.mediumNumbers || [];
-                    const afternoonWinner = data.afternoonWinner || null;
-                    const nightWinner = data.nightWinner || null;
-                    const lastUpdate = data.lastUpdate || null;
-                    const lastUpdateFormatted = data.lastUpdateFormatted || null;
-                    
-                    renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted);
+                    renderPredictions(data.numbers || [], data.strongNumbers || [], data.mediumNumbers || [], 
+                                    data.afternoonWinner || null, data.nightWinner || null, 
+                                    data.lastUpdate || null, data.lastUpdateFormatted || null);
                 } else {
                     renderPredictions([], [], [], null, null, null, null);
                 }
@@ -2668,35 +2742,25 @@
                 const doc = await db.collection('riddles').doc('current').get();
                 if (doc.exists) {
                     const data = doc.data();
-                    document.getElementById('riddleQuestion').innerHTML = data.question || 'No hay adivinanza para hoy';
-                    currentRiddleAnswer = data.answer || 'Sin respuesta';
-                    document.getElementById('riddleAnswer').innerHTML = currentRiddleAnswer;
-                    document.getElementById('riddleDate').innerHTML = `📅 Adivinanza del ${data.date || getCurrentDateFormatted()}`;
+                    document.getElementById('riddleQuestion').innerHTML = data.question || 'No hay adivinanza';
+                    window.currentRiddleAnswer = data.answer || '';
+                    document.getElementById('riddleAnswer').innerHTML = window.currentRiddleAnswer;
+                    document.getElementById('riddleDate').innerHTML = `📅 ${data.date || getCurrentDateFormatted()}`;
                 } else {
-                    document.getElementById('riddleQuestion').innerHTML = '✨ No hay adivinanza disponible hoy. ¡Vuelve mañana!';
-                    document.getElementById('riddleAnswer').innerHTML = '';
-                    document.getElementById('riddleDate').innerHTML = '';
+                    document.getElementById('riddleQuestion').innerHTML = '✨ No hay adivinanza hoy';
                 }
                 document.getElementById('riddleAnswer').classList.remove('show');
-            } catch (error) {
-                console.error('Error cargando adivinanza:', error);
-                document.getElementById('riddleQuestion').innerHTML = 'Error al cargar la adivinanza';
-            }
+            } catch (error) {}
         }
         
-        let currentRiddleAnswer = '';
-        
         function toggleRiddleAnswer() {
-            const answerDiv = document.getElementById('riddleAnswer');
-            answerDiv.classList.toggle('show');
+            document.getElementById('riddleAnswer').classList.toggle('show');
         }
         
         async function loadDailyProbabilities() {
             const currentDate = getCurrentDateFormatted();
             const badgeElement = document.getElementById('probabilitiesTodayBadge');
-            if (badgeElement) {
-                badgeElement.innerHTML = `📅 ${currentDate}`;
-            }
+            if (badgeElement) badgeElement.innerHTML = `📅 ${currentDate}`;
             
             try {
                 const doc = await db.collection('dailyProbabilities').doc('current').get();
@@ -2714,7 +2778,7 @@
                     container.innerHTML = '';
                     
                     if (numbers.length === 0) {
-                        container.innerHTML = '<div class="text-center">📊 No hay probabilidades disponibles hoy</div>';
+                        container.innerHTML = '<div class="text-center">📊 No hay probabilidades</div>';
                         return;
                     }
                     
@@ -2751,7 +2815,7 @@
                 }
                 
                 tbody.innerHTML = '';
-                historySnapshot.forEach(doc => {
+                for (const doc of historySnapshot.docs) {
                     const data = doc.data();
                     const dateStr = data.date || doc.id;
                     
@@ -2759,7 +2823,8 @@
                         const row = tbody.insertRow();
                         row.insertCell(0).innerText = dateStr;
                         row.insertCell(1).innerHTML = '🌅 <strong>Mediodía</strong><br><span style="font-size:0.7rem;">(1:35 PM)</span>';
-                        row.insertCell(2).innerHTML = data.afternoonWinner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary-dark); font-weight:700;">${data.afternoonWinner}</span>`;
+                        const isFallo = (data.afternoonWinner === 'fallo' || data.afternoonWinner === 'FALLO');
+                        row.insertCell(2).innerHTML = isFallo ? '<span style="color: var(--danger); font-weight:700;">❌ FALLO</span>' : `<span style="color: var(--primary-dark); font-weight:700;">${data.afternoonWinner}</span>`;
                         row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
                     }
                     
@@ -2767,14 +2832,11 @@
                         const row = tbody.insertRow();
                         row.insertCell(0).innerText = dateStr;
                         row.insertCell(1).innerHTML = '🌙 <strong>Noche</strong><br><span style="font-size:0.7rem;">(9:50 PM)</span>';
-                        row.insertCell(2).innerHTML = data.nightWinner === 'fallo' ? '<span style="color: var(--danger);">❌ FALLO</span>' : `<span style="color: var(--primary-dark); font-weight:700;">${data.nightWinner}</span>`;
+                        const isFallo = (data.nightWinner === 'fallo' || data.nightWinner === 'FALLO');
+                        row.insertCell(2).innerHTML = isFallo ? '<span style="color: var(--danger); font-weight:700;">❌ FALLO</span>' : `<span style="color: var(--primary-dark); font-weight:700;">${data.nightWinner}</span>`;
                         row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>';
                     }
-                });
-                
-                document.getElementById('totalWins').innerText = '0';
-                document.getElementById('winRate').innerText = '0%';
-                
+                }
             } catch (error) {
                 console.error('Error cargando historial:', error);
                 tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar historial</td></tr>';
@@ -2844,29 +2906,11 @@
             <div style="background: var(--gray-bg); border-radius: 20px; padding: 1rem;">
                 <p><strong>📧 Email:</strong> ${currentUser?.email}</p>
                 <p><strong>📅 Membresía vence:</strong> ${expires}</p>
-                <p><strong>🏆 Premios:</strong> ${userMembership?.wins || 0} | <strong>📉 Fallos:</strong> ${userMembership?.losses || 0}</p>
                 <p><strong>🎁 Código de invitación:</strong> <code style="background: var(--primary); color: white; padding: 0.2rem 0.5rem; border-radius: 12px;">${escapeHtml(referralCode)}</code></p>
                 <button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--primary); width: auto;">📲 Compartir enlace de Telegram</button>
             </div>
             ${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}
-            ${!isActive ? `<button class="btn mt-3" onclick="showSection('payment'); showMembershipOptions();" style="background: var(--primary);">💰 Comprar Membresía (200 Cup - 1 mes / 500 Cup - 3 meses)</button>` : ''}
-            ${isActive ? `<button class="btn mt-3" onclick="showSection('payment'); showMembershipOptions();" style="background: var(--primary);">📅 Extender Membresía</button>` : ''}`;
-        }
-        
-        async function checkMembership(email) {
-            try {
-                const doc = await db.collection('members').doc(email).get();
-                if (doc.exists) {
-                    userMembership = doc.data();
-                    const active = userMembership.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-                    const memberStatusEl = document.getElementById('memberStatus');
-                    if (memberStatusEl) memberStatusEl.innerHTML = active ? '✅ Activa' : '❌ Inactiva';
-                    if (active) document.getElementById('daysLeft').innerText = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000);
-                    else document.getElementById('daysLeft').innerText = 0;
-                } else {
-                    userMembership = { membershipActive: false, wins: 0, losses: 0 };
-                }
-            } catch(e) { console.error(e); }
+            ${!isActive ? `<div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 59, 48, 0.1); border-radius: 20px; text-align: center;"><strong style="color: var(--danger);">⚠️ Membresía Inactiva</strong><br>Realiza un depósito de 200 Cup para activar 30 días de acceso.</div>` : ''}`;
         }
         
         function showSection(section) {
@@ -2892,7 +2936,7 @@
             if (section === 'history') loadHistory();
             if (section === 'comments') loadComments();
             if (section === 'referrals') updateReferralsUI();
-            if (section === 'payment') { loadTransactions(); loadUserBalance(); document.getElementById('membershipOptions').style.display = 'none'; }
+            if (section === 'payment') { loadTransactions(); loadUserBalance(); }
             if (section === 'riddle') loadRiddle();
             if (section === 'dailyProb') loadDailyProbabilities();
             if (section === 'iaPro') loadIAData();
@@ -2932,7 +2976,7 @@
                     const referrer = await processReferral(email, referralCode);
                     await db.collection('members').doc(email).set({
                         email: email, membershipActive: false, createdAt: new Date().toISOString(),
-                        userId: userCred.user.uid, wins: 0, losses: 0,
+                        userId: userCred.user.uid,
                         referralCode: newReferralCode, referredBy: referrer || null, referralBonusDays: 0
                     });
                     await db.collection('wallets').doc(email).set({
@@ -2942,8 +2986,9 @@
                     
                     let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Pronóstico Pro!\n\n';
                     message += `📋 Tu código de invitación: ${newReferralCode}\n`;
-                    message += '🤖 IA Pro: Ingresa resultados anteriores para obtener predicciones inteligentes (números, decenas y terminales).\n\n';
-                    message += '¡Invita amigos! Por cada referido que pague membresía, recibirás 50 cup COMPLETAMENTE RETIRABLES.\n\nAdemás, cada 10 referidos activos = 30 días de membresía gratis.\n\n';
+                    message += '🤖 IA Pro: Ingresa resultados anteriores para obtener predicciones inteligentes.\n\n';
+                    message += '💰 Para acceder a los pronósticos, realiza un depósito de 200 Cup (membresía 30 días).\n\n';
+                    message += '🎁 ¡Invita amigos! Por cada referido que active membresía, recibirás 50 cup retirables.\n\n';
                     if (referrer) message += `🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él recibirá 50 cup.`;
                     showDialog('✅ Registro Exitoso', message);
                     document.getElementById('authPassword').value = '';
@@ -2962,10 +3007,9 @@
         
         function logout() { 
             if (unsubscribePredictions) unsubscribePredictions();
-            if (unsubscribeProbabilities) unsubscribeProbabilities();
-            if (unsubscribeResults) unsubscribeResults();
             if (unsubscribeRiddle) unsubscribeRiddle();
             if (unsubscribeDailyProb) unsubscribeDailyProb();
+            if (unsubscribeTransactions) unsubscribeTransactions();
             auth.signOut();
             document.getElementById('dashboardScreen').style.display = 'none';
             document.getElementById('authScreen').style.display = 'flex';
@@ -3010,6 +3054,7 @@
                 document.getElementById('authScreen').style.display = 'none';
                 document.getElementById('dashboardScreen').style.display = 'block';
                 setupRealtimeListeners();
+                setupTransactionListener();
                 loadHistory();
                 loadComments();
                 loadProfile();
@@ -3024,10 +3069,9 @@
                 if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
             } else {
                 if (unsubscribePredictions) unsubscribePredictions();
-                if (unsubscribeProbabilities) unsubscribeProbabilities();
-                if (unsubscribeResults) unsubscribeResults();
                 if (unsubscribeRiddle) unsubscribeRiddle();
                 if (unsubscribeDailyProb) unsubscribeDailyProb();
+                if (unsubscribeTransactions) unsubscribeTransactions();
                 document.getElementById('dashboardScreen').style.display = 'none';
                 document.getElementById('authScreen').style.display = 'flex';
                 currentUser = null;
