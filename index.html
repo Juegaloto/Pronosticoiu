@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Pronóstico Pro | Casino IA Pro + 50 cup por referido</title>
+    <title>Pronóstico Pro | Casino IA Pro + 50 cup por referido + Tragamonedas</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     
@@ -175,6 +174,18 @@
             background: var(--gradient-ai);
         }
 
+        .btn-slot {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            font-size: 1.2rem;
+            padding: 16px 32px;
+            animation: pulse-gold 1.5s infinite;
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+        }
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -232,7 +243,7 @@
 
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 16px;
             margin-bottom: 4px;
         }
@@ -513,6 +524,103 @@
             font-size: 0.7rem;
             color: var(--text-gold-light);
             margin-top: 4px;
+        }
+
+        /* Estilos Tragamonedas */
+        .slot-machine {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 30px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid var(--gold-solid);
+            box-shadow: 0 0 30px rgba(245, 175, 25, 0.3);
+        }
+
+        .reels-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .reel-square {
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 20px;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--gold-solid);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.3);
+            background: linear-gradient(145deg, #2a2a3e, #1a1a2e);
+        }
+
+        .reel-symbol {
+            font-size: 4.5rem;
+            transition: all 0.1s ease;
+        }
+
+        .reel-symbol.spinning {
+            animation: spinSymbol 0.08s linear infinite;
+        }
+
+        @keyframes spinSymbol {
+            0% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.2) rotate(10deg); opacity: 0.7; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .slot-result {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 20px;
+        }
+
+        .slot-win {
+            background: linear-gradient(135deg, rgba(46, 139, 87, 0.3), rgba(0,0,0,0.5));
+            border: 1px solid var(--success);
+            animation: winPulse 0.5s ease;
+        }
+
+        .slot-lose {
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.2), rgba(0,0,0,0.5));
+            border: 1px solid var(--danger);
+        }
+
+        @keyframes winPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); background: rgba(46, 139, 87, 0.5); }
+        }
+
+        /* Stats de tragamonedas eliminados, solo mostramos un mensaje simple */
+        .slot-simple-message {
+            margin: 10px 0;
+            font-size: 0.8rem;
+            color: var(--text-gold-light);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .reel-square {
+                width: 80px;
+                height: 80px;
+            }
+            .reel-symbol {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .reel-square {
+                width: 65px;
+                height: 65px;
+            }
+            .reel-symbol {
+                font-size: 2.3rem;
+            }
         }
 
         .riddle-card {
@@ -1182,7 +1290,7 @@
     <div id="authScreen" class="auth-container">
         <div class="auth-card">
             <h2>🎰 Pronóstico Pro</h2>
-            <p class="text-center" style="color: var(--text-gold-light); margin: 0.5rem 0 1.5rem;">Pronósticos + IA Pro + Sistema de Referidos (50 cup por referido activo)</p>
+            <p class="text-center" style="color: var(--text-gold-light); margin: 0.5rem 0 1.5rem;">Pronósticos + IA Pro + Tragamonedas + Sistema de Referidos (50 cup por referido activo)</p>
             <div class="input-group">
                 <label>📧 Correo electrónico</label>
                 <input type="email" id="authEmail" placeholder="tu@email.com">
@@ -1207,8 +1315,8 @@
             <div class="card">
                 <div class="header">
                     <div class="logo">
-                        <h1>🎰 Pronóstico Pro <span class="live-badge">IA PRO ACTIVADA</span></h1>
-                        <p>Pronósticos IA + 50 cup por referido que pague membresía</p>
+                        <h1>🎰 Pronóstico Pro <span class="live-badge">IA PRO + TRAGAMONEDAS ACTIVADA</span></h1>
+                        <p>Pronósticos IA + Tragamonedas + 50 cup por referido que pague membresía</p>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
                         <span class="balance-display" id="balanceDisplay">💰 Saldo: 0 Cup</span>
@@ -1338,6 +1446,20 @@
                         </div>
                         <span class="nav-label">Depósito/Retiro</span>
                     </div>
+                    <div class="nav-card" data-section="slot">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                                <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" fill="none"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor"/>
+                                <circle cx="12" cy="12" r="2" stroke="currentColor"/>
+                                <circle cx="8" cy="12" r="1.5" stroke="currentColor"/>
+                                <circle cx="16" cy="12" r="1.5" stroke="currentColor"/>
+                                <path d="M5 18 L19 18" stroke="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="nav-label">🎰 TRAGAMONEDAS</span>
+                    </div>
                 </div>
             </div>
 
@@ -1448,9 +1570,7 @@
                     <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
                     <div class="table-responsive">
                         <table id="referralsTable">
-                            <thead>
-                                <tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></tr>
-                            </thead>
+                            <thead><tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></tr></thead>
                             <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</td></tr>
                             </tbody>
                         </table>
@@ -1463,7 +1583,8 @@
                     <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
                     <div class="table-responsive">
                         <table id="historyTable">
-                            <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr></thead>
+                            <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr>
+                            </thead>
                             <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...</td></tr>
                             </tbody>
                         </table>
@@ -1585,6 +1706,39 @@
                     </div>
                 </div>
             </div>
+
+            <!-- SECCIÓN TRAGAMONEDAS (Simplificada: sin Giros Totales, Mayor Premio ni Últimas Jugadas) -->
+            <div id="slotSection" style="display: none;">
+                <div class="card slot-machine">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎰 MÁQUINA TRAGAMONEDAS 🎰</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.8rem;">Costo por giro: <strong style="color: var(--gold-solid);">2 Cup</strong> | ¡Gana hasta 400 Cup!</p>
+                    
+                    <div class="reels-container">
+                        <div class="reel-square">
+                            <div class="reel-symbol" id="reel1">🍒</div>
+                        </div>
+                        <div class="reel-square">
+                            <div class="reel-symbol" id="reel2">🍒</div>
+                        </div>
+                        <div class="reel-square">
+                            <div class="reel-symbol" id="reel3">🍒</div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-slot" id="spinButton" onclick="spinSlot()">
+                        🎰 GIRAR (2 cup) 🎰
+                    </button>
+
+                    <div id="slotResult" class="slot-result">
+                        🎲 Presiona GIRAR para comenzar 🎲
+                    </div>
+                    
+                    <!-- Mensaje simple indicando que se guardan las estadísticas internamente, pero sin mostrarlas -->
+                    <div class="slot-simple-message">
+                        🎲 ¡Cada giro puede darte grandes premios!
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1601,10 +1755,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // [TODO EL CÓDIGO JAVASCRIPT ORIGINAL VA AQUÍ - ES EXTENSIVO PERO COMPLETO]
-        // Por razones de longitud, se incluye el mismo código JavaScript original
-        // que ya funciona correctamente con la estructura actual.
-        
+        // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyA1vFooiPl-CTM-z5QCrpBNya1h_D7Ws8I",
             authDomain: "loteriapro-46e18.firebaseapp.com",
@@ -1643,6 +1794,239 @@
         let iaDecenas = [];
         let iaTerminales = [];
         let iaLastInput = '';
+        
+        // Variables de la tragamonedas (aunque no se muestren, se siguen guardando en BD)
+        let slotSpins = 0;
+        let slotNextJackpot = 500;
+        let slotBiggestWin = 0;
+        let slotHistory = [];
+        let isSpinning = false;
+        
+        // Símbolos de la tragamonedas
+        const slotSymbols = ['🍒', '🍋', '🍊', '🍉', '🍇', '🔔', '⭐', '💎', '7️⃣'];
+        
+        function getRandomSymbol() {
+            const random = Math.random();
+            if (random < 0.02) return '7️⃣';
+            if (random < 0.07) return '⭐';
+            if (random < 0.12) return '💎';
+            if (random < 0.20) return '🍒';
+            if (random < 0.28) return '🍋';
+            if (random < 0.36) return '🍊';
+            if (random < 0.44) return '🍉';
+            if (random < 0.52) return '🍇';
+            return '🔔';
+        }
+        
+        function checkWin(symbols) {
+            if (symbols[0] === '7️⃣' && symbols[1] === '7️⃣' && symbols[2] === '7️⃣') {
+                return { prize: 400, name: '🎰 ¡JACKPOT! 400 CUP 🎰', type: 'jackpot' };
+            }
+            if (symbols[0] === symbols[1] && symbols[1] === symbols[2]) {
+                const prizes = { '🍒': 100, '🍋': 80, '🍊': 60, '🍉': 50, '🍇': 50, '🔔': 70, '⭐': 60, '💎': 70 };
+                if (prizes[symbols[0]]) {
+                    return { prize: prizes[symbols[0]], name: `¡TRES ${symbols[0]}! +${prizes[symbols[0]]} CUP`, type: 'win' };
+                }
+            }
+            if (symbols[0] === symbols[1] && symbols[0] !== symbols[2]) {
+                const prizes = { '7️⃣': 150, '🍒': 40, '🍋': 30, '🍊': 25, '⭐': 50, '💎': 40 };
+                if (prizes[symbols[0]]) {
+                    return { prize: prizes[symbols[0]], name: `¡DOS ${symbols[0]}! +${prizes[symbols[0]]} CUP`, type: 'win' };
+                }
+            }
+            if (symbols[1] === symbols[2] && symbols[0] !== symbols[1]) {
+                const prizes = { '7️⃣': 150, '🍒': 40, '🍋': 30, '🍊': 25, '⭐': 50, '💎': 40 };
+                if (prizes[symbols[1]]) {
+                    return { prize: prizes[symbols[1]], name: `¡DOS ${symbols[1]}! +${prizes[symbols[1]]} CUP`, type: 'win' };
+                }
+            }
+            return null;
+        }
+        
+        function playSlotSound(type) {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = 'sine';
+                gain.gain.value = 0.3;
+                if (type === 'spin') {
+                    osc.frequency.value = 880;
+                    osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.15);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.15);
+                } else if (type === 'win') {
+                    osc.frequency.value = 523.25;
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                    osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.2);
+                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'jackpot') {
+                    const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+                    notes.forEach((freq, i) => {
+                        setTimeout(() => {
+                            const o = audioCtx.createOscillator();
+                            const g = audioCtx.createGain();
+                            o.connect(g);
+                            g.connect(audioCtx.destination);
+                            o.type = 'sine';
+                            o.frequency.value = freq;
+                            g.gain.value = 0.4;
+                            g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
+                            o.start();
+                            o.stop(audioCtx.currentTime + 0.3);
+                        }, i * 100);
+                    });
+                } else if (type === 'lose') {
+                    osc.frequency.value = 220;
+                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.2);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.2);
+                }
+            } catch(e) { console.log('Audio error:', e); }
+        }
+        
+        function animateReels(finalSymbols, callback) {
+            const reel1 = document.getElementById('reel1');
+            const reel2 = document.getElementById('reel2');
+            const reel3 = document.getElementById('reel3');
+            let spins = 0;
+            const maxSpins = 10;
+            const interval = setInterval(() => {
+                reel1.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                reel2.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                reel3.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                spins++;
+                if (spins >= maxSpins) {
+                    clearInterval(interval);
+                    reel1.innerText = finalSymbols[0];
+                    reel2.innerText = finalSymbols[1];
+                    reel3.innerText = finalSymbols[2];
+                    if (callback) callback();
+                }
+            }, 80);
+        }
+        
+        async function spinSlot() {
+            if (isSpinning) {
+                showDialog('⏳ Espera', 'Ya hay un giro en proceso...');
+                return;
+            }
+            
+            if (!currentUser) {
+                showDialog('Error', 'Debes iniciar sesión');
+                return;
+            }
+            
+            const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
+            if (!isActive) {
+                showDialog('🔒 Membresía requerida', 'Necesitas una membresía activa para jugar en la tragamonedas.\n\n💰 Realiza un depósito de 200 Cup para activar 30 días de acceso.');
+                return;
+            }
+            
+            if (userBalance < 2) {
+                showDialog('💰 Saldo insuficiente', `Necesitas 2 Cup para girar. Tu saldo actual es: ${userBalance} Cup\n\nRealiza un depósito para obtener más saldo.`);
+                return;
+            }
+            
+            isSpinning = true;
+            const spinButton = document.getElementById('spinButton');
+            spinButton.disabled = true;
+            spinButton.style.opacity = '0.6';
+            
+            playSlotSound('spin');
+            
+            const symbols = [getRandomSymbol(), getRandomSymbol(), getRandomSymbol()];
+            
+            const spinsSinceLastJackpot = slotSpins % slotNextJackpot;
+            if (spinsSinceLastJackpot === slotNextJackpot - 1 && Math.random() < 0.3) {
+                symbols[0] = '7️⃣';
+                symbols[1] = '7️⃣';
+                symbols[2] = '7️⃣';
+            }
+            
+            animateReels(symbols, async () => {
+                const newBalance = userBalance - 2;
+                await updateUserBalance(newBalance);
+                
+                slotSpins++;
+                
+                const win = checkWin(symbols);
+                let prize = 0;
+                let resultMessage = '';
+                
+                if (win) {
+                    prize = win.prize;
+                    const finalBalance = userBalance + prize - 2;
+                    await updateUserBalance(finalBalance);
+                    
+                    if (prize > slotBiggestWin) {
+                        slotBiggestWin = prize;
+                    }
+                    
+                    resultMessage = `🎉 ${win.name}! Ganaste ${prize} Cup! 🎉`;
+                    if (prize === 400) {
+                        playSlotSound('jackpot');
+                        resultMessage = `🎰🎰🎰 ¡JACKPOT! Ganaste 400 Cup 🎰🎰🎰`;
+                    } else {
+                        playSlotSound('win');
+                    }
+                    
+                    slotHistory.unshift({ result: `${symbols.join(' ')}`, won: true, prize: prize, time: new Date().toISOString() });
+                } else {
+                    resultMessage = `😢 ${symbols.join(' ')} - No ganaste. ¡Sigue intentando!`;
+                    playSlotSound('lose');
+                    slotHistory.unshift({ result: `${symbols.join(' ')}`, won: false, prize: 0, time: new Date().toISOString() });
+                }
+                
+                const resultDiv = document.getElementById('slotResult');
+                resultDiv.innerHTML = resultMessage;
+                resultDiv.className = win ? 'slot-result slot-win' : 'slot-result slot-lose';
+                
+                // Guardar datos internamente (sin mostrarlos en UI)
+                await saveSlotData();
+                await loadUserBalance();
+                
+                setTimeout(() => {
+                    resultDiv.className = 'slot-result';
+                }, 2000);
+                
+                isSpinning = false;
+                spinButton.disabled = false;
+                spinButton.style.opacity = '1';
+            });
+        }
+        
+        async function loadSlotData() {
+            if (!currentUser) return;
+            const slotRef = db.collection('slots').doc(currentUser.email);
+            const doc = await slotRef.get();
+            if (doc.exists) {
+                const data = doc.data();
+                slotSpins = data.spins || 0;
+                slotNextJackpot = data.nextJackpot || 500;
+                slotBiggestWin = data.biggestWin || 0;
+                slotHistory = data.history || [];
+            }
+            // No actualizamos UI de stats porque se eliminaron
+        }
+        
+        async function saveSlotData() {
+            if (!currentUser) return;
+            const slotRef = db.collection('slots').doc(currentUser.email);
+            await slotRef.set({
+                spins: slotSpins,
+                nextJackpot: slotNextJackpot,
+                biggestWin: slotBiggestWin,
+                history: slotHistory.slice(-20),
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+        }
         
         function setupTransactionListener() {
             if (!currentUser) return;
@@ -1831,7 +2215,7 @@
         function toggleTheme() { const body = document.body; const btn = document.getElementById('themeToggleBtn'); if (body.classList.contains('dark')) { body.classList.remove('dark'); localStorage.setItem('floridaTheme', 'light'); if (btn) btn.innerHTML = '🌙'; } else { body.classList.add('dark'); localStorage.setItem('floridaTheme', 'dark'); if (btn) btn.innerHTML = '☀️'; } }
         async function copyToClipboard(text) { try { await navigator.clipboard.writeText(text); showDialog('✅ Copiado', `"${text}" ha sido copiado al portapapeles`); } catch (err) { showDialog('Error', 'No se pudo copiar el texto'); } }
         function shareTelegramLink() { const code = document.getElementById('userReferralCode').innerText; if (code && code !== 'Cargando...') { const telegramLink = `https://t.me/pronostico1_bot?start=${code}`; window.open(telegramLink, '_blank'); showDialog('📲 Invitar por Telegram', `Comparte este enlace con tus amigos:\n\n${telegramLink}`); } else { showDialog('Error', 'Código de referido no disponible aún.'); } }
-        async function copyReferralCode() { const code = document.getElementById('userReferralCode').innerText; await navigator.clipboard.writeText(code); showDialog('¡Copiado!', 'Código de invitación copiado'); }
+        async function copyReferralCode() { const code = document.getElementById('userReferralCode').innerText; await copyToClipboard(code); }
         function updateLoadingProgress(progress) { loadingProgress = Math.min(progress, 95); const bar = document.getElementById('loadingProgressBar'); if (bar) bar.style.width = loadingProgress + '%'; }
         function hideLoadingScreen() { clearInterval(loadingInterval); const loadingScreen = document.getElementById('loadingScreen'); if (loadingScreen) { loadingScreen.style.opacity = '0'; setTimeout(() => { loadingScreen.style.display = 'none'; }, 300); } }
         function animateLoading() { loadingInterval = setInterval(() => { if (loadingProgress < 90) { loadingProgress += Math.random() * 5; updateLoadingProgress(loadingProgress); } }, 300); }
@@ -1860,18 +2244,18 @@
         async function loadRiddle() { try { const doc = await db.collection('riddles').doc('current').get(); if (doc.exists) { const data = doc.data(); document.getElementById('riddleQuestion').innerHTML = data.question || 'No hay adivinanza'; window.currentRiddleAnswer = data.answer || ''; document.getElementById('riddleAnswer').innerHTML = window.currentRiddleAnswer; document.getElementById('riddleDate').innerHTML = `📅 ${data.date || getCurrentDateFormatted()}`; } else { document.getElementById('riddleQuestion').innerHTML = '✨ No hay adivinanza hoy'; } document.getElementById('riddleAnswer').classList.remove('show'); } catch (error) {} }
         function toggleRiddleAnswer() { document.getElementById('riddleAnswer').classList.toggle('show'); }
         async function loadDailyProbabilities() { const currentDate = getCurrentDateFormatted(); const badgeElement = document.getElementById('probabilitiesTodayBadge'); if (badgeElement) badgeElement.innerHTML = `📅 ${currentDate}`; try { const doc = await db.collection('dailyProbabilities').doc('current').get(); if (doc.exists) { const data = doc.data(); const numbers = data.numbers || []; const percentages = data.percentages || []; const lastUpdate = data.lastUpdateFormatted || 'No disponible'; const lastUpdateDate = data.lastUpdate ? new Date(data.lastUpdate).toLocaleDateString() : 'No disponible'; document.getElementById('probUpdateTime').innerHTML = lastUpdate; document.getElementById('probUpdateDate').innerHTML = lastUpdateDate; const container = document.getElementById('probabilitiesList'); container.innerHTML = ''; if (numbers.length === 0) { container.innerHTML = '<div class="text-center">📊 No hay probabilidades</div>'; return; } numbers.forEach((num, index) => { const percent = percentages[index] || Math.floor(Math.random() * 30) + 50; const probDiv = document.createElement('div'); probDiv.className = 'prob-item'; probDiv.innerHTML = `<div class="prob-number">${num}</div><div class="prob-percent">${percent}%</div>`; container.appendChild(probDiv); }); } else { document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">📊 No hay probabilidades disponibles hoy</div>'; document.getElementById('probUpdateTime').innerHTML = '--:-- --'; document.getElementById('probUpdateDate').innerHTML = '--/--/----'; } } catch (error) { console.error('Error cargando probabilidades:', error); document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">❌ Error al cargar probabilidades</div>'; } }
-        async function loadHistory() { if (!currentUser) return; const tbody = document.getElementById('historyTableBody'); try { const historySnapshot = await db.collection('dailyResults').orderBy('timestamp', 'desc').limit(50).get(); if (historySnapshot.empty) { tbody.innerHTML = '</tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td></tr>'; return; } tbody.innerHTML = ''; for (const doc of historySnapshot.docs) { const data = doc.data(); const dateStr = data.date || doc.id; if (data.afternoonWinner) { const row = tbody.insertRow(); row.insertCell(0).innerText = dateStr; row.insertCell(1).innerHTML = '🌅 <strong>Mediodía</strong><br><span style="font-size:0.7rem;">(1:35 PM)</span>'; const isFallo = (data.afternoonWinner === 'fallo' || data.afternoonWinner === 'FALLO'); row.insertCell(2).innerHTML = isFallo ? '<span style="color: var(--danger); font-weight:700;">❌ FALLO</span>' : `<span style="color: var(--gold-solid); font-weight:700;">${data.afternoonWinner}</span>`; row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>'; } if (data.nightWinner) { const row = tbody.insertRow(); row.insertCell(0).innerText = dateStr; row.insertCell(1).innerHTML = '🌙 <strong>Noche</strong><br><span style="font-size:0.7rem;">(9:50 PM)</span>'; const isFallo = (data.nightWinner === 'fallo' || data.nightWinner === 'FALLO'); row.insertCell(2).innerHTML = isFallo ? '<span style="color: var(--danger); font-weight:700;">❌ FALLO</span>' : `<span style="color: var(--gold-solid); font-weight:700;">${data.nightWinner}</span>`; row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>'; } } } catch (error) { console.error('Error cargando historial:', error); tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar historial</td></tr>'; } }
+        async function loadHistory() { if (!currentUser) return; const tbody = document.getElementById('historyTableBody'); try { const historySnapshot = await db.collection('dailyResults').orderBy('timestamp', 'desc').limit(50).get(); if (historySnapshot.empty) { tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td></tr>'; return; } tbody.innerHTML = ''; for (const doc of historySnapshot.docs) { const data = doc.data(); const dateStr = data.date || doc.id; if (data.afternoonWinner) { const row = tbody.insertRow(); row.insertCell(0).innerText = dateStr; row.insertCell(1).innerHTML = '🌅 <strong>Mediodía</strong><br><span style="font-size:0.7rem;">(1:35 PM)</span>'; const isFallo = (data.afternoonWinner === 'fallo' || data.afternoonWinner === 'FALLO'); row.insertCell(2).innerHTML = isFallo ? '<span style="color: var(--danger); font-weight:700;">❌ FALLO</span>' : `<span style="color: var(--gold-solid); font-weight:700;">${data.afternoonWinner}</span>`; row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>'; } if (data.nightWinner) { const row = tbody.insertRow(); row.insertCell(0).innerText = dateStr; row.insertCell(1).innerHTML = '🌙 <strong>Noche</strong><br><span style="font-size:0.7rem;">(9:50 PM)</span>'; const isFallo = (data.nightWinner === 'fallo' || data.nightWinner === 'FALLO'); row.insertCell(2).innerHTML = isFallo ? '<span style="color: var(--danger); font-weight:700;">❌ FALLO</span>' : `<span style="color: var(--gold-solid); font-weight:700;">${data.nightWinner}</span>`; row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>'; } } } catch (error) { console.error('Error cargando historial:', error); tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar historial</td></tr>'; } }
         async function loadComments() { const container = document.getElementById('commentsList'); if (!container) return; try { const commentsSnapshot = await db.collection('comments').orderBy('timestamp', 'desc').limit(50).get(); if (commentsSnapshot.empty) { container.innerHTML = '<div class="text-center" style="padding: 2rem;">💬 No hay comentarios aún. ¡Sé el primero en compartir tu jugada!</div>'; return; } container.innerHTML = ''; commentsSnapshot.forEach(doc => { const comment = doc.data(); const commentDiv = document.createElement('div'); commentDiv.className = 'comment-card'; let numberHtml = ''; if (comment.number) numberHtml = `<div class="comment-number" style="display:inline-block; background:var(--gradient-primary); color:#0A0F2C; padding:4px 12px; border-radius:20px; font-size:0.7rem; margin-top:8px; font-weight:600;">🎯 Número jugado: ${escapeHtml(comment.number)} ${comment.draw ? `(${escapeHtml(comment.draw)})` : ''}</div>`; commentDiv.innerHTML = `<div class="comment-header"><span class="comment-user">👤 ${escapeHtml(comment.userEmail || 'Usuario')}</span><span class="comment-date">📅 ${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Reciente'}</span></div><div class="comment-text">${escapeHtml(comment.message)}</div>${numberHtml}`; container.appendChild(commentDiv); }); } catch (error) { console.error('Error cargando comentarios:', error); container.innerHTML = '<div class="text-center">❌ Error al cargar comentarios</div>'; } }
         async function publishComment() { if (!currentUser) { showDialog('Inicia sesión', 'Debes iniciar sesión para publicar comentarios'); return; } const message = document.getElementById('commentMessage').value.trim(); const number = document.getElementById('commentNumber').value.trim(); const draw = document.getElementById('commentDraw').value.trim(); if (!message) { showDialog('Error', 'Escribe un comentario antes de publicar'); return; } try { await db.collection('comments').add({ userEmail: currentUser.email, userId: currentUser.uid, message: message, number: number || null, draw: draw || null, timestamp: firebase.firestore.FieldValue.serverTimestamp(), likes: 0 }); document.getElementById('commentMessage').value = ''; document.getElementById('commentNumber').value = ''; document.getElementById('commentDraw').value = ''; showDialog('✅ Publicado', 'Tu comentario ha sido publicado'); loadComments(); } catch (error) { showDialog('Error', 'No se pudo publicar el comentario'); } }
         function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
         async function loadProfile() { const content = document.getElementById('profileContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); const expires = userMembership?.membershipExpires ? new Date(userMembership.membershipExpires).toLocaleDateString() : 'Inactiva'; let daysLeft = 0; if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000); document.getElementById('daysLeft').innerText = daysLeft; const referralCode = userMembership?.referralCode || 'Cargando...'; content.innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div><div class="stat-card"><div class="stat-number">${userBalance}</div><div class="stat-label">💰 Saldo Cup</div></div></div><div style="background: rgba(0, 0, 0, 0.5); border-radius: 20px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Membresía vence:</strong> ${expires}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--gradient-primary); color: #0A0F2C; padding: 0.2rem 0.5rem; border-radius: 12px; font-weight:600;">${escapeHtml(referralCode)}</code></p><button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--gradient-primary); width: auto;">📲 Compartir enlace de Telegram</button></div>${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}${!isActive ? `<div style="margin-top: 1rem; padding: 1rem; background: rgba(220, 20, 60, 0.2); border-radius: 20px; text-align: center;"><strong style="color: var(--danger);">⚠️ Membresía Inactiva</strong><br>Realiza un depósito de 200 Cup para activar 30 días de acceso.</div>` : ''}`; }
-        function showSection(section) { document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none'; document.getElementById('iaProSection').style.display = section === 'iaPro' ? 'block' : 'none'; document.getElementById('riddleSection').style.display = section === 'riddle' ? 'block' : 'none'; document.getElementById('dailyProbSection').style.display = section === 'dailyProb' ? 'block' : 'none'; document.getElementById('referralsSection').style.display = section === 'referrals' ? 'block' : 'none'; document.getElementById('historySection').style.display = section === 'history' ? 'block' : 'none'; document.getElementById('commentsSection').style.display = section === 'comments' ? 'block' : 'none'; document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none'; document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none'; document.querySelectorAll('.nav-card').forEach(card => { if (card.dataset.section === section) card.classList.add('active'); else card.classList.remove('active'); }); if (section === 'profile') loadProfile(); if (section === 'history') loadHistory(); if (section === 'comments') loadComments(); if (section === 'referrals') updateReferralsUI(); if (section === 'payment') { loadTransactions(); loadUserBalance(); } if (section === 'riddle') loadRiddle(); if (section === 'dailyProb') loadDailyProbabilities(); if (section === 'iaPro') loadIAData(); }
+        function showSection(section) { document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none'; document.getElementById('iaProSection').style.display = section === 'iaPro' ? 'block' : 'none'; document.getElementById('riddleSection').style.display = section === 'riddle' ? 'block' : 'none'; document.getElementById('dailyProbSection').style.display = section === 'dailyProb' ? 'block' : 'none'; document.getElementById('referralsSection').style.display = section === 'referrals' ? 'block' : 'none'; document.getElementById('historySection').style.display = section === 'history' ? 'block' : 'none'; document.getElementById('commentsSection').style.display = section === 'comments' ? 'block' : 'none'; document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none'; document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none'; document.getElementById('slotSection').style.display = section === 'slot' ? 'block' : 'none'; document.querySelectorAll('.nav-card').forEach(card => { if (card.dataset.section === section) card.classList.add('active'); else card.classList.remove('active'); }); if (section === 'profile') loadProfile(); if (section === 'history') loadHistory(); if (section === 'comments') loadComments(); if (section === 'referrals') updateReferralsUI(); if (section === 'payment') { loadTransactions(); loadUserBalance(); } if (section === 'riddle') loadRiddle(); if (section === 'dailyProb') loadDailyProbabilities(); if (section === 'iaPro') loadIAData(); if (section === 'slot') loadSlotData(); }
         async function handleAuth() { const email = document.getElementById('authEmail').value.trim(); const password = document.getElementById('authPassword').value; const referralCode = document.getElementById('referralCodeInput').value.trim(); if (!email || !password) { showDialog('Error', 'Completa todos los campos'); return; } if (authMode === 'login') { try { await auth.signInWithEmailAndPassword(email, password); } catch (error) { let msg = error.message; if (error.code === 'auth/invalid-email') msg = 'Email inválido'; if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta'; if (error.code === 'auth/user-not-found') msg = 'Usuario no encontrado'; showDialog('Error', msg); } } else { if (!referralCode) { showDialog('Error', 'El código de invitación es OBLIGATORIO para registrarte.\n\nSolicita un código a un amigo o al administrador @sdesaroyador'); return; } const isValid = await validateReferralCode(referralCode, email); if (!isValid) { showDialog('Error', 'El código de invitación ingresado NO es válido.\n\nVerifica el código o solicita uno nuevo a tu referidor.'); return; } try { const userCred = await auth.createUserWithEmailAndPassword(email, password); const newReferralCode = generateReferralCode(email); const referrer = await processReferral(email, referralCode); await db.collection('members').doc(email).set({ email: email, membershipActive: false, createdAt: new Date().toISOString(), userId: userCred.user.uid, referralCode: newReferralCode, referredBy: referrer || null, referralBonusDays: 0 }); await db.collection('wallets').doc(email).set({ balance: 0, createdAt: new Date().toISOString() }); let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Pronóstico Pro!\n\n'; message += `📋 Tu código de invitación: ${newReferralCode}\n`; message += '🤖 IA Pro: Ingresa resultados anteriores para obtener predicciones inteligentes.\n\n'; message += '💰 Para acceder a los pronósticos, realiza un depósito de 200 Cup (membresía 30 días).\n\n'; message += '🎁 ¡Invita amigos! Por cada referido que active membresía, recibirás 50 cup retirables.\n\n'; if (referrer) message += `🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él recibirá 50 cup.`; showDialog('✅ Registro Exitoso', message); document.getElementById('authPassword').value = ''; document.getElementById('referralCodeInput').value = ''; await auth.signOut(); await auth.signInWithEmailAndPassword(email, password); } catch (error) { let msg = error.message; if (error.code === 'auth/email-already-in-use') msg = 'Email ya registrado'; if (error.code === 'auth/weak-password') msg = 'Contraseña débil (mínimo 6 caracteres)'; if (error.code === 'auth/invalid-email') msg = 'Email inválido'; showDialog('Error', msg); } } }
         function logout() { if (unsubscribePredictions) unsubscribePredictions(); if (unsubscribeRiddle) unsubscribeRiddle(); if (unsubscribeDailyProb) unsubscribeDailyProb(); if (unsubscribeTransactions) unsubscribeTransactions(); auth.signOut(); document.getElementById('dashboardScreen').style.display = 'none'; document.getElementById('authScreen').style.display = 'flex'; authMode = 'register'; document.querySelector('.auth-card h2').innerText = 'Crear Cuenta'; document.getElementById('authBtn').innerHTML = 'Registrarse'; document.getElementById('switchAuth').innerHTML = '¿Ya tienes cuenta? Inicia sesión'; document.getElementById('referralCodeGroup').style.display = 'block'; document.getElementById('authEmail').value = ''; document.getElementById('authPassword').value = ''; document.getElementById('referralCodeInput').value = ''; }
         document.querySelectorAll('.nav-card').forEach(card => { card.addEventListener('click', () => { const section = card.dataset.section; if (section) showSection(section); }); });
         animateLoading();
         setTimeout(async () => { const isConnected = await checkConnection(); if (isConnected) { updateLoadingProgress(100); setTimeout(() => { hideLoadingScreen(); }, 300); } else { updateLoadingProgress(100); setTimeout(() => { hideLoadingScreen(); showDialog('⚠️ Error de conexión', 'No se pudo conectar al servidor. Verifica tu conexión a internet.'); }, 300); } }, 1500);
-        auth.onAuthStateChanged(async (user) => { if (user) { currentUser = user; await checkMembership(user.email); await loadUserBalance(); document.getElementById('authScreen').style.display = 'none'; document.getElementById('dashboardScreen').style.display = 'block'; setupRealtimeListeners(); setupTransactionListener(); loadHistory(); loadComments(); loadProfile(); updateReferralsUI(); loadRiddle(); loadDailyProbabilities(); loadTransactions(); loadIAData(); showSection('predictions'); initTheme(); const themeBtn = document.getElementById('themeToggleBtn'); if (themeBtn) themeBtn.addEventListener('click', toggleTheme); } else { if (unsubscribePredictions) unsubscribePredictions(); if (unsubscribeRiddle) unsubscribeRiddle(); if (unsubscribeDailyProb) unsubscribeDailyProb(); if (unsubscribeTransactions) unsubscribeTransactions(); document.getElementById('dashboardScreen').style.display = 'none'; document.getElementById('authScreen').style.display = 'flex'; currentUser = null; } });
+        auth.onAuthStateChanged(async (user) => { if (user) { currentUser = user; await checkMembership(user.email); await loadUserBalance(); document.getElementById('authScreen').style.display = 'none'; document.getElementById('dashboardScreen').style.display = 'block'; setupRealtimeListeners(); setupTransactionListener(); loadHistory(); loadComments(); loadProfile(); updateReferralsUI(); loadRiddle(); loadDailyProbabilities(); loadTransactions(); loadIAData(); loadSlotData(); showSection('predictions'); initTheme(); const themeBtn = document.getElementById('themeToggleBtn'); if (themeBtn) themeBtn.addEventListener('click', toggleTheme); } else { if (unsubscribePredictions) unsubscribePredictions(); if (unsubscribeRiddle) unsubscribeRiddle(); if (unsubscribeDailyProb) unsubscribeDailyProb(); if (unsubscribeTransactions) unsubscribeTransactions(); document.getElementById('dashboardScreen').style.display = 'none'; document.getElementById('authScreen').style.display = 'flex'; currentUser = null; } });
     </script>
 </body>
 </html>
