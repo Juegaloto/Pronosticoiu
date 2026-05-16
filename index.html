@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOC<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -536,6 +536,34 @@
             box-shadow: 0 0 30px rgba(245, 175, 25, 0.3);
         }
 
+        .slot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-icon {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.2s ease;
+            border: 1px solid var(--gold-solid);
+        }
+
+        .info-icon:hover {
+            background: var(--gold-solid);
+            transform: scale(1.05);
+        }
+
         .reels-container {
             display: flex;
             justify-content: center;
@@ -595,12 +623,85 @@
             50% { transform: scale(1.02); background: rgba(46, 139, 87, 0.5); }
         }
 
-        /* Stats de tragamonedas eliminados, solo mostramos un mensaje simple */
         .slot-simple-message {
             margin: 10px 0;
             font-size: 0.8rem;
             color: var(--text-gold-light);
             text-align: center;
+        }
+
+        /* Modal de premios */
+        .prizes-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(16px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .prizes-content {
+            background: linear-gradient(135deg, #1a1a2e, #0a0a1a);
+            border-radius: 30px;
+            padding: 25px;
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid var(--gold-solid);
+            animation: modalPop 0.2s ease-out;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .prizes-content h3 {
+            color: var(--gold-solid);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .prize-table {
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .prize-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid rgba(245, 175, 25, 0.3);
+        }
+
+        .prize-symbol {
+            font-size: 1.5rem;
+            min-width: 80px;
+            text-align: left;
+        }
+
+        .prize-amount {
+            color: var(--gold-solid);
+            font-weight: bold;
+        }
+
+        .prize-note {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         @media (max-width: 768px) {
@@ -908,17 +1009,6 @@
             text-align: center;
             animation: modalPop 0.2s ease-out;
             border: 1px solid var(--gold-solid);
-        }
-
-        @keyframes modalPop {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
         }
 
         .payment-info {
@@ -1707,10 +1797,13 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN TRAGAMONEDAS (Simplificada: sin Giros Totales, Mayor Premio ni Últimas Jugadas) -->
+            <!-- SECCIÓN TRAGAMONEDAS - DIFICULTAD UNIFORME (11.11% cada símbolo) -->
             <div id="slotSection" style="display: none;">
                 <div class="card slot-machine">
-                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎰 MÁQUINA TRAGAMONEDAS 🎰</h2>
+                    <div class="slot-header">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 0;">🎰 MÁQUINA TRAGAMONEDAS 🎰</h2>
+                        <div class="info-icon" onclick="showPrizesModal()">ℹ️</div>
+                    </div>
                     <p style="color: var(--text-secondary); font-size: 0.8rem;">Costo por giro: <strong style="color: var(--gold-solid);">2 Cup</strong> | ¡Gana hasta 400 Cup!</p>
                     
                     <div class="reels-container">
@@ -1733,12 +1826,45 @@
                         🎲 Presiona GIRAR para comenzar 🎲
                     </div>
                     
-                    <!-- Mensaje simple indicando que se guardan las estadísticas internamente, pero sin mostrarlas -->
                     <div class="slot-simple-message">
-                        🎲 ¡Cada giro puede darte grandes premios!
+                        🎲 ¡TODOS los símbolos tienen la misma probabilidad! Gana con combinaciones raras
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal de premios -->
+    <div id="prizesModal" class="prizes-modal">
+        <div class="prizes-content">
+            <h3>🎁 TABLA DE PREMIOS 🎁</h3>
+            <div class="prize-table">
+                <div class="prize-row"><span class="prize-symbol">7️⃣ 7️⃣ 7️⃣</span><span class="prize-amount">400 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">⭐⭐⭐</span><span class="prize-amount">12 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">💎💎💎</span><span class="prize-amount">15 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🔔🔔🔔</span><span class="prize-amount">8 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🍒🍒🍒</span><span class="prize-amount">6 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🍋🍋🍋</span><span class="prize-amount">5 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🍊🍊🍊</span><span class="prize-amount">4 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🍉🍉🍉</span><span class="prize-amount">3 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🍇🍇🍇</span><span class="prize-amount">3 CUP</span></div>
+            </div>
+            <div class="prize-table" style="border-top: 1px solid rgba(245,175,25,0.3); padding-top: 10px;">
+                <h4 style="color: var(--gold-solid); margin-bottom: 10px;">🎯 PREMIOS POR 2 SÍMBOLOS IGUALES 🎯</h4>
+                <div class="prize-row"><span class="prize-symbol">⭐⭐</span><span class="prize-amount">1 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">💎💎</span><span class="prize-amount">1.5 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🔔🔔</span><span class="prize-amount">2.00CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🍒🍒</span><span class="prize-amount">2.00 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🍋🍋</span><span class="prize-amount">2.00 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🍊🍊</span><span class="prize-amount">2.00 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">🍉🍉</span><span class="prize-amount">2.00</span></div>
+                <div class="prize-row"><span class="prize-symbol">🍇🍇</span><span class="prize-amount">2.00 CUP</span></div>
+                <div class="prize-row"><span class="prize-symbol">7️⃣7️⃣</span><span class="prize-amount">5 CUP</span></div>
+            </div>
+            <div class="prize-note">
+                💡 Todos los símbolos tienen la MISMA probabilidad (11.11%) - ¡Extremadamente difícil ganar!
+            </div>
+            <button class="btn btn-small" onclick="closePrizesModal()" style="margin-top: 15px; width: auto;">Cerrar</button>
         </div>
     </div>
 
@@ -1795,63 +1921,40 @@
         let iaTerminales = [];
         let iaLastInput = '';
         
-        // Variables de la tragamonedas (aunque no se muestren, se siguen guardando en BD)
+        // Variables de la tragamonedas
         let slotSpins = 0;
-        let slotNextJackpot = 500;
+        let slotNextJackpot = 5000;
         let slotBiggestWin = 0;
         let slotHistory = [];
         let isSpinning = false;
         
-        // Símbolos de la tragamonedas
+        // Símbolos de la tragamonedas - TODOS CON LA MISMA PROBABILIDAD (11.11%)
         const slotSymbols = ['🍒', '🍋', '🍊', '🍉', '🍇', '🔔', '⭐', '💎', '7️⃣'];
         
-        function getRandomSymbol() {
-            const random = Math.random();
-            if (random < 0.02) return '7️⃣';
-            if (random < 0.07) return '⭐';
-            if (random < 0.12) return '💎';
-            if (random < 0.20) return '🍒';
-            if (random < 0.28) return '🍋';
-            if (random < 0.36) return '🍊';
-            if (random < 0.44) return '🍉';
-            if (random < 0.52) return '🍇';
-            return '🔔';
-        }
+        // Audio context para sonidos
+        let audioCtx = null;
         
-        function checkWin(symbols) {
-            if (symbols[0] === '7️⃣' && symbols[1] === '7️⃣' && symbols[2] === '7️⃣') {
-                return { prize: 400, name: '🎰 ¡JACKPOT! 400 CUP 🎰', type: 'jackpot' };
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
-            if (symbols[0] === symbols[1] && symbols[1] === symbols[2]) {
-                const prizes = { '🍒': 100, '🍋': 80, '🍊': 60, '🍉': 50, '🍇': 50, '🔔': 70, '⭐': 60, '💎': 70 };
-                if (prizes[symbols[0]]) {
-                    return { prize: prizes[symbols[0]], name: `¡TRES ${symbols[0]}! +${prizes[symbols[0]]} CUP`, type: 'win' };
-                }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
             }
-            if (symbols[0] === symbols[1] && symbols[0] !== symbols[2]) {
-                const prizes = { '7️⃣': 150, '🍒': 40, '🍋': 30, '🍊': 25, '⭐': 50, '💎': 40 };
-                if (prizes[symbols[0]]) {
-                    return { prize: prizes[symbols[0]], name: `¡DOS ${symbols[0]}! +${prizes[symbols[0]]} CUP`, type: 'win' };
-                }
-            }
-            if (symbols[1] === symbols[2] && symbols[0] !== symbols[1]) {
-                const prizes = { '7️⃣': 150, '🍒': 40, '🍋': 30, '🍊': 25, '⭐': 50, '💎': 40 };
-                if (prizes[symbols[1]]) {
-                    return { prize: prizes[symbols[1]], name: `¡DOS ${symbols[1]}! +${prizes[symbols[1]]} CUP`, type: 'win' };
-                }
-            }
-            return null;
         }
         
         function playSlotSound(type) {
             try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                initAudio();
+                if (!audioCtx) return;
+                
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.type = 'sine';
-                gain.gain.value = 0.3;
+                gain.gain.value = 0.25;
+                
                 if (type === 'spin') {
                     osc.frequency.value = 880;
                     osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.1);
@@ -1870,6 +1973,7 @@
                     const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
                     notes.forEach((freq, i) => {
                         setTimeout(() => {
+                            if (!audioCtx) return;
                             const o = audioCtx.createOscillator();
                             const g = audioCtx.createGain();
                             o.connect(g);
@@ -1887,8 +1991,87 @@
                     gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.2);
                     osc.start();
                     osc.stop(audioCtx.currentTime + 0.2);
+                } else if (type === 'two') {
+                    osc.frequency.value = 392.00;
+                    osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.2);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.2);
                 }
             } catch(e) { console.log('Audio error:', e); }
+        }
+        
+        // FUNCIÓN ACTUALIZADA - TODOS LOS SÍMBOLOS CON LA MISMA PROBABILIDAD (11.11%)
+        function getRandomSymbol() {
+            // 9 símbolos en total, cada uno con 11.11% de probabilidad
+            const random = Math.random();
+            if (random < 0.1111) return '🍒';
+            if (random < 0.2222) return '🍋';
+            if (random < 0.3333) return '🍊';
+            if (random < 0.4444) return '🍉';
+            if (random < 0.5555) return '🍇';
+            if (random < 0.6666) return '🔔';
+            if (random < 0.7777) return '⭐';
+            if (random < 0.8888) return '💎';
+            return '7️⃣'; // 11.11% también
+        }
+        
+        function checkWin(symbols) {
+            // JACKPOT: 7️⃣ 7️⃣ 7️⃣ -> 400 cup
+            if (symbols[0] === '7️⃣' && symbols[1] === '7️⃣' && symbols[2] === '7️⃣') {
+                return { prize: 400, name: '🎰 ¡JACKPOT! 400 CUP 🎰', type: 'jackpot' };
+            }
+            // TRES IGUALES
+            if (symbols[0] === symbols[1] && symbols[1] === symbols[2]) {
+                const prizes = { 
+                    '🍒': 6, 
+                    '🍋': 5, 
+                    '🍊': 4, 
+                    '🍉': 3, 
+                    '🍇': 3, 
+                    '🔔': 8, 
+                    '⭐': 12, 
+                    '💎': 15,
+                    '7️⃣': 400
+                };
+                if (prizes[symbols[0]]) {
+                    return { prize: prizes[symbols[0]], name: `¡TRES ${symbols[0]}! +${prizes[symbols[0]]} CUP`, type: 'win' };
+                }
+            }
+            // DOS IGUALES
+            if (symbols[0] === symbols[1] && symbols[0] !== symbols[2]) {
+                const prizes = { 
+                    '7️⃣': 5, 
+                    '⭐': 1, 
+                    '💎': 1.5, 
+                    '🔔': 2.00, 
+                    '🍒': 2.00, 
+                    '🍋': 2.00, 
+                    '🍊': 2.00, 
+                    '🍉': 2.00, 
+                    '🍇': 2.00 
+                };
+                if (prizes[symbols[0]]) {
+                    return { prize: prizes[symbols[0]], name: `¡DOS ${symbols[0]}! +${prizes[symbols[0]]} CUP`, type: 'two' };
+                }
+            }
+            if (symbols[1] === symbols[2] && symbols[0] !== symbols[1]) {
+                const prizes = { 
+                    '7️⃣': 5, 
+                    '⭐': 1, 
+                    '💎': 1.5, 
+                    '🔔': 2.00, 
+                    '🍒': 2.00, 
+                    '🍋': 2.00, 
+                    '🍊': 2.00, 
+                    '🍉': 2.00, 
+                    '🍇': 2.00 
+                };
+                if (prizes[symbols[1]]) {
+                    return { prize: prizes[symbols[1]], name: `¡DOS ${symbols[1]}! +${prizes[symbols[1]]} CUP`, type: 'two' };
+                }
+            }
+            return null;
         }
         
         function animateReels(finalSymbols, callback) {
@@ -1896,7 +2079,7 @@
             const reel2 = document.getElementById('reel2');
             const reel3 = document.getElementById('reel3');
             let spins = 0;
-            const maxSpins = 10;
+            const maxSpins = 15;
             const interval = setInterval(() => {
                 reel1.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
                 reel2.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
@@ -1909,7 +2092,15 @@
                     reel3.innerText = finalSymbols[2];
                     if (callback) callback();
                 }
-            }, 80);
+            }, 60);
+        }
+        
+        function showPrizesModal() {
+            document.getElementById('prizesModal').style.display = 'flex';
+        }
+        
+        function closePrizesModal() {
+            document.getElementById('prizesModal').style.display = 'none';
         }
         
         async function spinSlot() {
@@ -1943,8 +2134,9 @@
             
             const symbols = [getRandomSymbol(), getRandomSymbol(), getRandomSymbol()];
             
+            // Control de progresión para el jackpot (más difícil aún)
             const spinsSinceLastJackpot = slotSpins % slotNextJackpot;
-            if (spinsSinceLastJackpot === slotNextJackpot - 1 && Math.random() < 0.3) {
+            if (spinsSinceLastJackpot === slotNextJackpot - 1 && Math.random() < 0.02) {
                 symbols[0] = '7️⃣';
                 symbols[1] = '7️⃣';
                 symbols[2] = '7️⃣';
@@ -1973,6 +2165,8 @@
                     if (prize === 400) {
                         playSlotSound('jackpot');
                         resultMessage = `🎰🎰🎰 ¡JACKPOT! Ganaste 400 Cup 🎰🎰🎰`;
+                    } else if (win.type === 'two') {
+                        playSlotSound('two');
                     } else {
                         playSlotSound('win');
                     }
@@ -1988,13 +2182,12 @@
                 resultDiv.innerHTML = resultMessage;
                 resultDiv.className = win ? 'slot-result slot-win' : 'slot-result slot-lose';
                 
-                // Guardar datos internamente (sin mostrarlos en UI)
                 await saveSlotData();
                 await loadUserBalance();
                 
                 setTimeout(() => {
                     resultDiv.className = 'slot-result';
-                }, 2000);
+                }, 2500);
                 
                 isSpinning = false;
                 spinButton.disabled = false;
@@ -2009,11 +2202,10 @@
             if (doc.exists) {
                 const data = doc.data();
                 slotSpins = data.spins || 0;
-                slotNextJackpot = data.nextJackpot || 500;
+                slotNextJackpot = data.nextJackpot || 5000;
                 slotBiggestWin = data.biggestWin || 0;
                 slotHistory = data.history || [];
             }
-            // No actualizamos UI de stats porque se eliminaron
         }
         
         async function saveSlotData() {
