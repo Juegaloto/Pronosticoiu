@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Pronóstico Pro | Casino IA Pro + 50 cup por referido + Tragamonedas + Bingo Sincronizado</title>
+    <title>Pronóstico Pro | Casino IA Pro + 50 cup por referido + Tragamonedas</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     
@@ -243,7 +243,7 @@
 
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 16px;
             margin-bottom: 4px;
         }
@@ -630,180 +630,27 @@
             text-align: center;
         }
 
-        /* Estilos Bingo Sincronizado MEJORADOS - Cartones compactos y bonitos */
-        .bingo-card {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border-radius: 20px;
-            padding: 12px;
-            border: 2px solid var(--gold-solid);
-            margin-bottom: 15px;
-            transition: transform 0.2s ease;
-        }
-        
-        .bingo-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        .bingo-card-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid var(--gold-solid);
-        }
-
-        .bingo-card-title span {
-            font-size: 0.7rem;
-            color: var(--text-gold-light);
-        }
-
-        .bingo-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .bingo-table th, .bingo-table td {
-            border: 1px solid rgba(245, 175, 25, 0.3);
-            padding: 6px 2px;
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            width: 20%;
-        }
-
-        .bingo-table th {
-            background: var(--gradient-primary);
-            color: #0A0F2C;
-            font-size: 0.7rem;
-            padding: 6px 2px;
-        }
-
-        .bingo-table td {
-            color: var(--gold-light);
-        }
-
-        .bingo-table td.marked {
-            background: linear-gradient(135deg, var(--success), #1E4D2B);
-            color: white;
-            text-decoration: line-through;
-            position: relative;
-        }
-
-        .bingo-table td.marked::after {
-            content: '✓';
-            position: absolute;
-            right: 2px;
-            top: 2px;
-            font-size: 0.6rem;
-        }
-
-        .bingo-table td.free {
-            background: var(--gradient-primary);
-            color: #0A0F2C;
-            font-weight: bold;
-        }
-
-        .balls-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 15px 0;
-            justify-content: center;
-            max-height: 120px;
-            overflow-y: auto;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-        }
-
-        .ball {
+        .winner-celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background: linear-gradient(135deg, #FFD700, #FF8C00);
             color: #0A0F2C;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 20px 40px;
+            border-radius: 60px;
+            font-size: 2rem;
             font-weight: bold;
-            font-size: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            animation: ballPop 0.3s ease;
+            z-index: 10000;
+            animation: celebrationAnim 1s ease;
+            white-space: nowrap;
+            box-shadow: 0 0 50px rgba(255,215,0,0.8);
         }
 
-        @keyframes ballPop {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .bingo-status {
-            margin: 15px 0;
-            padding: 12px;
-            border-radius: 15px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .bingo-active {
-            background: linear-gradient(135deg, rgba(46, 139, 87, 0.3), rgba(0,0,0,0.5));
-            border: 1px solid var(--success);
-        }
-
-        .bingo-waiting {
-            background: rgba(30, 144, 255, 0.3);
-            border: 1px solid #1E90FF;
-        }
-
-        .bingo-ended {
-            background: rgba(220, 20, 60, 0.3);
-            border: 1px solid var(--danger);
-        }
-
-        .bingo-pending {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px dashed var(--gold-solid);
-        }
-
-        .my-cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        /* Saldo en tiempo real - siempre visible */
-        .real-time-balance {
-            background: linear-gradient(135deg, #2E8B57, #1E4D2B);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            box-shadow: var(--shadow-sm);
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        @media (max-width: 768px) {
-            .my-cards-container {
-                grid-template-columns: 1fr;
-            }
-            .bingo-table th, .bingo-table td {
-                padding: 4px 2px;
-                font-size: 0.7rem;
-            }
-            .ball {
-                width: 35px;
-                height: 35px;
-                font-size: 0.9rem;
-            }
+        @keyframes celebrationAnim {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
 
         /* Modal de premios */
@@ -1523,6 +1370,11 @@
             .referral-code { font-size: 1rem; }
             .ia-numbers-grid { grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); }
             .decenas-terminales-grid { flex-direction: column; }
+            .winner-celebration {
+                font-size: 1.2rem;
+                padding: 12px 24px;
+                white-space: nowrap;
+            }
         }
     </style>
 </head>
@@ -1539,7 +1391,7 @@
     <div id="authScreen" class="auth-container">
         <div class="auth-card">
             <h2>🎰 Pronóstico Pro</h2>
-            <p class="text-center" style="color: var(--text-gold-light); margin: 0.5rem 0 1.5rem;">Pronósticos + IA Pro + Tragamonedas + Bingo Sincronizado + Sistema de Referidos (50 cup por referido activo)</p>
+            <p class="text-center" style="color: var(--text-gold-light); margin: 0.5rem 0 1.5rem;">Pronósticos + IA Pro + Tragamonedas + Sistema de Referidos (50 cup por referido activo)</p>
             <div class="input-group">
                 <label>📧 Correo electrónico</label>
                 <input type="email" id="authEmail" placeholder="tu@email.com">
@@ -1564,8 +1416,8 @@
             <div class="card">
                 <div class="header">
                     <div class="logo">
-                        <h1>🎰 Pronóstico Pro <span class="live-badge">IA PRO + TRAGAMONEDAS + BINGO</span></h1>
-                        <p>Pronósticos IA + Tragamonedas + Bingo Sincronizado + 50 cup por referido que pague membresía</p>
+                        <h1>🎰 Pronóstico Pro <span class="live-badge">IA PRO + TRAGAMONEDAS</span></h1>
+                        <p>Pronósticos IA + Tragamonedas + 50 cup por referido que pague membresía</p>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
                         <span class="balance-display" id="balanceDisplay">💰 Saldo: 0 Cup</span>
@@ -1709,23 +1561,6 @@
                         </div>
                         <span class="nav-label">🎰 TRAGAMONEDAS</span>
                     </div>
-                    <div class="nav-card" data-section="bingo">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" fill="none"/>
-                                <circle cx="8" cy="8" r="1.5" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="12" cy="8" r="1.5" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="16" cy="8" r="1.5" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="8" cy="12" r="1.5" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="12" cy="12" r="1.5" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="16" cy="12" r="1.5" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="8" cy="16" r="1.5" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="12" cy="16" r="1.5" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="16" cy="16" r="1.5" stroke="currentColor" fill="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">🎯 BINGO</span>
-                    </div>
                 </div>
             </div>
 
@@ -1836,7 +1671,7 @@
                     <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
                     <div class="table-responsive">
                         <table id="referralsTable">
-                            <thead><tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></tr></thead>
+                            <thead><tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></table></thead>
                             <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</tbody>
                         </table>
                     </div>
@@ -2005,51 +1840,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- SECCIÓN BINGO SINCRONIZADO - MEJORADA -->
-            <div id="bingoSection" style="display: none;">
-                <div class="card bingo-card">
-                    <div class="slot-header">
-                        <h2 style="font-size: 1.5rem; margin-bottom: 0;">🎯 BINGO SINCRONIZADO 🎯</h2>
-                        <div class="info-icon" onclick="showBingoPrizesModal()">ℹ️</div>
-                    </div>
-                    
-                    <!-- Indicador de saldo en tiempo real DENTRO del bingo -->
-                    <div style="background: rgba(0,0,0,0.5); border-radius: 20px; padding: 10px; margin-bottom: 15px; text-align: center;">
-                        <span class="real-time-balance" id="bingoRealTimeBalance">💰 Mi Saldo: 0 Cup</span>
-                    </div>
-                    
-                    <!-- Estado del juego -->
-                    <div id="bingoGameStatus" class="bingo-status bingo-pending">
-                        🔄 Cargando información del juego...
-                    </div>
-                    
-                    <!-- Estadísticas del juego -->
-                    <div class="stats-grid" style="margin-bottom: 15px;">
-                        <div class="stat-card"><div class="stat-number" id="totalCardsSold">0</div><div class="stat-label">🎫 Cartones Vendidos</div></div>
-                        <div class="stat-card"><div class="stat-number" id="totalPrizePool">0</div><div class="stat-label">💰 Pozo Total</div></div>
-                        <div class="stat-card"><div class="stat-number" id="houseFee">0</div><div class="stat-label">🏦 Banca (10%)</div></div>
-                        <div class="stat-card"><div class="stat-number" id="winnerPrize">0</div><div class="stat-label">🎁 Premio por Ganador</div></div>
-                    </div>
-                    
-                    <!-- Bolas extraídas (sincronizadas) -->
-                    <div id="bingoBallsContainer" class="balls-container">
-                        <div class="text-center">Esperando inicio del juego...</div>
-                    </div>
-                    
-                    <!-- Mis cartones -->
-                    <div style="margin-top: 15px;">
-                        <h3 style="font-size: 1rem; margin-bottom: 10px;">🎫 MIS CARTONES (máx 8)</h3>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
-                            <button class="btn btn-small" onclick="buyBingoCard()" id="buyCardBtn" style="width: auto;">🎯 COMPRAR CARTÓN (5 cup)</button>
-                            <span id="myCardsCount" style="background: var(--gray-bg); padding: 8px 15px; border-radius: 20px;">0/8 cartones</span>
-                        </div>
-                        <div id="myCardsContainer" class="my-cards-container">
-                            <div class="text-center">No tienes cartones activos. Compra uno para participar!</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -2084,33 +1874,6 @@
                 💡 Todos los símbolos tienen la MISMA probabilidad (11.11%)
             </div>
             <button class="btn btn-small" onclick="closePrizesModal()" style="margin-top: 15px; width: auto;">Cerrar</button>
-        </div>
-    </div>
-
-    <!-- Modal de premios bingo -->
-    <div id="bingoPrizesModal" class="prizes-modal">
-        <div class="prizes-content">
-            <h3>🎁 REGLAS DEL BINGO SINCRONIZADO 🎁</h3>
-            <div class="prize-table">
-                <div class="prize-row"><span class="prize-symbol">🎫 Costo cartón</span><span class="prize-amount">5 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🎯 Máx cartones por usuario</span><span class="prize-amount">8</span></div>
-                <div class="prize-row"><span class="prize-symbol">🎲 Total de bolas</span><span class="prize-amount">43 (1 al 43)</span></div>
-                <div class="prize-row"><span class="prize-symbol">📏 LÍNEA (5 en línea)</span><span class="prize-amount">Premio del pozo</span></div>
-                <div class="prize-row"><span class="prize-symbol">🏆 BINGO (cartón lleno)</span><span class="prize-amount">Premio del pozo</span></div>
-            </div>
-            <div class="prize-table" style="border-top: 1px solid rgba(245,175,25,0.3); padding-top: 10px;">
-                <h4 style="color: var(--gold-solid); margin-bottom: 10px;">📖 CÓMO JUGAR:</h4>
-                <p style="font-size: 0.8rem; text-align: left;">1. Compra cartones (máx 8) por 5 cup cada uno</p>
-                <p style="font-size: 0.8rem; text-align: left;">2. El juego comienza automáticamente cuando se venden 20 cartones</p>
-                <p style="font-size: 0.8rem; text-align: left;">3. Las bolas se extraen de forma SINCRONIZADA para todos</p>
-                <p style="font-size: 0.8rem; text-align: left;">4. Completa una línea → Ganas parte del pozo</p>
-                <p style="font-size: 0.8rem; text-align: left;">5. Completa BINGO → Ganas el resto del pozo</p>
-                <p style="font-size: 0.8rem; text-align: left;">6. El premio se reparte EQUITATIVAMENTE entre todos los ganadores</p>
-            </div>
-            <div class="prize-note">
-                💡 La banca se queda con el 10% de lo recaudado. El 90% restante es para los ganadores
-            </div>
-            <button class="btn btn-small" onclick="closeBingoPrizesModal()" style="margin-top: 15px; width: auto;">Cerrar</button>
         </div>
     </div>
 
@@ -2150,8 +1913,6 @@
         let unsubscribeRiddle = null;
         let unsubscribeDailyProb = null;
         let unsubscribeTransactions = null;
-        let unsubscribeBingoGame = null;
-        let unsubscribeMyCards = null;
         
         let loadingProgress = 0;
         let loadingInterval;
@@ -2177,26 +1938,76 @@
         let isSpinning = false;
         const slotSymbols = ['🍒', '🍋', '🍊', '🍉', '🍇', '🔔', '⭐', '💎', '7️⃣'];
         
-        // Variables del Bingo Sincronizado
-        let bingoGameActive = false;
-        let currentDrawnBalls = [];
-        let currentLineWinners = [];
-        let currentBingoWinners = [];
-        let linePrizeAwarded = false;
-        let bingoPrizeAwarded = false;
-        let userCards = []; // Array de objetos { cardId, numbers, marked }
-        let bingoUnsubscribeGame = null;
-        
-        // Función para actualizar el saldo en tiempo real en todas las interfaces
+        // Función para actualizar el saldo en tiempo real
         async function updateAllBalanceDisplays() {
             if (!currentUser) return;
             const balanceElement = document.getElementById('balanceDisplay');
             const walletBalanceElement = document.getElementById('walletBalance');
-            const bingoBalanceElement = document.getElementById('bingoRealTimeBalance');
             
             if (balanceElement) balanceElement.innerHTML = `💰 Saldo: ${userBalance} Cup`;
             if (walletBalanceElement) walletBalanceElement.innerText = userBalance;
-            if (bingoBalanceElement) bingoBalanceElement.innerHTML = `💰 Mi Saldo: ${userBalance} Cup`;
+        }
+        
+        // Sonidos
+        function playSound(type) {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = 'sine';
+                gain.gain.value = 0.25;
+                
+                if (type === 'win') {
+                    osc.frequency.value = 523.25;
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                    osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.2);
+                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'jackpot') {
+                    const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+                    notes.forEach((freq, i) => {
+                        setTimeout(() => {
+                            const o = audioCtx.createOscillator();
+                            const g = audioCtx.createGain();
+                            o.connect(g);
+                            g.connect(audioCtx.destination);
+                            o.type = 'sine';
+                            o.frequency.value = freq;
+                            g.gain.value = 0.4;
+                            g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
+                            o.start();
+                            o.stop(audioCtx.currentTime + 0.3);
+                        }, i * 100);
+                    });
+                } else if (type === 'lose') {
+                    osc.frequency.value = 220;
+                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.2);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.2);
+                } else if (type === 'spin') {
+                    osc.frequency.value = 440;
+                    osc.frequency.exponentialRampToValueAtTime(660, audioCtx.currentTime + 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.15);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.15);
+                }
+            } catch(e) { console.log('Audio error:', e); }
+        }
+        
+        // Mostrar celebración visual
+        function showCelebration(message) {
+            const celebration = document.createElement('div');
+            celebration.className = 'winner-celebration';
+            celebration.innerHTML = message;
+            document.body.appendChild(celebration);
+            playSound('win');
+            setTimeout(() => {
+                celebration.remove();
+            }, 2000);
         }
         
         // ========== FUNCIONES TRAGAMONEDAS ==========
@@ -2256,8 +2067,6 @@
         async function spinSlot() {
             if (isSpinning) { showDialog('⏳ Espera', 'Ya hay un giro en proceso...'); return; }
             if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; }
-            const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-            if (!isActive) { showDialog('🔒 Membresía requerida', 'Necesitas una membresía activa para jugar.'); return; }
             if (userBalance < 2) { showDialog('💰 Saldo insuficiente', `Necesitas 2 Cup. Saldo: ${userBalance} Cup`); return; }
             
             isSpinning = true;
@@ -2287,6 +2096,7 @@
                     if (prize === 400) playSound('jackpot');
                     else playSound('win');
                     slotHistory.unshift({ result: `${symbols.join(' ')}`, won: true, prize: prize, time: new Date().toISOString() });
+                    showCelebration(`🎉 +${prize} CUP! 🎉`);
                 } else {
                     resultMessage = `😢 ${symbols.join(' ')} - No ganaste. ¡Sigue intentando!`;
                     playSound('lose');
@@ -2325,480 +2135,9 @@
             await slotRef.set({ spins: slotSpins, nextJackpot: slotNextJackpot, biggestWin: slotBiggestWin, history: slotHistory.slice(-20), lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
         }
         
-        // ========== FUNCIONES BINGO SINCRONIZADO ==========
-        function generateBingoCardNumbers() {
-            const numbers = [];
-            const availableNumbers = Array.from({ length: 43 }, (_, i) => i + 1);
-            for (let i = 0; i < 24; i++) {
-                const randomIndex = Math.floor(Math.random() * availableNumbers.length);
-                numbers.push(availableNumbers[randomIndex]);
-                availableNumbers.splice(randomIndex, 1);
-            }
-            numbers.splice(12, 0, 'FREE');
-            return numbers;
-        }
-        
-        function checkCardWins(cardNumbers, drawnBalls) {
-            let lines = 0;
-            let fullCard = true;
-            
-            // Verificar filas
-            for (let row = 0; row < 5; row++) {
-                let rowComplete = true;
-                for (let col = 0; col < 5; col++) {
-                    const idx = row * 5 + col;
-                    const num = cardNumbers[idx];
-                    if (num !== 'FREE' && !drawnBalls.includes(num)) {
-                        rowComplete = false;
-                        fullCard = false;
-                    }
-                }
-                if (rowComplete) lines++;
-            }
-            
-            // Verificar columnas
-            for (let col = 0; col < 5; col++) {
-                let colComplete = true;
-                for (let row = 0; row < 5; row++) {
-                    const idx = row * 5 + col;
-                    const num = cardNumbers[idx];
-                    if (num !== 'FREE' && !drawnBalls.includes(num)) {
-                        colComplete = false;
-                        fullCard = false;
-                    }
-                }
-                if (colComplete) lines++;
-            }
-            
-            // Diagonal principal
-            let diag1Complete = true;
-            for (let i = 0; i < 5; i++) {
-                const idx = i * 5 + i;
-                const num = cardNumbers[idx];
-                if (num !== 'FREE' && !drawnBalls.includes(num)) {
-                    diag1Complete = false;
-                    fullCard = false;
-                }
-            }
-            if (diag1Complete) lines++;
-            
-            // Diagonal secundaria
-            let diag2Complete = true;
-            for (let i = 0; i < 5; i++) {
-                const idx = i * 5 + (4 - i);
-                const num = cardNumbers[idx];
-                if (num !== 'FREE' && !drawnBalls.includes(num)) {
-                    diag2Complete = false;
-                    fullCard = false;
-                }
-            }
-            if (diag2Complete) lines++;
-            
-            return { hasLine: lines > 0, hasBingo: fullCard };
-        }
-        
-        function renderBingoCard(cardNumbers, cardId, drawnBalls) {
-            let html = `<div class="bingo-card">
-                <div class="bingo-card-title">
-                    <span>🎫 #${cardId.substring(0, 6)}</span>
-                    <span>✅ ${cardNumbers.filter(n => n !== 'FREE' && drawnBalls.includes(n)).length}/24</span>
-                </div>
-                <table class="bingo-table"><thead><tr>`;
-            const letters = ['B', 'I', 'N', 'G', 'O'];
-            for (let i = 0; i < 5; i++) html += `<th>${letters[i]}</th>`;
-            html += `</thead><tbody>`;
-            
-            for (let row = 0; row < 5; row++) {
-                html += '<tr>';
-                for (let col = 0; col < 5; col++) {
-                    const idx = row * 5 + col;
-                    const num = cardNumbers[idx];
-                    const isMarked = num === 'FREE' || drawnBalls.includes(num);
-                    const markedClass = isMarked ? 'marked' : '';
-                    const freeClass = num === 'FREE' ? 'free' : '';
-                    html += `<td class="${markedClass} ${freeClass}">${num === 'FREE' ? '🎁' : num}</td>`;
-                }
-                html += '</tr>';
-            }
-            html += '</tbody></table></div>';
-            return html;
-        }
-        
-        function updateBingoUI() {
-            const gameRef = db.collection('bingoGames').doc('current');
-            gameRef.onSnapshot(async (doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    const totalCards = data.totalCardsSold || 0;
-                    const totalCollected = totalCards * 5;
-                    const houseFee = totalCollected * 0.1;
-                    const prizePool = totalCollected - houseFee;
-                    const drawnBalls = data.drawnBalls || [];
-                    const gameStarted = data.gameStarted || false;
-                    const gameEnded = data.gameEnded || false;
-                    const lineWinners = data.lineWinners || [];
-                    const bingoWinners = data.bingoWinners || [];
-                    const linePrizeAwardedFlag = data.linePrizeAwarded || false;
-                    const bingoPrizeAwardedFlag = data.bingoPrizeAwarded || false;
-                    
-                    document.getElementById('totalCardsSold').innerText = totalCards;
-                    document.getElementById('totalPrizePool').innerText = prizePool;
-                    document.getElementById('houseFee').innerText = houseFee;
-                    
-                    const linePrizeAmount = lineWinners.length > 0 ? (prizePool * 0.4) / lineWinners.length : 0;
-                    const bingoPrizeAmount = bingoWinners.length > 0 ? (prizePool * 0.6) / bingoWinners.length : 0;
-                    
-                    if (linePrizeAwardedFlag && lineWinners.length > 0) {
-                        document.getElementById('winnerPrize').innerHTML = `📏 Línea: ${linePrizeAmount.toFixed(2)} cup<br>🏆 Bingo: ${bingoPrizeAmount.toFixed(2)} cup`;
-                    } else if (bingoPrizeAwardedFlag && bingoWinners.length > 0) {
-                        document.getElementById('winnerPrize').innerHTML = `🏆 Bingo: ${bingoPrizeAmount.toFixed(2)} cup`;
-                    } else {
-                        document.getElementById('winnerPrize').innerHTML = `📏 Línea: ${(prizePool * 0.4).toFixed(2)} cup<br>🏆 Bingo: ${(prizePool * 0.6).toFixed(2)} cup`;
-                    }
-                    
-                    // Mostrar bolas
-                    const ballsContainer = document.getElementById('bingoBallsContainer');
-                    if (drawnBalls.length === 0) {
-                        ballsContainer.innerHTML = '<div class="text-center">🎲 Esperando que comience el juego...</div>';
-                    } else {
-                        ballsContainer.innerHTML = drawnBalls.map(ball => `<div class="ball">${ball}</div>`).join('');
-                    }
-                    
-                    // Mostrar estado del juego
-                    const statusDiv = document.getElementById('bingoGameStatus');
-                    if (gameEnded) {
-                        statusDiv.innerHTML = `🏆 JUEGO FINALIZADO 🏆<br>Línea: ${lineWinners.length} ganador(es) | Bingo: ${bingoWinners.length} ganador(es)`;
-                        statusDiv.className = 'bingo-status bingo-ended';
-                        document.getElementById('buyCardBtn').disabled = true;
-                    } else if (gameStarted) {
-                        statusDiv.innerHTML = `🎲 JUEGO EN CURSO 🎲<br>Bolsa extraídas: ${drawnBalls.length}/43 | Cartones vendidos: ${totalCards}`;
-                        statusDiv.className = 'bingo-status bingo-active';
-                        document.getElementById('buyCardBtn').disabled = true;
-                    } else {
-                        const neededCards = 20 - totalCards;
-                        statusDiv.innerHTML = `⏳ ESPERANDO JUGADORES ⏳<br>Se necesitan ${neededCards > 0 ? neededCards : 0} cartones más para comenzar (mínimo 20) | Actuales: ${totalCards}`;
-                        statusDiv.className = 'bingo-status bingo-waiting';
-                        document.getElementById('buyCardBtn').disabled = false;
-                    }
-                    
-                    // Verificar si el usuario ha ganado algo
-                    if (lineWinners.includes(currentUser?.email) && !linePrizeAwardedFlag) {
-                        const prizeAmount = (prizePool * 0.4) / lineWinners.length;
-                        showDialog('📏 ¡HAS GANADO UNA LÍNEA!', `¡Felicidades! Has completado una línea y has ganado ${prizeAmount.toFixed(2)} cup.`);
-                        await loadUserBalance();
-                        await updateAllBalanceDisplays();
-                    }
-                    if (bingoWinners.includes(currentUser?.email) && !bingoPrizeAwardedFlag) {
-                        const prizeAmount = (prizePool * 0.6) / bingoWinners.length;
-                        showDialog('🏆 ¡BINGO!', `¡Felicidades! Completaste el cartón y has ganado ${prizeAmount.toFixed(2)} cup.`);
-                        await loadUserBalance();
-                        await updateAllBalanceDisplays();
-                    }
-                    
-                    currentDrawnBalls = drawnBalls;
-                    bingoGameActive = gameStarted && !gameEnded;
-                    linePrizeAwarded = linePrizeAwardedFlag;
-                    bingoPrizeAwarded = bingoPrizeAwardedFlag;
-                    currentLineWinners = lineWinners;
-                    currentBingoWinners = bingoWinners;
-                    
-                    // Actualizar la visualización de cartones
-                    await loadUserCards();
-                }
-            });
-        }
-        
-        async function loadUserCards() {
-            if (!currentUser) return;
-            
-            const userCardsRef = db.collection('bingoUserCards').doc(currentUser.email);
-            const doc = await userCardsRef.get();
-            if (doc.exists) {
-                userCards = doc.data().cards || [];
-            } else {
-                userCards = [];
-            }
-            
-            const container = document.getElementById('myCardsContainer');
-            document.getElementById('myCardsCount').innerText = `${userCards.length}/8`;
-            
-            if (userCards.length === 0) {
-                container.innerHTML = '<div class="text-center">No tienes cartones activos. Compra uno para participar!</div>';
-                return;
-            }
-            
-            // Obtener el estado actual del juego para las bolas
-            const gameDoc = await db.collection('bingoGames').doc('current').get();
-            const drawnBalls = gameDoc.exists ? (gameDoc.data().drawnBalls || []) : [];
-            
-            let html = '';
-            for (const card of userCards) {
-                html += renderBingoCard(card.numbers, card.id, drawnBalls);
-            }
-            container.innerHTML = html;
-        }
-        
-        async function buyBingoCard() {
-            if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; }
-            const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-            if (!isActive) { showDialog('🔒 Membresía requerida', 'Necesitas una membresía activa para jugar al bingo.'); return; }
-            if (userBalance < 5) { showDialog('💰 Saldo insuficiente', `Necesitas 5 Cup para comprar un cartón. Saldo: ${userBalance} Cup`); return; }
-            
-            // Verificar si el juego ya empezó o terminó
-            const gameDoc = await db.collection('bingoGames').doc('current').get();
-            const gameStarted = gameDoc.exists ? gameDoc.data().gameStarted || false : false;
-            const gameEnded = gameDoc.exists ? gameDoc.data().gameEnded || false : false;
-            if (gameStarted || gameEnded) {
-                showDialog('⏳ Juego en curso', 'El juego ya ha comenzado o ha terminado. Espera a la próxima partida.');
-                return;
-            }
-            
-            if (userCards.length >= 8) {
-                showDialog('⚠️ Límite alcanzado', 'Ya tienes el máximo de 8 cartones. No puedes comprar más.');
-                return;
-            }
-            
-            // Crear nuevo cartón
-            const newCard = {
-                id: Date.now().toString() + Math.random().toString(36).substring(2, 6),
-                numbers: generateBingoCardNumbers(),
-                purchasedAt: new Date().toISOString()
-            };
-            
-            userCards.push(newCard);
-            
-            // Guardar en Firestore
-            const userCardsRef = db.collection('bingoUserCards').doc(currentUser.email);
-            await userCardsRef.set({ cards: userCards, email: currentUser.email }, { merge: true });
-            
-            // Actualizar contador global de cartones
-            const gameRef = db.collection('bingoGames').doc('current');
-            const gameData = (await gameRef.get()).data() || {};
-            const currentTotal = gameData.totalCardsSold || 0;
-            await gameRef.set({
-                totalCardsSold: currentTotal + 1,
-                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true });
-            
-            // Cobrar al usuario
-            await updateUserBalance(userBalance - 5);
-            await updateAllBalanceDisplays();
-            
-            await loadUserCards();
-            showDialog('✅ Cartón comprado', `Has comprado un cartón de bingo por 5 cup. ¡Buena suerte! Te quedan ${8 - userCards.length} cartones disponibles.`);
-            
-            // Verificar si ya hay 20 cartones para iniciar el juego
-            const updatedGame = await gameRef.get();
-            const totalAfter = updatedGame.data().totalCardsSold || 0;
-            if (totalAfter >= 20 && !updatedGame.data().gameStarted) {
-                await startBingoGame();
-            }
-        }
-        
-        async function startBingoGame() {
-            const gameRef = db.collection('bingoGames').doc('current');
-            await gameRef.update({
-                gameStarted: true,
-                startTime: firebase.firestore.FieldValue.serverTimestamp(),
-                drawnBalls: []
-            });
-            
-            // Iniciar extracción automática de bolas cada 5 segundos
-            startAutoDrawBalls();
-            
-            showDialog('🎲 ¡JUEGO INICIADO!', 'Se han vendido 20 cartones. El bingo ha comenzado. Las bolas se extraerán automáticamente cada 5 segundos.');
-        }
-        
-        let autoDrawInterval = null;
-        
-        async function startAutoDrawBalls() {
-            if (autoDrawInterval) clearInterval(autoDrawInterval);
-            
-            autoDrawInterval = setInterval(async () => {
-                const gameRef = db.collection('bingoGames').doc('current');
-                const gameDoc = await gameRef.get();
-                const gameData = gameDoc.data();
-                
-                if (!gameData || !gameData.gameStarted || gameData.gameEnded) {
-                    if (autoDrawInterval) clearInterval(autoDrawInterval);
-                    autoDrawInterval = null;
-                    return;
-                }
-                
-                const drawnBalls = gameData.drawnBalls || [];
-                if (drawnBalls.length >= 43) {
-                    // Fin del juego sin ganadores
-                    await gameRef.update({ gameEnded: true, endTime: firebase.firestore.FieldValue.serverTimestamp() });
-                    if (autoDrawInterval) clearInterval(autoDrawInterval);
-                    autoDrawInterval = null;
-                    showDialog('🏆 JUEGO FINALIZADO', 'Se han extraído todas las bolas. El juego ha terminado.');
-                    return;
-                }
-                
-                // Extraer nueva bola (números del 1 al 43 no extraídos)
-                const availableBalls = [];
-                for (let i = 1; i <= 43; i++) {
-                    if (!drawnBalls.includes(i)) availableBalls.push(i);
-                }
-                
-                if (availableBalls.length === 0) {
-                    await gameRef.update({ gameEnded: true });
-                    if (autoDrawInterval) clearInterval(autoDrawInterval);
-                    autoDrawInterval = null;
-                    return;
-                }
-                
-                const randomIndex = Math.floor(Math.random() * availableBalls.length);
-                const newBall = availableBalls[randomIndex];
-                const newDrawnBalls = [...drawnBalls, newBall];
-                
-                await gameRef.update({ drawnBalls: newDrawnBalls, lastBallTime: firebase.firestore.FieldValue.serverTimestamp() });
-                
-                // Verificar ganadores después de cada bola
-                await checkBingoWinners();
-                
-                playSound('draw');
-            }, 5000);
-        }
-        
-        async function checkBingoWinners() {
-            const gameRef = db.collection('bingoGames').doc('current');
-            const gameDoc = await gameRef.get();
-            const gameData = gameDoc.data();
-            
-            if (!gameData) return;
-            
-            const drawnBalls = gameData.drawnBalls || [];
-            const linePrizeAwarded = gameData.linePrizeAwarded || false;
-            const bingoPrizeAwarded = gameData.bingoPrizeAwarded || false;
-            const totalCards = gameData.totalCardsSold || 0;
-            const totalCollected = totalCards * 5;
-            const prizePool = totalCollected - (totalCollected * 0.1);
-            
-            // Obtener todos los usuarios con cartones
-            const userCardsSnapshot = await db.collection('bingoUserCards').get();
-            const lineWinnersList = [];
-            const bingoWinnersList = [];
-            
-            for (const doc of userCardsSnapshot.docs) {
-                const userData = doc.data();
-                const userEmail = userData.email;
-                const cards = userData.cards || [];
-                
-                for (const card of cards) {
-                    const winStatus = checkCardWins(card.numbers, drawnBalls);
-                    if (!linePrizeAwarded && winStatus.hasLine && !lineWinnersList.includes(userEmail)) {
-                        lineWinnersList.push(userEmail);
-                    }
-                    if (!bingoPrizeAwarded && winStatus.hasBingo && !bingoWinnersList.includes(userEmail)) {
-                        bingoWinnersList.push(userEmail);
-                    }
-                }
-            }
-            
-            // Procesar premios de línea
-            if (!linePrizeAwarded && lineWinnersList.length > 0) {
-                const linePrizeAmount = (prizePool * 0.4) / lineWinnersList.length;
-                for (const winnerEmail of lineWinnersList) {
-                    const walletRef = db.collection('wallets').doc(winnerEmail);
-                    const walletDoc = await walletRef.get();
-                    const currentBalance = walletDoc.exists ? walletDoc.data().balance || 0 : 0;
-                    await walletRef.set({ balance: currentBalance + linePrizeAmount, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
-                    if (winnerEmail === currentUser?.email) {
-                        userBalance = currentBalance + linePrizeAmount;
-                        await updateAllBalanceDisplays();
-                    }
-                }
-                await gameRef.update({ linePrizeAwarded: true, lineWinners: lineWinnersList, linePrizeAmount: linePrizeAmount });
-                
-                if (lineWinnersList.includes(currentUser?.email)) {
-                    showDialog('📏 ¡PREMIOS DE LÍNEA!', `Has ganado ${linePrizeAmount.toFixed(2)} cup por tu(s) línea(s)!`);
-                }
-            }
-            
-            // Procesar premios de bingo
-            if (!bingoPrizeAwarded && bingoWinnersList.length > 0) {
-                const bingoPrizeAmount = (prizePool * 0.6) / bingoWinnersList.length;
-                for (const winnerEmail of bingoWinnersList) {
-                    const walletRef = db.collection('wallets').doc(winnerEmail);
-                    const walletDoc = await walletRef.get();
-                    const currentBalance = walletDoc.exists ? walletDoc.data().balance || 0 : 0;
-                    await walletRef.set({ balance: currentBalance + bingoPrizeAmount, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
-                    if (winnerEmail === currentUser?.email) {
-                        userBalance = currentBalance + bingoPrizeAmount;
-                        await updateAllBalanceDisplays();
-                    }
-                }
-                await gameRef.update({ bingoPrizeAwarded: true, bingoWinners: bingoWinnersList, bingoPrizeAmount: bingoPrizeAmount, gameEnded: true });
-                
-                if (autoDrawInterval) clearInterval(autoDrawInterval);
-                autoDrawInterval = null;
-                
-                if (bingoWinnersList.includes(currentUser?.email)) {
-                    showDialog('🏆 ¡BINGO!', `¡Felicidades! Has ganado ${bingoPrizeAmount.toFixed(2)} cup por completar el bingo!`);
-                }
-            }
-            
-            // Recargar UI
-            await loadUserCards();
-            if (currentUser) await loadUserBalance();
-            await updateAllBalanceDisplays();
-        }
-        
         // ========== FUNCIONES GENERALES ==========
-        function playSound(type) {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.type = 'sine';
-                gain.gain.value = 0.25;
-                
-                if (type === 'win') {
-                    osc.frequency.value = 523.25;
-                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.1);
-                    osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.2);
-                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.3);
-                } else if (type === 'jackpot') {
-                    const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
-                    notes.forEach((freq, i) => {
-                        setTimeout(() => {
-                            const o = audioCtx.createOscillator();
-                            const g = audioCtx.createGain();
-                            o.connect(g);
-                            g.connect(audioCtx.destination);
-                            o.type = 'sine';
-                            o.frequency.value = freq;
-                            g.gain.value = 0.4;
-                            g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
-                            o.start();
-                            o.stop(audioCtx.currentTime + 0.3);
-                        }, i * 100);
-                    });
-                } else if (type === 'lose') {
-                    osc.frequency.value = 220;
-                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.2);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.2);
-                } else if (type === 'spin' || type === 'draw') {
-                    osc.frequency.value = 440;
-                    osc.frequency.exponentialRampToValueAtTime(660, audioCtx.currentTime + 0.1);
-                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.15);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.15);
-                }
-            } catch(e) { console.log('Audio error:', e); }
-        }
-        
         function showPrizesModal() { document.getElementById('prizesModal').style.display = 'flex'; }
         function closePrizesModal() { document.getElementById('prizesModal').style.display = 'none'; }
-        function showBingoPrizesModal() { document.getElementById('bingoPrizesModal').style.display = 'flex'; }
-        function closeBingoPrizesModal() { document.getElementById('bingoPrizesModal').style.display = 'none'; }
         
         function setupTransactionListener() {
             if (!currentUser) return;
@@ -3000,7 +2339,7 @@
         async function processReferral(newUserEmail, referralCode) { if (!referralCode) return null; try { const usersRef = db.collection('members'); const query = await usersRef.where('referralCode', '==', referralCode).get(); if (!query.empty) { const referrerDoc = query.docs[0]; const referrerEmail = referrerDoc.data().email; if (referrerEmail === newUserEmail) return null; await db.collection('referrals').add({ referrerEmail: referrerEmail, referredEmail: newUserEmail, referredAt: new Date().toISOString(), status: 'pending_cup', statusDays: 'pending_days', membershipActive: false, referralCode: referralCode }); return referrerEmail; } } catch (error) {} return null; }
         async function checkAndRewardReferralsWithCup(userEmail) { try { const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); let totalEarned = 0; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const refId = doc.id; if (referral.status === 'rewarded_cup') continue; const referredMember = await db.collection('members').doc(referral.referredEmail).get(); if (referredMember.exists && referredMember.data().membershipActive) { const expires = new Date(referredMember.data().membershipExpires); if (expires > new Date()) { const rewardCheck = await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').get(); if (!rewardCheck.exists) { const userRef = db.collection('wallets').doc(userEmail); const userDoc = await userRef.get(); const currentBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; await userRef.set({ balance: currentBalance + 50, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); await db.collection('referrals').doc(refId).update({ status: 'rewarded_cup', rewardedAt: new Date().toISOString(), rewardAmount: 50 }); totalEarned += 50; } } } } if (totalEarned > 0) { await loadUserBalance(); await updateAllBalanceDisplays(); showDialog('🎉 ¡RECOMPENSA RECIBIDA!', `Has ganado ${totalEarned} cup por referidos activos.`); await updateReferralsUI(); await loadProfile(); } return totalEarned; } catch (error) { return 0; } }
         async function checkAndRewardReferrals(userEmail) { try { const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); let activeReferrals = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); if (referral.statusDays === 'rewarded_days') continue; const referredMember = await db.collection('members').doc(referral.referredEmail).get(); if (referredMember.exists && referredMember.data().membershipActive) { const expires = new Date(referredMember.data().membershipExpires); if (expires > new Date()) activeReferrals.push({ id: doc.id, data: referral }); } } const activeCount = activeReferrals.length; const rewardCycles = Math.floor(activeCount / 10); if (rewardCycles > 0) { const userDoc = await db.collection('members').doc(userEmail).get(); let currentExpires = new Date(); if (userDoc.exists && userDoc.data().membershipExpires) { currentExpires = new Date(userDoc.data().membershipExpires); if (currentExpires < new Date()) currentExpires = new Date(); } const newExpires = new Date(currentExpires); newExpires.setDate(newExpires.getDate() + (rewardCycles * 30)); await db.collection('members').doc(userEmail).update({ membershipExpires: newExpires.toISOString(), referralBonusDays: firebase.firestore.FieldValue.increment(rewardCycles * 30) }); for (let i = 0; i < rewardCycles * 10 && i < activeReferrals.length; i++) { await db.collection('referrals').doc(activeReferrals[i].id).update({ statusDays: 'rewarded_days', rewardedAt: new Date().toISOString(), rewardDays: 30 }); } showDialog('🎁 ¡RECOMPENSA DE DÍAS RECIBIDA!', `Has ganado ${rewardCycles * 30} días gratis de membresía.`); await checkMembership(userEmail); } return { totalReferrals: referralsSnapshot.size, activeReferrals: activeCount }; } catch (error) { return { totalReferrals: 0, activeReferrals: 0 }; } }
-        async function updateReferralsUI() { if (!currentUser) return; try { const userDoc = await db.collection('members').doc(currentUser.email).get(); const referralCode = userDoc.data()?.referralCode || 'No disponible'; document.getElementById('userReferralCode').innerText = referralCode; const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get(); let activeCount = 0; let totalCupEarned = 0; const referralsList = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const referredMember = await db.collection('members').doc(referral.referredEmail).get(); const isActive = referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date(); if (isActive) activeCount++; if (referral.status === 'rewarded_cup') totalCupEarned += 50; referralsList.push({ email: referral.referredEmail, date: referral.referredAt, isActive: isActive, rewarded: referral.status === 'rewarded_cup' }); } const totalReferrals = referralsSnapshot.size; document.getElementById('referralsCount').innerText = totalReferrals; document.getElementById('totalReferrals').innerText = totalReferrals; document.getElementById('activeReferralsCount').innerText = activeCount; document.getElementById('referralCupEarned').innerText = totalCupEarned; document.getElementById('cupEarnedStat').innerText = totalCupEarned; const tbody = document.getElementById('referralsTableBody'); tbody.innerHTML = ''; if (referralsList.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></table>'; } else { referralsList.forEach(ref => { const row = tbody.insertRow(); row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`; row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString(); row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>'; row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-'); }); } await checkAndRewardReferralsWithCup(currentUser.email); await checkAndRewardReferrals(currentUser.email); } catch (error) { console.error('Error actualizando referidos:', error); } }
+        async function updateReferralsUI() { if (!currentUser) return; try { const userDoc = await db.collection('members').doc(currentUser.email).get(); const referralCode = userDoc.data()?.referralCode || 'No disponible'; document.getElementById('userReferralCode').innerText = referralCode; const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get(); let activeCount = 0; let totalCupEarned = 0; const referralsList = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const referredMember = await db.collection('members').doc(referral.referredEmail).get(); const isActive = referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date(); if (isActive) activeCount++; if (referral.status === 'rewarded_cup') totalCupEarned += 50; referralsList.push({ email: referral.referredEmail, date: referral.referredAt, isActive: isActive, rewarded: referral.status === 'rewarded_cup' }); } const totalReferrals = referralsSnapshot.size; document.getElementById('referralsCount').innerText = totalReferrals; document.getElementById('totalReferrals').innerText = totalReferrals; document.getElementById('activeReferralsCount').innerText = activeCount; document.getElementById('referralCupEarned').innerText = totalCupEarned; document.getElementById('cupEarnedStat').innerText = totalCupEarned; const tbody = document.getElementById('referralsTableBody'); tbody.innerHTML = ''; if (referralsList.length === 0) { tbody.innerHTML = '<table><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></tr>'; } else { referralsList.forEach(ref => { const row = tbody.insertRow(); row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`; row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString(); row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>'; row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-'); }); } await checkAndRewardReferralsWithCup(currentUser.email); await checkAndRewardReferrals(currentUser.email); } catch (error) { console.error('Error actualizando referidos:', error); } }
         async function loadUserBalance() { if (!currentUser) return; try { const userDoc = await db.collection('wallets').doc(currentUser.email).get(); userBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; await updateAllBalanceDisplays(); return userBalance; } catch (error) { return 0; } }
         async function updateUserBalance(amount) { if (!currentUser) return; try { await db.collection('wallets').doc(currentUser.email).set({ balance: amount, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); userBalance = amount; await updateAllBalanceDisplays(); } catch (error) {} }
         function showDepositForm() { document.getElementById('depositForm').style.display = 'block'; document.getElementById('withdrawForm').style.display = 'none'; }
@@ -3029,7 +2368,6 @@
             document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
             document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none';
             document.getElementById('slotSection').style.display = section === 'slot' ? 'block' : 'none';
-            document.getElementById('bingoSection').style.display = section === 'bingo' ? 'block' : 'none';
             document.querySelectorAll('.nav-card').forEach(card => { if (card.dataset.section === section) card.classList.add('active'); else card.classList.remove('active'); });
             if (section === 'profile') loadProfile();
             if (section === 'history') loadHistory();
@@ -3040,41 +2378,15 @@
             if (section === 'dailyProb') loadDailyProbabilities();
             if (section === 'iaPro') loadIAData();
             if (section === 'slot') loadSlotData();
-            if (section === 'bingo') { 
-                updateBingoUI(); 
-                loadUserCards();
-                loadUserBalance();
-                updateAllBalanceDisplays();
-            }
         }
         async function handleAuth() { const email = document.getElementById('authEmail').value.trim(); const password = document.getElementById('authPassword').value; const referralCode = document.getElementById('referralCodeInput').value.trim(); if (!email || !password) { showDialog('Error', 'Completa todos los campos'); return; } if (authMode === 'login') { try { await auth.signInWithEmailAndPassword(email, password); } catch (error) { let msg = error.message; if (error.code === 'auth/invalid-email') msg = 'Email inválido'; if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta'; if (error.code === 'auth/user-not-found') msg = 'Usuario no encontrado'; showDialog('Error', msg); } } else { if (!referralCode) { showDialog('Error', 'El código de invitación es OBLIGATORIO para registrarte.\n\nSolicita un código a un amigo o al administrador @sdesaroyador'); return; } const isValid = await validateReferralCode(referralCode, email); if (!isValid) { showDialog('Error', 'El código de invitación ingresado NO es válido.\n\nVerifica el código o solicita uno nuevo a tu referidor.'); return; } try { const userCred = await auth.createUserWithEmailAndPassword(email, password); const newReferralCode = generateReferralCode(email); const referrer = await processReferral(email, referralCode); await db.collection('members').doc(email).set({ email: email, membershipActive: false, createdAt: new Date().toISOString(), userId: userCred.user.uid, referralCode: newReferralCode, referredBy: referrer || null, referralBonusDays: 0 }); await db.collection('wallets').doc(email).set({ balance: 0, createdAt: new Date().toISOString() }); let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Pronóstico Pro!\n\n'; message += `📋 Tu código de invitación: ${newReferralCode}\n`; message += '🤖 IA Pro: Ingresa resultados anteriores para obtener predicciones inteligentes.\n\n'; message += '💰 Para acceder a los pronósticos, realiza un depósito de 200 Cup (membresía 30 días).\n\n'; message += '🎁 ¡Invita amigos! Por cada referido que active membresía, recibirás 50 cup retirables.\n\n'; if (referrer) message += `🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él recibirá 50 cup.`; showDialog('✅ Registro Exitoso', message); document.getElementById('authPassword').value = ''; document.getElementById('referralCodeInput').value = ''; await auth.signOut(); await auth.signInWithEmailAndPassword(email, password); } catch (error) { let msg = error.message; if (error.code === 'auth/email-already-in-use') msg = 'Email ya registrado'; if (error.code === 'auth/weak-password') msg = 'Contraseña débil (mínimo 6 caracteres)'; if (error.code === 'auth/invalid-email') msg = 'Email inválido'; showDialog('Error', msg); } } }
-        function logout() { if (unsubscribePredictions) unsubscribePredictions(); if (unsubscribeRiddle) unsubscribeRiddle(); if (unsubscribeDailyProb) unsubscribeDailyProb(); if (unsubscribeTransactions) unsubscribeTransactions(); if (unsubscribeBingoGame) unsubscribeBingoGame(); if (unsubscribeMyCards) unsubscribeMyCards(); if (autoDrawInterval) clearInterval(autoDrawInterval); auth.signOut(); document.getElementById('dashboardScreen').style.display = 'none'; document.getElementById('authScreen').style.display = 'flex'; authMode = 'register'; document.querySelector('.auth-card h2').innerText = 'Crear Cuenta'; document.getElementById('authBtn').innerHTML = 'Registrarse'; document.getElementById('switchAuth').innerHTML = '¿Ya tienes cuenta? Inicia sesión'; document.getElementById('referralCodeGroup').style.display = 'block'; document.getElementById('authEmail').value = ''; document.getElementById('authPassword').value = ''; document.getElementById('referralCodeInput').value = ''; }
+        function logout() { if (unsubscribePredictions) unsubscribePredictions(); if (unsubscribeRiddle) unsubscribeRiddle(); if (unsubscribeDailyProb) unsubscribeDailyProb(); if (unsubscribeTransactions) unsubscribeTransactions(); auth.signOut(); document.getElementById('dashboardScreen').style.display = 'none'; document.getElementById('authScreen').style.display = 'flex'; authMode = 'register'; document.querySelector('.auth-card h2').innerText = 'Crear Cuenta'; document.getElementById('authBtn').innerHTML = 'Registrarse'; document.getElementById('switchAuth').innerHTML = '¿Ya tienes cuenta? Inicia sesión'; document.getElementById('referralCodeGroup').style.display = 'block'; document.getElementById('authEmail').value = ''; document.getElementById('authPassword').value = ''; document.getElementById('referralCodeInput').value = ''; }
         document.querySelectorAll('.nav-card').forEach(card => { card.addEventListener('click', () => { const section = card.dataset.section; if (section) showSection(section); }); });
-        
-        // Inicializar el documento de bingo si no existe
-        async function initBingoGame() {
-            const gameRef = db.collection('bingoGames').doc('current');
-            const gameDoc = await gameRef.get();
-            if (!gameDoc.exists) {
-                await gameRef.set({
-                    totalCardsSold: 0,
-                    gameStarted: false,
-                    gameEnded: false,
-                    drawnBalls: [],
-                    lineWinners: [],
-                    bingoWinners: [],
-                    linePrizeAwarded: false,
-                    bingoPrizeAwarded: false,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            }
-        }
         
         animateLoading();
         setTimeout(async () => { 
             const isConnected = await checkConnection(); 
             if (isConnected) { 
-                await initBingoGame();
                 updateLoadingProgress(100); 
                 setTimeout(() => { hideLoadingScreen(); }, 300); 
             } else { 
@@ -3101,9 +2413,7 @@
                 loadDailyProbabilities(); 
                 loadTransactions(); 
                 loadIAData(); 
-                loadSlotData(); 
-                updateBingoUI();
-                loadUserCards();
+                loadSlotData();
                 showSection('predictions'); 
                 initTheme(); 
                 const themeBtn = document.getElementById('themeToggleBtn'); 
@@ -3113,9 +2423,6 @@
                 if (unsubscribeRiddle) unsubscribeRiddle(); 
                 if (unsubscribeDailyProb) unsubscribeDailyProb(); 
                 if (unsubscribeTransactions) unsubscribeTransactions(); 
-                if (unsubscribeBingoGame) unsubscribeBingoGame();
-                if (unsubscribeMyCards) unsubscribeMyCards();
-                if (autoDrawInterval) clearInterval(autoDrawInterval);
                 document.getElementById('dashboardScreen').style.display = 'none'; 
                 document.getElementById('authScreen').style.display = 'flex'; 
                 currentUser = null; 
