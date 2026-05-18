@@ -106,6 +106,18 @@
             }
         }
 
+        /* Header con saldo siempre visible */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 0 0 28px 28px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--gold-solid);
+        }
+
         .card {
             background: var(--glass-bg);
             backdrop-filter: blur(var(--blur-amount));
@@ -176,8 +188,8 @@
 
         .btn-slot {
             background: linear-gradient(135deg, #FFD700, #FF8C00);
-            font-size: 1.2rem;
-            padding: 16px 32px;
+            font-size: 1rem;
+            padding: 12px 20px;
             animation: pulse-gold 1.5s infinite;
         }
 
@@ -192,6 +204,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
+            padding: 15px 20px;
         }
 
         .logo h1 {
@@ -199,13 +212,13 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-size: 1.65rem;
+            font-size: 1.4rem;
             font-weight: 620;
             letter-spacing: -0.02em;
         }
 
         .logo p {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-gold-light);
             font-weight: 400;
         }
@@ -243,7 +256,7 @@
 
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
             margin-bottom: 4px;
         }
@@ -253,7 +266,7 @@
             backdrop-filter: blur(var(--blur-amount));
             -webkit-backdrop-filter: blur(var(--blur-amount));
             border-radius: 24px;
-            padding: 20px 12px;
+            padding: 16px 12px;
             text-align: center;
             cursor: pointer;
             border: var(--glass-border);
@@ -285,12 +298,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .nav-icon svg {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             stroke: var(--gold-color);
             stroke-width: 1.8;
             fill: none;
@@ -298,7 +311,7 @@
         }
 
         .nav-label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 590;
             color: var(--text-gold-light);
             letter-spacing: -0.01em;
@@ -306,18 +319,18 @@
 
         @media (max-width: 640px) {
             .nav-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
             .nav-card {
-                padding: 14px 8px;
+                padding: 12px 8px;
             }
             .nav-icon svg {
-                width: 22px;
-                height: 22px;
+                width: 20px;
+                height: 20px;
             }
             .nav-label {
-                font-size: 0.65rem;
+                font-size: 0.6rem;
             }
         }
 
@@ -526,108 +539,150 @@
             margin-top: 4px;
         }
 
-        /* Estilos Tragamonedas */
-        .slot-machine {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border-radius: 30px;
-            padding: 25px;
+        /* TRAGAMONEDAS COMPACTO Y REALISTA */
+        .slot-machine-compact {
+            background: linear-gradient(145deg, #1a1a2e, #0d0d1a);
+            border-radius: 24px;
+            padding: 20px;
             text-align: center;
             border: 2px solid var(--gold-solid);
-            box-shadow: 0 0 30px rgba(245, 175, 25, 0.3);
+            box-shadow: 0 0 20px rgba(245, 175, 25, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .slot-header {
+        .slot-machine-compact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-solid), transparent);
+            animation: scanLine 3s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .slot-header-compact {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 15px;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 10px;
         }
 
-        .info-icon {
-            background: rgba(255, 255, 255, 0.2);
+        .slot-header-compact h3 {
+            font-size: 1.1rem;
+            color: var(--gold-solid);
+        }
+
+        .info-icon-compact {
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 1.3rem;
+            font-size: 1rem;
             transition: all 0.2s ease;
             border: 1px solid var(--gold-solid);
         }
 
-        .info-icon:hover {
+        .info-icon-compact:hover {
             background: var(--gold-solid);
             transform: scale(1.05);
+            color: #0A0F2C;
         }
 
-        .reels-container {
+        .reels-container-compact {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 25px 0;
-            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+            perspective: 500px;
         }
 
-        .reel-square {
-            background: rgba(0, 0, 0, 0.9);
-            border-radius: 20px;
-            width: 120px;
-            height: 120px;
+        .reel-square-compact {
+            background: linear-gradient(145deg, #2a2a3e, #1a1a2e);
+            border-radius: 16px;
+            width: 85px;
+            height: 85px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 3px solid var(--gold-solid);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.3);
-            background: linear-gradient(145deg, #2a2a3e, #1a1a2e);
+            border: 2px solid var(--gold-solid);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .reel-symbol {
-            font-size: 4.5rem;
+        .reel-square-compact::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .reel-symbol-compact {
+            font-size: 3rem;
             transition: all 0.1s ease;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
         }
 
-        .reel-symbol.spinning {
-            animation: spinSymbol 0.08s linear infinite;
+        .reel-symbol-compact.spinning {
+            animation: spinSymbolReal 0.08s linear infinite;
         }
 
-        @keyframes spinSymbol {
-            0% { transform: scale(1) rotate(0deg); opacity: 1; }
-            50% { transform: scale(1.2) rotate(10deg); opacity: 0.7; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        @keyframes spinSymbolReal {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            25% { transform: translateY(-8px) rotate(5deg); opacity: 0.8; }
+            50% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            75% { transform: translateY(8px) rotate(-5deg); opacity: 0.8; }
+            100% { transform: translateY(0) rotate(0deg); opacity: 1; }
         }
 
-        .slot-result {
-            font-size: 1.2rem;
-            margin: 15px 0;
-            padding: 15px;
+        .slot-cost {
+            background: rgba(0,0,0,0.5);
+            display: inline-block;
+            padding: 4px 12px;
             border-radius: 20px;
+            font-size: 0.7rem;
+            margin-bottom: 10px;
         }
 
-        .slot-win {
-            background: linear-gradient(135deg, rgba(46, 139, 87, 0.3), rgba(0,0,0,0.5));
+        .slot-result-compact {
+            font-size: 0.9rem;
+            margin: 12px 0;
+            padding: 10px;
+            border-radius: 16px;
+            font-weight: 600;
+        }
+
+        .slot-win-compact {
+            background: linear-gradient(135deg, rgba(46, 139, 87, 0.4), rgba(0,0,0,0.5));
             border: 1px solid var(--success);
-            animation: winPulse 0.5s ease;
+            animation: winFlash 0.3s ease;
         }
 
-        .slot-lose {
+        @keyframes winFlash {
+            0%, 100% { background: linear-gradient(135deg, rgba(46, 139, 87, 0.4), rgba(0,0,0,0.5)); }
+            50% { background: linear-gradient(135deg, rgba(46, 139, 87, 0.8), rgba(0,0,0,0.7)); box-shadow: 0 0 20px rgba(46,139,87,0.5); }
+        }
+
+        .slot-lose-compact {
             background: linear-gradient(135deg, rgba(220, 20, 60, 0.2), rgba(0,0,0,0.5));
             border: 1px solid var(--danger);
-        }
-
-        @keyframes winPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); background: rgba(46, 139, 87, 0.5); }
-        }
-
-        .slot-simple-message {
-            margin: 10px 0;
-            font-size: 0.8rem;
-            color: var(--text-gold-light);
-            text-align: center;
         }
 
         .winner-celebration {
@@ -653,7 +708,7 @@
             100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
 
-        /* Modal de premios */
+        /* Modal de premios compacto */
         .prizes-modal {
             display: none;
             position: fixed;
@@ -668,11 +723,11 @@
             z-index: 2000;
         }
 
-        .prizes-content {
+        .prizes-content-compact {
             background: linear-gradient(135deg, #1a1a2e, #0a0a1a);
-            border-radius: 30px;
-            padding: 25px;
-            max-width: 500px;
+            border-radius: 24px;
+            padding: 20px;
+            max-width: 380px;
             width: 90%;
             border: 2px solid var(--gold-solid);
             animation: modalPop 0.2s ease-out;
@@ -680,40 +735,49 @@
             overflow-y: auto;
         }
 
-        .prizes-content h3 {
+        .prizes-content-compact h3 {
             color: var(--gold-solid);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            text-align: center;
         }
 
-        .prize-table {
-            width: 100%;
-            margin: 15px 0;
+        .prize-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 10px 0;
         }
 
-        .prize-row {
+        .prize-item {
+            background: rgba(0,0,0,0.5);
+            border-radius: 12px;
+            padding: 8px;
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid rgba(245, 175, 25, 0.3);
+            align-items: center;
+            border: 1px solid rgba(245, 175, 25, 0.2);
         }
 
         .prize-symbol {
-            font-size: 1.2rem;
-            min-width: 80px;
-            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         .prize-amount {
             color: var(--gold-solid);
             font-weight: bold;
+            font-size: 0.9rem;
         }
 
-        .prize-note {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            margin-top: 15px;
+        .prize-divider {
             text-align: center;
+            color: var(--gold-solid);
+            font-size: 0.7rem;
+            margin: 8px 0;
+            padding: 5px;
+            background: rgba(245,175,25,0.1);
+            border-radius: 20px;
         }
 
         @keyframes modalPop {
@@ -734,7 +798,7 @@
         }
 
         .riddle-question {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--gold-solid);
             margin-bottom: 1rem;
@@ -748,10 +812,10 @@
         .riddle-answer {
             background: var(--gradient-primary);
             color: #0A0F2C;
-            padding: 12px;
+            padding: 10px;
             border-radius: 20px;
             margin-top: 1rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: none;
             font-weight: 600;
         }
@@ -768,21 +832,21 @@
 
         .probabilities-list {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .prob-item {
             text-align: center;
-            padding: 8px 16px;
+            padding: 6px 14px;
             background: var(--card-bg-casino);
             border-radius: 20px;
             border: 1px solid rgba(245, 175, 25, 0.3);
         }
 
         .prob-number {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 800;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
@@ -806,7 +870,7 @@
         }
 
         .referral-code {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 620;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
@@ -845,14 +909,14 @@
             flex: 1;
             background: var(--card-bg-casino);
             backdrop-filter: blur(8px);
-            padding: 14px;
+            padding: 12px;
             border-radius: 24px;
             text-align: center;
             border: 1px solid rgba(245, 175, 25, 0.2);
         }
 
         .referral-stat-number {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 800;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
@@ -867,9 +931,9 @@
         .comment-card {
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 16px;
-            margin-bottom: 14px;
+            border-radius: 20px;
+            padding: 14px;
+            margin-bottom: 12px;
             border-left: 3px solid var(--gold-solid);
         }
 
@@ -888,16 +952,16 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .comment-date {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--text-gold-light);
         }
 
         .comment-text {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             margin-bottom: 8px;
             word-break: break-word;
             color: var(--text-white);
@@ -906,20 +970,20 @@
         .new-comment-form {
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 16px;
+            border-radius: 20px;
+            padding: 14px;
             margin-top: 1rem;
         }
 
         .new-comment-form textarea,
         .new-comment-form input {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 0.5px solid var(--border);
-            border-radius: 20px;
-            font-size: 0.85rem;
+            border-radius: 16px;
+            font-size: 0.8rem;
             font-family: inherit;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             background: rgba(0, 0, 0, 0.7);
             color: var(--text-white);
             transition: border-color var(--transition-fast);
@@ -941,10 +1005,10 @@
         }
 
         th, td {
-            padding: 12px;
+            padding: 10px;
             text-align: left;
             border-bottom: 0.5px solid var(--border);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-gold-light);
         }
 
@@ -963,27 +1027,27 @@
         .badge-win {
             background: linear-gradient(135deg, var(--success), #1E4D2B);
             color: white;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 40px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             display: inline-block;
         }
 
         .badge-pending {
             background: var(--gradient-secondary);
             color: white;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 40px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             display: inline-block;
         }
 
         .badge-rewarded {
             background: var(--gradient-primary);
             color: #0A0F2C;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 40px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             display: inline-block;
             font-weight: 600;
         }
@@ -1005,9 +1069,9 @@
         .modal-content {
             background: var(--card-bg-casino);
             backdrop-filter: blur(28px);
-            border-radius: 32px;
-            padding: 24px;
-            max-width: 500px;
+            border-radius: 28px;
+            padding: 20px;
+            max-width: 450px;
             width: 90%;
             text-align: center;
             animation: modalPop 0.2s ease-out;
@@ -1024,7 +1088,7 @@
         }
 
         .payment-number {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             font-family: monospace;
             background: var(--gradient-primary);
@@ -1072,7 +1136,7 @@
 
         .auth-card h2 {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 0.5rem;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
@@ -1087,7 +1151,7 @@
         .input-group label {
             display: block;
             margin-bottom: 6px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-gold-light);
             font-weight: 500;
         }
@@ -1095,11 +1159,11 @@
         .input-group input, 
         .input-group textarea {
             width: 100%;
-            padding: 14px 18px;
+            padding: 12px 16px;
             background: rgba(0, 0, 0, 0.7);
             border: 0.5px solid var(--border);
             border-radius: 20px;
-            font-size: 0.9375rem;
+            font-size: 0.9rem;
             font-family: inherit;
             color: var(--text-white);
             transition: border-color var(--transition-fast);
@@ -1114,14 +1178,14 @@
         .balance-display {
             background: linear-gradient(135deg, #2E8B57, #1E4D2B);
             color: white;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.8rem;
+            font-weight: 700;
+            font-size: 0.85rem;
             box-shadow: var(--shadow-sm);
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
 
         .copy-number-btn {
@@ -1165,8 +1229,8 @@
         }
 
         .loading-spinner {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border: 4px solid rgba(245, 175, 25, 0.3);
             border-top: 4px solid var(--gold-solid);
             border-radius: 50%;
@@ -1180,14 +1244,14 @@
         }
 
         .loading-text {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--gold-solid);
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
         .loading-subtext {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-gold-light);
         }
 
@@ -1222,11 +1286,11 @@
 
         .ia-input-group input {
             flex: 1;
-            padding: 14px 18px;
+            padding: 12px 16px;
             background: rgba(0, 0, 0, 0.7);
             border: 0.5px solid var(--border);
             border-radius: 20px;
-            font-size: 0.9375rem;
+            font-size: 0.9rem;
             font-family: inherit;
             color: var(--text-white);
         }
@@ -1238,16 +1302,16 @@
 
         .ia-numbers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 10px;
             margin: 16px 0;
         }
 
         .ia-number-card {
             background: var(--card-bg-casino);
             backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 12px;
+            border-radius: 16px;
+            padding: 10px;
             text-align: center;
             border: 1px solid var(--gold-solid);
             transition: transform var(--transition-fast);
@@ -1258,7 +1322,7 @@
         }
 
         .ia-number {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             background: var(--gradient-ai);
             -webkit-background-clip: text;
@@ -1267,14 +1331,14 @@
         }
 
         .ia-probability {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: var(--text-gold-light);
             margin-top: 4px;
         }
 
         .decenas-terminales-grid {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
             margin: 20px 0;
@@ -1282,24 +1346,24 @@
 
         .decenas-box, .terminales-box {
             flex: 1;
-            min-width: 200px;
+            min-width: 180px;
             background: var(--card-bg-casino);
             backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 16px;
+            border-radius: 20px;
+            padding: 14px;
             text-align: center;
             border: 1px solid var(--gold-solid);
         }
 
         .decenas-box h4, .terminales-box h4 {
-            font-size: 0.9rem;
-            margin-bottom: 12px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
             color: var(--gold-solid);
         }
 
         .decenas-items, .terminales-items {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -1307,15 +1371,15 @@
         .decena-item, .terminal-item {
             background: var(--gradient-ai);
             color: #0A0F2C;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 40px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            min-width: 60px;
+            min-width: 50px;
         }
 
         .ia-info {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-gold-light);
             text-align: center;
             margin-top: 12px;
@@ -1330,7 +1394,7 @@
             padding: 12px;
             margin: 12px 0;
             text-align: left;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             border-left: 3px solid var(--gold-solid);
         }
 
@@ -1346,34 +1410,56 @@
         .membership-active-alert {
             background: linear-gradient(135deg, var(--success), #1E4D2B);
             color: white;
-            padding: 12px;
+            padding: 10px;
             border-radius: 20px;
             text-align: center;
             margin-bottom: 15px;
+            font-size: 0.8rem;
         }
 
         .membership-expired-alert {
             background: linear-gradient(135deg, var(--danger), #8B0000);
             color: white;
-            padding: 12px;
+            padding: 10px;
             border-radius: 20px;
             text-align: center;
             margin-bottom: 15px;
+            font-size: 0.8rem;
         }
 
         @media (max-width: 640px) {
             .container { padding: 14px; }
             .card { padding: 16px; border-radius: 24px; }
-            .numbers-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 10px; }
-            .number { font-size: 1.2rem; }
+            .numbers-grid { grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 8px; }
+            .number { font-size: 1.1rem; }
             .result-value { font-size: 1.2rem; }
             .referral-code { font-size: 1rem; }
-            .ia-numbers-grid { grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); }
+            .ia-numbers-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
             .decenas-terminales-grid { flex-direction: column; }
             .winner-celebration {
-                font-size: 1.2rem;
-                padding: 12px 24px;
+                font-size: 1rem;
+                padding: 10px 20px;
                 white-space: nowrap;
+            }
+            .reel-square-compact {
+                width: 70px;
+                height: 70px;
+            }
+            .reel-symbol-compact {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .reel-square-compact {
+                width: 55px;
+                height: 55px;
+            }
+            .reel-symbol-compact {
+                font-size: 2rem;
+            }
+            .slot-header-compact h3 {
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -1412,22 +1498,22 @@
     </div>
 
     <div id="dashboardScreen" style="display: none;">
-        <div class="container">
-            <div class="card">
-                <div class="header">
-                    <div class="logo">
-                        <h1>🎰 Pronóstico Pro <span class="live-badge">IA PRO + TRAGAMONEDAS</span></h1>
-                        <p>Pronósticos IA + Tragamonedas + 50 cup por referido que pague membresía</p>
-                    </div>
-                    <div style="display: flex; gap: 0.75rem; align-items: center;">
-                        <span class="balance-display" id="balanceDisplay">💰 Saldo: 0 Cup</span>
-                        <span class="florida-badge">🎯 PRONÓSTICOS</span>
-                        <div class="theme-toggle" id="themeToggleBtn" title="Cambiar tema">🌙</div>
-                        <button class="btn" onclick="logout()" style="width: auto; padding: 6px 18px; background: var(--danger); font-size: 0.75rem;">Salir</button>
-                    </div>
+        <div class="sticky-header">
+            <div class="header">
+                <div class="logo">
+                    <h1>🎰 Pronóstico Pro <span class="live-badge">IA PRO + TRAGAMONEDAS</span></h1>
+                    <p>Pronósticos IA + Tragamonedas + 50 cup por referido que pague membresía</p>
+                </div>
+                <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                    <span class="balance-display" id="balanceDisplay">💰 Saldo: 0 Cup</span>
+                    <span class="florida-badge">🎯 PRONÓSTICOS</span>
+                    <div class="theme-toggle" id="themeToggleBtn" title="Cambiar tema">🌙</div>
+                    <button class="btn" onclick="logout()" style="width: auto; padding: 6px 16px; background: var(--danger); font-size: 0.7rem;">Salir</button>
                 </div>
             </div>
+        </div>
 
+        <div class="container">
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
                 <div class="stat-card"><div class="stat-number" id="referralsCount">0</div><div class="stat-label">👥 Referidos</div></div>
@@ -1436,7 +1522,7 @@
 
             <div id="membershipAlert" class="membership-active-alert" style="display: none;"></div>
 
-            <div class="card" style="padding: 20px;">
+            <div class="card" style="padding: 16px;">
                 <div class="nav-grid">
                     <div class="nav-card" data-section="predictions">
                         <div class="nav-icon">
@@ -1498,21 +1584,6 @@
                         </div>
                         <span class="nav-label">Referidos (50 cup)</span>
                     </div>
-                    <div class="nav-card" data-section="history">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <circle cx="12" cy="12" r="9" stroke="currentColor" fill="none"/>
-                                <polyline points="12 7 12 12 15 15" stroke="currentColor" fill="none"/>
-                                <path d="M12 3L12 5" stroke="currentColor"/>
-                                <path d="M19 12L21 12" stroke="currentColor"/>
-                                <path d="M12 19L12 21" stroke="currentColor"/>
-                                <path d="M5 12L3 12" stroke="currentColor"/>
-                                <circle cx="10" cy="17" r="0.8" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="14" cy="7" r="0.8" stroke="currentColor" fill="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">Historial</span>
-                    </div>
                     <div class="nav-card" data-section="comments">
                         <div class="nav-icon">
                             <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
@@ -1572,22 +1643,22 @@
 
             <div id="iaProSection" style="display: none;">
                 <div class="card ia-card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 0.5rem;">🤖 IA Pro - Predictor Inteligente</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">
+                    <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🤖 IA Pro - Predictor Inteligente</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">
                         Ingresa los resultados anteriores de la lotería (ej: 23 45 67 89 12 34) y la IA generará:
                         <strong>12 números de 2 dígitos, 3 decenas y 3 terminales</strong> con alta probabilidad.
                     </p>
                     
                     <div class="ia-input-group">
                         <input type="text" id="iaInputNumbers" placeholder="Ej: 23 45 67 89 12 34 56 78" autocomplete="off">
-                        <button class="btn btn-ai btn-small" onclick="generateIAPrediction()" style="width: auto; padding: 14px 24px;">🚀 Generar IA Pro</button>
+                        <button class="btn btn-ai btn-small" onclick="generateIAPrediction()" style="width: auto; padding: 12px 20px;">🚀 Generar IA Pro</button>
                     </div>
                     
                     <div id="iaNumbersContainer" style="display: none;">
-                        <h3 style="font-size: 0.9rem; margin: 16px 0 8px 0;">🎯 Números de 2 dígitos generados por IA Pro:</h3>
+                        <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">🎯 Números de 2 dígitos generados por IA Pro:</h3>
                         <div id="iaNumbersGrid" class="ia-numbers-grid"></div>
                         
-                        <h3 style="font-size: 0.9rem; margin: 16px 0 8px 0;">📊 Decenas y Terminales con más probabilidad:</h3>
+                        <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">📊 Decenas y Terminales con más probabilidad:</h3>
                         <div id="iaDecenasTerminalesGrid" class="decenas-terminales-grid"></div>
                         
                         <div class="ia-info">
@@ -1595,8 +1666,8 @@
                         </div>
                     </div>
                     
-                    <div id="iaHistoryContainer" style="display: none; margin-top: 20px;">
-                        <h3 style="font-size: 0.9rem; margin-bottom: 8px;">📊 Últimos datos ingresados:</h3>
+                    <div id="iaHistoryContainer" style="display: none; margin-top: 16px;">
+                        <h3 style="font-size: 0.85rem; margin-bottom: 8px;">📊 Últimos datos ingresados:</h3>
                         <div id="iaLastInput" class="ia-info" style="background: var(--gradient-ai); color: white;"></div>
                     </div>
                 </div>
@@ -1604,7 +1675,7 @@
 
             <div id="riddleSection" style="display: none;">
                 <div class="card riddle-card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">🤔 Adivinanza del Día</h2>
+                    <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">🤔 Adivinanza del Día</h2>
                     <div id="riddleContent" class="text-center">
                         <div class="riddle-question" id="riddleQuestion">Cargando adivinanza...</div>
                         <button class="btn btn-small show-answer-btn" onclick="toggleRiddleAnswer()">🔍 Ver respuesta</button>
@@ -1620,7 +1691,7 @@
                         <div class="today-badge" id="probabilitiesTodayBadge">📊 Cargando...</div>
                         <div class="probabilities-title">🎯 ESTOS SON LOS NÚMEROS DE HOY</div>
                     </div>
-                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem; text-align: center;">Números con mayor probabilidad de salir según análisis del administrador</p>
+                    <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem; text-align: center;">Números con mayor probabilidad de salir según análisis del administrador</p>
                     <div id="dailyProbContent" class="text-center">
                         <div class="probabilities-list" id="probabilitiesList">
                             <div>Cargando probabilidades...</div>
@@ -1636,18 +1707,18 @@
 
             <div id="referralsSection" style="display: none;">
                 <div class="card referral-card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem;">
+                    <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">
                         Comparte tu código de invitación. Por cada amigo que se registre y <strong>pague una membresía ACTIVA</strong> (200 cup mínimo), 
                         recibirás <strong>50 cup COMPLETAMENTE RETIRABLES</strong> en tu cuenta.
                     </p>
                     
                     <div class="referral-code-box">
-                        <span style="font-size: 0.7rem; color: var(--text-secondary);">TU CÓDIGO DE INVITACIÓN</span>
+                        <span style="font-size: 0.65rem; color: var(--text-secondary);">TU CÓDIGO DE INVITACIÓN</span>
                         <div>
                             <span class="referral-code" id="userReferralCode">Cargando...</span>
                             <button class="copy-btn" onclick="copyReferralCode()">📋 Copiar</button>
-                            <button class="copy-btn" onclick="shareTelegramLink()" style="margin-left: 0.5rem;">📲 Invitar por Telegram</button>
+                            <button class="copy-btn" onclick="shareTelegramLink()" style="margin-left: 0.5rem;">📲 Invitar</button>
                         </div>
                     </div>
 
@@ -1668,24 +1739,11 @@
                 </div>
 
                 <div class="card">
-                    <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
+                    <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
                     <div class="table-responsive">
                         <table id="referralsTable">
-                            <thead><tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></table></thead>
+                            <thead><tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></tr></thead>
                             <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div id="historySection" style="display: none;">
-                <div class="card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">🏆 Historial de Resultados</h2>
-                    <div class="table-responsive">
-                        <table id="historyTable">
-                            <thead><tr><th>Fecha</th><th>Sorteo</th><th>Número Ganador</th><th>Estado</th></tr>
-                            </thead>
-                            <tbody id="historyTableBody"><tr><td colspan="4" class="text-center">Cargando historial...</tbody>
                         </table>
                     </div>
                 </div>
@@ -1693,16 +1751,16 @@
 
             <div id="commentsSection" style="display: none;">
                 <div class="card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">💬 Comentarios y Jugadas</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
+                    <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">💬 Comentarios y Jugadas</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
                     <div id="commentsList" class="comments-section"><div class="text-center">Cargando comentarios...</div></div>
                     <div class="new-comment-form">
-                        <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📝 Publicar jugada/comentario</h3>
+                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📝 Publicar jugada/comentario</h3>
                         <div class="form-row">
                             <input type="text" id="commentNumber" placeholder="Número que jugaste (ej: 76)" maxlength="2">
                             <input type="text" id="commentDraw" placeholder="Sorteo (mediodía/noche)" maxlength="10">
                         </div>
-                        <textarea id="commentMessage" rows="3" placeholder="Escribe tu comentario o experiencia..."></textarea>
+                        <textarea id="commentMessage" rows="2" placeholder="Escribe tu comentario o experiencia..."></textarea>
                         <button class="btn btn-small" onclick="publishComment()" style="width: auto;">📢 Publicar comentario</button>
                     </div>
                 </div>
@@ -1714,7 +1772,7 @@
 
             <div id="paymentSection" style="display: none;">
                 <div class="card">
-                    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">💰 Depósito / Retiro</h2>
+                    <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">💰 Depósito / Retiro</h2>
                     
                     <div class="stats-grid">
                         <div class="stat-card"><div class="stat-number" id="walletBalance">0</div><div class="stat-label">💰 Saldo Disponible</div></div>
@@ -1722,50 +1780,49 @@
                     </div>
 
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                        <button class="btn" onclick="showDepositForm()" style="flex: 1;">💵 DEPOSITAR (200 cup mínimo)</button>
+                        <button class="btn" onclick="showDepositForm()" style="flex: 1;">💵 DEPOSITAR (200 cup)</button>
                         <button class="btn btn-outline" onclick="showWithdrawForm()" style="flex: 1;">🏦 RETIRAR</button>
                     </div>
 
                     <div id="depositForm" style="display: block;">
-                        <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📥 Depositar fondos</h3>
+                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📥 Depositar fondos</h3>
                         
                         <div class="payment-info">
-                            <div style="font-size: 0.7rem; color: var(--text-secondary);">💳 Tarjeta para transferencia:</div>
-                            <div class="payment-number" style="font-size: 1.3rem; font-family: monospace; font-weight: 800;">9227 0699 9771 1927</div>
-                            <button class="copy-number-btn" onclick="copyCardNumber()">📋 Copiar número de tarjeta</button>
+                            <div style="font-size: 0.65rem; color: var(--text-secondary);">💳 Tarjeta para transferencia:</div>
+                            <div class="payment-number" style="font-size: 1.1rem;">9227 0699 9771 1927</div>
+                            <button class="copy-number-btn" onclick="copyCardNumber()">📋 Copiar número</button>
                         </div>
 
                         <div class="transfer-confirmation">
                             <div class="text-center" style="margin-bottom: 0.5rem;">
                                 <strong>✅ ¿Ya hiciste la transferencia?</strong>
                             </div>
-                            <p style="font-size: 0.75rem; margin-bottom: 0.8rem;">
+                            <p style="font-size: 0.7rem; margin-bottom: 0.8rem;">
                                 Una vez que hayas transferido el monto a la tarjeta <strong>9227 0699 9771 1927</strong>, 
-                                envía la captura de pantalla al administrador con el siguiente mensaje:
+                                envía la captura de pantalla al administrador.
                             </p>
                             
                             <div class="telegram-message-example">
-                                <strong>📱 Mensaje predefinido para Telegram:</strong>
-                                <code style="display: block; background: var(--card-bg); padding: 10px; border-radius: 12px; margin-top: 8px; font-size: 0.7rem; word-break: break-all;">
-💰 DEPÓSITO PRONÓSTICO PRO<br><br>
+                                <strong>📱 Mensaje para Telegram:</strong>
+                                <code style="display: block; background: var(--card-bg); padding: 8px; border-radius: 12px; margin-top: 8px; font-size: 0.65rem; word-break: break-all;">
+💰 DEPÓSITO PRONÓSTICO PRO<br>
 💳 Tarjeta: 9227 0699 9771 1927<br>
 📝 Número de transacción: [TU NÚMERO]<br>
 💵 Monto: [MONTO] Cup<br>
-📧 Correo: [TU CORREO]<br><br>
-📎 Adjunto captura de pantalla
+📧 Correo: [TU CORREO]
                                 </code>
                             </div>
                             
                             <div class="telegram-contact">
                                 📱 <strong>Enviar a:</strong> <span style="font-family: monospace;">@sdesaroyador</span>
-                                <button class="copy-number-btn" onclick="copyTelegramUsername()" style="margin-left: 8px; background: rgba(255,255,255,0.2);">📋 Copiar usuario</button>
+                                <button class="copy-number-btn" onclick="copyTelegramUsername()" style="margin-left: 8px;">📋 Copiar</button>
                             </div>
                             
                             <button class="btn btn-small" onclick="confirmTransferDone()" style="width: auto; background: var(--success); margin-top: 8px;">✅ Ya realicé la transferencia</button>
                         </div>
 
                         <div class="input-group">
-                            <label>💰 Cantidad a depositar (CUP) - Mínimo 200 cup para activar membresía 30 días</label>
+                            <label>💰 Cantidad a depositar (CUP) - Mínimo 200 cup</label>
                             <input type="number" id="depositAmount" placeholder="Mínimo 200 CUP" value="200" min="200">
                         </div>
 
@@ -1774,11 +1831,11 @@
                             <input type="text" id="transactionNumber" placeholder="Ej: KW600UIE4C999" required>
                         </div>
 
-                        <button class="btn" onclick="submitDeposit()">💰 Enviar solicitud de depósito</button>
+                        <button class="btn" onclick="submitDeposit()">💰 Enviar solicitud</button>
                     </div>
 
                     <div id="withdrawForm" style="display: none;">
-                        <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📤 Retirar fondos</h3>
+                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📤 Retirar fondos</h3>
                         <div class="input-group">
                             <label>💰 Cantidad a retirar (CUP)</label>
                             <input type="number" id="withdrawAmount" placeholder="Mínimo 50 CUP" min="50">
@@ -1795,7 +1852,7 @@
                     </div>
 
                     <div class="card" id="transactionHistoryCard" style="margin-top: 1rem; display: none;">
-                        <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">📋 Historial de transacciones</h3>
+                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📋 Historial de transacciones</h3>
                         <div class="table-responsive">
                             <table id="transactionsTable">
                                 <thead><tr><th>Fecha</th><th>Tipo</th><th>Monto</th><th>Estado</th></tr></thead>
@@ -1806,24 +1863,24 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN TRAGAMONEDAS -->
+            <!-- TRAGAMONEDAS COMPACTA Y REALISTA -->
             <div id="slotSection" style="display: none;">
-                <div class="card slot-machine">
-                    <div class="slot-header">
-                        <h2 style="font-size: 1.5rem; margin-bottom: 0;">🎰 MÁQUINA TRAGAMONEDAS 🎰</h2>
-                        <div class="info-icon" onclick="showPrizesModal()">ℹ️</div>
+                <div class="slot-machine-compact">
+                    <div class="slot-header-compact">
+                        <h3>🎰 MÁQUINA TRAGAMONEDAS 🎰</h3>
+                        <div class="info-icon-compact" onclick="showPrizesModal()">ℹ️</div>
                     </div>
-                    <p style="color: var(--text-secondary); font-size: 0.8rem;">Costo por giro: <strong style="color: var(--gold-solid);">2 Cup</strong> | ¡Gana hasta 400 Cup!</p>
+                    <div class="slot-cost">💰 Costo por giro: <strong>2 Cup</strong> | 🎁 Jackpot: 400 Cup</div>
                     
-                    <div class="reels-container">
-                        <div class="reel-square">
-                            <div class="reel-symbol" id="reel1">🍒</div>
+                    <div class="reels-container-compact">
+                        <div class="reel-square-compact">
+                            <div class="reel-symbol-compact" id="reel1">🍒</div>
                         </div>
-                        <div class="reel-square">
-                            <div class="reel-symbol" id="reel2">🍒</div>
+                        <div class="reel-square-compact">
+                            <div class="reel-symbol-compact" id="reel2">🍒</div>
                         </div>
-                        <div class="reel-square">
-                            <div class="reel-symbol" id="reel3">🍒</div>
+                        <div class="reel-square-compact">
+                            <div class="reel-symbol-compact" id="reel3">🍒</div>
                         </div>
                     </div>
 
@@ -1831,47 +1888,44 @@
                         🎰 GIRAR (2 cup) 🎰
                     </button>
 
-                    <div id="slotResult" class="slot-result">
+                    <div id="slotResult" class="slot-result-compact">
                         🎲 Presiona GIRAR para comenzar 🎲
-                    </div>
-                    
-                    <div class="slot-simple-message">
-                        🎲 ¡Todos los símbolos tienen la misma probabilidad (11.11%)! Gana con combinaciones raras
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal de premios tragamonedas -->
+    <!-- Modal de premios COMPACTO -->
     <div id="prizesModal" class="prizes-modal">
-        <div class="prizes-content">
-            <h3>🎁 TABLA DE PREMIOS - TRAGAMONEDAS 🎁</h3>
-            <div class="prize-table">
-                <div class="prize-row"><span class="prize-symbol">7️⃣ 7️⃣ 7️⃣</span><span class="prize-amount">400 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">⭐⭐⭐</span><span class="prize-amount">12 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">💎💎💎</span><span class="prize-amount">15 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🔔🔔🔔</span><span class="prize-amount">8 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🍒🍒🍒</span><span class="prize-amount">6 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🍋🍋🍋</span><span class="prize-amount">5 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🍊🍊🍊</span><span class="prize-amount">4 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🍉🍉🍉</span><span class="prize-amount">3 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🍇🍇🍇</span><span class="prize-amount">3 CUP</span></div>
+        <div class="prizes-content-compact">
+            <h3>🎁 TABLA DE PREMIOS 🎁</h3>
+            <div class="prize-divider">🔴 TRES SÍMBOLOS IGUALES 🔴</div>
+            <div class="prize-grid">
+                <div class="prize-item"><span class="prize-symbol">7️⃣ 7️⃣ 7️⃣</span><span class="prize-amount">400 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">💎 💎 💎</span><span class="prize-amount">15 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">⭐ ⭐ ⭐</span><span class="prize-amount">12 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🔔 🔔 🔔</span><span class="prize-amount">8 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🍒 🍒 🍒</span><span class="prize-amount">6 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🍋 🍋 🍋</span><span class="prize-amount">5 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🍊 🍊 🍊</span><span class="prize-amount">4 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🍉 🍉 🍉</span><span class="prize-amount">3 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🍇 🍇 🍇</span><span class="prize-amount">3 CUP</span></div>
             </div>
-            <div class="prize-table" style="border-top: 1px solid rgba(245,175,25,0.3); padding-top: 10px;">
-                <h4 style="color: var(--gold-solid); margin-bottom: 10px;">🎯 PREMIOS POR 2 SÍMBOLOS IGUALES 🎯</h4>
-                <div class="prize-row"><span class="prize-symbol">⭐⭐</span><span class="prize-amount">1 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">💎💎</span><span class="prize-amount">1.5 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🔔🔔</span><span class="prize-amount">2 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🍒🍒</span><span class="prize-amount">2 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🍋🍋</span><span class="prize-amount">2 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🍊🍊</span><span class="prize-amount">2 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🍉🍉</span><span class="prize-amount">2 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">🍇🍇</span><span class="prize-amount">2 CUP</span></div>
-                <div class="prize-row"><span class="prize-symbol">7️⃣7️⃣</span><span class="prize-amount">5 CUP</span></div>
+            <div class="prize-divider">🟡 DOS SÍMBOLOS IGUALES 🟡</div>
+            <div class="prize-grid">
+                <div class="prize-item"><span class="prize-symbol">7️⃣ 7️⃣</span><span class="prize-amount">100 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">💎 💎</span><span class="prize-amount">50 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">⭐ ⭐</span><span class="prize-amount">30 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🔔 🔔</span><span class="prize-amount">20 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🍒 🍒</span><span class="prize-amount">10 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🍋 🍋</span><span class="prize-amount">8 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🍊 🍊</span><span class="prize-amount">5 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🍉 🍉</span><span class="prize-amount">3 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🍇 🍇</span><span class="prize-amount">2 CUP</span></div>
             </div>
-            <div class="prize-note">
-                💡 Todos los símbolos tienen la MISMA probabilidad (11.11%)
+            <div class="prize-note" style="font-size: 0.65rem;">
+                💡 
             </div>
             <button class="btn btn-small" onclick="closePrizesModal()" style="margin-top: 15px; width: auto;">Cerrar</button>
         </div>
@@ -1937,6 +1991,19 @@
         let slotHistory = [];
         let isSpinning = false;
         const slotSymbols = ['🍒', '🍋', '🍊', '🍉', '🍇', '🔔', '⭐', '💎', '7️⃣'];
+        
+        // Nuevos premios para 2 símbolos iguales (2 a 100 pesos)
+        const twoSymbolPrizes = {
+            '7️⃣': 100,
+            '💎': 50,
+            '⭐': 30,
+            '🔔': 20,
+            '🍒': 10,
+            '🍋': 8,
+            '🍊': 5,
+            '🍉': 3,
+            '🍇': 2
+        };
         
         // Función para actualizar el saldo en tiempo real
         async function updateAllBalanceDisplays() {
@@ -2025,20 +2092,17 @@
         }
         
         function checkWin(symbols) {
-            if (symbols[0] === '7️⃣' && symbols[1] === '7️⃣' && symbols[2] === '7️⃣') {
-                return { prize: 400, name: '🎰 ¡JACKPOT! 400 CUP 🎰', type: 'jackpot' };
-            }
+            // Tres iguales
             if (symbols[0] === symbols[1] && symbols[1] === symbols[2]) {
                 const prizes = { '🍒': 6, '🍋': 5, '🍊': 4, '🍉': 3, '🍇': 3, '🔔': 8, '⭐': 12, '💎': 15, '7️⃣': 400 };
                 if (prizes[symbols[0]]) return { prize: prizes[symbols[0]], name: `¡TRES ${symbols[0]}! +${prizes[symbols[0]]} CUP`, type: 'win' };
             }
+            // Dos iguales - premios mejorados de 2 a 100
             if (symbols[0] === symbols[1] && symbols[0] !== symbols[2]) {
-                const prizes = { '7️⃣': 5, '⭐': 1, '💎': 1.5, '🔔': 2, '🍒': 2, '🍋': 2, '🍊': 2, '🍉': 2, '🍇': 2 };
-                if (prizes[symbols[0]]) return { prize: prizes[symbols[0]], name: `¡DOS ${symbols[0]}! +${prizes[symbols[0]]} CUP`, type: 'two' };
+                if (twoSymbolPrizes[symbols[0]]) return { prize: twoSymbolPrizes[symbols[0]], name: `¡DOS ${symbols[0]}! +${twoSymbolPrizes[symbols[0]]} CUP`, type: 'two' };
             }
             if (symbols[1] === symbols[2] && symbols[0] !== symbols[1]) {
-                const prizes = { '7️⃣': 5, '⭐': 1, '💎': 1.5, '🔔': 2, '🍒': 2, '🍋': 2, '🍊': 2, '🍉': 2, '🍇': 2 };
-                if (prizes[symbols[1]]) return { prize: prizes[symbols[1]], name: `¡DOS ${symbols[1]}! +${prizes[symbols[1]]} CUP`, type: 'two' };
+                if (twoSymbolPrizes[symbols[1]]) return { prize: twoSymbolPrizes[symbols[1]], name: `¡DOS ${symbols[1]}! +${twoSymbolPrizes[symbols[1]]} CUP`, type: 'two' };
             }
             return null;
         }
@@ -2048,20 +2112,27 @@
             const reel2 = document.getElementById('reel2');
             const reel3 = document.getElementById('reel3');
             let spins = 0;
-            const maxSpins = 15;
+            const maxSpins = 12;
             const interval = setInterval(() => {
                 reel1.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
                 reel2.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
                 reel3.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                // Añadir clase de animación
+                reel1.classList.add('spinning');
+                reel2.classList.add('spinning');
+                reel3.classList.add('spinning');
                 spins++;
                 if (spins >= maxSpins) {
                     clearInterval(interval);
+                    reel1.classList.remove('spinning');
+                    reel2.classList.remove('spinning');
+                    reel3.classList.remove('spinning');
                     reel1.innerText = finalSymbols[0];
                     reel2.innerText = finalSymbols[1];
                     reel3.innerText = finalSymbols[2];
                     if (callback) callback();
                 }
-            }, 60);
+            }, 70);
         }
         
         async function spinSlot() {
@@ -2076,10 +2147,6 @@
             playSound('spin');
             
             const symbols = [getRandomSymbol(), getRandomSymbol(), getRandomSymbol()];
-            const spinsSinceLastJackpot = slotSpins % slotNextJackpot;
-            if (spinsSinceLastJackpot === slotNextJackpot - 1 && Math.random() < 0.02) {
-                symbols[0] = '7️⃣'; symbols[1] = '7️⃣'; symbols[2] = '7️⃣';
-            }
             
             animateReels(symbols, async () => {
                 await updateUserBalance(userBalance - 2);
@@ -2105,11 +2172,11 @@
                 
                 const resultDiv = document.getElementById('slotResult');
                 resultDiv.innerHTML = resultMessage;
-                resultDiv.className = win ? 'slot-result slot-win' : 'slot-result slot-lose';
+                resultDiv.className = win ? 'slot-result-compact slot-win-compact' : 'slot-result-compact slot-lose-compact';
                 await saveSlotData();
                 await loadUserBalance();
                 await updateAllBalanceDisplays();
-                setTimeout(() => { resultDiv.className = 'slot-result'; }, 2500);
+                setTimeout(() => { resultDiv.className = 'slot-result-compact'; }, 2000);
                 isSpinning = false;
                 spinButton.disabled = false;
                 spinButton.style.opacity = '1';
@@ -2192,8 +2259,8 @@
                 });
                 userBalance = finalBalance;
                 await checkMembership(currentUser.email);
-                let mensaje = `✅ ¡MEMBRESÍA ACTIVADA POR 30 DÍAS!\n\n💰 Depósito aprobado: +${amount} Cup\n💸 Costo de membresía (30 días): -${COSTO_MEMBRESIA} Cup\n💵 SALDO FINAL: ${finalBalance} Cup\n📅 Membresía válida hasta: ${expiresDate.toLocaleDateString()}\n\n✅ Ya puedes acceder a todos los pronósticos y funcionalidades.`;
-                if (finalBalance === 0) mensaje += `\n\n💡 Tu saldo quedó en 0 Cup porque el depósito de ${amount} Cup se utilizó completamente para activar tu membresía.`;
+                let mensaje = `✅ ¡MEMBRESÍA ACTIVADA POR 30 DÍAS!\n\n💰 Depósito aprobado: +${amount} Cup\n💸 Costo de membresía: -${COSTO_MEMBRESIA} Cup\n💵 SALDO FINAL: ${finalBalance} Cup\n📅 Membresía válida hasta: ${expiresDate.toLocaleDateString()}`;
+                if (finalBalance === 0) mensaje += `\n\n💡 Tu saldo quedó en 0 Cup porque el depósito se utilizó completamente para activar tu membresía.`;
                 showDialog('🎉 ¡MEMBRESÍA ACTIVADA!', mensaje);
                 await updateAllBalanceDisplays();
                 updateMembershipAlert();
@@ -2252,8 +2319,8 @@
         
         function confirmTransferDone() {
             const email = currentUser?.email || 'tu_correo@ejemplo.com';
-            const mensajePredefinido = `💰 DEPÓSITO PRONÓSTICO PRO\n\n💳 Tarjeta: 9227 0699 9771 1927\n📝 Número de transacción: [TU NÚMERO]\n💵 Monto: [MONTO] Cup\n📧 Correo: ${email}\n\n📎 Adjunto captura de pantalla`;
-            showDialog('✅ Transferencia confirmada', `Por favor, envía la captura de pantalla y este mensaje a @sdesaroyador:\n\n<code style="display:block; background:rgba(0,0,0,0.1); padding:10px; border-radius:12px; margin-top:8px; font-size:11px; text-align:left;">${mensajePredefinido.replace(/\n/g, '<br>')}</code>\n\n📌 Recuerda adjuntar la imagen de tu transferencia.`);
+            const mensajePredefinido = `💰 DEPÓSITO PRONÓSTICO PRO\n\n💳 Tarjeta: 9227 0699 9771 1927\n📝 Número de transacción: [TU NÚMERO]\n💵 Monto: [MONTO] Cup\n📧 Correo: ${email}`;
+            showDialog('✅ Transferencia confirmada', `Por favor, envía la captura de pantalla y este mensaje a @sdesaroyador:\n\n<code style="display:block; background:rgba(0,0,0,0.1); padding:8px; border-radius:12px; margin-top:8px; font-size:11px; text-align:left;">${mensajePredefinido.replace(/\n/g, '<br>')}</code>\n\n📌 Recuerda adjuntar la imagen de tu transferencia.`);
         }
         
         function generateIAPrediction() {
@@ -2314,7 +2381,7 @@
         function displayDecenasTerminales(decenas, terminales) {
             const container = document.getElementById('iaDecenasTerminalesGrid');
             if ((!decenas || decenas.length === 0) && (!terminales || terminales.length === 0)) { container.innerHTML = ''; return; }
-            container.innerHTML = `<div class="decenas-box"><h4>🔟 DECENAS MÁS PROBABLES</h4><div class="decenas-items">${decenas.map(d => `<span class="decena-item">${d}</span>`).join('')}</div><div style="font-size: 0.65rem; margin-top: 8px; color: var(--text-secondary);">Números que comienzan con estos dígitos</div></div><div class="terminales-box"><h4>🔢 TERMINALES MÁS PROBABLES</h4><div class="terminales-items">${terminales.map(t => `<span class="terminal-item">${t}</span>`).join('')}</div><div style="font-size: 0.65rem; margin-top: 8px; color: var(--text-secondary);">Números que terminan con estos dígitos</div></div>`;
+            container.innerHTML = `<div class="decenas-box"><h4>🔟 DECENAS MÁS PROBABLES</h4><div class="decenas-items">${decenas.map(d => `<span class="decena-item">${d}</span>`).join('')}</div><div style="font-size: 0.6rem; margin-top: 6px; color: var(--text-secondary);">Números que comienzan con estos dígitos</div></div><div class="terminales-box"><h4>🔢 TERMINALES MÁS PROBABLES</h4><div class="terminales-items">${terminales.map(t => `<span class="terminal-item">${t}</span>`).join('')}</div><div style="font-size: 0.6rem; margin-top: 6px; color: var(--text-secondary);">Números que terminan con estos dígitos</div></div>`;
         }
         
         async function loadIAData() { if (!currentUser) return; const saved = localStorage.getItem(`iaPro_${currentUser.email}`); if (saved) { try { const data = JSON.parse(saved); iaNumbers = data.numbers || []; iaDecenas = data.decenas || []; iaTerminales = data.terminales || []; iaLastInput = data.lastInput || ''; if (iaNumbers.length > 0) { displayIANumbers(iaNumbers); displayDecenasTerminales(iaDecenas, iaTerminales); document.getElementById('iaHistoryContainer').style.display = 'block'; document.getElementById('iaLastInput').innerHTML = `📊 "${iaLastInput}" → Generados ${iaNumbers.length} números (${new Date(data.timestamp).toLocaleDateString()})`; } } catch(e) { console.error(e); } } }
@@ -2339,7 +2406,7 @@
         async function processReferral(newUserEmail, referralCode) { if (!referralCode) return null; try { const usersRef = db.collection('members'); const query = await usersRef.where('referralCode', '==', referralCode).get(); if (!query.empty) { const referrerDoc = query.docs[0]; const referrerEmail = referrerDoc.data().email; if (referrerEmail === newUserEmail) return null; await db.collection('referrals').add({ referrerEmail: referrerEmail, referredEmail: newUserEmail, referredAt: new Date().toISOString(), status: 'pending_cup', statusDays: 'pending_days', membershipActive: false, referralCode: referralCode }); return referrerEmail; } } catch (error) {} return null; }
         async function checkAndRewardReferralsWithCup(userEmail) { try { const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); let totalEarned = 0; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const refId = doc.id; if (referral.status === 'rewarded_cup') continue; const referredMember = await db.collection('members').doc(referral.referredEmail).get(); if (referredMember.exists && referredMember.data().membershipActive) { const expires = new Date(referredMember.data().membershipExpires); if (expires > new Date()) { const rewardCheck = await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').get(); if (!rewardCheck.exists) { const userRef = db.collection('wallets').doc(userEmail); const userDoc = await userRef.get(); const currentBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; await userRef.set({ balance: currentBalance + 50, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); await db.collection('referrals').doc(refId).update({ status: 'rewarded_cup', rewardedAt: new Date().toISOString(), rewardAmount: 50 }); totalEarned += 50; } } } } if (totalEarned > 0) { await loadUserBalance(); await updateAllBalanceDisplays(); showDialog('🎉 ¡RECOMPENSA RECIBIDA!', `Has ganado ${totalEarned} cup por referidos activos.`); await updateReferralsUI(); await loadProfile(); } return totalEarned; } catch (error) { return 0; } }
         async function checkAndRewardReferrals(userEmail) { try { const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); let activeReferrals = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); if (referral.statusDays === 'rewarded_days') continue; const referredMember = await db.collection('members').doc(referral.referredEmail).get(); if (referredMember.exists && referredMember.data().membershipActive) { const expires = new Date(referredMember.data().membershipExpires); if (expires > new Date()) activeReferrals.push({ id: doc.id, data: referral }); } } const activeCount = activeReferrals.length; const rewardCycles = Math.floor(activeCount / 10); if (rewardCycles > 0) { const userDoc = await db.collection('members').doc(userEmail).get(); let currentExpires = new Date(); if (userDoc.exists && userDoc.data().membershipExpires) { currentExpires = new Date(userDoc.data().membershipExpires); if (currentExpires < new Date()) currentExpires = new Date(); } const newExpires = new Date(currentExpires); newExpires.setDate(newExpires.getDate() + (rewardCycles * 30)); await db.collection('members').doc(userEmail).update({ membershipExpires: newExpires.toISOString(), referralBonusDays: firebase.firestore.FieldValue.increment(rewardCycles * 30) }); for (let i = 0; i < rewardCycles * 10 && i < activeReferrals.length; i++) { await db.collection('referrals').doc(activeReferrals[i].id).update({ statusDays: 'rewarded_days', rewardedAt: new Date().toISOString(), rewardDays: 30 }); } showDialog('🎁 ¡RECOMPENSA DE DÍAS RECIBIDA!', `Has ganado ${rewardCycles * 30} días gratis de membresía.`); await checkMembership(userEmail); } return { totalReferrals: referralsSnapshot.size, activeReferrals: activeCount }; } catch (error) { return { totalReferrals: 0, activeReferrals: 0 }; } }
-        async function updateReferralsUI() { if (!currentUser) return; try { const userDoc = await db.collection('members').doc(currentUser.email).get(); const referralCode = userDoc.data()?.referralCode || 'No disponible'; document.getElementById('userReferralCode').innerText = referralCode; const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get(); let activeCount = 0; let totalCupEarned = 0; const referralsList = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const referredMember = await db.collection('members').doc(referral.referredEmail).get(); const isActive = referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date(); if (isActive) activeCount++; if (referral.status === 'rewarded_cup') totalCupEarned += 50; referralsList.push({ email: referral.referredEmail, date: referral.referredAt, isActive: isActive, rewarded: referral.status === 'rewarded_cup' }); } const totalReferrals = referralsSnapshot.size; document.getElementById('referralsCount').innerText = totalReferrals; document.getElementById('totalReferrals').innerText = totalReferrals; document.getElementById('activeReferralsCount').innerText = activeCount; document.getElementById('referralCupEarned').innerText = totalCupEarned; document.getElementById('cupEarnedStat').innerText = totalCupEarned; const tbody = document.getElementById('referralsTableBody'); tbody.innerHTML = ''; if (referralsList.length === 0) { tbody.innerHTML = '<table><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></tr>'; } else { referralsList.forEach(ref => { const row = tbody.insertRow(); row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`; row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString(); row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>'; row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-'); }); } await checkAndRewardReferralsWithCup(currentUser.email); await checkAndRewardReferrals(currentUser.email); } catch (error) { console.error('Error actualizando referidos:', error); } }
+        async function updateReferralsUI() { if (!currentUser) return; try { const userDoc = await db.collection('members').doc(currentUser.email).get(); const referralCode = userDoc.data()?.referralCode || 'No disponible'; document.getElementById('userReferralCode').innerText = referralCode; const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get(); let activeCount = 0; let totalCupEarned = 0; const referralsList = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const referredMember = await db.collection('members').doc(referral.referredEmail).get(); const isActive = referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date(); if (isActive) activeCount++; if (referral.status === 'rewarded_cup') totalCupEarned += 50; referralsList.push({ email: referral.referredEmail, date: referral.referredAt, isActive: isActive, rewarded: referral.status === 'rewarded_cup' }); } const totalReferrals = referralsSnapshot.size; document.getElementById('referralsCount').innerText = totalReferrals; document.getElementById('totalReferrals').innerText = totalReferrals; document.getElementById('activeReferralsCount').innerText = activeCount; document.getElementById('referralCupEarned').innerText = totalCupEarned; document.getElementById('cupEarnedStat').innerText = totalCupEarned; const tbody = document.getElementById('referralsTableBody'); tbody.innerHTML = ''; if (referralsList.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></tr>'; } else { referralsList.forEach(ref => { const row = tbody.insertRow(); row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`; row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString(); row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>'; row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-'); }); } await checkAndRewardReferralsWithCup(currentUser.email); await checkAndRewardReferrals(currentUser.email); } catch (error) { console.error('Error actualizando referidos:', error); } }
         async function loadUserBalance() { if (!currentUser) return; try { const userDoc = await db.collection('wallets').doc(currentUser.email).get(); userBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; await updateAllBalanceDisplays(); return userBalance; } catch (error) { return 0; } }
         async function updateUserBalance(amount) { if (!currentUser) return; try { await db.collection('wallets').doc(currentUser.email).set({ balance: amount, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); userBalance = amount; await updateAllBalanceDisplays(); } catch (error) {} }
         function showDepositForm() { document.getElementById('depositForm').style.display = 'block'; document.getElementById('withdrawForm').style.display = 'none'; }
@@ -2347,30 +2414,27 @@
         async function submitDeposit() { if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; } const amount = parseFloat(document.getElementById('depositAmount').value); const transactionNumber = document.getElementById('transactionNumber').value.trim(); if (isNaN(amount) || amount < 200) { showDialog('Error', 'El monto mínimo para depósito es 200 Cup (incluye membresía de 30 días)'); return; } if (!transactionNumber) { showDialog('Error', 'Ingresa el número de transacción'); return; } try { await db.collection('transactions').add({ userEmail: currentUser.email, userId: currentUser.uid, type: 'deposit', amount: amount, transactionNumber: transactionNumber, status: 'pending', timestamp: firebase.firestore.FieldValue.serverTimestamp(), processedForMembership: false }); document.getElementById('transactionNumber').value = ''; document.getElementById('depositAmount').value = '200'; showDialog('✅ Solicitud enviada', `Depósito de ${amount} Cup registrado.\n\n📌 IMPORTANTE:\n1. Envía la captura a @sdesaroyador\n2. El administrador aprobará tu depósito\n3. Al aprobarse, se activará tu membresía por 30 días y tu saldo será de ${amount - 200} Cup\n\nNúmero de transacción: ${transactionNumber}`); loadTransactions(); } catch (error) { showDialog('Error', error.message); } }
         async function submitWithdraw() { if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; } const amount = parseFloat(document.getElementById('withdrawAmount').value); const cardNumber = document.getElementById('withdrawCardNumber').value.trim(); const phone = document.getElementById('withdrawPhone').value.trim(); if (isNaN(amount) || amount < 50) { showDialog('Error', 'Monto mínimo: 50 Cup'); return; } if (amount > userBalance) { showDialog('Error', `Saldo insuficiente. Saldo actual: ${userBalance} Cup`); return; } if (!cardNumber || !phone) { showDialog('Error', 'Completa todos los campos'); return; } try { await db.collection('transactions').add({ userEmail: currentUser.email, userId: currentUser.uid, type: 'withdraw', amount: amount, cardNumber: cardNumber, phone: phone, status: 'pending', timestamp: firebase.firestore.FieldValue.serverTimestamp() }); document.getElementById('withdrawAmount').value = ''; document.getElementById('withdrawCardNumber').value = ''; document.getElementById('withdrawPhone').value = ''; showDialog('✅ Solicitud enviada', `Retiro de ${amount} Cup solicitado.`); loadTransactions(); } catch (error) { showDialog('Error', error.message); } }
         async function loadTransactions() { if (!currentUser) return; try { const transactionsSnapshot = await db.collection('transactions').where('userEmail', '==', currentUser.email).orderBy('timestamp', 'desc').limit(30).get(); const historyCard = document.getElementById('transactionHistoryCard'); const tbody = document.getElementById('transactionsTableBody'); if (!transactionsSnapshot.empty) { historyCard.style.display = 'block'; tbody.innerHTML = ''; transactionsSnapshot.forEach(doc => { const tx = doc.data(); const row = tbody.insertRow(); const date = tx.timestamp?.toDate ? tx.timestamp.toDate().toLocaleString() : new Date(tx.timestamp).toLocaleString(); row.insertCell(0).innerText = date; let typeText = ''; if (tx.type === 'deposit') typeText = '💰 Depósito'; else if (tx.type === 'withdraw') typeText = '🏦 Retiro'; else if (tx.type === 'membership_deduction') typeText = '🔻 Membresía'; else if (tx.type === 'deposit_processed') typeText = '💵 Depósito Procesado'; else typeText = tx.type; row.insertCell(1).innerHTML = typeText; let amountText = ''; if (tx.type === 'deposit') amountText = `${tx.amount} Cup`; else if (tx.type === 'withdraw') amountText = `- ${tx.amount} Cup`; else if (tx.type === 'membership_deduction') amountText = `- ${tx.amount} Cup`; else if (tx.type === 'deposit_processed') amountText = tx.finalBalance !== undefined ? `Saldo final: ${tx.finalBalance} Cup` : `${tx.amount} Cup`; else amountText = `${tx.amount} Cup`; row.insertCell(2).innerText = amountText; let statusHtml = ''; if (tx.status === 'approved') statusHtml = '<span class="badge-win">✅ Aprobado</span>'; else if (tx.status === 'pending') statusHtml = '<span class="badge-pending">⏳ Pendiente</span>'; else if (tx.type === 'deposit_processed') statusHtml = '<span class="badge-win">✅ Procesado</span>'; else statusHtml = '<span style="color: var(--danger);">❌ Rechazado</span>'; row.insertCell(3).innerHTML = statusHtml; }); } else { historyCard.style.display = 'none'; } } catch (error) {} }
-        function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) { const container = document.getElementById('predictionsContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); if (!isActive) { container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para ver los pronósticos.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button></div>`; return; } let finalNumbers = numbers; let finalStrong = strongNumbers; let finalMedium = mediumNumbers; let finalAfternoon = afternoonWinner; let finalNight = nightWinner; let finalLastUpdate = lastUpdate; let finalLastUpdateFormatted = lastUpdateFormatted; if (finalNumbers && finalNumbers.length > 0) { cachedNumbers = [...finalNumbers]; cachedStrong = finalStrong || []; cachedMedium = finalMedium || []; if (finalAfternoon !== undefined) cachedAfternoonWinner = finalAfternoon; if (finalNight !== undefined) cachedNightWinner = finalNight; if (finalLastUpdate) cachedLastUpdate = finalLastUpdate; if (finalLastUpdateFormatted) cachedLastUpdateFormatted = finalLastUpdateFormatted; } else if (cachedNumbers.length > 0) { finalNumbers = cachedNumbers; finalStrong = cachedStrong; finalMedium = cachedMedium; if (afternoonWinner === undefined) finalAfternoon = cachedAfternoonWinner; if (nightWinner === undefined) finalNight = cachedNightWinner; if (!lastUpdate) finalLastUpdate = cachedLastUpdate; if (!lastUpdateFormatted) finalLastUpdateFormatted = cachedLastUpdateFormatted; } if (!finalNumbers || finalNumbers.length === 0) { container.innerHTML = `<div class="text-center"><h3>⏳ Esperando pronósticos</h3><p>Los números se mostrarán aquí cuando el admin los publique.</p></div>`; return; } const displayTime = finalLastUpdateFormatted || formatTime12Hour(finalLastUpdate); const displayDate = formatDate(finalLastUpdate); const currentDate = getCurrentDateFormatted(); let html = `<h2 style="color: var(--gold-solid); font-size: 1.2rem;">🎯 Pronóstico del Día <span class="live-badge">ACTIVO</span></h2><div class="update-info"><span class="update-label">📅 Fecha: ${currentDate}</span><span class="update-time">🕒 Actualización: ${displayTime}</span><span class="update-date">📆 Publicado: ${displayDate}</span></div><div class="numbers-grid" id="numbersGrid"></div>`; let afternoonClass = 'result-box result-waiting'; let afternoonText = '⏳ ESPERANDO RESULTADO...'; let afternoonAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>'; if (finalAfternoon) { if (finalAfternoon === 'fallo') { afternoonClass = 'result-box result-fallo'; afternoonText = '❌ FALLO - No hubo ganador'; afternoonAlert = ''; } else { afternoonClass = 'result-box result-winner'; afternoonText = `🎯 GANADOR: ${finalAfternoon}`; afternoonAlert = ''; } } html += `<div class="${afternoonClass}"><div class="result-title">🌅 MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`; let nightClass = 'result-box result-waiting'; let nightText = '⏳ ESPERANDO RESULTADO...'; let nightAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>'; if (finalNight) { if (finalNight === 'fallo') { nightClass = 'result-box result-fallo'; nightText = '❌ FALLO - No hubo ganador'; nightAlert = ''; } else { nightClass = 'result-box result-winner'; nightText = `🎯 GANADOR: ${finalNight}`; nightAlert = ''; } } html += `<div class="${nightClass}"><div class="result-title">🌙 NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div>${nightAlert}</div>`; container.innerHTML = html; const grid = document.getElementById('numbersGrid'); if (grid) { grid.innerHTML = ''; finalNumbers.forEach(num => { let className = 'number-card'; if (finalStrong && finalStrong.includes(num)) className += ' strong'; else if (finalMedium && finalMedium.includes(num)) className += ' medium'; const isWinner = (finalAfternoon && finalAfternoon !== 'fallo' && finalAfternoon === num) || (finalNight && finalNight !== 'fallo' && finalNight === num); if (isWinner) className += ' winner'; let probText = ''; if (finalStrong && finalStrong.includes(num)) probText = '<div class="probability">🔥 68%</div>'; else if (finalMedium && finalMedium.includes(num)) probText = '<div class="probability">📊 50%</div>'; const card = document.createElement('div'); card.className = className; card.innerHTML = `<div class="number">${num}</div>${probText}`; grid.appendChild(card); }); } }
+        function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) { const container = document.getElementById('predictionsContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); if (!isActive) { container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para ver los pronósticos.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button></div>`; return; } let finalNumbers = numbers; let finalStrong = strongNumbers; let finalMedium = mediumNumbers; let finalAfternoon = afternoonWinner; let finalNight = nightWinner; let finalLastUpdate = lastUpdate; let finalLastUpdateFormatted = lastUpdateFormatted; if (finalNumbers && finalNumbers.length > 0) { cachedNumbers = [...finalNumbers]; cachedStrong = finalStrong || []; cachedMedium = finalMedium || []; if (finalAfternoon !== undefined) cachedAfternoonWinner = finalAfternoon; if (finalNight !== undefined) cachedNightWinner = finalNight; if (finalLastUpdate) cachedLastUpdate = finalLastUpdate; if (finalLastUpdateFormatted) cachedLastUpdateFormatted = finalLastUpdateFormatted; } else if (cachedNumbers.length > 0) { finalNumbers = cachedNumbers; finalStrong = cachedStrong; finalMedium = cachedMedium; if (afternoonWinner === undefined) finalAfternoon = cachedAfternoonWinner; if (nightWinner === undefined) finalNight = cachedNightWinner; if (!lastUpdate) finalLastUpdate = cachedLastUpdate; if (!lastUpdateFormatted) finalLastUpdateFormatted = cachedLastUpdateFormatted; } if (!finalNumbers || finalNumbers.length === 0) { container.innerHTML = `<div class="text-center"><h3>⏳ Esperando pronósticos</h3><p>Los números se mostrarán aquí cuando el admin los publique.</p></div>`; return; } const displayTime = finalLastUpdateFormatted || formatTime12Hour(finalLastUpdate); const displayDate = formatDate(finalLastUpdate); const currentDate = getCurrentDateFormatted(); let html = `<h2 style="color: var(--gold-solid); font-size: 1.1rem;">🎯 Pronóstico del Día <span class="live-badge">ACTIVO</span></h2><div class="update-info"><span class="update-label">📅 Fecha: ${currentDate}</span><span class="update-time">🕒 Actualización: ${displayTime}</span><span class="update-date">📆 Publicado: ${displayDate}</span></div><div class="numbers-grid" id="numbersGrid"></div>`; let afternoonClass = 'result-box result-waiting'; let afternoonText = '⏳ ESPERANDO RESULTADO...'; let afternoonAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>'; if (finalAfternoon) { if (finalAfternoon === 'fallo') { afternoonClass = 'result-box result-fallo'; afternoonText = '❌ FALLO - No hubo ganador'; afternoonAlert = ''; } else { afternoonClass = 'result-box result-winner'; afternoonText = `🎯 GANADOR: ${finalAfternoon}`; afternoonAlert = ''; } } html += `<div class="${afternoonClass}"><div class="result-title">🌅 MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`; let nightClass = 'result-box result-waiting'; let nightText = '⏳ ESPERANDO RESULTADO...'; let nightAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>'; if (finalNight) { if (finalNight === 'fallo') { nightClass = 'result-box result-fallo'; nightText = '❌ FALLO - No hubo ganador'; nightAlert = ''; } else { nightClass = 'result-box result-winner'; nightText = `🎯 GANADOR: ${finalNight}`; nightAlert = ''; } } html += `<div class="${nightClass}"><div class="result-title">🌙 NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div>${nightAlert}</div>`; container.innerHTML = html; const grid = document.getElementById('numbersGrid'); if (grid) { grid.innerHTML = ''; finalNumbers.forEach(num => { let className = 'number-card'; if (finalStrong && finalStrong.includes(num)) className += ' strong'; else if (finalMedium && finalMedium.includes(num)) className += ' medium'; const isWinner = (finalAfternoon && finalAfternoon !== 'fallo' && finalAfternoon === num) || (finalNight && finalNight !== 'fallo' && finalNight === num); if (isWinner) className += ' winner'; let probText = ''; if (finalStrong && finalStrong.includes(num)) probText = '<div class="probability">🔥 68%</div>'; else if (finalMedium && finalMedium.includes(num)) probText = '<div class="probability">📊 50%</div>'; const card = document.createElement('div'); card.className = className; card.innerHTML = `<div class="number">${num}</div>${probText}`; grid.appendChild(card); }); } }
         function setupRealtimeListeners() { if (unsubscribePredictions) unsubscribePredictions(); unsubscribePredictions = db.collection('masterPredictions').doc('current').onSnapshot((doc) => { if (doc.exists) { const data = doc.data(); renderPredictions(data.numbers || [], data.strongNumbers || [], data.mediumNumbers || [], data.afternoonWinner || null, data.nightWinner || null, data.lastUpdate || null, data.lastUpdateFormatted || null); } else { renderPredictions([], [], [], null, null, null, null); } }); if (unsubscribeRiddle) unsubscribeRiddle(); unsubscribeRiddle = db.collection('riddles').doc('current').onSnapshot(() => { if (document.getElementById('riddleSection').style.display !== 'none') loadRiddle(); }); if (unsubscribeDailyProb) unsubscribeDailyProb(); unsubscribeDailyProb = db.collection('dailyProbabilities').doc('current').onSnapshot(() => { if (document.getElementById('dailyProbSection').style.display !== 'none') loadDailyProbabilities(); }); }
         async function loadRiddle() { try { const doc = await db.collection('riddles').doc('current').get(); if (doc.exists) { const data = doc.data(); document.getElementById('riddleQuestion').innerHTML = data.question || 'No hay adivinanza'; window.currentRiddleAnswer = data.answer || ''; document.getElementById('riddleAnswer').innerHTML = window.currentRiddleAnswer; document.getElementById('riddleDate').innerHTML = `📅 ${data.date || getCurrentDateFormatted()}`; } else { document.getElementById('riddleQuestion').innerHTML = '✨ No hay adivinanza hoy'; } document.getElementById('riddleAnswer').classList.remove('show'); } catch (error) {} }
         function toggleRiddleAnswer() { document.getElementById('riddleAnswer').classList.toggle('show'); }
         async function loadDailyProbabilities() { const currentDate = getCurrentDateFormatted(); const badgeElement = document.getElementById('probabilitiesTodayBadge'); if (badgeElement) badgeElement.innerHTML = `📅 ${currentDate}`; try { const doc = await db.collection('dailyProbabilities').doc('current').get(); if (doc.exists) { const data = doc.data(); const numbers = data.numbers || []; const percentages = data.percentages || []; const lastUpdate = data.lastUpdateFormatted || 'No disponible'; const lastUpdateDate = data.lastUpdate ? new Date(data.lastUpdate).toLocaleDateString() : 'No disponible'; document.getElementById('probUpdateTime').innerHTML = lastUpdate; document.getElementById('probUpdateDate').innerHTML = lastUpdateDate; const container = document.getElementById('probabilitiesList'); container.innerHTML = ''; if (numbers.length === 0) { container.innerHTML = '<div class="text-center">📊 No hay probabilidades</div>'; return; } numbers.forEach((num, index) => { const percent = percentages[index] || Math.floor(Math.random() * 30) + 50; const probDiv = document.createElement('div'); probDiv.className = 'prob-item'; probDiv.innerHTML = `<div class="prob-number">${num}</div><div class="prob-percent">${percent}%</div>`; container.appendChild(probDiv); }); } else { document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">📊 No hay probabilidades disponibles hoy</div>'; document.getElementById('probUpdateTime').innerHTML = '--:-- --'; document.getElementById('probUpdateDate').innerHTML = '--/--/----'; } } catch (error) { console.error('Error cargando probabilidades:', error); document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">❌ Error al cargar probabilidades</div>'; } }
-        async function loadHistory() { if (!currentUser) return; const tbody = document.getElementById('historyTableBody'); try { const historySnapshot = await db.collection('dailyResults').orderBy('timestamp', 'desc').limit(50).get(); if (historySnapshot.empty) { tbody.innerHTML = '<tr><td colspan="4" class="text-center">📭 No hay resultados registrados aún</td></tr>'; return; } tbody.innerHTML = ''; for (const doc of historySnapshot.docs) { const data = doc.data(); const dateStr = data.date || doc.id; if (data.afternoonWinner) { const row = tbody.insertRow(); row.insertCell(0).innerText = dateStr; row.insertCell(1).innerHTML = '🌅 <strong>Mediodía</strong><br><span style="font-size:0.7rem;">(1:35 PM)</span>'; const isFallo = (data.afternoonWinner === 'fallo' || data.afternoonWinner === 'FALLO'); row.insertCell(2).innerHTML = isFallo ? '<span style="color: var(--danger); font-weight:700;">❌ FALLO</span>' : `<span style="color: var(--gold-solid); font-weight:700;">${data.afternoonWinner}</span>`; row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>'; } if (data.nightWinner) { const row = tbody.insertRow(); row.insertCell(0).innerText = dateStr; row.insertCell(1).innerHTML = '🌙 <strong>Noche</strong><br><span style="font-size:0.7rem;">(9:50 PM)</span>'; const isFallo = (data.nightWinner === 'fallo' || data.nightWinner === 'FALLO'); row.insertCell(2).innerHTML = isFallo ? '<span style="color: var(--danger); font-weight:700;">❌ FALLO</span>' : `<span style="color: var(--gold-solid); font-weight:700;">${data.nightWinner}</span>`; row.insertCell(3).innerHTML = '<span class="badge-win">📋 Registrado</span>'; } } } catch (error) { console.error('Error cargando historial:', error); tbody.innerHTML = '<tr><td colspan="4" class="text-center">❌ Error al cargar historial</td></tr>'; } }
-        async function loadComments() { const container = document.getElementById('commentsList'); if (!container) return; try { const commentsSnapshot = await db.collection('comments').orderBy('timestamp', 'desc').limit(50).get(); if (commentsSnapshot.empty) { container.innerHTML = '<div class="text-center" style="padding: 2rem;">💬 No hay comentarios aún. ¡Sé el primero en compartir tu jugada!</div>'; return; } container.innerHTML = ''; commentsSnapshot.forEach(doc => { const comment = doc.data(); const commentDiv = document.createElement('div'); commentDiv.className = 'comment-card'; let numberHtml = ''; if (comment.number) numberHtml = `<div class="comment-number" style="display:inline-block; background:var(--gradient-primary); color:#0A0F2C; padding:4px 12px; border-radius:20px; font-size:0.7rem; margin-top:8px; font-weight:600;">🎯 Número jugado: ${escapeHtml(comment.number)} ${comment.draw ? `(${escapeHtml(comment.draw)})` : ''}</div>`; commentDiv.innerHTML = `<div class="comment-header"><span class="comment-user">👤 ${escapeHtml(comment.userEmail || 'Usuario')}</span><span class="comment-date">📅 ${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Reciente'}</span></div><div class="comment-text">${escapeHtml(comment.message)}</div>${numberHtml}`; container.appendChild(commentDiv); }); } catch (error) { console.error('Error cargando comentarios:', error); container.innerHTML = '<div class="text-center">❌ Error al cargar comentarios</div>'; } }
+        async function loadComments() { const container = document.getElementById('commentsList'); if (!container) return; try { const commentsSnapshot = await db.collection('comments').orderBy('timestamp', 'desc').limit(50).get(); if (commentsSnapshot.empty) { container.innerHTML = '<div class="text-center" style="padding: 2rem;">💬 No hay comentarios aún. ¡Sé el primero en compartir tu jugada!</div>'; return; } container.innerHTML = ''; commentsSnapshot.forEach(doc => { const comment = doc.data(); const commentDiv = document.createElement('div'); commentDiv.className = 'comment-card'; let numberHtml = ''; if (comment.number) numberHtml = `<div class="comment-number" style="display:inline-block; background:var(--gradient-primary); color:#0A0F2C; padding:4px 12px; border-radius:20px; font-size:0.65rem; margin-top:8px; font-weight:600;">🎯 Número jugado: ${escapeHtml(comment.number)} ${comment.draw ? `(${escapeHtml(comment.draw)})` : ''}</div>`; commentDiv.innerHTML = `<div class="comment-header"><span class="comment-user">👤 ${escapeHtml(comment.userEmail || 'Usuario')}</span><span class="comment-date">📅 ${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Reciente'}</span></div><div class="comment-text">${escapeHtml(comment.message)}</div>${numberHtml}`; container.appendChild(commentDiv); }); } catch (error) { console.error('Error cargando comentarios:', error); container.innerHTML = '<div class="text-center">❌ Error al cargar comentarios</div>'; } }
         async function publishComment() { if (!currentUser) { showDialog('Inicia sesión', 'Debes iniciar sesión para publicar comentarios'); return; } const message = document.getElementById('commentMessage').value.trim(); const number = document.getElementById('commentNumber').value.trim(); const draw = document.getElementById('commentDraw').value.trim(); if (!message) { showDialog('Error', 'Escribe un comentario antes de publicar'); return; } try { await db.collection('comments').add({ userEmail: currentUser.email, userId: currentUser.uid, message: message, number: number || null, draw: draw || null, timestamp: firebase.firestore.FieldValue.serverTimestamp(), likes: 0 }); document.getElementById('commentMessage').value = ''; document.getElementById('commentNumber').value = ''; document.getElementById('commentDraw').value = ''; showDialog('✅ Publicado', 'Tu comentario ha sido publicado'); loadComments(); } catch (error) { showDialog('Error', 'No se pudo publicar el comentario'); } }
         function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
-        async function loadProfile() { const content = document.getElementById('profileContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); const expires = userMembership?.membershipExpires ? new Date(userMembership.membershipExpires).toLocaleDateString() : 'Inactiva'; let daysLeft = 0; if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000); document.getElementById('daysLeft').innerText = daysLeft; const referralCode = userMembership?.referralCode || 'Cargando...'; content.innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div><div class="stat-card"><div class="stat-number">${userBalance}</div><div class="stat-label">💰 Saldo Cup</div></div></div><div style="background: rgba(0, 0, 0, 0.5); border-radius: 20px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Membresía vence:</strong> ${expires}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--gradient-primary); color: #0A0F2C; padding: 0.2rem 0.5rem; border-radius: 12px; font-weight:600;">${escapeHtml(referralCode)}</code></p><button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--gradient-primary); width: auto;">📲 Compartir enlace de Telegram</button></div>${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}${!isActive ? `<div style="margin-top: 1rem; padding: 1rem; background: rgba(220, 20, 60, 0.2); border-radius: 20px; text-align: center;"><strong style="color: var(--danger);">⚠️ Membresía Inactiva</strong><br>Realiza un depósito de 200 Cup para activar 30 días de acceso.</div>` : ''}`; }
+        async function loadProfile() { const content = document.getElementById('profileContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); const expires = userMembership?.membershipExpires ? new Date(userMembership.membershipExpires).toLocaleDateString() : 'Inactiva'; let daysLeft = 0; if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000); document.getElementById('daysLeft').innerText = daysLeft; const referralCode = userMembership?.referralCode || 'Cargando...'; content.innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div><div class="stat-card"><div class="stat-number">${userBalance}</div><div class="stat-label">💰 Saldo Cup</div></div></div><div style="background: rgba(0, 0, 0, 0.5); border-radius: 20px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Membresía vence:</strong> ${expires}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--gradient-primary); color: #0A0F2C; padding: 0.2rem 0.5rem; border-radius: 12px; font-weight:600;">${escapeHtml(referralCode)}</code></p><button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--gradient-primary); width: auto;">📲 Compartir enlace</button></div>${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}${!isActive ? `<div style="margin-top: 1rem; padding: 1rem; background: rgba(220, 20, 60, 0.2); border-radius: 20px; text-align: center;"><strong style="color: var(--danger);">⚠️ Membresía Inactiva</strong><br>Realiza un depósito de 200 Cup para activar 30 días de acceso.</div>` : ''}`; }
         function showSection(section) { 
             document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
             document.getElementById('iaProSection').style.display = section === 'iaPro' ? 'block' : 'none';
             document.getElementById('riddleSection').style.display = section === 'riddle' ? 'block' : 'none';
             document.getElementById('dailyProbSection').style.display = section === 'dailyProb' ? 'block' : 'none';
             document.getElementById('referralsSection').style.display = section === 'referrals' ? 'block' : 'none';
-            document.getElementById('historySection').style.display = section === 'history' ? 'block' : 'none';
             document.getElementById('commentsSection').style.display = section === 'comments' ? 'block' : 'none';
             document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
             document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none';
             document.getElementById('slotSection').style.display = section === 'slot' ? 'block' : 'none';
             document.querySelectorAll('.nav-card').forEach(card => { if (card.dataset.section === section) card.classList.add('active'); else card.classList.remove('active'); });
             if (section === 'profile') loadProfile();
-            if (section === 'history') loadHistory();
             if (section === 'comments') loadComments();
             if (section === 'referrals') updateReferralsUI();
             if (section === 'payment') { loadTransactions(); loadUserBalance(); }
@@ -2405,7 +2469,6 @@
                 document.getElementById('dashboardScreen').style.display = 'block'; 
                 setupRealtimeListeners(); 
                 setupTransactionListener(); 
-                loadHistory(); 
                 loadComments(); 
                 loadProfile(); 
                 updateReferralsUI(); 
