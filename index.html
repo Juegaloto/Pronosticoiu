@@ -106,7 +106,6 @@
             }
         }
 
-        /* Header con saldo siempre visible */
         .sticky-header {
             position: sticky;
             top: 0;
@@ -539,7 +538,6 @@
             margin-top: 4px;
         }
 
-        /* TRAGAMONEDAS COMPACTO Y REALISTA */
         .slot-machine-compact {
             background: linear-gradient(145deg, #1a1a2e, #0d0d1a);
             border-radius: 24px;
@@ -708,7 +706,6 @@
             100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
 
-        /* Modal de premios compacto */
         .prizes-modal {
             display: none;
             position: fixed;
@@ -1863,7 +1860,6 @@
                 </div>
             </div>
 
-            <!-- TRAGAMONEDAS COMPACTA Y REALISTA -->
             <div id="slotSection" style="display: none;">
                 <div class="slot-machine-compact">
                     <div class="slot-header-compact">
@@ -1896,7 +1892,6 @@
         </div>
     </div>
 
-    <!-- Modal de premios COMPACTO -->
     <div id="prizesModal" class="prizes-modal">
         <div class="prizes-content-compact">
             <h3>🎁 TABLA DE PREMIOS 🎁</h3>
@@ -1914,10 +1909,10 @@
             </div>
             <div class="prize-divider">🟡 DOS SÍMBOLOS IGUALES 🟡</div>
             <div class="prize-grid">
-                <div class="prize-item"><span class="prize-symbol">7️⃣ 7️⃣</span><span class="prize-amount">100 CUP</span></div>
-                <div class="prize-item"><span class="prize-symbol">💎 💎</span><span class="prize-amount">50 CUP</span></div>
-                <div class="prize-item"><span class="prize-symbol">⭐ ⭐</span><span class="prize-amount">30 CUP</span></div>
-                <div class="prize-item"><span class="prize-symbol">🔔 🔔</span><span class="prize-amount">20 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">7️⃣ 7️⃣</span><span class="prize-amount">40 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">💎 💎</span><span class="prize-amount">30 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">⭐ ⭐</span><span class="prize-amount">20 CUP</span></div>
+                <div class="prize-item"><span class="prize-symbol">🔔 🔔</span><span class="prize-amount">15 CUP</span></div>
                 <div class="prize-item"><span class="prize-symbol">🍒 🍒</span><span class="prize-amount">10 CUP</span></div>
                 <div class="prize-item"><span class="prize-symbol">🍋 🍋</span><span class="prize-amount">8 CUP</span></div>
                 <div class="prize-item"><span class="prize-symbol">🍊 🍊</span><span class="prize-amount">5 CUP</span></div>
@@ -1990,14 +1985,46 @@
         let slotBiggestWin = 0;
         let slotHistory = [];
         let isSpinning = false;
+        
+        // Símbolos y sus probabilidades ajustadas para máxima dificultad
+        // Los símbolos con premios altos tienen probabilidades extremadamente bajas
         const slotSymbols = ['🍒', '🍋', '🍊', '🍉', '🍇', '🔔', '⭐', '💎', '7️⃣'];
         
-        // Nuevos premios para 2 símbolos iguales (2 a 100 pesos)
+        // Probabilidades ajustadas para máxima dificultad:
+        // - Los símbolos de premio bajo tienen más probabilidad
+        // - Los símbolos de premio alto (7️⃣, 💎, ⭐) tienen probabilidades muy bajas
+        // - Esto hace que sea muy difícil obtener combinaciones ganadoras
+        const symbolProbabilities = {
+            '🍒': 0.25,   // 25% - premio más bajo
+            '🍋': 0.18,   // 18%
+            '🍊': 0.14,   // 14%
+            '🍉': 0.12,   // 12%
+            '🍇': 0.10,   // 10%
+            '🔔': 0.08,   // 8%
+            '⭐': 0.06,    // 6% - premio alto (raro)
+            '💎': 0.04,   // 4% - premio muy alto (muy raro)
+            '7️⃣': 0.03    // 3% - JACKPOT (extremadamente raro)
+        };
+        
+        // Premios para 3 símbolos iguales
+        const threeSymbolPrizes = {
+            '🍒': 6,
+            '🍋': 5,
+            '🍊': 4,
+            '🍉': 3,
+            '🍇': 3,
+            '🔔': 8,
+            '⭐': 12,
+            '💎': 15,
+            '7️⃣': 400
+        };
+        
+        // Premios para 2 símbolos iguales (2 a 40 cup)
         const twoSymbolPrizes = {
-            '7️⃣': 100,
-            '💎': 50,
-            '⭐': 30,
-            '🔔': 20,
+            '7️⃣': 40,
+            '💎': 30,
+            '⭐': 20,
+            '🔔': 15,
             '🍒': 10,
             '🍋': 8,
             '🍊': 5,
@@ -2005,104 +2032,39 @@
             '🍇': 2
         };
         
-        // Función para actualizar el saldo en tiempo real
-        async function updateAllBalanceDisplays() {
-            if (!currentUser) return;
-            const balanceElement = document.getElementById('balanceDisplay');
-            const walletBalanceElement = document.getElementById('walletBalance');
-            
-            if (balanceElement) balanceElement.innerHTML = `💰 Saldo: ${userBalance} Cup`;
-            if (walletBalanceElement) walletBalanceElement.innerText = userBalance;
-        }
-        
-        // Sonidos
-        function playSound(type) {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.type = 'sine';
-                gain.gain.value = 0.25;
-                
-                if (type === 'win') {
-                    osc.frequency.value = 523.25;
-                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.1);
-                    osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.2);
-                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.3);
-                } else if (type === 'jackpot') {
-                    const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
-                    notes.forEach((freq, i) => {
-                        setTimeout(() => {
-                            const o = audioCtx.createOscillator();
-                            const g = audioCtx.createGain();
-                            o.connect(g);
-                            g.connect(audioCtx.destination);
-                            o.type = 'sine';
-                            o.frequency.value = freq;
-                            g.gain.value = 0.4;
-                            g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
-                            o.start();
-                            o.stop(audioCtx.currentTime + 0.3);
-                        }, i * 100);
-                    });
-                } else if (type === 'lose') {
-                    osc.frequency.value = 220;
-                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.2);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.2);
-                } else if (type === 'spin') {
-                    osc.frequency.value = 440;
-                    osc.frequency.exponentialRampToValueAtTime(660, audioCtx.currentTime + 0.1);
-                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.15);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.15);
-                }
-            } catch(e) { console.log('Audio error:', e); }
-        }
-        
-        // Mostrar celebración visual
-        function showCelebration(message) {
-            const celebration = document.createElement('div');
-            celebration.className = 'winner-celebration';
-            celebration.innerHTML = message;
-            document.body.appendChild(celebration);
-            playSound('win');
-            setTimeout(() => {
-                celebration.remove();
-            }, 2000);
-        }
-        
-        // ========== FUNCIONES TRAGAMONEDAS ==========
+        // Función para obtener símbolo basado en probabilidades (máxima dificultad)
         function getRandomSymbol() {
-            const random = Math.random();
-            if (random < 0.1111) return '🍒';
-            if (random < 0.2222) return '🍋';
-            if (random < 0.3333) return '🍊';
-            if (random < 0.4444) return '🍉';
-            if (random < 0.5555) return '🍇';
-            if (random < 0.6666) return '🔔';
-            if (random < 0.7777) return '⭐';
-            if (random < 0.8888) return '💎';
-            return '7️⃣';
+            const rand = Math.random();
+            let acum = 0;
+            for (const [symbol, prob] of Object.entries(symbolProbabilities)) {
+                acum += prob;
+                if (rand < acum) return symbol;
+            }
+            return '🍒';
         }
         
         function checkWin(symbols) {
-            // Tres iguales
+            // Tres iguales - pagan siempre (son extremadamente raros por las probabilidades)
             if (symbols[0] === symbols[1] && symbols[1] === symbols[2]) {
-                const prizes = { '🍒': 6, '🍋': 5, '🍊': 4, '🍉': 3, '🍇': 3, '🔔': 8, '⭐': 12, '💎': 15, '7️⃣': 400 };
-                if (prizes[symbols[0]]) return { prize: prizes[symbols[0]], name: `¡TRES ${symbols[0]}! +${prizes[symbols[0]]} CUP`, type: 'win' };
+                if (threeSymbolPrizes[symbols[0]]) {
+                    return { prize: threeSymbolPrizes[symbols[0]], name: `¡TRES ${symbols[0]}! +${threeSymbolPrizes[symbols[0]]} CUP`, type: 'win' };
+                }
             }
-            // Dos iguales - premios mejorados de 2 a 100
-            if (symbols[0] === symbols[1] && symbols[0] !== symbols[2]) {
-                if (twoSymbolPrizes[symbols[0]]) return { prize: twoSymbolPrizes[symbols[0]], name: `¡DOS ${symbols[0]}! +${twoSymbolPrizes[symbols[0]]} CUP`, type: 'two' };
-            }
-            if (symbols[1] === symbols[2] && symbols[0] !== symbols[1]) {
-                if (twoSymbolPrizes[symbols[1]]) return { prize: twoSymbolPrizes[symbols[1]], name: `¡DOS ${symbols[1]}! +${twoSymbolPrizes[symbols[1]]} CUP`, type: 'two' };
+            
+            // Dos iguales - AHORA SIEMPRE PAGAN cuando salen (pero es muy difícil que salgan)
+            // Se ha eliminado la probabilidad aleatoria, ahora SIEMPRE pagan si hay 2 iguales
+            if ((symbols[0] === symbols[1] && symbols[0] !== symbols[2]) ||
+                (symbols[1] === symbols[2] && symbols[0] !== symbols[1])) {
+                
+                // Determinar qué símbolo se repite
+                let repeatedSymbol = null;
+                if (symbols[0] === symbols[1]) repeatedSymbol = symbols[0];
+                if (symbols[1] === symbols[2]) repeatedSymbol = symbols[1];
+                
+                if (repeatedSymbol && twoSymbolPrizes[repeatedSymbol]) {
+                    // AHORA SIEMPRE PAGA (100% de las veces que salen 2 iguales)
+                    return { prize: twoSymbolPrizes[repeatedSymbol], name: `¡DOS ${repeatedSymbol}! +${twoSymbolPrizes[repeatedSymbol]} CUP`, type: 'two' };
+                }
             }
             return null;
         }
@@ -2117,7 +2079,6 @@
                 reel1.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
                 reel2.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
                 reel3.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
-                // Añadir clase de animación
                 reel1.classList.add('spinning');
                 reel2.classList.add('spinning');
                 reel3.classList.add('spinning');
@@ -2200,6 +2161,78 @@
             if (!currentUser) return;
             const slotRef = db.collection('slots').doc(currentUser.email);
             await slotRef.set({ spins: slotSpins, nextJackpot: slotNextJackpot, biggestWin: slotBiggestWin, history: slotHistory.slice(-20), lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+        }
+        
+        // Función para actualizar el saldo en tiempo real
+        async function updateAllBalanceDisplays() {
+            if (!currentUser) return;
+            const balanceElement = document.getElementById('balanceDisplay');
+            const walletBalanceElement = document.getElementById('walletBalance');
+            
+            if (balanceElement) balanceElement.innerHTML = `💰 Saldo: ${userBalance} Cup`;
+            if (walletBalanceElement) walletBalanceElement.innerText = userBalance;
+        }
+        
+        // Sonidos
+        function playSound(type) {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = 'sine';
+                gain.gain.value = 0.25;
+                
+                if (type === 'win') {
+                    osc.frequency.value = 523.25;
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                    osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.2);
+                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'jackpot') {
+                    const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+                    notes.forEach((freq, i) => {
+                        setTimeout(() => {
+                            const o = audioCtx.createOscillator();
+                            const g = audioCtx.createGain();
+                            o.connect(g);
+                            g.connect(audioCtx.destination);
+                            o.type = 'sine';
+                            o.frequency.value = freq;
+                            g.gain.value = 0.4;
+                            g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
+                            o.start();
+                            o.stop(audioCtx.currentTime + 0.3);
+                        }, i * 100);
+                    });
+                } else if (type === 'lose') {
+                    osc.frequency.value = 220;
+                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.2);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.2);
+                } else if (type === 'spin') {
+                    osc.frequency.value = 440;
+                    osc.frequency.exponentialRampToValueAtTime(660, audioCtx.currentTime + 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.15);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.15);
+                }
+            } catch(e) { console.log('Audio error:', e); }
+        }
+        
+        // Mostrar celebración visual
+        function showCelebration(message) {
+            const celebration = document.createElement('div');
+            celebration.className = 'winner-celebration';
+            celebration.innerHTML = message;
+            document.body.appendChild(celebration);
+            playSound('win');
+            setTimeout(() => {
+                celebration.remove();
+            }, 2000);
         }
         
         // ========== FUNCIONES GENERALES ==========
@@ -2406,7 +2439,7 @@
         async function processReferral(newUserEmail, referralCode) { if (!referralCode) return null; try { const usersRef = db.collection('members'); const query = await usersRef.where('referralCode', '==', referralCode).get(); if (!query.empty) { const referrerDoc = query.docs[0]; const referrerEmail = referrerDoc.data().email; if (referrerEmail === newUserEmail) return null; await db.collection('referrals').add({ referrerEmail: referrerEmail, referredEmail: newUserEmail, referredAt: new Date().toISOString(), status: 'pending_cup', statusDays: 'pending_days', membershipActive: false, referralCode: referralCode }); return referrerEmail; } } catch (error) {} return null; }
         async function checkAndRewardReferralsWithCup(userEmail) { try { const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); let totalEarned = 0; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const refId = doc.id; if (referral.status === 'rewarded_cup') continue; const referredMember = await db.collection('members').doc(referral.referredEmail).get(); if (referredMember.exists && referredMember.data().membershipActive) { const expires = new Date(referredMember.data().membershipExpires); if (expires > new Date()) { const rewardCheck = await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').get(); if (!rewardCheck.exists) { const userRef = db.collection('wallets').doc(userEmail); const userDoc = await userRef.get(); const currentBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; await userRef.set({ balance: currentBalance + 50, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); await db.collection('referrals').doc(refId).update({ status: 'rewarded_cup', rewardedAt: new Date().toISOString(), rewardAmount: 50 }); totalEarned += 50; } } } } if (totalEarned > 0) { await loadUserBalance(); await updateAllBalanceDisplays(); showDialog('🎉 ¡RECOMPENSA RECIBIDA!', `Has ganado ${totalEarned} cup por referidos activos.`); await updateReferralsUI(); await loadProfile(); } return totalEarned; } catch (error) { return 0; } }
         async function checkAndRewardReferrals(userEmail) { try { const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); let activeReferrals = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); if (referral.statusDays === 'rewarded_days') continue; const referredMember = await db.collection('members').doc(referral.referredEmail).get(); if (referredMember.exists && referredMember.data().membershipActive) { const expires = new Date(referredMember.data().membershipExpires); if (expires > new Date()) activeReferrals.push({ id: doc.id, data: referral }); } } const activeCount = activeReferrals.length; const rewardCycles = Math.floor(activeCount / 10); if (rewardCycles > 0) { const userDoc = await db.collection('members').doc(userEmail).get(); let currentExpires = new Date(); if (userDoc.exists && userDoc.data().membershipExpires) { currentExpires = new Date(userDoc.data().membershipExpires); if (currentExpires < new Date()) currentExpires = new Date(); } const newExpires = new Date(currentExpires); newExpires.setDate(newExpires.getDate() + (rewardCycles * 30)); await db.collection('members').doc(userEmail).update({ membershipExpires: newExpires.toISOString(), referralBonusDays: firebase.firestore.FieldValue.increment(rewardCycles * 30) }); for (let i = 0; i < rewardCycles * 10 && i < activeReferrals.length; i++) { await db.collection('referrals').doc(activeReferrals[i].id).update({ statusDays: 'rewarded_days', rewardedAt: new Date().toISOString(), rewardDays: 30 }); } showDialog('🎁 ¡RECOMPENSA DE DÍAS RECIBIDA!', `Has ganado ${rewardCycles * 30} días gratis de membresía.`); await checkMembership(userEmail); } return { totalReferrals: referralsSnapshot.size, activeReferrals: activeCount }; } catch (error) { return { totalReferrals: 0, activeReferrals: 0 }; } }
-        async function updateReferralsUI() { if (!currentUser) return; try { const userDoc = await db.collection('members').doc(currentUser.email).get(); const referralCode = userDoc.data()?.referralCode || 'No disponible'; document.getElementById('userReferralCode').innerText = referralCode; const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get(); let activeCount = 0; let totalCupEarned = 0; const referralsList = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const referredMember = await db.collection('members').doc(referral.referredEmail).get(); const isActive = referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date(); if (isActive) activeCount++; if (referral.status === 'rewarded_cup') totalCupEarned += 50; referralsList.push({ email: referral.referredEmail, date: referral.referredAt, isActive: isActive, rewarded: referral.status === 'rewarded_cup' }); } const totalReferrals = referralsSnapshot.size; document.getElementById('referralsCount').innerText = totalReferrals; document.getElementById('totalReferrals').innerText = totalReferrals; document.getElementById('activeReferralsCount').innerText = activeCount; document.getElementById('referralCupEarned').innerText = totalCupEarned; document.getElementById('cupEarnedStat').innerText = totalCupEarned; const tbody = document.getElementById('referralsTableBody'); tbody.innerHTML = ''; if (referralsList.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></tr>'; } else { referralsList.forEach(ref => { const row = tbody.insertRow(); row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`; row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString(); row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>'; row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-'); }); } await checkAndRewardReferralsWithCup(currentUser.email); await checkAndRewardReferrals(currentUser.email); } catch (error) { console.error('Error actualizando referidos:', error); } }
+        async function updateReferralsUI() { if (!currentUser) return; try { const userDoc = await db.collection('members').doc(currentUser.email).get(); const referralCode = userDoc.data()?.referralCode || 'No disponible'; document.getElementById('userReferralCode').innerText = referralCode; const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get(); let activeCount = 0; let totalCupEarned = 0; const referralsList = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const referredMember = await db.collection('members').doc(referral.referredEmail).get(); const isActive = referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date(); if (isActive) activeCount++; if (referral.status === 'rewarded_cup') totalCupEarned += 50; referralsList.push({ email: referral.referredEmail, date: referral.referredAt, isActive: isActive, rewarded: referral.status === 'rewarded_cup' }); } const totalReferrals = referralsSnapshot.size; document.getElementById('referralsCount').innerText = totalReferrals; document.getElementById('totalReferrals').innerText = totalReferrals; document.getElementById('activeReferralsCount').innerText = activeCount; document.getElementById('referralCupEarned').innerText = totalCupEarned; document.getElementById('cupEarnedStat').innerText = totalCupEarned; const tbody = document.getElementById('referralsTableBody'); tbody.innerHTML = ''; if (referralsList.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></td>'; } else { referralsList.forEach(ref => { const row = tbody.insertRow(); row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`; row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString(); row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>'; row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-'); }); } await checkAndRewardReferralsWithCup(currentUser.email); await checkAndRewardReferrals(currentUser.email); } catch (error) { console.error('Error actualizando referidos:', error); } }
         async function loadUserBalance() { if (!currentUser) return; try { const userDoc = await db.collection('wallets').doc(currentUser.email).get(); userBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; await updateAllBalanceDisplays(); return userBalance; } catch (error) { return 0; } }
         async function updateUserBalance(amount) { if (!currentUser) return; try { await db.collection('wallets').doc(currentUser.email).set({ balance: amount, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); userBalance = amount; await updateAllBalanceDisplays(); } catch (error) {} }
         function showDepositForm() { document.getElementById('depositForm').style.display = 'block'; document.getElementById('withdrawForm').style.display = 'none'; }
