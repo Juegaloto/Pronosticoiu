@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+--text<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -106,90 +106,90 @@
             }
         }
 
-        /* ALERTA VPN */
-        .vpn-alert {
+        /* PANTALLA DE BLOQUEO VPN (OBLIGATORIO) */
+        .vpn-block-screen {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #DC143C, #8B0000);
-            color: white;
-            padding: 14px 20px;
-            border-radius: 20px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #0A0F2C 0%, #050816 100%);
+            z-index: 30000;
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            z-index: 1000;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            border-left: 5px solid #FFD700;
-            font-weight: 500;
-            backdrop-filter: blur(10px);
-            animation: slideUp 0.3s ease;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .vpn-block-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 35px 25px;
+            max-width: 450px;
+            width: 90%;
+            border: 2px solid var(--gold-solid);
+            box-shadow: var(--shadow-xl);
+            animation: fadeInUp 0.4s ease;
         }
 
-        .vpn-alert button {
-            background: rgba(255,255,255,0.2);
+        .vpn-block-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .vpn-block-title {
+            font-size: 1.8rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .vpn-block-message {
+            color: var(--text-gold-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .vpn-block-btn {
+            background: var(--gradient-primary);
+            color: #0A0F2C;
             border: none;
-            color: white;
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .vpn-block-btn:active {
+            transform: scale(0.97);
+        }
+
+        .vpn-status-badge {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(46, 139, 87, 0.9);
+            backdrop-filter: blur(8px);
             padding: 6px 14px;
             border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-
-        .vpn-alert button:hover {
-            background: rgba(255,255,255,0.4);
-        }
-
-        .vpn-icon {
-            font-size: 1.3rem;
-        }
-
-        /* Botón actualización */
-        .refresh-btn {
-            background: var(--gradient-primary);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.75rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: 0.2s;
-            color: #0A0F2C;
-        }
-
-        .refresh-btn:active {
-            transform: scale(0.96);
-        }
-
-        .refresh-btn.spinning {
-            animation: spinBtn 0.6s ease;
-        }
-
-        @keyframes spinBtn {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .offline-badge {
-            background: #555;
-            color: #ddd;
-            padding: 4px 12px;
-            border-radius: 30px;
             font-size: 0.7rem;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            z-index: 500;
+            font-weight: 600;
+            color: white;
+            pointer-events: none;
+        }
+
+        .vpn-status-badge.vpn-off {
+            background: rgba(220, 20, 60, 0.9);
         }
 
         .sticky-header {
@@ -622,6 +622,50 @@
             font-size: 0.7rem;
             color: var(--text-gold-light);
             margin-top: 4px;
+        }
+
+        .lotteries-banner {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .lottery-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            padding: 8px 18px;
+            border-radius: 60px;
+            border: 1px solid var(--gold-solid);
+            transition: transform 0.2s;
+        }
+
+        .lottery-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .lottery-icon {
+            font-size: 1.8rem;
+        }
+
+        .lottery-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .lottery-location {
+            font-size: 0.65rem;
+            color: var(--text-gold-light);
         }
 
         .slot-machine-compact {
@@ -1510,6 +1554,25 @@
             font-size: 0.8rem;
         }
 
+        .refresh-btn {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+            color: #0A0F2C;
+        }
+
+        .refresh-btn:active {
+            transform: scale(0.96);
+        }
+
         @media (max-width: 640px) {
             .container { padding: 14px; }
             .card { padding: 16px; border-radius: 24px; }
@@ -1531,6 +1594,18 @@
             .reel-symbol-compact {
                 font-size: 2.5rem;
             }
+            .lotteries-banner {
+                gap: 8px;
+            }
+            .lottery-badge {
+                padding: 5px 12px;
+            }
+            .lottery-icon {
+                font-size: 1.3rem;
+            }
+            .lottery-name {
+                font-size: 0.7rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1548,6 +1623,22 @@
     </style>
 </head>
 <body>
+    <!-- PANTALLA DE BLOQUEO VPN (OBLIGATORIO) -->
+    <div id="vpnBlockScreen" class="vpn-block-screen" style="display: none;">
+        <div class="vpn-block-card">
+            <div class="vpn-block-icon">🔒🛡️</div>
+            <div class="vpn-block-title">VPN REQUERIDA</div>
+            <div class="vpn-block-message">
+                ⚠️ <strong>Para acceder a Pronóstico Pro</strong> es necesario tener una <strong>VPN activada</strong>.<br><br>
+                🌍 Activa tu VPN y presiona el botón para verificar.
+            </div>
+            <button class="vpn-block-btn" onclick="checkVPNRequired()">🔄 Verificar VPN</button>
+            <div style="margin-top: 15px; font-size: 0.7rem; color: var(--text-secondary);">
+                La VPN es obligatoria por medidas de seguridad y ubicación.
+            </div>
+        </div>
+    </div>
+
     <div id="loadingScreen" class="loading-screen">
         <div class="loading-spinner"></div>
         <div class="loading-text">🎰 Pronóstico Pro Casino</div>
@@ -1597,8 +1688,10 @@
         </div>
 
         <div class="container">
-            <!-- Alerta VPN se inyecta aquí -->
-            <div id="vpnAlertContainer"></div>
+            <!-- Badge de estado VPN (informativo) -->
+            <div id="vpnStatusBadge" class="vpn-status-badge vpn-off" style="display: none;">
+                <span>🔴</span> VPN: Desactivada
+            </div>
 
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
@@ -2075,7 +2168,6 @@
         let slotHistory = [];
         let isSpinning = false;
         
-        // Símbolos y sus probabilidades ajustadas para máxima dificultad
         const slotSymbols = ['🍒', '🍋', '🍊', '🍉', '🍇', '🔔', '⭐', '💎', '7️⃣'];
         
         const symbolProbabilities = {
@@ -2092,6 +2184,118 @@
             '7️⃣': 40, '💎': 30, '⭐': 20, '🔔': 15,
             '🍒': 10, '🍋': 8, '🍊': 5, '🍉': 3, '🍇': 2
         };
+        
+        // ========== FUNCIONES VPN OBLIGATORIO ==========
+        let vpnRequiredPassed = false;
+        
+        function detectVPNForRequired() {
+            return new Promise((resolve) => {
+                const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
+                pc.createDataChannel("");
+                pc.createOffer()
+                    .then(offer => pc.setLocalDescription(offer))
+                    .catch(() => resolve(false));
+                let resolved = false;
+                pc.onicecandidate = (event) => {
+                    if (event.candidate && !resolved) {
+                        const candidate = event.candidate.candidate;
+                        const ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}/;
+                        const match = candidate.match(ipRegex);
+                        if (match) {
+                            const ip = match[0];
+                            const isPrivate = ip.startsWith('192.168.') || ip.startsWith('10.') || ip.startsWith('172.') || ip === '127.0.0.1';
+                            if (!isPrivate) {
+                                resolved = true;
+                                pc.close();
+                                resolve(true);
+                            } else {
+                                resolved = true;
+                                pc.close();
+                                resolve(false);
+                            }
+                        }
+                    }
+                };
+                setTimeout(() => {
+                    if (!resolved) {
+                        resolved = true;
+                        pc.close();
+                        resolve(false);
+                    }
+                }, 3000);
+            });
+        }
+        
+        async function checkVPNRequired() {
+            const isVPN = await detectVPNForRequired();
+            const blockScreen = document.getElementById('vpnBlockScreen');
+            
+            if (isVPN) {
+                // VPN activada correctamente
+                vpnRequiredPassed = true;
+                blockScreen.style.display = 'none';
+                // Actualizar badge de estado
+                const badge = document.getElementById('vpnStatusBadge');
+                if (badge) {
+                    badge.style.display = 'flex';
+                    badge.innerHTML = '<span>🟢</span> VPN: Activada';
+                    badge.classList.remove('vpn-off');
+                }
+                // Cargar datos del usuario si ya estaba logueado
+                if (currentUser) {
+                    await loadUserDataAfterVPN();
+                }
+            } else {
+                // Sin VPN - mostrar mensaje de error
+                const blockCard = blockScreen.querySelector('.vpn-block-card');
+                const originalMessage = blockCard.querySelector('.vpn-block-message').innerHTML;
+                blockCard.querySelector('.vpn-block-message').innerHTML = '❌ <strong>No se detectó VPN activa.</strong><br><br>🌍 Activa tu VPN y presiona nuevamente "Verificar VPN".';
+                setTimeout(() => {
+                    if (blockScreen.style.display !== 'none') {
+                        blockCard.querySelector('.vpn-block-message').innerHTML = originalMessage;
+                    }
+                }, 3000);
+                showDialog('VPN Requerida', '⚠️ No se detectó una VPN activa. Por favor, activa tu VPN para acceder a Pronóstico Pro.');
+            }
+        }
+        
+        async function verifyVPNBeforeAccess() {
+            const isVPN = await detectVPNForRequired();
+            const blockScreen = document.getElementById('vpnBlockScreen');
+            
+            if (!isVPN) {
+                blockScreen.style.display = 'flex';
+                vpnRequiredPassed = false;
+                return false;
+            } else {
+                vpnRequiredPassed = true;
+                blockScreen.style.display = 'none';
+                const badge = document.getElementById('vpnStatusBadge');
+                if (badge) {
+                    badge.style.display = 'flex';
+                    badge.innerHTML = '<span>🟢</span> VPN: Activada';
+                    badge.classList.remove('vpn-off');
+                }
+                return true;
+            }
+        }
+        
+        async function loadUserDataAfterVPN() {
+            await checkMembership(currentUser.email);
+            await loadUserBalance();
+            await updateAllBalanceDisplays();
+            setupRealtimeListeners();
+            setupTransactionListener();
+            loadComments();
+            loadProfile();
+            updateReferralsUI();
+            loadRiddle();
+            loadDailyProbabilities();
+            loadTransactions();
+            loadIAData();
+            loadSlotData();
+            showSection('predictions');
+        }
         
         function getRandomSymbol() {
             const rand = Math.random();
@@ -2496,14 +2700,43 @@
         async function submitWithdraw() { if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; } const amount = parseFloat(document.getElementById('withdrawAmount').value); const cardNumber = document.getElementById('withdrawCardNumber').value.trim(); const phone = document.getElementById('withdrawPhone').value.trim(); if (isNaN(amount) || amount < 50) { showDialog('Error', 'Monto mínimo: 50 Cup'); return; } if (amount > userBalance) { showDialog('Error', `Saldo insuficiente. Saldo actual: ${userBalance} Cup`); return; } if (!cardNumber || !phone) { showDialog('Error', 'Completa todos los campos'); return; } try { await db.collection('transactions').add({ userEmail: currentUser.email, userId: currentUser.uid, type: 'withdraw', amount: amount, cardNumber: cardNumber, phone: phone, status: 'pending', timestamp: firebase.firestore.FieldValue.serverTimestamp() }); document.getElementById('withdrawAmount').value = ''; document.getElementById('withdrawCardNumber').value = ''; document.getElementById('withdrawPhone').value = ''; showDialog('✅ Solicitud enviada', `Retiro de ${amount} Cup solicitado.`); loadTransactions(); } catch (error) { showDialog('Error', error.message); } }
         async function loadTransactions() { if (!currentUser) return; try { const transactionsSnapshot = await db.collection('transactions').where('userEmail', '==', currentUser.email).orderBy('timestamp', 'desc').limit(30).get(); const historyCard = document.getElementById('transactionHistoryCard'); const tbody = document.getElementById('transactionsTableBody'); if (!transactionsSnapshot.empty) { historyCard.style.display = 'block'; tbody.innerHTML = ''; transactionsSnapshot.forEach(doc => { const tx = doc.data(); const row = tbody.insertRow(); const date = tx.timestamp?.toDate ? tx.timestamp.toDate().toLocaleString() : new Date(tx.timestamp).toLocaleString(); row.insertCell(0).innerText = date; let typeText = ''; if (tx.type === 'deposit') typeText = '💰 Depósito'; else if (tx.type === 'withdraw') typeText = '🏦 Retiro'; else if (tx.type === 'membership_deduction') typeText = '🔻 Membresía'; else if (tx.type === 'deposit_processed') typeText = '💵 Depósito Procesado'; else typeText = tx.type; row.insertCell(1).innerHTML = typeText; let amountText = ''; if (tx.type === 'deposit') amountText = `${tx.amount} Cup`; else if (tx.type === 'withdraw') amountText = `- ${tx.amount} Cup`; else if (tx.type === 'membership_deduction') amountText = `- ${tx.amount} Cup`; else if (tx.type === 'deposit_processed') amountText = tx.finalBalance !== undefined ? `Saldo final: ${tx.finalBalance} Cup` : `${tx.amount} Cup`; else amountText = `${tx.amount} Cup`; row.insertCell(2).innerText = amountText; let statusHtml = ''; if (tx.status === 'approved') statusHtml = '<span class="badge-win">✅ Aprobado</span>'; else if (tx.status === 'pending') statusHtml = '<span class="badge-pending">⏳ Pendiente</span>'; else if (tx.type === 'deposit_processed') statusHtml = '<span class="badge-win">✅ Procesado</span>'; else statusHtml = '<span style="color: var(--danger);">❌ Rechazado</span>'; row.insertCell(3).innerHTML = statusHtml; }); } else { historyCard.style.display = 'none'; } } catch (error) {} }
         
-        // Variables para persistencia offline
         let predictionsCache = null;
+        
+        function getLotteriesHTML() {
+            return `
+                <div class="lotteries-banner">
+                    <div class="lottery-badge">
+                        <span class="lottery-icon">🌴🐊</span>
+                        <div>
+                            <div class="lottery-name">FLORIDA</div>
+                            <div class="lottery-location">🎯 Pick 2,3,4,5</div>
+                        </div>
+                    </div>
+                    <div class="lottery-badge">
+                        <span class="lottery-icon">🍑⚾</span>
+                        <div>
+                            <div class="lottery-name">GEORGIA</div>
+                            <div class="lottery-location">🎯 Cash 3, Cash 4</div>
+                        </div>
+                    </div>
+                    <div class="lottery-badge">
+                        <span class="lottery-icon">🗽🍎</span>
+                        <div>
+                            <div class="lottery-name">NUEVA YORK</div>
+                            <div class="lottery-location">🎯 Numbers, Win 4</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="update-info" style="margin-bottom: 10px; text-align: center;">
+                    <span style="font-size: 0.75rem;">✨ Este pronóstico es VÁLIDO para las loterías de FLORIDA, GEORGIA y NUEVA YORK ✨</span>
+                </div>
+            `;
+        }
         
         function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             
-            // Guardar en caché siempre (incluso sin membresía para mostrar después)
             predictionsCache = {
                 numbers: numbers || [],
                 strongNumbers: strongNumbers || [],
@@ -2553,7 +2786,19 @@
             const displayTime = finalLastUpdateFormatted || formatTime12Hour(finalLastUpdate);
             const displayDate = formatDate(finalLastUpdate);
             const currentDate = getCurrentDateFormatted();
-            let html = `<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;"><h2 style="color: var(--gold-solid); font-size: 1.1rem;">🎯 Pronóstico del Día <span class="live-badge">ACTIVO</span></h2><button class="refresh-btn" onclick="manualRefreshPredictions()">🔄 Actualizar</button></div><div class="update-info"><span class="update-label">📅 Fecha: ${currentDate}</span><span class="update-time">🕒 Actualización: ${displayTime}</span><span class="update-date">📆 Publicado: ${displayDate}</span></div><div class="numbers-grid" id="numbersGrid"></div>`;
+            
+            let html = `<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
+                            <h2 style="color: var(--gold-solid); font-size: 1.1rem;">🎯 Pronóstico del Día <span class="live-badge">ACTIVO</span></h2>
+                            <button class="refresh-btn" onclick="manualRefreshPredictions()">🔄 Actualizar</button>
+                        </div>
+                        ${getLotteriesHTML()}
+                        <div class="update-info">
+                            <span class="update-label">📅 Fecha: ${currentDate}</span>
+                            <span class="update-time">🕒 Actualización: ${displayTime}</span>
+                            <span class="update-date">📆 Publicado: ${displayDate}</span>
+                        </div>
+                        <div class="numbers-grid" id="numbersGrid"></div>`;
+            
             let afternoonClass = 'result-box result-waiting';
             let afternoonText = '⏳ ESPERANDO RESULTADO...';
             let afternoonAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>';
@@ -2569,6 +2814,7 @@
                 }
             }
             html += `<div class="${afternoonClass}"><div class="result-title">🌅 MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`;
+            
             let nightClass = 'result-box result-waiting';
             let nightText = '⏳ ESPERANDO RESULTADO...';
             let nightAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>';
@@ -2585,6 +2831,7 @@
             }
             html += `<div class="${nightClass}"><div class="result-title">🌙 NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div>${nightAlert}</div>`;
             container.innerHTML = html;
+            
             const grid = document.getElementById('numbersGrid');
             if (grid) {
                 grid.innerHTML = '';
@@ -2605,7 +2852,6 @@
             }
         }
         
-        // Actualización manual
         async function manualRefreshPredictions() {
             const refreshBtn = document.querySelector('#predictionsContent .refresh-btn');
             if (refreshBtn) {
@@ -2634,70 +2880,6 @@
                     showDialog('⚠️ Error', 'No se pudo actualizar. Verifica tu conexión.');
                 }
             }
-        }
-        
-        // Detección de VPN usando WebRTC
-        function detectVPN() {
-            return new Promise((resolve) => {
-                const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
-                pc.createDataChannel("");
-                pc.createOffer()
-                    .then(offer => pc.setLocalDescription(offer))
-                    .catch(() => resolve(false));
-                pc.onicecandidate = (event) => {
-                    if (event.candidate) {
-                        const candidate = event.candidate.candidate;
-                        const ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}/;
-                        const match = candidate.match(ipRegex);
-                        if (match) {
-                            const ip = match[0];
-                            // IPs privadas o conocidas no son VPN
-                            const isPrivate = ip.startsWith('192.168.') || ip.startsWith('10.') || ip.startsWith('172.') || ip === '127.0.0.1';
-                            if (!isPrivate) {
-                                // Verificar si es IP de datacenter/VPN (simulación con detección básica)
-                                const isVPN = ip.startsWith('45.') || ip.startsWith('104.') || ip.startsWith('34.') || ip.startsWith('35.') || ip.startsWith('23.');
-                                resolve(isVPN);
-                            } else {
-                                resolve(false);
-                            }
-                            pc.close();
-                        }
-                    }
-                };
-                setTimeout(() => {
-                    pc.close();
-                    resolve(false);
-                }, 3000);
-            });
-        }
-        
-        function showVPNAlert() {
-            const alertContainer = document.getElementById('vpnAlertContainer');
-            if (alertContainer && !document.getElementById('vpnAlert')) {
-                alertContainer.innerHTML = `
-                    <div id="vpnAlert" class="vpn-alert">
-                        <span class="vpn-icon">🛡️</span>
-                        <span>⚠️ Detectamos que usas VPN/Proxy. Desactívalo para una mejor experiencia y acceso seguro.</span>
-                        <button onclick="dismissVPNAlert()">Entendido</button>
-                    </div>
-                `;
-            }
-        }
-        
-        function dismissVPNAlert() {
-            const alert = document.getElementById('vpnAlert');
-            if (alert) alert.remove();
-        }
-        
-        function setupVPNListener() {
-            detectVPN().then(isVPN => {
-                if (isVPN) showVPNAlert();
-            });
-            // Verificar periódicamente
-            setInterval(async () => {
-                const isVPN = await detectVPN();
-                if (isVPN) showVPNAlert();
-            }, 30000);
         }
         
         function setupRealtimeListeners() { 
@@ -2766,26 +2948,21 @@
         auth.onAuthStateChanged(async (user) => { 
             if (user) { 
                 currentUser = user; 
-                await checkMembership(user.email); 
-                await loadUserBalance(); 
-                await updateAllBalanceDisplays();
-                document.getElementById('authScreen').style.display = 'none'; 
-                document.getElementById('dashboardScreen').style.display = 'block'; 
-                setupRealtimeListeners(); 
-                setupTransactionListener(); 
-                setupVPNListener(); // Iniciar detección de VPN
-                loadComments(); 
-                loadProfile(); 
-                updateReferralsUI(); 
-                loadRiddle(); 
-                loadDailyProbabilities(); 
-                loadTransactions(); 
-                loadIAData(); 
-                loadSlotData();
-                showSection('predictions'); 
-                initTheme(); 
-                const themeBtn = document.getElementById('themeToggleBtn'); 
-                if (themeBtn) themeBtn.addEventListener('click', toggleTheme); 
+                // ANTES DE MOSTRAR EL DASHBOARD, VERIFICAR VPN
+                const vpnOk = await verifyVPNBeforeAccess();
+                if (vpnOk) {
+                    await loadUserDataAfterVPN();
+                    document.getElementById('authScreen').style.display = 'none'; 
+                    document.getElementById('dashboardScreen').style.display = 'block';
+                    initTheme(); 
+                    const themeBtn = document.getElementById('themeToggleBtn'); 
+                    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+                } else {
+                    // Mostrar pantalla de bloqueo VPN
+                    document.getElementById('authScreen').style.display = 'none';
+                    document.getElementById('dashboardScreen').style.display = 'block';
+                    document.getElementById('vpnBlockScreen').style.display = 'flex';
+                }
             } else { 
                 if (unsubscribePredictions) unsubscribePredictions(); 
                 if (unsubscribeRiddle) unsubscribeRiddle(); 
@@ -2793,6 +2970,7 @@
                 if (unsubscribeTransactions) unsubscribeTransactions(); 
                 document.getElementById('dashboardScreen').style.display = 'none'; 
                 document.getElementById('authScreen').style.display = 'flex'; 
+                document.getElementById('vpnBlockScreen').style.display = 'none';
                 currentUser = null; 
             } 
         });
