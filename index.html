@@ -106,6 +106,92 @@
             }
         }
 
+        /* ALERTA VPN */
+        .vpn-alert {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #DC143C, #8B0000);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            z-index: 1000;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border-left: 5px solid #FFD700;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .vpn-alert button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .vpn-alert button:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        .vpn-icon {
+            font-size: 1.3rem;
+        }
+
+        /* Botón actualización */
+        .refresh-btn {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+            color: #0A0F2C;
+        }
+
+        .refresh-btn:active {
+            transform: scale(0.96);
+        }
+
+        .refresh-btn.spinning {
+            animation: spinBtn 0.6s ease;
+        }
+
+        @keyframes spinBtn {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .offline-badge {
+            background: #555;
+            color: #ddd;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .sticky-header {
             position: sticky;
             top: 0;
@@ -1511,6 +1597,9 @@
         </div>
 
         <div class="container">
+            <!-- Alerta VPN se inyecta aquí -->
+            <div id="vpnAlertContainer"></div>
+
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
                 <div class="stat-card"><div class="stat-number" id="referralsCount">0</div><div class="stat-label">👥 Referidos</div></div>
@@ -1987,52 +2076,23 @@
         let isSpinning = false;
         
         // Símbolos y sus probabilidades ajustadas para máxima dificultad
-        // Los símbolos con premios altos tienen probabilidades extremadamente bajas
         const slotSymbols = ['🍒', '🍋', '🍊', '🍉', '🍇', '🔔', '⭐', '💎', '7️⃣'];
         
-        // Probabilidades ajustadas para máxima dificultad:
-        // - Los símbolos de premio bajo tienen más probabilidad
-        // - Los símbolos de premio alto (7️⃣, 💎, ⭐) tienen probabilidades muy bajas
-        // - Esto hace que sea muy difícil obtener combinaciones ganadoras
         const symbolProbabilities = {
-            '🍒': 0.25,   // 25% - premio más bajo
-            '🍋': 0.18,   // 18%
-            '🍊': 0.14,   // 14%
-            '🍉': 0.12,   // 12%
-            '🍇': 0.10,   // 10%
-            '🔔': 0.08,   // 8%
-            '⭐': 0.06,    // 6% - premio alto (raro)
-            '💎': 0.04,   // 4% - premio muy alto (muy raro)
-            '7️⃣': 0.03    // 3% - JACKPOT (extremadamente raro)
+            '🍒': 0.25, '🍋': 0.18, '🍊': 0.14, '🍉': 0.12, '🍇': 0.10,
+            '🔔': 0.08, '⭐': 0.06, '💎': 0.04, '7️⃣': 0.03
         };
         
-        // Premios para 3 símbolos iguales
         const threeSymbolPrizes = {
-            '🍒': 6,
-            '🍋': 5,
-            '🍊': 4,
-            '🍉': 3,
-            '🍇': 3,
-            '🔔': 8,
-            '⭐': 12,
-            '💎': 15,
-            '7️⃣': 400
+            '🍒': 6, '🍋': 5, '🍊': 4, '🍉': 3, '🍇': 3,
+            '🔔': 8, '⭐': 12, '💎': 15, '7️⃣': 400
         };
         
-        // Premios para 2 símbolos iguales (2 a 40 cup)
         const twoSymbolPrizes = {
-            '7️⃣': 40,
-            '💎': 30,
-            '⭐': 20,
-            '🔔': 15,
-            '🍒': 10,
-            '🍋': 8,
-            '🍊': 5,
-            '🍉': 3,
-            '🍇': 2
+            '7️⃣': 40, '💎': 30, '⭐': 20, '🔔': 15,
+            '🍒': 10, '🍋': 8, '🍊': 5, '🍉': 3, '🍇': 2
         };
         
-        // Función para obtener símbolo basado en probabilidades (máxima dificultad)
         function getRandomSymbol() {
             const rand = Math.random();
             let acum = 0;
@@ -2044,25 +2104,17 @@
         }
         
         function checkWin(symbols) {
-            // Tres iguales - pagan siempre (son extremadamente raros por las probabilidades)
             if (symbols[0] === symbols[1] && symbols[1] === symbols[2]) {
                 if (threeSymbolPrizes[symbols[0]]) {
                     return { prize: threeSymbolPrizes[symbols[0]], name: `¡TRES ${symbols[0]}! +${threeSymbolPrizes[symbols[0]]} CUP`, type: 'win' };
                 }
             }
-            
-            // Dos iguales - AHORA SIEMPRE PAGAN cuando salen (pero es muy difícil que salgan)
-            // Se ha eliminado la probabilidad aleatoria, ahora SIEMPRE pagan si hay 2 iguales
             if ((symbols[0] === symbols[1] && symbols[0] !== symbols[2]) ||
                 (symbols[1] === symbols[2] && symbols[0] !== symbols[1])) {
-                
-                // Determinar qué símbolo se repite
                 let repeatedSymbol = null;
                 if (symbols[0] === symbols[1]) repeatedSymbol = symbols[0];
                 if (symbols[1] === symbols[2]) repeatedSymbol = symbols[1];
-                
                 if (repeatedSymbol && twoSymbolPrizes[repeatedSymbol]) {
-                    // AHORA SIEMPRE PAGA (100% de las veces que salen 2 iguales)
                     return { prize: twoSymbolPrizes[repeatedSymbol], name: `¡DOS ${repeatedSymbol}! +${twoSymbolPrizes[repeatedSymbol]} CUP`, type: 'two' };
                 }
             }
@@ -2163,7 +2215,6 @@
             await slotRef.set({ spins: slotSpins, nextJackpot: slotNextJackpot, biggestWin: slotBiggestWin, history: slotHistory.slice(-20), lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
         }
         
-        // Función para actualizar el saldo en tiempo real
         async function updateAllBalanceDisplays() {
             if (!currentUser) return;
             const balanceElement = document.getElementById('balanceDisplay');
@@ -2173,7 +2224,6 @@
             if (walletBalanceElement) walletBalanceElement.innerText = userBalance;
         }
         
-        // Sonidos
         function playSound(type) {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -2223,7 +2273,6 @@
             } catch(e) { console.log('Audio error:', e); }
         }
         
-        // Mostrar celebración visual
         function showCelebration(message) {
             const celebration = document.createElement('div');
             celebration.className = 'winner-celebration';
@@ -2235,7 +2284,6 @@
             }, 2000);
         }
         
-        // ========== FUNCIONES GENERALES ==========
         function showPrizesModal() { document.getElementById('prizesModal').style.display = 'flex'; }
         function closePrizesModal() { document.getElementById('prizesModal').style.display = 'none'; }
         
@@ -2439,7 +2487,7 @@
         async function processReferral(newUserEmail, referralCode) { if (!referralCode) return null; try { const usersRef = db.collection('members'); const query = await usersRef.where('referralCode', '==', referralCode).get(); if (!query.empty) { const referrerDoc = query.docs[0]; const referrerEmail = referrerDoc.data().email; if (referrerEmail === newUserEmail) return null; await db.collection('referrals').add({ referrerEmail: referrerEmail, referredEmail: newUserEmail, referredAt: new Date().toISOString(), status: 'pending_cup', statusDays: 'pending_days', membershipActive: false, referralCode: referralCode }); return referrerEmail; } } catch (error) {} return null; }
         async function checkAndRewardReferralsWithCup(userEmail) { try { const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); let totalEarned = 0; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const refId = doc.id; if (referral.status === 'rewarded_cup') continue; const referredMember = await db.collection('members').doc(referral.referredEmail).get(); if (referredMember.exists && referredMember.data().membershipActive) { const expires = new Date(referredMember.data().membershipExpires); if (expires > new Date()) { const rewardCheck = await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').get(); if (!rewardCheck.exists) { const userRef = db.collection('wallets').doc(userEmail); const userDoc = await userRef.get(); const currentBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; await userRef.set({ balance: currentBalance + 50, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); await db.collection('referrals').doc(refId).update({ status: 'rewarded_cup', rewardedAt: new Date().toISOString(), rewardAmount: 50 }); totalEarned += 50; } } } } if (totalEarned > 0) { await loadUserBalance(); await updateAllBalanceDisplays(); showDialog('🎉 ¡RECOMPENSA RECIBIDA!', `Has ganado ${totalEarned} cup por referidos activos.`); await updateReferralsUI(); await loadProfile(); } return totalEarned; } catch (error) { return 0; } }
         async function checkAndRewardReferrals(userEmail) { try { const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); let activeReferrals = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); if (referral.statusDays === 'rewarded_days') continue; const referredMember = await db.collection('members').doc(referral.referredEmail).get(); if (referredMember.exists && referredMember.data().membershipActive) { const expires = new Date(referredMember.data().membershipExpires); if (expires > new Date()) activeReferrals.push({ id: doc.id, data: referral }); } } const activeCount = activeReferrals.length; const rewardCycles = Math.floor(activeCount / 10); if (rewardCycles > 0) { const userDoc = await db.collection('members').doc(userEmail).get(); let currentExpires = new Date(); if (userDoc.exists && userDoc.data().membershipExpires) { currentExpires = new Date(userDoc.data().membershipExpires); if (currentExpires < new Date()) currentExpires = new Date(); } const newExpires = new Date(currentExpires); newExpires.setDate(newExpires.getDate() + (rewardCycles * 30)); await db.collection('members').doc(userEmail).update({ membershipExpires: newExpires.toISOString(), referralBonusDays: firebase.firestore.FieldValue.increment(rewardCycles * 30) }); for (let i = 0; i < rewardCycles * 10 && i < activeReferrals.length; i++) { await db.collection('referrals').doc(activeReferrals[i].id).update({ statusDays: 'rewarded_days', rewardedAt: new Date().toISOString(), rewardDays: 30 }); } showDialog('🎁 ¡RECOMPENSA DE DÍAS RECIBIDA!', `Has ganado ${rewardCycles * 30} días gratis de membresía.`); await checkMembership(userEmail); } return { totalReferrals: referralsSnapshot.size, activeReferrals: activeCount }; } catch (error) { return { totalReferrals: 0, activeReferrals: 0 }; } }
-        async function updateReferralsUI() { if (!currentUser) return; try { const userDoc = await db.collection('members').doc(currentUser.email).get(); const referralCode = userDoc.data()?.referralCode || 'No disponible'; document.getElementById('userReferralCode').innerText = referralCode; const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get(); let activeCount = 0; let totalCupEarned = 0; const referralsList = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const referredMember = await db.collection('members').doc(referral.referredEmail).get(); const isActive = referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date(); if (isActive) activeCount++; if (referral.status === 'rewarded_cup') totalCupEarned += 50; referralsList.push({ email: referral.referredEmail, date: referral.referredAt, isActive: isActive, rewarded: referral.status === 'rewarded_cup' }); } const totalReferrals = referralsSnapshot.size; document.getElementById('referralsCount').innerText = totalReferrals; document.getElementById('totalReferrals').innerText = totalReferrals; document.getElementById('activeReferralsCount').innerText = activeCount; document.getElementById('referralCupEarned').innerText = totalCupEarned; document.getElementById('cupEarnedStat').innerText = totalCupEarned; const tbody = document.getElementById('referralsTableBody'); tbody.innerHTML = ''; if (referralsList.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></td>'; } else { referralsList.forEach(ref => { const row = tbody.insertRow(); row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`; row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString(); row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>'; row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-'); }); } await checkAndRewardReferralsWithCup(currentUser.email); await checkAndRewardReferrals(currentUser.email); } catch (error) { console.error('Error actualizando referidos:', error); } }
+        async function updateReferralsUI() { if (!currentUser) return; try { const userDoc = await db.collection('members').doc(currentUser.email).get(); const referralCode = userDoc.data()?.referralCode || 'No disponible'; document.getElementById('userReferralCode').innerText = referralCode; const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get(); let activeCount = 0; let totalCupEarned = 0; const referralsList = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const referredMember = await db.collection('members').doc(referral.referredEmail).get(); const isActive = referredMember.exists && referredMember.data().membershipActive && new Date(referredMember.data().membershipExpires) > new Date(); if (isActive) activeCount++; if (referral.status === 'rewarded_cup') totalCupEarned += 50; referralsList.push({ email: referral.referredEmail, date: referral.referredAt, isActive: isActive, rewarded: referral.status === 'rewarded_cup' }); } const totalReferrals = referralsSnapshot.size; document.getElementById('referralsCount').innerText = totalReferrals; document.getElementById('totalReferrals').innerText = totalReferrals; document.getElementById('activeReferralsCount').innerText = activeCount; document.getElementById('referralCupEarned').innerText = totalCupEarned; document.getElementById('cupEarnedStat').innerText = totalCupEarned; const tbody = document.getElementById('referralsTableBody'); tbody.innerHTML = ''; if (referralsList.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></tr>'; } else { referralsList.forEach(ref => { const row = tbody.insertRow(); row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`; row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString(); row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>'; row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-'); }); } await checkAndRewardReferralsWithCup(currentUser.email); await checkAndRewardReferrals(currentUser.email); } catch (error) { console.error('Error actualizando referidos:', error); } }
         async function loadUserBalance() { if (!currentUser) return; try { const userDoc = await db.collection('wallets').doc(currentUser.email).get(); userBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; await updateAllBalanceDisplays(); return userBalance; } catch (error) { return 0; } }
         async function updateUserBalance(amount) { if (!currentUser) return; try { await db.collection('wallets').doc(currentUser.email).set({ balance: amount, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); userBalance = amount; await updateAllBalanceDisplays(); } catch (error) {} }
         function showDepositForm() { document.getElementById('depositForm').style.display = 'block'; document.getElementById('withdrawForm').style.display = 'none'; }
@@ -2447,8 +2495,231 @@
         async function submitDeposit() { if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; } const amount = parseFloat(document.getElementById('depositAmount').value); const transactionNumber = document.getElementById('transactionNumber').value.trim(); if (isNaN(amount) || amount < 200) { showDialog('Error', 'El monto mínimo para depósito es 200 Cup (incluye membresía de 30 días)'); return; } if (!transactionNumber) { showDialog('Error', 'Ingresa el número de transacción'); return; } try { await db.collection('transactions').add({ userEmail: currentUser.email, userId: currentUser.uid, type: 'deposit', amount: amount, transactionNumber: transactionNumber, status: 'pending', timestamp: firebase.firestore.FieldValue.serverTimestamp(), processedForMembership: false }); document.getElementById('transactionNumber').value = ''; document.getElementById('depositAmount').value = '200'; showDialog('✅ Solicitud enviada', `Depósito de ${amount} Cup registrado.\n\n📌 IMPORTANTE:\n1. Envía la captura a @sdesaroyador\n2. El administrador aprobará tu depósito\n3. Al aprobarse, se activará tu membresía por 30 días y tu saldo será de ${amount - 200} Cup\n\nNúmero de transacción: ${transactionNumber}`); loadTransactions(); } catch (error) { showDialog('Error', error.message); } }
         async function submitWithdraw() { if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; } const amount = parseFloat(document.getElementById('withdrawAmount').value); const cardNumber = document.getElementById('withdrawCardNumber').value.trim(); const phone = document.getElementById('withdrawPhone').value.trim(); if (isNaN(amount) || amount < 50) { showDialog('Error', 'Monto mínimo: 50 Cup'); return; } if (amount > userBalance) { showDialog('Error', `Saldo insuficiente. Saldo actual: ${userBalance} Cup`); return; } if (!cardNumber || !phone) { showDialog('Error', 'Completa todos los campos'); return; } try { await db.collection('transactions').add({ userEmail: currentUser.email, userId: currentUser.uid, type: 'withdraw', amount: amount, cardNumber: cardNumber, phone: phone, status: 'pending', timestamp: firebase.firestore.FieldValue.serverTimestamp() }); document.getElementById('withdrawAmount').value = ''; document.getElementById('withdrawCardNumber').value = ''; document.getElementById('withdrawPhone').value = ''; showDialog('✅ Solicitud enviada', `Retiro de ${amount} Cup solicitado.`); loadTransactions(); } catch (error) { showDialog('Error', error.message); } }
         async function loadTransactions() { if (!currentUser) return; try { const transactionsSnapshot = await db.collection('transactions').where('userEmail', '==', currentUser.email).orderBy('timestamp', 'desc').limit(30).get(); const historyCard = document.getElementById('transactionHistoryCard'); const tbody = document.getElementById('transactionsTableBody'); if (!transactionsSnapshot.empty) { historyCard.style.display = 'block'; tbody.innerHTML = ''; transactionsSnapshot.forEach(doc => { const tx = doc.data(); const row = tbody.insertRow(); const date = tx.timestamp?.toDate ? tx.timestamp.toDate().toLocaleString() : new Date(tx.timestamp).toLocaleString(); row.insertCell(0).innerText = date; let typeText = ''; if (tx.type === 'deposit') typeText = '💰 Depósito'; else if (tx.type === 'withdraw') typeText = '🏦 Retiro'; else if (tx.type === 'membership_deduction') typeText = '🔻 Membresía'; else if (tx.type === 'deposit_processed') typeText = '💵 Depósito Procesado'; else typeText = tx.type; row.insertCell(1).innerHTML = typeText; let amountText = ''; if (tx.type === 'deposit') amountText = `${tx.amount} Cup`; else if (tx.type === 'withdraw') amountText = `- ${tx.amount} Cup`; else if (tx.type === 'membership_deduction') amountText = `- ${tx.amount} Cup`; else if (tx.type === 'deposit_processed') amountText = tx.finalBalance !== undefined ? `Saldo final: ${tx.finalBalance} Cup` : `${tx.amount} Cup`; else amountText = `${tx.amount} Cup`; row.insertCell(2).innerText = amountText; let statusHtml = ''; if (tx.status === 'approved') statusHtml = '<span class="badge-win">✅ Aprobado</span>'; else if (tx.status === 'pending') statusHtml = '<span class="badge-pending">⏳ Pendiente</span>'; else if (tx.type === 'deposit_processed') statusHtml = '<span class="badge-win">✅ Procesado</span>'; else statusHtml = '<span style="color: var(--danger);">❌ Rechazado</span>'; row.insertCell(3).innerHTML = statusHtml; }); } else { historyCard.style.display = 'none'; } } catch (error) {} }
-        function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) { const container = document.getElementById('predictionsContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); if (!isActive) { container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para ver los pronósticos.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button></div>`; return; } let finalNumbers = numbers; let finalStrong = strongNumbers; let finalMedium = mediumNumbers; let finalAfternoon = afternoonWinner; let finalNight = nightWinner; let finalLastUpdate = lastUpdate; let finalLastUpdateFormatted = lastUpdateFormatted; if (finalNumbers && finalNumbers.length > 0) { cachedNumbers = [...finalNumbers]; cachedStrong = finalStrong || []; cachedMedium = finalMedium || []; if (finalAfternoon !== undefined) cachedAfternoonWinner = finalAfternoon; if (finalNight !== undefined) cachedNightWinner = finalNight; if (finalLastUpdate) cachedLastUpdate = finalLastUpdate; if (finalLastUpdateFormatted) cachedLastUpdateFormatted = finalLastUpdateFormatted; } else if (cachedNumbers.length > 0) { finalNumbers = cachedNumbers; finalStrong = cachedStrong; finalMedium = cachedMedium; if (afternoonWinner === undefined) finalAfternoon = cachedAfternoonWinner; if (nightWinner === undefined) finalNight = cachedNightWinner; if (!lastUpdate) finalLastUpdate = cachedLastUpdate; if (!lastUpdateFormatted) finalLastUpdateFormatted = cachedLastUpdateFormatted; } if (!finalNumbers || finalNumbers.length === 0) { container.innerHTML = `<div class="text-center"><h3>⏳ Esperando pronósticos</h3><p>Los números se mostrarán aquí cuando el admin los publique.</p></div>`; return; } const displayTime = finalLastUpdateFormatted || formatTime12Hour(finalLastUpdate); const displayDate = formatDate(finalLastUpdate); const currentDate = getCurrentDateFormatted(); let html = `<h2 style="color: var(--gold-solid); font-size: 1.1rem;">🎯 Pronóstico del Día <span class="live-badge">ACTIVO</span></h2><div class="update-info"><span class="update-label">📅 Fecha: ${currentDate}</span><span class="update-time">🕒 Actualización: ${displayTime}</span><span class="update-date">📆 Publicado: ${displayDate}</span></div><div class="numbers-grid" id="numbersGrid"></div>`; let afternoonClass = 'result-box result-waiting'; let afternoonText = '⏳ ESPERANDO RESULTADO...'; let afternoonAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>'; if (finalAfternoon) { if (finalAfternoon === 'fallo') { afternoonClass = 'result-box result-fallo'; afternoonText = '❌ FALLO - No hubo ganador'; afternoonAlert = ''; } else { afternoonClass = 'result-box result-winner'; afternoonText = `🎯 GANADOR: ${finalAfternoon}`; afternoonAlert = ''; } } html += `<div class="${afternoonClass}"><div class="result-title">🌅 MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`; let nightClass = 'result-box result-waiting'; let nightText = '⏳ ESPERANDO RESULTADO...'; let nightAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>'; if (finalNight) { if (finalNight === 'fallo') { nightClass = 'result-box result-fallo'; nightText = '❌ FALLO - No hubo ganador'; nightAlert = ''; } else { nightClass = 'result-box result-winner'; nightText = `🎯 GANADOR: ${finalNight}`; nightAlert = ''; } } html += `<div class="${nightClass}"><div class="result-title">🌙 NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div>${nightAlert}</div>`; container.innerHTML = html; const grid = document.getElementById('numbersGrid'); if (grid) { grid.innerHTML = ''; finalNumbers.forEach(num => { let className = 'number-card'; if (finalStrong && finalStrong.includes(num)) className += ' strong'; else if (finalMedium && finalMedium.includes(num)) className += ' medium'; const isWinner = (finalAfternoon && finalAfternoon !== 'fallo' && finalAfternoon === num) || (finalNight && finalNight !== 'fallo' && finalNight === num); if (isWinner) className += ' winner'; let probText = ''; if (finalStrong && finalStrong.includes(num)) probText = '<div class="probability">🔥 68%</div>'; else if (finalMedium && finalMedium.includes(num)) probText = '<div class="probability">📊 50%</div>'; const card = document.createElement('div'); card.className = className; card.innerHTML = `<div class="number">${num}</div>${probText}`; grid.appendChild(card); }); } }
-        function setupRealtimeListeners() { if (unsubscribePredictions) unsubscribePredictions(); unsubscribePredictions = db.collection('masterPredictions').doc('current').onSnapshot((doc) => { if (doc.exists) { const data = doc.data(); renderPredictions(data.numbers || [], data.strongNumbers || [], data.mediumNumbers || [], data.afternoonWinner || null, data.nightWinner || null, data.lastUpdate || null, data.lastUpdateFormatted || null); } else { renderPredictions([], [], [], null, null, null, null); } }); if (unsubscribeRiddle) unsubscribeRiddle(); unsubscribeRiddle = db.collection('riddles').doc('current').onSnapshot(() => { if (document.getElementById('riddleSection').style.display !== 'none') loadRiddle(); }); if (unsubscribeDailyProb) unsubscribeDailyProb(); unsubscribeDailyProb = db.collection('dailyProbabilities').doc('current').onSnapshot(() => { if (document.getElementById('dailyProbSection').style.display !== 'none') loadDailyProbabilities(); }); }
+        
+        // Variables para persistencia offline
+        let predictionsCache = null;
+        
+        function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
+            const container = document.getElementById('predictionsContent');
+            const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
+            
+            // Guardar en caché siempre (incluso sin membresía para mostrar después)
+            predictionsCache = {
+                numbers: numbers || [],
+                strongNumbers: strongNumbers || [],
+                mediumNumbers: mediumNumbers || [],
+                afternoonWinner: afternoonWinner || null,
+                nightWinner: nightWinner || null,
+                lastUpdate: lastUpdate || null,
+                lastUpdateFormatted: lastUpdateFormatted || null
+            };
+            
+            if (!isActive) {
+                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para ver los pronósticos.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button></div>`;
+                return;
+            }
+            
+            let finalNumbers = numbers;
+            let finalStrong = strongNumbers;
+            let finalMedium = mediumNumbers;
+            let finalAfternoon = afternoonWinner;
+            let finalNight = nightWinner;
+            let finalLastUpdate = lastUpdate;
+            let finalLastUpdateFormatted = lastUpdateFormatted;
+            
+            if (finalNumbers && finalNumbers.length > 0) {
+                cachedNumbers = [...finalNumbers];
+                cachedStrong = finalStrong || [];
+                cachedMedium = finalMedium || [];
+                if (finalAfternoon !== undefined) cachedAfternoonWinner = finalAfternoon;
+                if (finalNight !== undefined) cachedNightWinner = finalNight;
+                if (finalLastUpdate) cachedLastUpdate = finalLastUpdate;
+                if (finalLastUpdateFormatted) cachedLastUpdateFormatted = finalLastUpdateFormatted;
+            } else if (cachedNumbers.length > 0) {
+                finalNumbers = cachedNumbers;
+                finalStrong = cachedStrong;
+                finalMedium = cachedMedium;
+                if (afternoonWinner === undefined) finalAfternoon = cachedAfternoonWinner;
+                if (nightWinner === undefined) finalNight = cachedNightWinner;
+                if (!lastUpdate) finalLastUpdate = cachedLastUpdate;
+                if (!lastUpdateFormatted) finalLastUpdateFormatted = cachedLastUpdateFormatted;
+            }
+            
+            if (!finalNumbers || finalNumbers.length === 0) {
+                container.innerHTML = `<div class="text-center"><h3>⏳ Esperando pronósticos</h3><p>Los números se mostrarán aquí cuando el admin los publique.</p><button class="refresh-btn" onclick="manualRefreshPredictions()" style="margin-top: 1rem;">🔄 Actualizar ahora</button></div>`;
+                return;
+            }
+            
+            const displayTime = finalLastUpdateFormatted || formatTime12Hour(finalLastUpdate);
+            const displayDate = formatDate(finalLastUpdate);
+            const currentDate = getCurrentDateFormatted();
+            let html = `<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;"><h2 style="color: var(--gold-solid); font-size: 1.1rem;">🎯 Pronóstico del Día <span class="live-badge">ACTIVO</span></h2><button class="refresh-btn" onclick="manualRefreshPredictions()">🔄 Actualizar</button></div><div class="update-info"><span class="update-label">📅 Fecha: ${currentDate}</span><span class="update-time">🕒 Actualización: ${displayTime}</span><span class="update-date">📆 Publicado: ${displayDate}</span></div><div class="numbers-grid" id="numbersGrid"></div>`;
+            let afternoonClass = 'result-box result-waiting';
+            let afternoonText = '⏳ ESPERANDO RESULTADO...';
+            let afternoonAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>';
+            if (finalAfternoon) {
+                if (finalAfternoon === 'fallo') {
+                    afternoonClass = 'result-box result-fallo';
+                    afternoonText = '❌ FALLO - No hubo ganador';
+                    afternoonAlert = '';
+                } else {
+                    afternoonClass = 'result-box result-winner';
+                    afternoonText = `🎯 GANADOR: ${finalAfternoon}`;
+                    afternoonAlert = '';
+                }
+            }
+            html += `<div class="${afternoonClass}"><div class="result-title">🌅 MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`;
+            let nightClass = 'result-box result-waiting';
+            let nightText = '⏳ ESPERANDO RESULTADO...';
+            let nightAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>';
+            if (finalNight) {
+                if (finalNight === 'fallo') {
+                    nightClass = 'result-box result-fallo';
+                    nightText = '❌ FALLO - No hubo ganador';
+                    nightAlert = '';
+                } else {
+                    nightClass = 'result-box result-winner';
+                    nightText = `🎯 GANADOR: ${finalNight}`;
+                    nightAlert = '';
+                }
+            }
+            html += `<div class="${nightClass}"><div class="result-title">🌙 NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div>${nightAlert}</div>`;
+            container.innerHTML = html;
+            const grid = document.getElementById('numbersGrid');
+            if (grid) {
+                grid.innerHTML = '';
+                finalNumbers.forEach(num => {
+                    let className = 'number-card';
+                    if (finalStrong && finalStrong.includes(num)) className += ' strong';
+                    else if (finalMedium && finalMedium.includes(num)) className += ' medium';
+                    const isWinner = (finalAfternoon && finalAfternoon !== 'fallo' && finalAfternoon === num) || (finalNight && finalNight !== 'fallo' && finalNight === num);
+                    if (isWinner) className += ' winner';
+                    let probText = '';
+                    if (finalStrong && finalStrong.includes(num)) probText = '<div class="probability">🔥 68%</div>';
+                    else if (finalMedium && finalMedium.includes(num)) probText = '<div class="probability">📊 50%</div>';
+                    const card = document.createElement('div');
+                    card.className = className;
+                    card.innerHTML = `<div class="number">${num}</div>${probText}`;
+                    grid.appendChild(card);
+                });
+            }
+        }
+        
+        // Actualización manual
+        async function manualRefreshPredictions() {
+            const refreshBtn = document.querySelector('#predictionsContent .refresh-btn');
+            if (refreshBtn) {
+                refreshBtn.classList.add('spinning');
+                setTimeout(() => refreshBtn.classList.remove('spinning'), 600);
+            }
+            try {
+                const doc = await db.collection('masterPredictions').doc('current').get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    renderPredictions(data.numbers || [], data.strongNumbers || [], data.mediumNumbers || [], data.afternoonWinner || null, data.nightWinner || null, data.lastUpdate || null, data.lastUpdateFormatted || null);
+                    showDialog('✅ Actualizado', 'El pronóstico ha sido actualizado correctamente.');
+                } else {
+                    if (predictionsCache && predictionsCache.numbers && predictionsCache.numbers.length > 0) {
+                        renderPredictions(predictionsCache.numbers, predictionsCache.strongNumbers, predictionsCache.mediumNumbers, predictionsCache.afternoonWinner, predictionsCache.nightWinner, predictionsCache.lastUpdate, predictionsCache.lastUpdateFormatted);
+                        showDialog('ℹ️ Sin conexión', 'No se pudo conectar con el servidor. Mostrando datos en caché.');
+                    } else {
+                        showDialog('⚠️ Sin datos', 'No hay pronósticos disponibles en este momento.');
+                    }
+                }
+            } catch (error) {
+                if (predictionsCache && predictionsCache.numbers && predictionsCache.numbers.length > 0) {
+                    renderPredictions(predictionsCache.numbers, predictionsCache.strongNumbers, predictionsCache.mediumNumbers, predictionsCache.afternoonWinner, predictionsCache.nightWinner, predictionsCache.lastUpdate, predictionsCache.lastUpdateFormatted);
+                    showDialog('⚠️ Error de conexión', 'No se pudo conectar con el servidor. Mostrando datos guardados localmente.');
+                } else {
+                    showDialog('⚠️ Error', 'No se pudo actualizar. Verifica tu conexión.');
+                }
+            }
+        }
+        
+        // Detección de VPN usando WebRTC
+        function detectVPN() {
+            return new Promise((resolve) => {
+                const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
+                pc.createDataChannel("");
+                pc.createOffer()
+                    .then(offer => pc.setLocalDescription(offer))
+                    .catch(() => resolve(false));
+                pc.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        const candidate = event.candidate.candidate;
+                        const ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}/;
+                        const match = candidate.match(ipRegex);
+                        if (match) {
+                            const ip = match[0];
+                            // IPs privadas o conocidas no son VPN
+                            const isPrivate = ip.startsWith('192.168.') || ip.startsWith('10.') || ip.startsWith('172.') || ip === '127.0.0.1';
+                            if (!isPrivate) {
+                                // Verificar si es IP de datacenter/VPN (simulación con detección básica)
+                                const isVPN = ip.startsWith('45.') || ip.startsWith('104.') || ip.startsWith('34.') || ip.startsWith('35.') || ip.startsWith('23.');
+                                resolve(isVPN);
+                            } else {
+                                resolve(false);
+                            }
+                            pc.close();
+                        }
+                    }
+                };
+                setTimeout(() => {
+                    pc.close();
+                    resolve(false);
+                }, 3000);
+            });
+        }
+        
+        function showVPNAlert() {
+            const alertContainer = document.getElementById('vpnAlertContainer');
+            if (alertContainer && !document.getElementById('vpnAlert')) {
+                alertContainer.innerHTML = `
+                    <div id="vpnAlert" class="vpn-alert">
+                        <span class="vpn-icon">🛡️</span>
+                        <span>⚠️ Detectamos que usas VPN/Proxy. Desactívalo para una mejor experiencia y acceso seguro.</span>
+                        <button onclick="dismissVPNAlert()">Entendido</button>
+                    </div>
+                `;
+            }
+        }
+        
+        function dismissVPNAlert() {
+            const alert = document.getElementById('vpnAlert');
+            if (alert) alert.remove();
+        }
+        
+        function setupVPNListener() {
+            detectVPN().then(isVPN => {
+                if (isVPN) showVPNAlert();
+            });
+            // Verificar periódicamente
+            setInterval(async () => {
+                const isVPN = await detectVPN();
+                if (isVPN) showVPNAlert();
+            }, 30000);
+        }
+        
+        function setupRealtimeListeners() { 
+            if (unsubscribePredictions) unsubscribePredictions(); 
+            unsubscribePredictions = db.collection('masterPredictions').doc('current').onSnapshot((doc) => { 
+                if (doc.exists) { 
+                    const data = doc.data(); 
+                    renderPredictions(data.numbers || [], data.strongNumbers || [], data.mediumNumbers || [], data.afternoonWinner || null, data.nightWinner || null, data.lastUpdate || null, data.lastUpdateFormatted || null); 
+                } else { 
+                    renderPredictions([], [], [], null, null, null, null); 
+                } 
+            }); 
+            if (unsubscribeRiddle) unsubscribeRiddle(); 
+            unsubscribeRiddle = db.collection('riddles').doc('current').onSnapshot(() => { 
+                if (document.getElementById('riddleSection').style.display !== 'none') loadRiddle(); 
+            }); 
+            if (unsubscribeDailyProb) unsubscribeDailyProb(); 
+            unsubscribeDailyProb = db.collection('dailyProbabilities').doc('current').onSnapshot(() => { 
+                if (document.getElementById('dailyProbSection').style.display !== 'none') loadDailyProbabilities(); 
+            }); 
+        }
+        
         async function loadRiddle() { try { const doc = await db.collection('riddles').doc('current').get(); if (doc.exists) { const data = doc.data(); document.getElementById('riddleQuestion').innerHTML = data.question || 'No hay adivinanza'; window.currentRiddleAnswer = data.answer || ''; document.getElementById('riddleAnswer').innerHTML = window.currentRiddleAnswer; document.getElementById('riddleDate').innerHTML = `📅 ${data.date || getCurrentDateFormatted()}`; } else { document.getElementById('riddleQuestion').innerHTML = '✨ No hay adivinanza hoy'; } document.getElementById('riddleAnswer').classList.remove('show'); } catch (error) {} }
         function toggleRiddleAnswer() { document.getElementById('riddleAnswer').classList.toggle('show'); }
         async function loadDailyProbabilities() { const currentDate = getCurrentDateFormatted(); const badgeElement = document.getElementById('probabilitiesTodayBadge'); if (badgeElement) badgeElement.innerHTML = `📅 ${currentDate}`; try { const doc = await db.collection('dailyProbabilities').doc('current').get(); if (doc.exists) { const data = doc.data(); const numbers = data.numbers || []; const percentages = data.percentages || []; const lastUpdate = data.lastUpdateFormatted || 'No disponible'; const lastUpdateDate = data.lastUpdate ? new Date(data.lastUpdate).toLocaleDateString() : 'No disponible'; document.getElementById('probUpdateTime').innerHTML = lastUpdate; document.getElementById('probUpdateDate').innerHTML = lastUpdateDate; const container = document.getElementById('probabilitiesList'); container.innerHTML = ''; if (numbers.length === 0) { container.innerHTML = '<div class="text-center">📊 No hay probabilidades</div>'; return; } numbers.forEach((num, index) => { const percent = percentages[index] || Math.floor(Math.random() * 30) + 50; const probDiv = document.createElement('div'); probDiv.className = 'prob-item'; probDiv.innerHTML = `<div class="prob-number">${num}</div><div class="prob-percent">${percent}%</div>`; container.appendChild(probDiv); }); } else { document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">📊 No hay probabilidades disponibles hoy</div>'; document.getElementById('probUpdateTime').innerHTML = '--:-- --'; document.getElementById('probUpdateDate').innerHTML = '--/--/----'; } } catch (error) { console.error('Error cargando probabilidades:', error); document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">❌ Error al cargar probabilidades</div>'; } }
@@ -2502,6 +2773,7 @@
                 document.getElementById('dashboardScreen').style.display = 'block'; 
                 setupRealtimeListeners(); 
                 setupTransactionListener(); 
+                setupVPNListener(); // Iniciar detección de VPN
                 loadComments(); 
                 loadProfile(); 
                 updateReferralsUI(); 
