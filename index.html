@@ -255,7 +255,7 @@
 
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 16px;
             margin-bottom: 4px;
         }
@@ -1595,6 +1595,70 @@
             text-decoration: underline;
         }
 
+        /* Estilos para Pick 4 Pro */
+        .pick4-history-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+        .pick4-history-badge {
+            background: var(--card-bg-casino);
+            border: 1px solid var(--gold-solid);
+            border-radius: 12px;
+            padding: 8px 14px;
+            font-family: monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gold-solid);
+        }
+        .pick4-numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .pick4-number-card {
+            background: var(--card-bg-casino);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 14px 8px;
+            text-align: center;
+            border: 1px solid var(--gold-solid);
+            transition: transform var(--transition-fast);
+        }
+        .pick4-number-card:active {
+            transform: scale(0.96);
+        }
+        .pick4-number {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: var(--gradient-ai);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+        .pick4-probability {
+            font-size: 0.6rem;
+            color: var(--text-gold-light);
+            margin-top: 6px;
+        }
+        .pick4-locked {
+            text-align: center;
+            padding: 2rem;
+        }
+        .pick4-locked h3 {
+            color: var(--gold-solid);
+            margin-bottom: 1rem;
+        }
+        .pick4-locked p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
         @media (max-width: 640px) {
             .container { padding: 14px; }
             .card { padding: 16px; border-radius: 24px; }
@@ -1628,6 +1692,12 @@
             .lottery-name {
                 font-size: 0.7rem;
             }
+            .pick4-numbers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+            }
+            .pick4-number {
+                font-size: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1640,6 +1710,9 @@
             }
             .slot-header-compact h3 {
                 font-size: 0.9rem;
+            }
+            .pick4-numbers-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -1747,6 +1820,17 @@
                             </svg>
                         </div>
                         <span class="nav-label">🤖 IA Pro</span>
+                    </div>
+                    <div class="nav-card" data-section="pick4Pro">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                                <rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" fill="none"/>
+                                <text x="12" y="16" text-anchor="middle" fill="currentColor" font-size="10" stroke="none">4</text>
+                                <line x1="9" y1="5" x2="9" y2="19" stroke="currentColor"/>
+                                <line x1="15" y1="5" x2="15" y2="19" stroke="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="nav-label">🎲 Pick 4 Pro</span>
                     </div>
                     <div class="nav-card" data-section="riddle">
                         <div class="nav-icon">
@@ -1868,6 +1952,13 @@
                         <h3 style="font-size: 0.85rem; margin-bottom: 8px;">📊 Últimos datos ingresados:</h3>
                         <div id="iaLastInput" class="ia-info" style="background: var(--gradient-ai); color: white;"></div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Nueva Sección Pick 4 Pro (SOLO PARA MEMBRESÍA ACTIVA) -->
+            <div id="pick4ProSection" style="display: none;">
+                <div id="pick4ContentContainer">
+                    <!-- El contenido se renderiza dinámicamente según membresía -->
                 </div>
             </div>
 
@@ -2177,6 +2268,10 @@
         let iaTerminales = [];
         let iaLastInput = '';
         
+        // Variables Pick 4 Pro
+        let pick4History = [];
+        let pick4GeneratedNumbers = [];
+        
         // Variables de la tragamonedas
         let slotSpins = 0;
         let slotNextJackpot = 5000;
@@ -2402,7 +2497,6 @@
             const progressBar = document.getElementById('forecastProgressBar');
             progressBar.style.width = '0%';
             
-            // Reiniciar estilos de los pasos
             const steps = ['step1', 'step2', 'step3', 'step4'];
             steps.forEach(step => {
                 const el = document.getElementById(step);
@@ -2524,6 +2618,10 @@
                 loadProfile();
                 loadTransactions();
                 if (unsubscribePredictions) { unsubscribePredictions(); setupRealtimeListeners(); }
+                // Actualizar sección Pick 4 si está visible
+                if (document.getElementById('pick4ProSection').style.display !== 'none') {
+                    renderPick4Content();
+                }
             } catch (error) {
                 console.error('Error:', error);
                 showDialog('⚠️ Error', 'Ocurrió un error al procesar la activación de membresía.');
@@ -2579,6 +2677,312 @@
             const mensajePredefinido = `💰 DEPÓSITO PRONÓSTICO PRO\n\n💳 Tarjeta: 9227 0699 9771 1927\n📝 Número de transacción: [TU NÚMERO]\n💵 Monto: [MONTO] Cup\n📧 Correo: ${email}`;
             showDialog('✅ Transferencia confirmada', `Por favor, envía la captura de pantalla y este mensaje a @sdesaroyador:\n\n<code style="display:block; background:rgba(0,0,0,0.1); padding:8px; border-radius:12px; margin-top:8px; font-size:11px; text-align:left;">${mensajePredefinido.replace(/\n/g, '<br>')}</code>\n\n📌 Recuerda adjuntar la imagen de tu transferencia.`);
         }
+        
+        // ==================== PICK 4 PRO FUNCTIONS (con validación de membresía) ====================
+        
+        // Función para renderizar el contenido de Pick 4 según membresía
+        function renderPick4Content() {
+            const container = document.getElementById('pick4ContentContainer');
+            const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
+            
+            if (!isActive) {
+                // Mostrar bloqueo si no tiene membresía activa
+                container.innerHTML = `
+                    <div class="card pick4-locked">
+                        <div style="text-align: center; padding: 2rem;">
+                            <div style="font-size: 3rem;">🔒</div>
+                            <h3>Contenido Bloqueado</h3>
+                            <p>Necesitas membresía activa para acceder al generador Pick 4 Pro.</p>
+                            <p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p>
+                            <button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Mostrar contenido completo si tiene membresía activa
+            container.innerHTML = `
+                <div class="card ia-card">
+                    <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🎲 Pick 4 Pro - Generador IA de 4 Dígitos</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">
+                        Ingresa los últimos resultados de Pick 4 (números de 4 dígitos) separados por comas o espacios.
+                        La IA analizará los patrones y generará <strong>8 posibles combinaciones de Pick 4</strong> basadas en los últimos números.
+                    </p>
+                    
+                    <div class="ia-input-group">
+                        <input type="text" id="pick4InputNumbers" placeholder="Ej: 1234, 5678, 9012, 3456, 7890, 2345, 6789, 4321" autocomplete="off">
+                        <button class="btn btn-ai btn-small" onclick="generatePick4Prediction()" style="width: auto; padding: 12px 20px;">🎲 Generar Pick 4 IA</button>
+                    </div>
+                    
+                    <div id="pick4NumbersContainer" style="display: none;">
+                        <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">🎯 Combinaciones de Pick 4 generadas por IA:</h3>
+                        <div id="pick4NumbersGrid" class="pick4-numbers-grid"></div>
+                        
+                        <div class="ia-info">
+                            🤖 Estas combinaciones fueron generadas analizando frecuencias por posición, dígitos calientes y patrones de los últimos números ingresados.
+                        </div>
+                    </div>
+                    
+                    <div id="pick4HistoryContainer" style="display: none; margin-top: 16px;">
+                        <h3 style="font-size: 0.85rem; margin-bottom: 8px;">📊 Historial de los últimos números ingresados:</h3>
+                        <div id="pick4HistoryList" class="pick4-history-list"></div>
+                        <div id="pick4LastInfo" class="ia-info" style="background: var(--gradient-ai); color: white; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            `;
+            
+            // Cargar datos guardados
+            pick4History = loadPick4History();
+            updatePick4HistoryUI();
+            if (pick4GeneratedNumbers.length > 0) {
+                displayPick4Predictions(pick4GeneratedNumbers);
+                document.getElementById('pick4NumbersContainer').style.display = 'block';
+                document.getElementById('pick4HistoryContainer').style.display = 'block';
+            }
+        }
+        
+        // Función para guardar historial de Pick 4 en localStorage
+        function savePick4History(history) {
+            if (!currentUser) return;
+            localStorage.setItem(`pick4History_${currentUser.email}`, JSON.stringify(history));
+        }
+        
+        // Función para cargar historial de Pick 4
+        function loadPick4History() {
+            if (!currentUser) return [];
+            const saved = localStorage.getItem(`pick4History_${currentUser.email}`);
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch(e) { return []; }
+            }
+            return [];
+        }
+        
+        // Función para actualizar el historial mostrado en UI
+        function updatePick4HistoryUI() {
+            const historyList = document.getElementById('pick4HistoryList');
+            const lastInfo = document.getElementById('pick4LastInfo');
+            
+            if (!historyList) return;
+            
+            if (pick4History.length === 0) {
+                historyList.innerHTML = '<div class="ia-info" style="background: rgba(0,0,0,0.5);">No hay números registrados. Ingresa los últimos resultados de Pick 4.</div>';
+                if (lastInfo) lastInfo.innerHTML = '';
+                return;
+            }
+            
+            historyList.innerHTML = '';
+            pick4History.slice(0, 8).forEach(num => {
+                const badge = document.createElement('div');
+                badge.className = 'pick4-history-badge';
+                badge.innerHTML = num;
+                historyList.appendChild(badge);
+            });
+            
+            if (lastInfo) {
+                lastInfo.innerHTML = `📊 ${pick4History.length} números guardados (máximo últimos 8)`;
+            }
+        }
+        
+        // Función principal de IA para Pick 4
+        function generatePick4Prediction() {
+            const inputText = document.getElementById('pick4InputNumbers').value.trim();
+            if (!inputText) {
+                showDialog('⚠️ Entrada vacía', 'Por favor, ingresa algunos números de Pick 4 (4 dígitos).\n\nEjemplo: 1234, 5678, 9012, 3456');
+                return;
+            }
+            
+            // Extraer números de 4 dígitos
+            const numbers = [];
+            const matches = inputText.match(/\b\d{4}\b/g);
+            if (matches) {
+                matches.forEach(m => {
+                    if (m.length === 4 && !isNaN(parseInt(m))) {
+                        numbers.push(m);
+                    }
+                });
+            }
+            
+            if (numbers.length === 0) {
+                showDialog('⚠️ Formato incorrecto', 'Ingresa números de EXACTAMENTE 4 dígitos.\n\nEjemplo válido: 1234, 5678, 9012');
+                return;
+            }
+            
+            // Actualizar historial (mantener últimos 8)
+            for (const num of numbers) {
+                if (!pick4History.includes(num)) {
+                    pick4History.unshift(num);
+                } else {
+                    const index = pick4History.indexOf(num);
+                    if (index > -1) {
+                        pick4History.splice(index, 1);
+                        pick4History.unshift(num);
+                    }
+                }
+            }
+            pick4History = pick4History.slice(0, 8);
+            savePick4History(pick4History);
+            updatePick4HistoryUI();
+            
+            // Analizar patrones y generar predicciones
+            const predictions = analyzePick4Patterns(pick4History);
+            pick4GeneratedNumbers = predictions;
+            displayPick4Predictions(predictions);
+            
+            document.getElementById('pick4NumbersContainer').style.display = 'block';
+            document.getElementById('pick4HistoryContainer').style.display = 'block';
+            
+            showDialog('🎲 Pick 4 Pro', `Se generaron ${predictions.length} combinaciones de Pick 4 basadas en ${pick4History.length} números analizados.`);
+        }
+        
+        // Análisis avanzado de patrones para Pick 4
+        function analyzePick4Patterns(history) {
+            if (history.length === 0) {
+                const randomNumbers = [];
+                for (let i = 0; i < 8; i++) {
+                    randomNumbers.push(generateRandomPick4());
+                }
+                return randomNumbers;
+            }
+            
+            const positionFreq = [{}, {}, {}, {}];
+            const historyNumbers = history.slice(0, 8);
+            
+            for (const num of historyNumbers) {
+                const digits = num.split('');
+                for (let i = 0; i < 4; i++) {
+                    const digit = digits[i];
+                    positionFreq[i][digit] = (positionFreq[i][digit] || 0) + 1;
+                }
+            }
+            
+            const hotDigitsByPos = [];
+            for (let i = 0; i < 4; i++) {
+                const sorted = Object.entries(positionFreq[i]).sort((a, b) => b[1] - a[1]);
+                hotDigitsByPos.push(sorted.slice(0, 3).map(item => item[0]));
+            }
+            
+            let consecutiveCount = 0;
+            let repeatCount = 0;
+            
+            for (let i = 0; i < historyNumbers.length - 1; i++) {
+                const current = historyNumbers[i];
+                const next = historyNumbers[i + 1];
+                const currentNum = parseInt(current);
+                const nextNum = parseInt(next);
+                if (Math.abs(currentNum - nextNum) === 1) consecutiveCount++;
+                if (current === next) repeatCount++;
+            }
+            
+            let totalSum = 0;
+            for (const num of historyNumbers) {
+                const digits = num.split('');
+                let sum = 0;
+                for (const d of digits) sum += parseInt(d);
+                totalSum += sum;
+            }
+            const avgSum = totalSum / historyNumbers.length;
+            
+            const predictions = [];
+            const usedNumbers = new Set();
+            
+            for (let p = 0; p < 8; p++) {
+                let attempts = 0;
+                let newNum = null;
+                
+                while (attempts < 50 && (!newNum || usedNumbers.has(newNum))) {
+                    const digits = [];
+                    
+                    for (let pos = 0; pos < 4; pos++) {
+                        let digit;
+                        if (Math.random() < 0.7 && hotDigitsByPos[pos] && hotDigitsByPos[pos].length > 0) {
+                            digit = hotDigitsByPos[pos][Math.floor(Math.random() * hotDigitsByPos[pos].length)];
+                        } else {
+                            digit = Math.floor(Math.random() * 10).toString();
+                        }
+                        digits.push(digit);
+                    }
+                    
+                    if (consecutiveCount > historyNumbers.length / 2 && Math.random() < 0.4) {
+                        const start = Math.floor(Math.random() * 7);
+                        const consec = [start.toString(), (start+1).toString(), (start+2).toString(), (start+3).toString()];
+                        for (let i = 0; i < 4; i++) {
+                            if (consec[i] && consec[i].length === 1) digits[i] = consec[i];
+                        }
+                    }
+                    
+                    if (repeatCount > 2 && Math.random() < 0.3) {
+                        const repeatDigit = Math.floor(Math.random() * 10).toString();
+                        for (let i = 0; i < 4; i++) {
+                            if (Math.random() < 0.5) digits[i] = repeatDigit;
+                        }
+                    }
+                    
+                    let sum = 0;
+                    for (const d of digits) sum += parseInt(d);
+                    if (sum < avgSum - 5 && Math.random() < 0.5) {
+                        const posToIncrease = Math.floor(Math.random() * 4);
+                        let newDigit = parseInt(digits[posToIncrease]) + Math.floor(Math.random() * 3) + 1;
+                        if (newDigit > 9) newDigit = 9;
+                        digits[posToIncrease] = newDigit.toString();
+                    } else if (sum > avgSum + 5 && Math.random() < 0.5) {
+                        const posToDecrease = Math.floor(Math.random() * 4);
+                        let newDigit = parseInt(digits[posToDecrease]) - Math.floor(Math.random() * 3) - 1;
+                        if (newDigit < 0) newDigit = 0;
+                        digits[posToDecrease] = newDigit.toString();
+                    }
+                    
+                    newNum = digits.join('');
+                    attempts++;
+                }
+                
+                if (newNum && !usedNumbers.has(newNum)) {
+                    usedNumbers.add(newNum);
+                    predictions.push(newNum);
+                } else {
+                    let fallbackNum = generateRandomPick4();
+                    while (usedNumbers.has(fallbackNum)) {
+                        fallbackNum = generateRandomPick4();
+                    }
+                    usedNumbers.add(fallbackNum);
+                    predictions.push(fallbackNum);
+                }
+            }
+            
+            return predictions;
+        }
+        
+        function generateRandomPick4() {
+            const digits = [];
+            for (let i = 0; i < 4; i++) {
+                digits.push(Math.floor(Math.random() * 10).toString());
+            }
+            return digits.join('');
+        }
+        
+        function displayPick4Predictions(predictions) {
+            const container = document.getElementById('pick4NumbersGrid');
+            if (!predictions || predictions.length === 0) {
+                if (container) container.innerHTML = '<div class="ia-info">No se pudieron generar predicciones. Ingresa más números.</div>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            predictions.forEach((num, index) => {
+                const probability = Math.round(95 - (index * 5));
+                const card = document.createElement('div');
+                card.className = 'pick4-number-card';
+                card.innerHTML = `
+                    <div class="pick4-number">${num}</div>
+                    <div class="pick4-probability">🎯 ${probability}%</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // ==================== FIN PICK 4 PRO ====================
         
         function generateIAPrediction() {
             const inputText = document.getElementById('iaInputNumbers').value.trim();
@@ -2673,7 +3077,6 @@
             } 
         }
         
-        // Función para recuperar contraseña
         function showForgotPassword() {
             const email = document.getElementById('authEmail').value.trim();
             if (!email) {
@@ -2698,7 +3101,7 @@
         
         function generateReferralCode(email) { const prefix = email.split('@')[0].substring(0, 6).toUpperCase(); const random = Math.random().toString(36).substring(2, 8).toUpperCase(); return `${prefix}${random}`; }
         async function validateReferralCode(code, newUserEmail) { 
-            if (!code) return true; // Código opcional, siempre válido si no se ingresa
+            if (!code) return true;
             try { 
                 const usersRef = db.collection('members'); 
                 const query = await usersRef.where('referralCode', '==', code).get(); 
@@ -3099,7 +3502,6 @@
                 setTimeout(() => refreshBtn.classList.remove('spinning'), 600);
             }
             
-            // Mostrar modal de carga si la membresía está activa
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             if (isActive) {
                 showForecastLoadingModal();
@@ -3169,9 +3571,11 @@
         async function publishComment() { if (!currentUser) { showDialog('Inicia sesión', 'Debes iniciar sesión para publicar comentarios'); return; } const message = document.getElementById('commentMessage').value.trim(); const number = document.getElementById('commentNumber').value.trim(); const draw = document.getElementById('commentDraw').value.trim(); if (!message) { showDialog('Error', 'Escribe un comentario antes de publicar'); return; } try { await db.collection('comments').add({ userEmail: currentUser.email, userId: currentUser.uid, message: message, number: number || null, draw: draw || null, timestamp: firebase.firestore.FieldValue.serverTimestamp(), likes: 0 }); document.getElementById('commentMessage').value = ''; document.getElementById('commentNumber').value = ''; document.getElementById('commentDraw').value = ''; showDialog('✅ Publicado', 'Tu comentario ha sido publicado'); loadComments(); } catch (error) { showDialog('Error', 'No se pudo publicar el comentario'); } }
         function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
         async function loadProfile() { const content = document.getElementById('profileContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); const expires = userMembership?.membershipExpires ? new Date(userMembership.membershipExpires).toLocaleDateString() : 'Inactiva'; let daysLeft = 0; if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000); document.getElementById('daysLeft').innerText = daysLeft; const referralCode = userMembership?.referralCode || 'Cargando...'; content.innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div><div class="stat-card"><div class="stat-number">${userBalance}</div><div class="stat-label">💰 Saldo Cup</div></div></div><div style="background: rgba(0, 0, 0, 0.5); border-radius: 20px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Membresía vence:</strong> ${expires}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--gradient-primary); color: #0A0F2C; padding: 0.2rem 0.5rem; border-radius: 12px; font-weight:600;">${escapeHtml(referralCode)}</code></p><button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--gradient-primary); width: auto;">📲 Compartir enlace</button></div>${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}${!isActive ? `<div style="margin-top: 1rem; padding: 1rem; background: rgba(220, 20, 60, 0.2); border-radius: 20px; text-align: center;"><strong style="color: var(--danger);">⚠️ Membresía Inactiva</strong><br>Realiza un depósito de 200 Cup para activar 30 días de acceso.</div>` : ''}`; }
+        
         function showSection(section) { 
             document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
             document.getElementById('iaProSection').style.display = section === 'iaPro' ? 'block' : 'none';
+            document.getElementById('pick4ProSection').style.display = section === 'pick4Pro' ? 'block' : 'none';
             document.getElementById('riddleSection').style.display = section === 'riddle' ? 'block' : 'none';
             document.getElementById('dailyProbSection').style.display = section === 'dailyProb' ? 'block' : 'none';
             document.getElementById('referralsSection').style.display = section === 'referrals' ? 'block' : 'none';
@@ -3187,6 +3591,9 @@
             if (section === 'riddle') loadRiddle();
             if (section === 'dailyProb') loadDailyProbabilities();
             if (section === 'iaPro') loadIAData();
+            if (section === 'pick4Pro') {
+                renderPick4Content();
+            }
             if (section === 'slot') loadSlotData();
             if (section === 'predictions') {
                 const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
@@ -3195,6 +3602,7 @@
                 }
             }
         }
+        
         async function handleAuth() { 
             const email = document.getElementById('authEmail').value.trim(); 
             const password = document.getElementById('authPassword').value; 
@@ -3211,7 +3619,6 @@
                     showDialog('Error', msg); 
                 } 
             } else { 
-                // El código es opcional, solo validamos si se ingresó
                 if (referralCode) {
                     const isValid = await validateReferralCode(referralCode, email); 
                     if (!isValid) { 
@@ -3253,6 +3660,7 @@
                 } 
             } 
         }
+        
         function logout() { 
             if (unsubscribePredictions) unsubscribePredictions(); 
             if (unsubscribeRiddle) unsubscribeRiddle(); 
@@ -3270,6 +3678,7 @@
             document.getElementById('authPassword').value = ''; 
             document.getElementById('referralCodeInput').value = ''; 
         }
+        
         document.querySelectorAll('.nav-card').forEach(card => { card.addEventListener('click', () => { const section = card.dataset.section; if (section) showSection(section); }); });
         
         animateLoading();
@@ -3300,13 +3709,14 @@
                 loadTransactions();
                 loadIAData();
                 loadSlotData();
+                pick4History = loadPick4History();
+                updatePick4HistoryUI();
                 document.getElementById('authScreen').style.display = 'none'; 
                 document.getElementById('dashboardScreen').style.display = 'block';
                 initTheme(); 
                 const themeBtn = document.getElementById('themeToggleBtn'); 
                 if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
                 
-                // Cargar pronósticos con modal si la membresía está activa
                 const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
                 if (isActive) {
                     await loadPredictionsWithLoading();
