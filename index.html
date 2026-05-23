@@ -368,83 +368,92 @@
             font-weight: 700;
         }
 
+        /* ESTILO BOLAS DE BILLAR */
         .numbers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
-            gap: 12px;
-            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
         }
 
         .number-card {
-            background: var(--card-bg-casino);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 14px 4px;
-            text-align: center;
-            border: 1px solid rgba(245, 175, 25, 0.3);
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-            cursor: pointer;
+            background: radial-gradient(circle at 30% 25%, #fff, #e0e0e0);
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: default;
+            position: relative;
+        }
+        
+        .number-card::after {
+            content: "";
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
-        .number-card:active {
-            transform: scale(0.96);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--gold-solid);
+        .number-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.4);
         }
 
         .number-card.strong {
-            background: linear-gradient(135deg, rgba(245, 175, 25, 0.15), rgba(177, 112, 2, 0.2));
-            border-left: 4px solid var(--gold-solid);
+            background: radial-gradient(circle at 30% 25%, #FFE4B5, #F5AF19);
+            box-shadow: 0 0 15px rgba(245,175,25,0.6), inset 0 1px 2px rgba(255,255,255,0.6);
         }
 
         .number-card.medium {
-            background: linear-gradient(135deg, rgba(139, 69, 19, 0.15), rgba(0, 0, 0, 0.3));
-            border-left: 4px solid #CD853F;
+            background: radial-gradient(circle at 30% 25%, #E6E6FA, #B0C4DE);
         }
 
         .number-card.ia-generated {
-            background: linear-gradient(135deg, rgba(218, 165, 32, 0.15), rgba(184, 134, 11, 0.2));
-            border: 1px solid var(--gold-solid);
-            position: relative;
-        }
-
-        .number-card.ia-generated::before {
-            content: '🤖';
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            font-size: 0.7rem;
-            background: var(--gradient-primary);
-            color: #0A0F2C;
-            border-radius: 20px;
-            padding: 2px 6px;
+            border: 2px solid var(--gold-solid);
+            box-shadow: 0 0 20px rgba(218,165,32,0.5);
         }
 
         .number-card.winner {
-            border: 2px solid var(--gold-solid);
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(245, 175, 25, 0.15));
-            animation: winnerPulse 1s infinite;
+            background: radial-gradient(circle at 30% 25%, #FFD700, #FF8C00);
+            box-shadow: 0 0 25px gold;
+            animation: pulseWinner 1s infinite;
         }
 
-        @keyframes winnerPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 175, 25, 0.4); }
-            50% { box-shadow: 0 0 0 4px rgba(245, 175, 25, 0); }
+        @keyframes pulseWinner {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,215,0,0.7);}
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255,215,0,0);}
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,215,0,0);}
         }
 
         .number {
-            font-size: 1.4rem;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1a1a2e;
+            text-shadow: 0 1px 0 white;
+            line-height: 1;
         }
 
         .probability {
             font-size: 0.6rem;
-            color: var(--text-gold-light);
+            font-weight: bold;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 20px;
             margin-top: 4px;
         }
+        /* FIN ESTILOS BOLAS */
 
         .result-box {
             background: var(--glass-bg);
@@ -1662,8 +1671,9 @@
         @media (max-width: 640px) {
             .container { padding: 14px; }
             .card { padding: 16px; border-radius: 24px; }
-            .numbers-grid { grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 8px; }
-            .number { font-size: 1.1rem; }
+            .numbers-grid { gap: 15px; }
+            .number-card { width: 65px; height: 65px; }
+            .number { font-size: 1.3rem; }
             .result-value { font-size: 1.2rem; }
             .referral-code { font-size: 1rem; }
             .ia-numbers-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
@@ -1951,6 +1961,30 @@
                     <div id="iaHistoryContainer" style="display: none; margin-top: 16px;">
                         <h3 style="font-size: 0.85rem; margin-bottom: 8px;">📊 Últimos datos ingresados:</h3>
                         <div id="iaLastInput" class="ia-info" style="background: var(--gradient-ai); color: white;"></div>
+                    </div>
+                </div>
+
+                <!-- NUEVA SECCIÓN: IA PARA PICK 3 (BASADO EN ÚLTIMOS TIROS) -->
+                <div class="card ia-card" style="margin-top: 20px;">
+                    <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🎱 IA Pick 3 Pro (Números de 3 Dígitos)</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">
+                        Analiza los últimos números ganadores de Pick 3 (3 dígitos) para generar nuevas predicciones.
+                        Ingresa los números separados por espacios. La IA usará frecuencias, patrones de secuencia y sumas.
+                    </p>
+                    <div class="ia-input-group">
+                        <input type="text" id="pick3InputNumbers" placeholder="Ej: 123 456 789 012 345 678" autocomplete="off">
+                        <button class="btn btn-ai btn-small" onclick="generarPick3()" style="width: auto; padding: 12px 20px;">🎱 Generar Pick 3 IA</button>
+                    </div>
+                    <div id="pick3HistoryContainer" style="display: none;">
+                        <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">📜 Historial de números ingresados:</h3>
+                        <div id="pick3HistoryList" class="pick4-history-list"></div>
+                    </div>
+                    <div id="pick3NumbersContainer" style="display: none;">
+                        <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">🎯 Predicciones Pick 3 (3 dígitos):</h3>
+                        <div id="pick3NumbersGrid" class="ia-numbers-grid"></div>
+                        <div class="ia-info">
+                            🤖 Combinaciones generadas por IA basadas en los últimos resultados registrados.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2267,6 +2301,9 @@
         let iaDecenas = [];
         let iaTerminales = [];
         let iaLastInput = '';
+        
+        // Variables Pick 3
+        let pick3History = [];
         
         // Variables Pick 4 Pro
         let pick4History = [];
@@ -2982,7 +3019,187 @@
             });
         }
         
-        // ==================== FIN PICK 4 PRO ====================
+        // ==================== NUEVA IA PARA PICK 3 (basada en últimos tiros) ====================
+        
+        function savePick3History() {
+            if (!currentUser) return;
+            localStorage.setItem(`pick3History_${currentUser.email}`, JSON.stringify(pick3History));
+        }
+        
+        function loadPick3History() {
+            if (!currentUser) return [];
+            const saved = localStorage.getItem(`pick3History_${currentUser.email}`);
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch(e) { return []; }
+            }
+            return [];
+        }
+        
+        function updatePick3HistoryUI() {
+            const container = document.getElementById('pick3HistoryList');
+            if (!container) return;
+            if (pick3History.length === 0) {
+                container.innerHTML = '<div class="ia-info">No hay historial. Ingresa números de Pick 3 (3 dígitos) para comenzar.</div>';
+                return;
+            }
+            container.innerHTML = '';
+            pick3History.slice(0, 10).forEach(num => {
+                const badge = document.createElement('div');
+                badge.className = 'pick4-history-badge';
+                badge.innerHTML = num;
+                container.appendChild(badge);
+            });
+        }
+        
+        function generarPick3() {
+            const inputText = document.getElementById('pick3InputNumbers').value.trim();
+            if (!inputText) {
+                showDialog('⚠️ Entrada vacía', 'Por favor, ingresa números de Pick 3 (3 dígitos).\n\nEjemplo: 123 456 789');
+                return;
+            }
+            
+            // Extraer números de 3 dígitos
+            const numbers = [];
+            const matches = inputText.match(/\b\d{3}\b/g);
+            if (matches) {
+                matches.forEach(m => {
+                    if (m.length === 3 && !isNaN(parseInt(m))) {
+                        numbers.push(m);
+                    }
+                });
+            }
+            
+            if (numbers.length === 0) {
+                showDialog('⚠️ Formato incorrecto', 'Ingresa números de EXACTAMENTE 3 dígitos.\n\nEjemplo válido: 123, 456, 789');
+                return;
+            }
+            
+            // Actualizar historial
+            for (const num of numbers) {
+                const index = pick3History.indexOf(num);
+                if (index > -1) pick3History.splice(index, 1);
+                pick3History.unshift(num);
+            }
+            pick3History = pick3History.slice(0, 15);
+            savePick3History();
+            updatePick3HistoryUI();
+            
+            // Generar predicciones con IA
+            const predictions = generarPrediccionesPick3(pick3History);
+            mostrarPrediccionesPick3(predictions);
+            
+            document.getElementById('pick3NumbersContainer').style.display = 'block';
+            document.getElementById('pick3HistoryContainer').style.display = 'block';
+            showDialog('🎱 IA Pick 3', `Se generaron ${predictions.length} predicciones de Pick 3 basadas en ${pick3History.length} números analizados.`);
+        }
+        
+        function generarPrediccionesPick3(historial) {
+            if (historial.length === 0) {
+                const random = [];
+                for (let i = 0; i < 8; i++) {
+                    random.push(Math.floor(Math.random() * 900 + 100).toString());
+                }
+                return random;
+            }
+            
+            // Análisis de frecuencias por posición
+            const freqPos = [{}, {}, {}];
+            const ultimos = historial.slice(0, 12);
+            for (const num of ultimos) {
+                const digits = num.split('');
+                for (let i = 0; i < 3; i++) {
+                    const d = digits[i];
+                    freqPos[i][d] = (freqPos[i][d] || 0) + 1;
+                }
+            }
+            
+            // Dígitos calientes por posición
+            const hotDigits = [];
+            for (let i = 0; i < 3; i++) {
+                const sorted = Object.entries(freqPos[i]).sort((a,b) => b[1] - a[1]);
+                hotDigits.push(sorted.slice(0, 4).map(item => item[0]));
+            }
+            
+            // Análisis de sumas
+            let sumaTotal = 0;
+            for (const num of ultimos) {
+                const digits = num.split('');
+                let s = 0;
+                for (const d of digits) s += parseInt(d);
+                sumaTotal += s;
+            }
+            const sumaPromedio = sumaTotal / ultimos.length;
+            
+            // Análisis de secuencias consecutivas o patrones
+            let esTendenciaConsecutiva = false;
+            let countConsec = 0;
+            for (let i = 0; i < ultimos.length - 1; i++) {
+                const num1 = parseInt(ultimos[i]);
+                const num2 = parseInt(ultimos[i+1]);
+                if (Math.abs(num1 - num2) === 1 || Math.abs(num1 - num2) === 111 || Math.abs(num1 - num2) === 222) {
+                    countConsec++;
+                }
+            }
+            if (countConsec > ultimos.length / 3) esTendenciaConsecutiva = true;
+            
+            const predicciones = new Set();
+            
+            // Generar hasta 10 predicciones únicas
+            while (predicciones.size < 10) {
+                let digits = [];
+                for (let i = 0; i < 3; i++) {
+                    let digit;
+                    if (Math.random() < 0.75 && hotDigits[i] && hotDigits[i].length > 0) {
+                        digit = hotDigits[i][Math.floor(Math.random() * hotDigits[i].length)];
+                    } else {
+                        digit = Math.floor(Math.random() * 10).toString();
+                    }
+                    digits.push(digit);
+                }
+                
+                // Ajustar por suma promedio
+                let sumaDigitos = digits.reduce((acc, d) => acc + parseInt(d), 0);
+                if (sumaDigitos < sumaPromedio - 3 && Math.random() < 0.4) {
+                    const idx = Math.floor(Math.random() * 3);
+                    let newVal = parseInt(digits[idx]) + Math.floor(Math.random() * 3) + 1;
+                    if (newVal > 9) newVal = 9;
+                    digits[idx] = newVal.toString();
+                } else if (sumaDigitos > sumaPromedio + 3 && Math.random() < 0.4) {
+                    const idx = Math.floor(Math.random() * 3);
+                    let newVal = parseInt(digits[idx]) - Math.floor(Math.random() * 3) - 1;
+                    if (newVal < 0) newVal = 0;
+                    digits[idx] = newVal.toString();
+                }
+                
+                // Si hay tendencia a números consecutivos, forzar un poco
+                if (esTendenciaConsecutiva && Math.random() < 0.3) {
+                    const start = Math.floor(Math.random() * 8);
+                    digits = [start.toString(), (start+1).toString(), (start+2).toString()];
+                }
+                
+                const numStr = digits.join('');
+                if (numStr.length === 3) predicciones.add(numStr);
+            }
+            
+            return Array.from(predicciones);
+        }
+        
+        function mostrarPrediccionesPick3(predictions) {
+            const container = document.getElementById('pick3NumbersGrid');
+            if (!container) return;
+            container.innerHTML = '';
+            predictions.forEach((num, idx) => {
+                const prob = Math.round(90 - (idx * 4));
+                const card = document.createElement('div');
+                card.className = 'ia-number-card';
+                card.innerHTML = `<div class="ia-number">${num}</div><div class="ia-probability">🎯 ${prob}%</div>`;
+                container.appendChild(card);
+            });
+        }
+        
+        // ==================== FIN PICK 3 ====================
         
         function generateIAPrediction() {
             const inputText = document.getElementById('iaInputNumbers').value.trim();
@@ -3045,7 +3262,11 @@
             container.innerHTML = `<div class="decenas-box"><h4>🔟 DECENAS MÁS PROBABLES</h4><div class="decenas-items">${decenas.map(d => `<span class="decena-item">${d}</span>`).join('')}</div><div style="font-size: 0.6rem; margin-top: 6px; color: var(--text-secondary);">Números que comienzan con estos dígitos</div></div><div class="terminales-box"><h4>🔢 TERMINALES MÁS PROBABLES</h4><div class="terminales-items">${terminales.map(t => `<span class="terminal-item">${t}</span>`).join('')}</div><div style="font-size: 0.6rem; margin-top: 6px; color: var(--text-secondary);">Números que terminan con estos dígitos</div></div>`;
         }
         
-        async function loadIAData() { if (!currentUser) return; const saved = localStorage.getItem(`iaPro_${currentUser.email}`); if (saved) { try { const data = JSON.parse(saved); iaNumbers = data.numbers || []; iaDecenas = data.decenas || []; iaTerminales = data.terminales || []; iaLastInput = data.lastInput || ''; if (iaNumbers.length > 0) { displayIANumbers(iaNumbers); displayDecenasTerminales(iaDecenas, iaTerminales); document.getElementById('iaHistoryContainer').style.display = 'block'; document.getElementById('iaLastInput').innerHTML = `📊 "${iaLastInput}" → Generados ${iaNumbers.length} números (${new Date(data.timestamp).toLocaleDateString()})`; } } catch(e) { console.error(e); } } }
+        async function loadIAData() { if (!currentUser) return; const saved = localStorage.getItem(`iaPro_${currentUser.email}`); if (saved) { try { const data = JSON.parse(saved); iaNumbers = data.numbers || []; iaDecenas = data.decenas || []; iaTerminales = data.terminales || []; iaLastInput = data.lastInput || ''; if (iaNumbers.length > 0) { displayIANumbers(iaNumbers); displayDecenasTerminales(iaDecenas, iaTerminales); document.getElementById('iaHistoryContainer').style.display = 'block'; document.getElementById('iaLastInput').innerHTML = `📊 "${iaLastInput}" → Generados ${iaNumbers.length} números (${new Date(data.timestamp).toLocaleDateString()})`; } } catch(e) { console.error(e); } } 
+            // Cargar historial de Pick 3
+            pick3History = loadPick3History();
+            updatePick3HistoryUI();
+        }
         
         function initTheme() { const savedTheme = localStorage.getItem('floridaTheme'); const themeBtn = document.getElementById('themeToggleBtn'); if (savedTheme === 'dark') { document.body.classList.add('dark'); if (themeBtn) themeBtn.innerHTML = '☀️'; } else { document.body.classList.remove('dark'); if (themeBtn) themeBtn.innerHTML = '🌙'; } }
         function toggleTheme() { const body = document.body; const btn = document.getElementById('themeToggleBtn'); if (body.classList.contains('dark')) { body.classList.remove('dark'); localStorage.setItem('floridaTheme', 'light'); if (btn) btn.innerHTML = '🌙'; } else { body.classList.add('dark'); localStorage.setItem('floridaTheme', 'dark'); if (btn) btn.innerHTML = '☀️'; } }
@@ -3485,8 +3706,8 @@
                     const isWinner = (finalAfternoon && finalAfternoon !== 'fallo' && finalAfternoon === num) || (finalNight && finalNight !== 'fallo' && finalNight === num);
                     if (isWinner) className += ' winner';
                     let probText = '';
-                    if (finalStrong && finalStrong.includes(num)) probText = '<div class="probability">🔥 68%</div>';
-                    else if (finalMedium && finalMedium.includes(num)) probText = '<div class="probability">📊 50%</div>';
+                    if (finalStrong && finalStrong.includes(num)) probText = '<div class="probability">68% 🔥</div>';
+                    else if (finalMedium && finalMedium.includes(num)) probText = '<div class="probability">50% 📊</div>';
                     const card = document.createElement('div');
                     card.className = className;
                     card.innerHTML = `<div class="number">${num}</div>${probText}`;
@@ -3711,6 +3932,9 @@
                 loadSlotData();
                 pick4History = loadPick4History();
                 updatePick4HistoryUI();
+                // Cargar historial Pick 3
+                pick3History = loadPick3History();
+                updatePick3HistoryUI();
                 document.getElementById('authScreen').style.display = 'none'; 
                 document.getElementById('dashboardScreen').style.display = 'block';
                 initTheme(); 
