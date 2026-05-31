@@ -52,17 +52,8 @@
             --gradient-ai: linear-gradient(135deg, #FFD700 0%, #DAA520 100%);
             --transition-fast: 0.15s ease;
             --transition-normal: 0.2s ease;
-        }
-
-        body.dark {
-            --primary-gold: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-            --gold-solid: #FFD700;
-            --blue-deep: #050816;
-            --blue-mid: #0A1A2F;
-            --card-bg-casino: rgba(5, 8, 22, 0.9);
-            --glass-bg: rgba(5, 8, 22, 0.85);
-            --text-gold: #FFD700;
-            --text-gold-light: #FFE4B5;
+            --sidebar-width: 280px;
+            --sidebar-collapsed-width: 80px;
         }
 
         body {
@@ -88,6 +79,227 @@
             z-index: -1;
         }
 
+        /* SIDEBAR MENÚ LATERAL */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: rgba(10, 15, 44, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(245, 175, 25, 0.3);
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(245, 175, 25, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h1 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.65rem;
+            color: var(--text-gold-light);
+            opacity: 0.8;
+        }
+
+        .sidebar-balance {
+            background: linear-gradient(135deg, #2E8B57, #1E4D2B);
+            margin: 0 16px 20px 16px;
+            padding: 12px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-balance span {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            display: block;
+        }
+
+        .sidebar-balance .balance-amount {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            margin-top: 4px;
+        }
+
+        .sidebar-badge {
+            background: var(--gradient-secondary);
+            color: var(--gold-light);
+            padding: 8px;
+            margin: 0 16px 20px 16px;
+            border-radius: 16px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 0 12px;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-gold-light);
+            background: transparent;
+            border: none;
+            width: 100%;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .sidebar-nav-item:hover {
+            background: rgba(245, 175, 25, 0.15);
+            transform: translateX(4px);
+        }
+
+        .sidebar-nav-item.active {
+            background: var(--gradient-primary);
+            color: #0A0F2C;
+        }
+
+        .sidebar-nav-item.active svg {
+            stroke: #0A0F2C;
+        }
+
+        .sidebar-nav-item svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--gold-solid);
+            stroke-width: 1.8;
+            fill: none;
+            transition: stroke 0.2s;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(245, 175, 25, 0.2);
+            margin-top: auto;
+        }
+
+        .logout-btn {
+            background: rgba(220, 20, 60, 0.2);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            width: 100%;
+            padding: 10px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .logout-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Botón para colapsar/expandir sidebar */
+        .sidebar-toggle {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 1001;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--gold-solid);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--gold-solid);
+            font-size: 1.2rem;
+        }
+
+        .sidebar-toggle:hover {
+            background: var(--gold-solid);
+            color: #0A0F2C;
+            transform: scale(1.05);
+        }
+
+        /* Sidebar colapsada */
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+        }
+
+        .sidebar.collapsed .sidebar-header h1,
+        .sidebar.collapsed .sidebar-header p,
+        .sidebar.collapsed .sidebar-balance span:first-child,
+        .sidebar.collapsed .sidebar-badge,
+        .sidebar.collapsed .sidebar-nav-item span,
+        .sidebar.collapsed .logout-btn span {
+            display: none;
+        }
+
+        .sidebar.collapsed .sidebar-balance .balance-amount {
+            font-size: 1rem;
+        }
+
+        .sidebar.collapsed .sidebar-nav-item {
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .sidebar.collapsed .sidebar-nav-item svg {
+            margin: 0;
+        }
+
+        .sidebar.collapsed .sidebar-footer {
+            padding: 12px;
+        }
+
+        .sidebar.collapsed .logout-btn {
+            justify-content: center;
+        }
+
+        /* Main content con espacio para sidebar */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 100vh;
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            margin-left: var(--sidebar-collapsed-width);
+        }
+
         .container {
             max-width: 1280px;
             margin: 0 auto;
@@ -106,15 +318,44 @@
             }
         }
 
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 0 0 28px 28px;
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 70px;
             margin-bottom: 20px;
-            border-bottom: 1px solid var(--gold-solid);
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 100px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            border-radius: 24px;
+            padding: 16px 8px;
+            text-align: center;
+            border: var(--glass-border);
+            transition: transform var(--transition-fast);
+        }
+
+        .stat-card:active {
+            transform: scale(0.98);
+            border-color: var(--gold-solid);
+        }
+
+        .stat-number {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-gold-light);
+            margin-top: 4px;
         }
 
         .card {
@@ -197,142 +438,6 @@
             50% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            padding: 15px 20px;
-        }
-
-        .logo h1 {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-size: 1.4rem;
-            font-weight: 620;
-            letter-spacing: -0.02em;
-        }
-
-        .logo p {
-            font-size: 0.7rem;
-            color: var(--text-gold-light);
-            font-weight: 400;
-        }
-
-        .florida-badge {
-            background: var(--gradient-secondary);
-            color: var(--gold-light);
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 590;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .theme-toggle {
-            background: var(--gray-bg);
-            border: 0.5px solid var(--border);
-            border-radius: 40px;
-            padding: 8px 16px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: transform var(--transition-fast), background var(--transition-fast);
-            font-weight: 500;
-            backdrop-filter: blur(8px);
-            color: var(--gold-solid);
-        }
-        .theme-toggle:active {
-            transform: scale(0.95);
-            background: var(--gold-solid);
-            color: var(--blue-deep);
-        }
-
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
-            margin-bottom: 4px;
-        }
-
-        .nav-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--blur-amount));
-            -webkit-backdrop-filter: blur(var(--blur-amount));
-            border-radius: 24px;
-            padding: 16px 12px;
-            text-align: center;
-            cursor: pointer;
-            border: var(--glass-border);
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .nav-card:active {
-            transform: scale(0.97);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--gold-color);
-        }
-
-        .nav-card.active {
-            background: var(--gradient-primary);
-            border-color: var(--gold-light);
-        }
-
-        .nav-card.active .nav-icon svg {
-            stroke: #0A0F2C;
-        }
-
-        .nav-card.active .nav-label {
-            color: #0A0F2C;
-            font-weight: 700;
-        }
-
-        .nav-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .nav-icon svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--gold-color);
-            stroke-width: 1.8;
-            fill: none;
-            transition: stroke var(--transition-fast);
-        }
-
-        .nav-label {
-            font-size: 0.7rem;
-            font-weight: 590;
-            color: var(--text-gold-light);
-            letter-spacing: -0.01em;
-        }
-
-        @media (max-width: 640px) {
-            .nav-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            .nav-card {
-                padding: 12px 8px;
-            }
-            .nav-icon svg {
-                width: 20px;
-                height: 20px;
-            }
-            .nav-label {
-                font-size: 0.6rem;
-            }
-        }
-
         .update-info {
             background: rgba(0, 0, 0, 0.5);
             padding: 12px;
@@ -368,7 +473,6 @@
             font-weight: 700;
         }
 
-        /* ESTILO BOLAS DE BILLAR */
         .numbers-grid {
             display: flex;
             flex-wrap: wrap;
@@ -419,11 +523,6 @@
             background: radial-gradient(circle at 30% 25%, #E6E6FA, #B0C4DE);
         }
 
-        .number-card.ia-generated {
-            border: 2px solid var(--gold-solid);
-            box-shadow: 0 0 20px rgba(218,165,32,0.5);
-        }
-
         .number-card.winner {
             background: radial-gradient(circle at 30% 25%, #FFD700, #FF8C00);
             box-shadow: 0 0 25px gold;
@@ -453,7 +552,6 @@
             border-radius: 20px;
             margin-top: 4px;
         }
-        /* FIN ESTILOS BOLAS */
 
         .result-box {
             background: var(--glass-bg);
@@ -506,45 +604,6 @@
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
-        }
-
-        .stats-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            flex: 1;
-            min-width: 100px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--blur-amount));
-            border-radius: 24px;
-            padding: 16px 8px;
-            text-align: center;
-            border: var(--glass-border);
-            transition: transform var(--transition-fast);
-        }
-
-        .stat-card:active {
-            transform: scale(0.98);
-            border-color: var(--gold-solid);
-        }
-
-        .stat-number {
-            font-size: 1.9rem;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .stat-label {
-            font-size: 0.7rem;
-            color: var(--text-gold-light);
-            margin-top: 4px;
         }
 
         .lotteries-banner {
@@ -831,14 +890,8 @@
         }
 
         @keyframes modalPop {
-            from {
-                transform: scale(0.95);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .riddle-card {
@@ -1225,19 +1278,6 @@
             border-color: var(--gold-solid);
         }
 
-        .balance-display {
-            background: linear-gradient(135deg, #2E8B57, #1E4D2B);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            box-shadow: var(--shadow-sm);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
         .copy-number-btn {
             background: var(--gradient-primary);
             color: #0A0F2C;
@@ -1322,7 +1362,6 @@
             transition: width 0.2s ease;
         }
 
-        /* Modal de carga para pronósticos con membresía activa */
         .forecast-loading-modal {
             position: fixed;
             top: 0;
@@ -1604,7 +1643,6 @@
             text-decoration: underline;
         }
 
-        /* Estilos para Pick 4 Pro */
         .pick4-history-list {
             display: flex;
             flex-wrap: wrap;
@@ -1668,6 +1706,25 @@
             margin-bottom: 1rem;
         }
 
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0 !important;
+            }
+            .sidebar-toggle {
+                left: 20px;
+                top: 20px;
+            }
+            .stats-grid {
+                margin-top: 70px;
+            }
+        }
+
         @media (max-width: 640px) {
             .container { padding: 14px; }
             .card { padding: 16px; border-radius: 24px; }
@@ -1675,55 +1732,9 @@
             .number-card { width: 65px; height: 65px; }
             .number { font-size: 1.3rem; }
             .result-value { font-size: 1.2rem; }
-            .referral-code { font-size: 1rem; }
-            .ia-numbers-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
-            .decenas-terminales-grid { flex-direction: column; }
-            .winner-celebration {
-                font-size: 1rem;
-                padding: 10px 20px;
-                white-space: nowrap;
-            }
-            .reel-square-compact {
-                width: 70px;
-                height: 70px;
-            }
-            .reel-symbol-compact {
-                font-size: 2.5rem;
-            }
-            .lotteries-banner {
-                gap: 8px;
-            }
-            .lottery-badge {
-                padding: 5px 12px;
-            }
-            .lottery-icon {
-                font-size: 1.3rem;
-            }
-            .lottery-name {
-                font-size: 0.7rem;
-            }
-            .pick4-numbers-grid {
-                grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-            }
-            .pick4-number {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .reel-square-compact {
-                width: 55px;
-                height: 55px;
-            }
-            .reel-symbol-compact {
-                font-size: 2rem;
-            }
-            .slot-header-compact h3 {
-                font-size: 0.9rem;
-            }
-            .pick4-numbers-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .reel-square-compact { width: 70px; height: 70px; }
+            .reel-symbol-compact { font-size: 2.5rem; }
+            .stats-grid { margin-top: 70px; }
         }
     </style>
 </head>
@@ -1779,439 +1790,371 @@
     </div>
 
     <div id="dashboardScreen" style="display: none;">
-        <div class="sticky-header">
-            <div class="header">
-                <div class="logo">
-                    <h1>🎰 Pronóstico Pro <span class="live-badge">IA PRO + TRAGAMONEDAS</span></h1>
-                    <p>Pronósticos IA + Tragamonedas + 50 cup por referido que pague membresía</p>
-                </div>
-                <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
-                    <span class="balance-display" id="balanceDisplay">💰 Saldo: 0 Cup</span>
-                    <span class="florida-badge">🎯 PRONÓSTICOS</span>
-                    <div class="theme-toggle" id="themeToggleBtn" title="Cambiar tema">🌙</div>
-                    <button class="btn" onclick="logout()" style="width: auto; padding: 6px 16px; background: var(--danger); font-size: 0.7rem;">Salir</button>
-                </div>
+        <div class="sidebar-toggle" id="sidebarToggleBtn">
+            ☰
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>🎰 Pronóstico Pro</h1>
+                <p>IA PRO + TRAGAMONEDAS</p>
+            </div>
+            
+            <div class="sidebar-balance">
+                <span>💰 Saldo disponible</span>
+                <div class="balance-amount" id="sidebarBalance">0 Cup</div>
+            </div>
+            
+            <div class="sidebar-badge">
+                🎯 PRONÓSTICOS + REFERIDOS (50 cup)
+            </div>
+            
+            <div class="sidebar-nav">
+                <button class="sidebar-nav-item" data-section="predictions">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" fill="none"/>
+                        <line x1="12" y1="2" x2="12" y2="5" stroke="currentColor"/>
+                        <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor"/>
+                        <line x1="2" y1="12" x2="5" y2="12" stroke="currentColor"/>
+                        <line x1="19" y1="12" x2="22" y2="12" stroke="currentColor"/>
+                        <path d="M12 8 L12 12 L15 15" stroke="currentColor" fill="none"/>
+                        <circle cx="12" cy="12" r="3" stroke="currentColor" fill="none"/>
+                    </svg>
+                    <span>Pronósticos</span>
+                </button>
+                <button class="sidebar-nav-item" data-section="iaPro">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                        <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" fill="none"/>
+                        <circle cx="9" cy="10" r="1.5" stroke="currentColor" fill="currentColor"/>
+                        <circle cx="15" cy="10" r="1.5" stroke="currentColor" fill="currentColor"/>
+                        <path d="M8 16 L12 13 L16 16" stroke="currentColor" fill="none"/>
+                        <line x1="12" y1="7" x2="12" y2="9" stroke="currentColor"/>
+                    </svg>
+                    <span>🤖 IA Pro</span>
+                </button>
+                <button class="sidebar-nav-item" data-section="pick4Pro">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                        <rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" fill="none"/>
+                        <text x="12" y="16" text-anchor="middle" fill="currentColor" font-size="10" stroke="none">4</text>
+                        <line x1="9" y1="5" x2="9" y2="19" stroke="currentColor"/>
+                        <line x1="15" y1="5" x2="15" y2="19" stroke="currentColor"/>
+                    </svg>
+                    <span>🎲 Pick 4</span>
+                </button>
+                <button class="sidebar-nav-item" data-section="slot">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                        <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" fill="none"/>
+                        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor"/>
+                        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor"/>
+                        <circle cx="12" cy="12" r="2" stroke="currentColor"/>
+                        <circle cx="8" cy="12" r="1.5" stroke="currentColor"/>
+                        <circle cx="16" cy="12" r="1.5" stroke="currentColor"/>
+                        <path d="M5 18 L19 18" stroke="currentColor"/>
+                    </svg>
+                    <span>🎰 Slots</span>
+                </button>
+                <button class="sidebar-nav-item" data-section="riddle">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z" stroke="currentColor" fill="none"/>
+                        <line x1="12" y1="22" x2="12" y2="17" stroke="currentColor"/>
+                        <circle cx="12" cy="9" r="1.5" stroke="currentColor" fill="none"/>
+                        <path d="M12 7v2" stroke="currentColor"/>
+                    </svg>
+                    <span>Adivinanza</span>
+                </button>
+                <button class="sidebar-nav-item" data-section="dailyProb">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                        <rect x="4" y="10" width="3" height="10" rx="0.5" stroke="currentColor" fill="none"/>
+                        <rect x="10" y="6" width="3" height="14" rx="0.5" stroke="currentColor" fill="none"/>
+                        <rect x="16" y="2" width="3" height="18" rx="0.5" stroke="currentColor" fill="none"/>
+                        <line x1="4" y1="3" x2="20" y2="3" stroke="currentColor"/>
+                        <line x1="4" y1="21" x2="20" y2="21" stroke="currentColor"/>
+                    </svg>
+                    <span>Probabilidades</span>
+                </button>
+                <button class="sidebar-nav-item" data-section="referrals">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                        <rect x="3" y="8" width="18" height="13" rx="2" stroke="currentColor" fill="none"/>
+                        <path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" fill="none"/>
+                        <polyline points="12 12 12 16 16 14" stroke="currentColor" fill="none"/>
+                        <line x1="12" y1="16" x2="8" y2="14" stroke="currentColor"/>
+                    </svg>
+                    <span>Referidos (50 cup)</span>
+                </button>
+                <button class="sidebar-nav-item" data-section="comments">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                        <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H5l4-4a8.5 8.5 0 1 1 12-4.5z" stroke="currentColor" fill="none"/>
+                        <circle cx="8" cy="11" r="1.2" stroke="currentColor" fill="currentColor"/>
+                        <circle cx="12.5" cy="11" r="1.2" stroke="currentColor" fill="currentColor"/>
+                        <circle cx="17" cy="11" r="1.2" stroke="currentColor" fill="currentColor"/>
+                    </svg>
+                    <span>Comentarios</span>
+                </button>
+                <button class="sidebar-nav-item" data-section="profile">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                        <circle cx="12" cy="8" r="4" stroke="currentColor" fill="none"/>
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" fill="none"/>
+                        <path d="M12 12 L12 4" stroke="currentColor"/>
+                        <path d="M9 7 L12 4 L15 7" stroke="currentColor"/>
+                    </svg>
+                    <span>Perfil</span>
+                </button>
+                <button class="sidebar-nav-item" data-section="payment">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
+                        <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" fill="none"/>
+                        <line x1="2" y1="10" x2="22" y2="10" stroke="currentColor"/>
+                        <path d="M16 15h3" stroke="currentColor"/>
+                        <circle cx="18.5" cy="15" r="0.8" stroke="currentColor" fill="currentColor"/>
+                        <path d="M7 13 L7 17" stroke="currentColor"/>
+                    </svg>
+                    <span>Depósito/Retiro</span>
+                </button>
+            </div>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    🚪 <span>Salir</span>
+                </button>
             </div>
         </div>
 
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
-                <div class="stat-card"><div class="stat-number" id="referralsCount">0</div><div class="stat-label">👥 Referidos</div></div>
-                <div class="stat-card"><div class="stat-number" id="cupEarnedStat">0</div><div class="stat-label">💰 cup ganados</div></div>
-            </div>
-
-            <div id="membershipAlert" class="membership-active-alert" style="display: none;"></div>
-
-            <div class="card" style="padding: 16px;">
-                <div class="nav-grid">
-                    <div class="nav-card" data-section="predictions">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" fill="none"/>
-                                <line x1="12" y1="2" x2="12" y2="5" stroke="currentColor"/>
-                                <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor"/>
-                                <line x1="2" y1="12" x2="5" y2="12" stroke="currentColor"/>
-                                <line x1="19" y1="12" x2="22" y2="12" stroke="currentColor"/>
-                                <path d="M12 8 L12 12 L15 15" stroke="currentColor" fill="none"/>
-                                <circle cx="12" cy="12" r="3" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">Pronósticos</span>
-                    </div>
-                    <div class="nav-card" data-section="iaPro">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" fill="none"/>
-                                <circle cx="9" cy="10" r="1.5" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="15" cy="10" r="1.5" stroke="currentColor" fill="currentColor"/>
-                                <path d="M8 16 L12 13 L16 16" stroke="currentColor" fill="none"/>
-                                <line x1="12" y1="7" x2="12" y2="9" stroke="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">🤖 IA Pro</span>
-                    </div>
-                    <div class="nav-card" data-section="pick4Pro">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" fill="none"/>
-                                <text x="12" y="16" text-anchor="middle" fill="currentColor" font-size="10" stroke="none">4</text>
-                                <line x1="9" y1="5" x2="9" y2="19" stroke="currentColor"/>
-                                <line x1="15" y1="5" x2="15" y2="19" stroke="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">🎲 Pick 4 Pro</span>
-                    </div>
-                    <div class="nav-card" data-section="riddle">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z" stroke="currentColor" fill="none"/>
-                                <line x1="12" y1="22" x2="12" y2="17" stroke="currentColor"/>
-                                <circle cx="12" cy="9" r="1.5" stroke="currentColor" fill="none"/>
-                                <path d="M12 7v2" stroke="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">Adivinanza</span>
-                    </div>
-                    <div class="nav-card" data-section="dailyProb">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <rect x="4" y="10" width="3" height="10" rx="0.5" stroke="currentColor" fill="none"/>
-                                <rect x="10" y="6" width="3" height="14" rx="0.5" stroke="currentColor" fill="none"/>
-                                <rect x="16" y="2" width="3" height="18" rx="0.5" stroke="currentColor" fill="none"/>
-                                <line x1="4" y1="3" x2="20" y2="3" stroke="currentColor"/>
-                                <line x1="4" y1="21" x2="20" y2="21" stroke="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">Probabilidades</span>
-                    </div>
-                    <div class="nav-card" data-section="referrals">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <rect x="3" y="8" width="18" height="13" rx="2" stroke="currentColor" fill="none"/>
-                                <path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" fill="none"/>
-                                <polyline points="12 12 12 16 16 14" stroke="currentColor" fill="none"/>
-                                <line x1="12" y1="16" x2="8" y2="14" stroke="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">Referidos (50 cup)</span>
-                    </div>
-                    <div class="nav-card" data-section="comments">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H5l4-4a8.5 8.5 0 1 1 12-4.5z" stroke="currentColor" fill="none"/>
-                                <circle cx="8" cy="11" r="1.2" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="12.5" cy="11" r="1.2" stroke="currentColor" fill="currentColor"/>
-                                <circle cx="17" cy="11" r="1.2" stroke="currentColor" fill="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">Comentarios</span>
-                    </div>
-                    <div class="nav-card" data-section="profile">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <circle cx="12" cy="8" r="4" stroke="currentColor" fill="none"/>
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" fill="none"/>
-                                <path d="M12 12 L12 4" stroke="currentColor"/>
-                                <path d="M9 7 L12 4 L15 7" stroke="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">Perfil</span>
-                    </div>
-                    <div class="nav-card" data-section="payment">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" fill="none"/>
-                                <line x1="2" y1="10" x2="22" y2="10" stroke="currentColor"/>
-                                <path d="M16 15h3" stroke="currentColor"/>
-                                <circle cx="18.5" cy="15" r="0.8" stroke="currentColor" fill="currentColor"/>
-                                <path d="M7 13 L7 17" stroke="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">Depósito/Retiro</span>
-                    </div>
-                    <div class="nav-card" data-section="slot">
-                        <div class="nav-icon">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none">
-                                <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" fill="none"/>
-                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor"/>
-                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor"/>
-                                <circle cx="12" cy="12" r="2" stroke="currentColor"/>
-                                <circle cx="8" cy="12" r="1.5" stroke="currentColor"/>
-                                <circle cx="16" cy="12" r="1.5" stroke="currentColor"/>
-                                <path d="M5 18 L19 18" stroke="currentColor"/>
-                            </svg>
-                        </div>
-                        <span class="nav-label">🎰 TRAGAMONEDAS</span>
-                    </div>
+        <div class="main-content">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-number" id="daysLeft">0</div><div class="stat-label">📅 Días activos</div></div>
+                    <div class="stat-card"><div class="stat-number" id="referralsCount">0</div><div class="stat-label">👥 Referidos</div></div>
+                    <div class="stat-card"><div class="stat-number" id="cupEarnedStat">0</div><div class="stat-label">💰 cup ganados</div></div>
                 </div>
-            </div>
 
-            <div id="predictionsSection">
-                <div class="card" id="predictionsContent">
-                    <div class="text-center">Cargando pronósticos...</div>
-                </div>
-            </div>
+                <div id="membershipAlert" class="membership-active-alert" style="display: none;"></div>
 
-            <div id="iaProSection" style="display: none;">
-                <div class="card ia-card">
-                    <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🤖 IA Pro - Predictor Inteligente</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">
-                        Ingresa los resultados anteriores de la lotería (ej: 23 45 67 89 12 34) y la IA generará:
-                        <strong>12 números de 2 dígitos, 3 decenas y 3 terminales</strong> con alta probabilidad.
-                    </p>
-                    
-                    <div class="ia-input-group">
-                        <input type="text" id="iaInputNumbers" placeholder="Ej: 23 45 67 89 12 34 56 78" autocomplete="off">
-                        <button class="btn btn-ai btn-small" onclick="generateIAPrediction()" style="width: auto; padding: 12px 20px;">🚀 Generar IA Pro</button>
-                    </div>
-                    
-                    <div id="iaNumbersContainer" style="display: none;">
-                        <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">🎯 Números de 2 dígitos generados por IA Pro:</h3>
-                        <div id="iaNumbersGrid" class="ia-numbers-grid"></div>
-                        
-                        <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">📊 Decenas y Terminales con más probabilidad:</h3>
-                        <div id="iaDecenasTerminalesGrid" class="decenas-terminales-grid"></div>
-                        
-                        <div class="ia-info">
-                            🤖 Estos números fueron generados mediante análisis de patrones de frecuencia, dígitos más comunes y tendencias.
-                        </div>
-                    </div>
-                    
-                    <div id="iaHistoryContainer" style="display: none; margin-top: 16px;">
-                        <h3 style="font-size: 0.85rem; margin-bottom: 8px;">📊 Últimos datos ingresados:</h3>
-                        <div id="iaLastInput" class="ia-info" style="background: var(--gradient-ai); color: white;"></div>
+                <div id="predictionsSection">
+                    <div class="card" id="predictionsContent">
+                        <div class="text-center">Cargando pronósticos...</div>
                     </div>
                 </div>
 
-                <!-- NUEVA SECCIÓN: IA PARA PICK 3 (BASADO EN ÚLTIMOS TIROS) -->
-                <div class="card ia-card" style="margin-top: 20px;">
-                    <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🎱 IA Pick 3 Pro (Números de 3 Dígitos)</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">
-                        Analiza los últimos números ganadores de Pick 3 (3 dígitos) para generar nuevas predicciones.
-                        Ingresa los números separados por espacios. La IA usará frecuencias, patrones de secuencia y sumas.
-                    </p>
-                    <div class="ia-input-group">
-                        <input type="text" id="pick3InputNumbers" placeholder="Ej: 123 456 789 012 345 678" autocomplete="off">
-                        <button class="btn btn-ai btn-small" onclick="generarPick3()" style="width: auto; padding: 12px 20px;">🎱 Generar Pick 3 IA</button>
-                    </div>
-                    <div id="pick3HistoryContainer" style="display: none;">
-                        <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">📜 Historial de números ingresados:</h3>
-                        <div id="pick3HistoryList" class="pick4-history-list"></div>
-                    </div>
-                    <div id="pick3NumbersContainer" style="display: none;">
-                        <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">🎯 Predicciones Pick 3 (3 dígitos):</h3>
-                        <div id="pick3NumbersGrid" class="ia-numbers-grid"></div>
-                        <div class="ia-info">
-                            🤖 Combinaciones generadas por IA basadas en los últimos resultados registrados.
+                <div id="iaProSection" style="display: none;">
+                    <div class="card ia-card">
+                        <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🤖 IA Pro - Predictor Inteligente</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">
+                            Ingresa los resultados anteriores de la lotería (ej: 23 45 67 89 12 34) y la IA generará:
+                            <strong>12 números de 2 dígitos, 3 decenas y 3 terminales</strong> con alta probabilidad.
+                        </p>
+                        <div class="ia-input-group">
+                            <input type="text" id="iaInputNumbers" placeholder="Ej: 23 45 67 89 12 34 56 78" autocomplete="off">
+                            <button class="btn btn-ai btn-small" onclick="generateIAPrediction()" style="width: auto; padding: 12px 20px;">🚀 Generar IA Pro</button>
+                        </div>
+                        <div id="iaNumbersContainer" style="display: none;">
+                            <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">🎯 Números de 2 dígitos generados por IA Pro:</h3>
+                            <div id="iaNumbersGrid" class="ia-numbers-grid"></div>
+                            <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">📊 Decenas y Terminales con más probabilidad:</h3>
+                            <div id="iaDecenasTerminalesGrid" class="decenas-terminales-grid"></div>
+                            <div class="ia-info">🤖 Estos números fueron generados mediante análisis de patrones de frecuencia, dígitos más comunes y tendencias.</div>
+                        </div>
+                        <div id="iaHistoryContainer" style="display: none; margin-top: 16px;">
+                            <h3 style="font-size: 0.85rem; margin-bottom: 8px;">📊 Últimos datos ingresados:</h3>
+                            <div id="iaLastInput" class="ia-info" style="background: var(--gradient-ai); color: white;"></div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Nueva Sección Pick 4 Pro (SOLO PARA MEMBRESÍA ACTIVA) -->
-            <div id="pick4ProSection" style="display: none;">
-                <div id="pick4ContentContainer">
-                    <!-- El contenido se renderiza dinámicamente según membresía -->
-                </div>
-            </div>
-
-            <div id="riddleSection" style="display: none;">
-                <div class="card riddle-card">
-                    <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">🤔 Adivinanza del Día</h2>
-                    <div id="riddleContent" class="text-center">
-                        <div class="riddle-question" id="riddleQuestion">Cargando adivinanza...</div>
-                        <button class="btn btn-small show-answer-btn" onclick="toggleRiddleAnswer()">🔍 Ver respuesta</button>
-                        <div id="riddleAnswer" class="riddle-answer"></div>
-                        <div class="riddle-date" id="riddleDate"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="dailyProbSection" style="display: none;">
-                <div class="card probabilities-card">
-                    <div class="probabilities-header">
-                        <div class="today-badge" id="probabilitiesTodayBadge">📊 Cargando...</div>
-                        <div class="probabilities-title">🎯 ESTOS SON LOS NÚMEROS DE HOY</div>
-                    </div>
-                    <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem; text-align: center;">Números con mayor probabilidad de salir según análisis del administrador</p>
-                    <div id="dailyProbContent" class="text-center">
-                        <div class="probabilities-list" id="probabilitiesList">
-                            <div>Cargando probabilidades...</div>
+                    <div class="card ia-card" style="margin-top: 20px;">
+                        <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🎱 IA Pick 3 Pro (Números de 3 Dígitos)</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">
+                            Analiza los últimos números ganadores de Pick 3 (3 dígitos) para generar nuevas predicciones.
+                            Ingresa los números separados por espacios.
+                        </p>
+                        <div class="ia-input-group">
+                            <input type="text" id="pick3InputNumbers" placeholder="Ej: 123 456 789 012 345 678" autocomplete="off">
+                            <button class="btn btn-ai btn-small" onclick="generarPick3()" style="width: auto; padding: 12px 20px;">🎱 Generar Pick 3 IA</button>
                         </div>
-                        <div class="update-info" style="margin-top: 1rem;">
-                            <span class="update-label">📅 Última actualización del admin</span>
-                            <span class="update-time" id="probUpdateTime">--:-- --</span>
-                            <span class="update-date" id="probUpdateDate">--/--/----</span>
+                        <div id="pick3HistoryContainer" style="display: none;">
+                            <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">📜 Historial de números ingresados:</h3>
+                            <div id="pick3HistoryList" class="pick4-history-list"></div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="referralsSection" style="display: none;">
-                <div class="card referral-card">
-                    <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">
-                        Comparte tu código de invitación. Por cada amigo que se registre y <strong>pague una membresía ACTIVA</strong> (200 cup mínimo), 
-                        recibirás <strong>50 cup COMPLETAMENTE RETIRABLES</strong> en tu cuenta.
-                    </p>
-                    
-                    <div class="referral-code-box">
-                        <span style="font-size: 0.65rem; color: var(--text-secondary);">TU CÓDIGO DE INVITACIÓN</span>
-                        <div>
-                            <span class="referral-code" id="userReferralCode">Cargando...</span>
-                            <button class="copy-btn" onclick="copyReferralCode()">📋 Copiar</button>
-                            <button class="copy-btn" onclick="shareTelegramLink()" style="margin-left: 0.5rem;">📲 Invitar</button>
-                        </div>
-                    </div>
-
-                    <div class="referral-stats">
-                        <div class="referral-stat">
-                            <div class="referral-stat-number" id="totalReferrals">0</div>
-                            <div class="stat-label">Total Referidos</div>
-                        </div>
-                        <div class="referral-stat">
-                            <div class="referral-stat-number" id="activeReferralsCount">0</div>
-                            <div class="stat-label">Activos con Membresía</div>
-                        </div>
-                        <div class="referral-stat">
-                            <div class="referral-stat-number" id="referralCupEarned">0</div>
-                            <div class="stat-label">💰 cup ganados (50 c/u)</div>
+                        <div id="pick3NumbersContainer" style="display: none;">
+                            <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">🎯 Predicciones Pick 3 (3 dígitos):</h3>
+                            <div id="pick3NumbersGrid" class="ia-numbers-grid"></div>
+                            <div class="ia-info">🤖 Combinaciones generadas por IA basadas en los últimos resultados registrados.</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
-                    <div class="table-responsive">
-                        <table id="referralsTable">
-                            <thead><tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></tr></thead>
-                            <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</tbody>
-                        </table>
+                <div id="pick4ProSection" style="display: none;">
+                    <div id="pick4ContentContainer"></div>
+                </div>
+
+                <div id="riddleSection" style="display: none;">
+                    <div class="card riddle-card">
+                        <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">🤔 Adivinanza del Día</h2>
+                        <div id="riddleContent" class="text-center">
+                            <div class="riddle-question" id="riddleQuestion">Cargando adivinanza...</div>
+                            <button class="btn btn-small show-answer-btn" onclick="toggleRiddleAnswer()">🔍 Ver respuesta</button>
+                            <div id="riddleAnswer" class="riddle-answer"></div>
+                            <div class="riddle-date" id="riddleDate"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="commentsSection" style="display: none;">
-                <div class="card">
-                    <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">💬 Comentarios y Jugadas</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
-                    <div id="commentsList" class="comments-section"><div class="text-center">Cargando comentarios...</div></div>
-                    <div class="new-comment-form">
-                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📝 Publicar jugada/comentario</h3>
-                        <div class="form-row">
-                            <input type="text" id="commentNumber" placeholder="Número que jugaste (ej: 76)" maxlength="2">
-                            <input type="text" id="commentDraw" placeholder="Sorteo (mediodía/noche)" maxlength="10">
+                <div id="dailyProbSection" style="display: none;">
+                    <div class="card probabilities-card">
+                        <div class="probabilities-header">
+                            <div class="today-badge" id="probabilitiesTodayBadge">📊 Cargando...</div>
+                            <div class="probabilities-title">🎯 ESTOS SON LOS NÚMEROS DE HOY</div>
                         </div>
-                        <textarea id="commentMessage" rows="2" placeholder="Escribe tu comentario o experiencia..."></textarea>
-                        <button class="btn btn-small" onclick="publishComment()" style="width: auto;">📢 Publicar comentario</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="profileSection" style="display: none;">
-                <div class="card" id="profileContent"></div>
-            </div>
-
-            <div id="paymentSection" style="display: none;">
-                <div class="card">
-                    <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">💰 Depósito / Retiro</h2>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card"><div class="stat-number" id="walletBalance">0</div><div class="stat-label">💰 Saldo Disponible</div></div>
-                        <div class="stat-card"><div class="stat-number" id="memberStatus">Inactiva</div><div class="stat-label">Membresía</div></div>
-                    </div>
-
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                        <button class="btn" onclick="showDepositForm()" style="flex: 1;">💵 DEPOSITAR (200 cup)</button>
-                        <button class="btn btn-outline" onclick="showWithdrawForm()" style="flex: 1;">🏦 RETIRAR</button>
-                    </div>
-
-                    <div id="depositForm" style="display: block;">
-                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📥 Depositar fondos</h3>
-                        
-                        <div class="payment-info">
-                            <div style="font-size: 0.65rem; color: var(--text-secondary);">💳 Tarjeta para transferencia:</div>
-                            <div class="payment-number" style="font-size: 1.1rem;">9227 0699 9771 1927</div>
-                            <button class="copy-number-btn" onclick="copyCardNumber()">📋 Copiar número</button>
-                        </div>
-
-                        <div class="transfer-confirmation">
-                            <div class="text-center" style="margin-bottom: 0.5rem;">
-                                <strong>✅ ¿Ya hiciste la transferencia?</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem; text-align: center;">Números con mayor probabilidad de salir según análisis del administrador</p>
+                        <div id="dailyProbContent" class="text-center">
+                            <div class="probabilities-list" id="probabilitiesList"><div>Cargando probabilidades...</div></div>
+                            <div class="update-info" style="margin-top: 1rem;">
+                                <span class="update-label">📅 Última actualización del admin</span>
+                                <span class="update-time" id="probUpdateTime">--:-- --</span>
+                                <span class="update-date" id="probUpdateDate">--/--/----</span>
                             </div>
-                            <p style="font-size: 0.7rem; margin-bottom: 0.8rem;">
-                                Una vez que hayas transferido el monto a la tarjeta <strong>9227 0699 9771 1927</strong>, 
-                                envía la captura de pantalla al administrador.
-                            </p>
-                            
-                            <div class="telegram-message-example">
-                                <strong>📱 Mensaje para Telegram:</strong>
-                                <code style="display: block; background: var(--card-bg); padding: 8px; border-radius: 12px; margin-top: 8px; font-size: 0.65rem; word-break: break-all;">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="referralsSection" style="display: none;">
+                    <div class="card referral-card">
+                        <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">
+                            Comparte tu código de invitación. Por cada amigo que se registre y <strong>pague una membresía ACTIVA</strong> (200 cup mínimo), 
+                            recibirás <strong>50 cup COMPLETAMENTE RETIRABLES</strong> en tu cuenta.
+                        </p>
+                        <div class="referral-code-box">
+                            <span style="font-size: 0.65rem; color: var(--text-secondary);">TU CÓDIGO DE INVITACIÓN</span>
+                            <div>
+                                <span class="referral-code" id="userReferralCode">Cargando...</span>
+                                <button class="copy-btn" onclick="copyReferralCode()">📋 Copiar</button>
+                                <button class="copy-btn" onclick="shareTelegramLink()" style="margin-left: 0.5rem;">📲 Invitar</button>
+                            </div>
+                        </div>
+                        <div class="referral-stats">
+                            <div class="referral-stat"><div class="referral-stat-number" id="totalReferrals">0</div><div class="stat-label">Total Referidos</div></div>
+                            <div class="referral-stat"><div class="referral-stat-number" id="activeReferralsCount">0</div><div class="stat-label">Activos con Membresía</div></div>
+                            <div class="referral-stat"><div class="referral-stat-number" id="referralCupEarned">0</div><div class="stat-label">💰 cup ganados (50 c/u)</div></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📋 Mis Referidos</h3>
+                        <div class="table-responsive">
+                            <table id="referralsTable">
+                                <thead><tr><th>Email</th><th>Fecha registro</th><th>Membresía</th><th>Recompensa 50 cup</th></tr></thead>
+                                <tbody id="referralsTableBody"><tr><td colspan="4" class="text-center">Cargando tus referidos...</tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="commentsSection" style="display: none;">
+                    <div class="card">
+                        <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">💬 Comentarios y Jugadas</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">Comparte tus jugadas, números y experiencias con la comunidad</p>
+                        <div id="commentsList" class="comments-section"><div class="text-center">Cargando comentarios...</div></div>
+                        <div class="new-comment-form">
+                            <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📝 Publicar jugada/comentario</h3>
+                            <div class="form-row">
+                                <input type="text" id="commentNumber" placeholder="Número que jugaste (ej: 76)" maxlength="2">
+                                <input type="text" id="commentDraw" placeholder="Sorteo (mediodía/noche)" maxlength="10">
+                            </div>
+                            <textarea id="commentMessage" rows="2" placeholder="Escribe tu comentario o experiencia..."></textarea>
+                            <button class="btn btn-small" onclick="publishComment()" style="width: auto;">📢 Publicar comentario</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="profileSection" style="display: none;">
+                    <div class="card" id="profileContent"></div>
+                </div>
+
+                <div id="paymentSection" style="display: none;">
+                    <div class="card">
+                        <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">💰 Depósito / Retiro</h2>
+                        <div class="stats-grid" style="margin-top: 0;">
+                            <div class="stat-card"><div class="stat-number" id="walletBalance">0</div><div class="stat-label">💰 Saldo Disponible</div></div>
+                            <div class="stat-card"><div class="stat-number" id="memberStatus">Inactiva</div><div class="stat-label">Membresía</div></div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                            <button class="btn" onclick="showDepositForm()" style="flex: 1;">💵 DEPOSITAR (200 cup)</button>
+                            <button class="btn btn-outline" onclick="showWithdrawForm()" style="flex: 1;">🏦 RETIRAR</button>
+                        </div>
+                        <div id="depositForm" style="display: block;">
+                            <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📥 Depositar fondos</h3>
+                            <div class="payment-info">
+                                <div style="font-size: 0.65rem; color: var(--text-secondary);">💳 Tarjeta para transferencia:</div>
+                                <div class="payment-number" style="font-size: 1.1rem;">9227 0699 9771 1927</div>
+                                <button class="copy-number-btn" onclick="copyCardNumber()">📋 Copiar número</button>
+                            </div>
+                            <div class="transfer-confirmation">
+                                <div class="text-center" style="margin-bottom: 0.5rem;"><strong>✅ ¿Ya hiciste la transferencia?</strong></div>
+                                <p style="font-size: 0.7rem; margin-bottom: 0.8rem;">Una vez que hayas transferido el monto a la tarjeta <strong>9227 0699 9771 1927</strong>, envía la captura de pantalla al administrador.</p>
+                                <div class="telegram-message-example">
+                                    <strong>📱 Mensaje para Telegram:</strong>
+                                    <code style="display: block; background: var(--card-bg); padding: 8px; border-radius: 12px; margin-top: 8px; font-size: 0.65rem; word-break: break-all;">
 💰 DEPÓSITO PRONÓSTICO PRO<br>
 💳 Tarjeta: 9227 0699 9771 1927<br>
 📝 Número de transacción: [TU NÚMERO]<br>
 💵 Monto: [MONTO] Cup<br>
 📧 Correo: [TU CORREO]
-                                </code>
+                                    </code>
+                                </div>
+                                <div class="telegram-contact">
+                                    📱 <strong>Enviar a:</strong> <span style="font-family: monospace;">@sdesaroyador</span>
+                                    <button class="copy-number-btn" onclick="copyTelegramUsername()" style="margin-left: 8px;">📋 Copiar</button>
+                                </div>
+                                <button class="btn btn-small" onclick="confirmTransferDone()" style="width: auto; background: var(--success); margin-top: 8px;">✅ Ya realicé la transferencia</button>
                             </div>
-                            
-                            <div class="telegram-contact">
-                                📱 <strong>Enviar a:</strong> <span style="font-family: monospace;">@sdesaroyador</span>
-                                <button class="copy-number-btn" onclick="copyTelegramUsername()" style="margin-left: 8px;">📋 Copiar</button>
+                            <div class="input-group">
+                                <label>💰 Cantidad a depositar (CUP) - Mínimo 200 cup</label>
+                                <input type="number" id="depositAmount" placeholder="Mínimo 200 CUP" value="200" min="200">
                             </div>
-                            
-                            <button class="btn btn-small" onclick="confirmTransferDone()" style="width: auto; background: var(--success); margin-top: 8px;">✅ Ya realicé la transferencia</button>
+                            <div class="input-group">
+                                <label>🔢 Número de transacción (obligatorio)</label>
+                                <input type="text" id="transactionNumber" placeholder="Ej: KW600UIE4C999" required>
+                            </div>
+                            <button class="btn" onclick="submitDeposit()">💰 Enviar solicitud</button>
                         </div>
-
-                        <div class="input-group">
-                            <label>💰 Cantidad a depositar (CUP) - Mínimo 200 cup</label>
-                            <input type="number" id="depositAmount" placeholder="Mínimo 200 CUP" value="200" min="200">
+                        <div id="withdrawForm" style="display: none;">
+                            <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📤 Retirar fondos</h3>
+                            <div class="input-group">
+                                <label>💰 Cantidad a retirar (CUP)</label>
+                                <input type="number" id="withdrawAmount" placeholder="Mínimo 50 CUP" min="50">
+                            </div>
+                            <div class="input-group">
+                                <label>💳 Número de tarjeta de destino</label>
+                                <input type="text" id="withdrawCardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19">
+                            </div>
+                            <div class="input-group">
+                                <label>📱 Teléfono de contacto</label>
+                                <input type="text" id="withdrawPhone" placeholder="+53 XXXXXXXX">
+                            </div>
+                            <button class="btn" onclick="submitWithdraw()">🏦 Solicitar retiro</button>
                         </div>
-
-                        <div class="input-group">
-                            <label>🔢 Número de transacción (obligatorio)</label>
-                            <input type="text" id="transactionNumber" placeholder="Ej: KW600UIE4C999" required>
-                        </div>
-
-                        <button class="btn" onclick="submitDeposit()">💰 Enviar solicitud</button>
-                    </div>
-
-                    <div id="withdrawForm" style="display: none;">
-                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📤 Retirar fondos</h3>
-                        <div class="input-group">
-                            <label>💰 Cantidad a retirar (CUP)</label>
-                            <input type="number" id="withdrawAmount" placeholder="Mínimo 50 CUP" min="50">
-                        </div>
-                        <div class="input-group">
-                            <label>💳 Número de tarjeta de destino</label>
-                            <input type="text" id="withdrawCardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19">
-                        </div>
-                        <div class="input-group">
-                            <label>📱 Teléfono de contacto</label>
-                            <input type="text" id="withdrawPhone" placeholder="+53 XXXXXXXX">
-                        </div>
-                        <button class="btn" onclick="submitWithdraw()">🏦 Solicitar retiro</button>
-                    </div>
-
-                    <div class="card" id="transactionHistoryCard" style="margin-top: 1rem; display: none;">
-                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📋 Historial de transacciones</h3>
-                        <div class="table-responsive">
-                            <table id="transactionsTable">
-                                <thead><tr><th>Fecha</th><th>Tipo</th><th>Monto</th><th>Estado</th></tr></thead>
-                                <tbody id="transactionsTableBody"></tbody>
-                            </table>
+                        <div class="card" id="transactionHistoryCard" style="margin-top: 1rem; display: none;">
+                            <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">📋 Historial de transacciones</h3>
+                            <div class="table-responsive">
+                                <table id="transactionsTable">
+                                    <thead><tr><th>Fecha</th><th>Tipo</th><th>Monto</th><th>Estado</th></tr></thead>
+                                    <tbody id="transactionsTableBody"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="slotSection" style="display: none;">
-                <div class="slot-machine-compact">
-                    <div class="slot-header-compact">
-                        <h3>🎰 MÁQUINA TRAGAMONEDAS 🎰</h3>
-                        <div class="info-icon-compact" onclick="showPrizesModal()">ℹ️</div>
-                    </div>
-                    <div class="slot-cost">💰 Costo por giro: <strong>2 Cup</strong> | 🎁 Jackpot: 400 Cup</div>
-                    
-                    <div class="reels-container-compact">
-                        <div class="reel-square-compact">
-                            <div class="reel-symbol-compact" id="reel1">🍒</div>
+                <div id="slotSection" style="display: none;">
+                    <div class="slot-machine-compact">
+                        <div class="slot-header-compact">
+                            <h3>🎰 MÁQUINA TRAGAMONEDAS 🎰</h3>
+                            <div class="info-icon-compact" onclick="showPrizesModal()">ℹ️</div>
                         </div>
-                        <div class="reel-square-compact">
-                            <div class="reel-symbol-compact" id="reel2">🍒</div>
+                        <div class="slot-cost">💰 Costo por giro: <strong>2 Cup</strong> | 🎁 Jackpot: 400 Cup</div>
+                        <div class="reels-container-compact">
+                            <div class="reel-square-compact"><div class="reel-symbol-compact" id="reel1">🍒</div></div>
+                            <div class="reel-square-compact"><div class="reel-symbol-compact" id="reel2">🍒</div></div>
+                            <div class="reel-square-compact"><div class="reel-symbol-compact" id="reel3">🍒</div></div>
                         </div>
-                        <div class="reel-square-compact">
-                            <div class="reel-symbol-compact" id="reel3">🍒</div>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-slot" id="spinButton" onclick="spinSlot()">
-                        🎰 GIRAR (2 cup) 🎰
-                    </button>
-
-                    <div id="slotResult" class="slot-result-compact">
-                        🎲 Presiona GIRAR para comenzar 🎲
+                        <button class="btn btn-slot" id="spinButton" onclick="spinSlot()">🎰 GIRAR (2 cup) 🎰</button>
+                        <div id="slotResult" class="slot-result-compact">🎲 Presiona GIRAR para comenzar 🎲</div>
                     </div>
                 </div>
             </div>
@@ -2302,14 +2245,10 @@
         let iaTerminales = [];
         let iaLastInput = '';
         
-        // Variables Pick 3
         let pick3History = [];
-        
-        // Variables Pick 4 Pro
         let pick4History = [];
         let pick4GeneratedNumbers = [];
         
-        // Variables de la tragamonedas
         let slotSpins = 0;
         let slotNextJackpot = 5000;
         let slotBiggestWin = 0;
@@ -2457,11 +2396,11 @@
         
         async function updateAllBalanceDisplays() {
             if (!currentUser) return;
-            const balanceElement = document.getElementById('balanceDisplay');
             const walletBalanceElement = document.getElementById('walletBalance');
+            const sidebarBalanceEl = document.getElementById('sidebarBalance');
             
-            if (balanceElement) balanceElement.innerHTML = `💰 Saldo: ${userBalance} Cup`;
             if (walletBalanceElement) walletBalanceElement.innerText = userBalance;
+            if (sidebarBalanceEl) sidebarBalanceEl.innerText = `${userBalance} Cup`;
         }
         
         function playSound(type) {
@@ -2519,32 +2458,24 @@
             celebration.innerHTML = message;
             document.body.appendChild(celebration);
             playSound('win');
-            setTimeout(() => {
-                celebration.remove();
-            }, 2000);
+            setTimeout(() => { celebration.remove(); }, 2000);
         }
         
         function showPrizesModal() { document.getElementById('prizesModal').style.display = 'flex'; }
         function closePrizesModal() { document.getElementById('prizesModal').style.display = 'none'; }
         
-        // Mostrar modal de carga de pronósticos
         function showForecastLoadingModal() {
             const modal = document.getElementById('forecastLoadingModal');
             modal.style.display = 'flex';
             const progressBar = document.getElementById('forecastProgressBar');
             progressBar.style.width = '0%';
-            
             const steps = ['step1', 'step2', 'step3', 'step4'];
-            steps.forEach(step => {
-                const el = document.getElementById(step);
-                el.classList.remove('active');
-            });
+            steps.forEach(step => { const el = document.getElementById(step); if (el) el.classList.remove('active'); });
         }
         
         function updateForecastLoading(step, progress) {
             const progressBar = document.getElementById('forecastProgressBar');
             if (progressBar) progressBar.style.width = progress + '%';
-            
             const steps = ['step1', 'step2', 'step3', 'step4'];
             const stepIndex = steps.indexOf(step);
             for (let i = 0; i <= stepIndex; i++) {
@@ -2553,32 +2484,23 @@
             }
         }
         
-        function hideForecastLoadingModal() {
-            const modal = document.getElementById('forecastLoadingModal');
-            modal.style.display = 'none';
-        }
+        function hideForecastLoadingModal() { document.getElementById('forecastLoadingModal').style.display = 'none'; }
         
-        // Función para cargar pronósticos con modal de carga
         async function loadPredictionsWithLoading() {
             if (!currentUser) return;
-            
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-            
             if (isActive) {
                 showForecastLoadingModal();
                 updateForecastLoading('step1', 20);
                 await new Promise(resolve => setTimeout(resolve, 500));
-                
                 updateForecastLoading('step2', 40);
                 await new Promise(resolve => setTimeout(resolve, 400));
-                
                 updateForecastLoading('step3', 70);
                 try {
                     const doc = await db.collection('masterPredictions').doc('current').get();
                     await new Promise(resolve => setTimeout(resolve, 300));
                     updateForecastLoading('step4', 90);
                     await new Promise(resolve => setTimeout(resolve, 300));
-                    
                     if (doc.exists) {
                         const data = doc.data();
                         renderPredictions(data.numbers || [], data.strongNumbers || [], data.mediumNumbers || [], 
@@ -2587,9 +2509,7 @@
                     }
                     updateForecastLoading('step4', 100);
                     await new Promise(resolve => setTimeout(resolve, 400));
-                } catch (error) {
-                    console.error('Error loading predictions:', error);
-                }
+                } catch (error) { console.error('Error loading predictions:', error); }
                 hideForecastLoadingModal();
             }
         }
@@ -2655,10 +2575,7 @@
                 loadProfile();
                 loadTransactions();
                 if (unsubscribePredictions) { unsubscribePredictions(); setupRealtimeListeners(); }
-                // Actualizar sección Pick 4 si está visible
-                if (document.getElementById('pick4ProSection').style.display !== 'none') {
-                    renderPick4Content();
-                }
+                if (document.getElementById('pick4ProSection').style.display !== 'none') renderPick4Content();
             } catch (error) {
                 console.error('Error:', error);
                 showDialog('⚠️ Error', 'Ocurrió un error al procesar la activación de membresía.');
@@ -2715,61 +2632,14 @@
             showDialog('✅ Transferencia confirmada', `Por favor, envía la captura de pantalla y este mensaje a @sdesaroyador:\n\n<code style="display:block; background:rgba(0,0,0,0.1); padding:8px; border-radius:12px; margin-top:8px; font-size:11px; text-align:left;">${mensajePredefinido.replace(/\n/g, '<br>')}</code>\n\n📌 Recuerda adjuntar la imagen de tu transferencia.`);
         }
         
-        // ==================== PICK 4 PRO FUNCTIONS (con validación de membresía) ====================
-        
-        // Función para renderizar el contenido de Pick 4 según membresía
         function renderPick4Content() {
             const container = document.getElementById('pick4ContentContainer');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-            
             if (!isActive) {
-                // Mostrar bloqueo si no tiene membresía activa
-                container.innerHTML = `
-                    <div class="card pick4-locked">
-                        <div style="text-align: center; padding: 2rem;">
-                            <div style="font-size: 3rem;">🔒</div>
-                            <h3>Contenido Bloqueado</h3>
-                            <p>Necesitas membresía activa para acceder al generador Pick 4 Pro.</p>
-                            <p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p>
-                            <button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button>
-                        </div>
-                    </div>
-                `;
+                container.innerHTML = `<div class="card pick4-locked"><div style="text-align: center; padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para acceder al generador Pick 4 Pro.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button></div></div>`;
                 return;
             }
-            
-            // Mostrar contenido completo si tiene membresía activa
-            container.innerHTML = `
-                <div class="card ia-card">
-                    <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🎲 Pick 4 Pro - Generador IA de 4 Dígitos</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">
-                        Ingresa los últimos resultados de Pick 4 (números de 4 dígitos) separados por comas o espacios.
-                        La IA analizará los patrones y generará <strong>8 posibles combinaciones de Pick 4</strong> basadas en los últimos números.
-                    </p>
-                    
-                    <div class="ia-input-group">
-                        <input type="text" id="pick4InputNumbers" placeholder="Ej: 1234, 5678, 9012, 3456, 7890, 2345, 6789, 4321" autocomplete="off">
-                        <button class="btn btn-ai btn-small" onclick="generatePick4Prediction()" style="width: auto; padding: 12px 20px;">🎲 Generar Pick 4 IA</button>
-                    </div>
-                    
-                    <div id="pick4NumbersContainer" style="display: none;">
-                        <h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">🎯 Combinaciones de Pick 4 generadas por IA:</h3>
-                        <div id="pick4NumbersGrid" class="pick4-numbers-grid"></div>
-                        
-                        <div class="ia-info">
-                            🤖 Estas combinaciones fueron generadas analizando frecuencias por posición, dígitos calientes y patrones de los últimos números ingresados.
-                        </div>
-                    </div>
-                    
-                    <div id="pick4HistoryContainer" style="display: none; margin-top: 16px;">
-                        <h3 style="font-size: 0.85rem; margin-bottom: 8px;">📊 Historial de los últimos números ingresados:</h3>
-                        <div id="pick4HistoryList" class="pick4-history-list"></div>
-                        <div id="pick4LastInfo" class="ia-info" style="background: var(--gradient-ai); color: white; margin-top: 10px;"></div>
-                    </div>
-                </div>
-            `;
-            
-            // Cargar datos guardados
+            container.innerHTML = `<div class="card ia-card"><h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🎲 Pick 4 Pro - Generador IA de 4 Dígitos</h2><p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">Ingresa los últimos resultados de Pick 4 (números de 4 dígitos) separados por comas o espacios. La IA analizará los patrones y generará <strong>8 posibles combinaciones de Pick 4</strong> basadas en los últimos números.</p><div class="ia-input-group"><input type="text" id="pick4InputNumbers" placeholder="Ej: 1234, 5678, 9012, 3456, 7890, 2345, 6789, 4321" autocomplete="off"><button class="btn btn-ai btn-small" onclick="generatePick4Prediction()" style="width: auto; padding: 12px 20px;">🎲 Generar Pick 4 IA</button></div><div id="pick4NumbersContainer" style="display: none;"><h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">🎯 Combinaciones de Pick 4 generadas por IA:</h3><div id="pick4NumbersGrid" class="pick4-numbers-grid"></div><div class="ia-info">🤖 Estas combinaciones fueron generadas analizando frecuencias por posición, dígitos calientes y patrones de los últimos números ingresados.</div></div><div id="pick4HistoryContainer" style="display: none; margin-top: 16px;"><h3 style="font-size: 0.85rem; margin-bottom: 8px;">📊 Historial de los últimos números ingresados:</h3><div id="pick4HistoryList" class="pick4-history-list"></div><div id="pick4LastInfo" class="ia-info" style="background: var(--gradient-ai); color: white; margin-top: 10px;"></div></div></div>`;
             pick4History = loadPick4History();
             updatePick4HistoryUI();
             if (pick4GeneratedNumbers.length > 0) {
@@ -2779,410 +2649,146 @@
             }
         }
         
-        // Función para guardar historial de Pick 4 en localStorage
-        function savePick4History(history) {
-            if (!currentUser) return;
-            localStorage.setItem(`pick4History_${currentUser.email}`, JSON.stringify(history));
-        }
+        function savePick4History(history) { if (!currentUser) return; localStorage.setItem(`pick4History_${currentUser.email}`, JSON.stringify(history)); }
+        function loadPick4History() { if (!currentUser) return []; const saved = localStorage.getItem(`pick4History_${currentUser.email}`); if (saved) { try { return JSON.parse(saved); } catch(e) { return []; } } return []; }
         
-        // Función para cargar historial de Pick 4
-        function loadPick4History() {
-            if (!currentUser) return [];
-            const saved = localStorage.getItem(`pick4History_${currentUser.email}`);
-            if (saved) {
-                try {
-                    return JSON.parse(saved);
-                } catch(e) { return []; }
-            }
-            return [];
-        }
-        
-        // Función para actualizar el historial mostrado en UI
         function updatePick4HistoryUI() {
             const historyList = document.getElementById('pick4HistoryList');
             const lastInfo = document.getElementById('pick4LastInfo');
-            
             if (!historyList) return;
-            
             if (pick4History.length === 0) {
                 historyList.innerHTML = '<div class="ia-info" style="background: rgba(0,0,0,0.5);">No hay números registrados. Ingresa los últimos resultados de Pick 4.</div>';
                 if (lastInfo) lastInfo.innerHTML = '';
                 return;
             }
-            
             historyList.innerHTML = '';
-            pick4History.slice(0, 8).forEach(num => {
-                const badge = document.createElement('div');
-                badge.className = 'pick4-history-badge';
-                badge.innerHTML = num;
-                historyList.appendChild(badge);
-            });
-            
-            if (lastInfo) {
-                lastInfo.innerHTML = `📊 ${pick4History.length} números guardados (máximo últimos 8)`;
-            }
+            pick4History.slice(0, 8).forEach(num => { const badge = document.createElement('div'); badge.className = 'pick4-history-badge'; badge.innerHTML = num; historyList.appendChild(badge); });
+            if (lastInfo) lastInfo.innerHTML = `📊 ${pick4History.length} números guardados (máximo últimos 8)`;
         }
         
-        // Función principal de IA para Pick 4
         function generatePick4Prediction() {
             const inputText = document.getElementById('pick4InputNumbers').value.trim();
-            if (!inputText) {
-                showDialog('⚠️ Entrada vacía', 'Por favor, ingresa algunos números de Pick 4 (4 dígitos).\n\nEjemplo: 1234, 5678, 9012, 3456');
-                return;
-            }
-            
-            // Extraer números de 4 dígitos
+            if (!inputText) { showDialog('⚠️ Entrada vacía', 'Por favor, ingresa algunos números de Pick 4 (4 dígitos).\n\nEjemplo: 1234, 5678, 9012, 3456'); return; }
             const numbers = [];
             const matches = inputText.match(/\b\d{4}\b/g);
-            if (matches) {
-                matches.forEach(m => {
-                    if (m.length === 4 && !isNaN(parseInt(m))) {
-                        numbers.push(m);
-                    }
-                });
-            }
-            
-            if (numbers.length === 0) {
-                showDialog('⚠️ Formato incorrecto', 'Ingresa números de EXACTAMENTE 4 dígitos.\n\nEjemplo válido: 1234, 5678, 9012');
-                return;
-            }
-            
-            // Actualizar historial (mantener últimos 8)
+            if (matches) matches.forEach(m => { if (m.length === 4 && !isNaN(parseInt(m))) numbers.push(m); });
+            if (numbers.length === 0) { showDialog('⚠️ Formato incorrecto', 'Ingresa números de EXACTAMENTE 4 dígitos.\n\nEjemplo válido: 1234, 5678, 9012'); return; }
             for (const num of numbers) {
-                if (!pick4History.includes(num)) {
-                    pick4History.unshift(num);
-                } else {
-                    const index = pick4History.indexOf(num);
-                    if (index > -1) {
-                        pick4History.splice(index, 1);
-                        pick4History.unshift(num);
-                    }
-                }
+                if (!pick4History.includes(num)) pick4History.unshift(num);
+                else { const index = pick4History.indexOf(num); if (index > -1) pick4History.splice(index, 1); pick4History.unshift(num); }
             }
             pick4History = pick4History.slice(0, 8);
             savePick4History(pick4History);
             updatePick4HistoryUI();
-            
-            // Analizar patrones y generar predicciones
             const predictions = analyzePick4Patterns(pick4History);
             pick4GeneratedNumbers = predictions;
             displayPick4Predictions(predictions);
-            
             document.getElementById('pick4NumbersContainer').style.display = 'block';
             document.getElementById('pick4HistoryContainer').style.display = 'block';
-            
             showDialog('🎲 Pick 4 Pro', `Se generaron ${predictions.length} combinaciones de Pick 4 basadas en ${pick4History.length} números analizados.`);
         }
         
-        // Análisis avanzado de patrones para Pick 4
         function analyzePick4Patterns(history) {
-            if (history.length === 0) {
-                const randomNumbers = [];
-                for (let i = 0; i < 8; i++) {
-                    randomNumbers.push(generateRandomPick4());
-                }
-                return randomNumbers;
-            }
-            
+            if (history.length === 0) { const randomNumbers = []; for (let i = 0; i < 8; i++) randomNumbers.push(generateRandomPick4()); return randomNumbers; }
             const positionFreq = [{}, {}, {}, {}];
             const historyNumbers = history.slice(0, 8);
-            
-            for (const num of historyNumbers) {
-                const digits = num.split('');
-                for (let i = 0; i < 4; i++) {
-                    const digit = digits[i];
-                    positionFreq[i][digit] = (positionFreq[i][digit] || 0) + 1;
-                }
-            }
-            
+            for (const num of historyNumbers) { const digits = num.split(''); for (let i = 0; i < 4; i++) positionFreq[i][digits[i]] = (positionFreq[i][digits[i]] || 0) + 1; }
             const hotDigitsByPos = [];
-            for (let i = 0; i < 4; i++) {
-                const sorted = Object.entries(positionFreq[i]).sort((a, b) => b[1] - a[1]);
-                hotDigitsByPos.push(sorted.slice(0, 3).map(item => item[0]));
-            }
-            
-            let consecutiveCount = 0;
-            let repeatCount = 0;
-            
-            for (let i = 0; i < historyNumbers.length - 1; i++) {
-                const current = historyNumbers[i];
-                const next = historyNumbers[i + 1];
-                const currentNum = parseInt(current);
-                const nextNum = parseInt(next);
-                if (Math.abs(currentNum - nextNum) === 1) consecutiveCount++;
-                if (current === next) repeatCount++;
-            }
-            
+            for (let i = 0; i < 4; i++) { const sorted = Object.entries(positionFreq[i]).sort((a, b) => b[1] - a[1]); hotDigitsByPos.push(sorted.slice(0, 3).map(item => item[0])); }
+            let consecutiveCount = 0, repeatCount = 0;
+            for (let i = 0; i < historyNumbers.length - 1; i++) { if (Math.abs(parseInt(historyNumbers[i]) - parseInt(historyNumbers[i+1])) === 1) consecutiveCount++; if (historyNumbers[i] === historyNumbers[i+1]) repeatCount++; }
             let totalSum = 0;
-            for (const num of historyNumbers) {
-                const digits = num.split('');
-                let sum = 0;
-                for (const d of digits) sum += parseInt(d);
-                totalSum += sum;
-            }
+            for (const num of historyNumbers) { const digits = num.split(''); totalSum += digits.reduce((a, b) => a + parseInt(b), 0); }
             const avgSum = totalSum / historyNumbers.length;
-            
             const predictions = [];
             const usedNumbers = new Set();
-            
             for (let p = 0; p < 8; p++) {
-                let attempts = 0;
-                let newNum = null;
-                
+                let attempts = 0, newNum = null;
                 while (attempts < 50 && (!newNum || usedNumbers.has(newNum))) {
                     const digits = [];
-                    
                     for (let pos = 0; pos < 4; pos++) {
                         let digit;
-                        if (Math.random() < 0.7 && hotDigitsByPos[pos] && hotDigitsByPos[pos].length > 0) {
-                            digit = hotDigitsByPos[pos][Math.floor(Math.random() * hotDigitsByPos[pos].length)];
-                        } else {
-                            digit = Math.floor(Math.random() * 10).toString();
-                        }
+                        if (Math.random() < 0.7 && hotDigitsByPos[pos] && hotDigitsByPos[pos].length > 0) digit = hotDigitsByPos[pos][Math.floor(Math.random() * hotDigitsByPos[pos].length)];
+                        else digit = Math.floor(Math.random() * 10).toString();
                         digits.push(digit);
                     }
-                    
-                    if (consecutiveCount > historyNumbers.length / 2 && Math.random() < 0.4) {
-                        const start = Math.floor(Math.random() * 7);
-                        const consec = [start.toString(), (start+1).toString(), (start+2).toString(), (start+3).toString()];
-                        for (let i = 0; i < 4; i++) {
-                            if (consec[i] && consec[i].length === 1) digits[i] = consec[i];
-                        }
-                    }
-                    
-                    if (repeatCount > 2 && Math.random() < 0.3) {
-                        const repeatDigit = Math.floor(Math.random() * 10).toString();
-                        for (let i = 0; i < 4; i++) {
-                            if (Math.random() < 0.5) digits[i] = repeatDigit;
-                        }
-                    }
-                    
-                    let sum = 0;
-                    for (const d of digits) sum += parseInt(d);
-                    if (sum < avgSum - 5 && Math.random() < 0.5) {
-                        const posToIncrease = Math.floor(Math.random() * 4);
-                        let newDigit = parseInt(digits[posToIncrease]) + Math.floor(Math.random() * 3) + 1;
-                        if (newDigit > 9) newDigit = 9;
-                        digits[posToIncrease] = newDigit.toString();
-                    } else if (sum > avgSum + 5 && Math.random() < 0.5) {
-                        const posToDecrease = Math.floor(Math.random() * 4);
-                        let newDigit = parseInt(digits[posToDecrease]) - Math.floor(Math.random() * 3) - 1;
-                        if (newDigit < 0) newDigit = 0;
-                        digits[posToDecrease] = newDigit.toString();
-                    }
-                    
+                    if (consecutiveCount > historyNumbers.length / 2 && Math.random() < 0.4) { const start = Math.floor(Math.random() * 7); for (let i = 0; i < 4; i++) if (start + i <= 9) digits[i] = (start + i).toString(); }
+                    if (repeatCount > 2 && Math.random() < 0.3) { const repeatDigit = Math.floor(Math.random() * 10).toString(); for (let i = 0; i < 4; i++) if (Math.random() < 0.5) digits[i] = repeatDigit; }
+                    let sum = digits.reduce((a, b) => a + parseInt(b), 0);
+                    if (sum < avgSum - 5 && Math.random() < 0.5) { let idx = Math.floor(Math.random() * 4); let newDigit = parseInt(digits[idx]) + Math.floor(Math.random() * 3) + 1; if (newDigit > 9) newDigit = 9; digits[idx] = newDigit.toString(); }
+                    else if (sum > avgSum + 5 && Math.random() < 0.5) { let idx = Math.floor(Math.random() * 4); let newDigit = parseInt(digits[idx]) - Math.floor(Math.random() * 3) - 1; if (newDigit < 0) newDigit = 0; digits[idx] = newDigit.toString(); }
                     newNum = digits.join('');
                     attempts++;
                 }
-                
-                if (newNum && !usedNumbers.has(newNum)) {
-                    usedNumbers.add(newNum);
-                    predictions.push(newNum);
-                } else {
-                    let fallbackNum = generateRandomPick4();
-                    while (usedNumbers.has(fallbackNum)) {
-                        fallbackNum = generateRandomPick4();
-                    }
-                    usedNumbers.add(fallbackNum);
-                    predictions.push(fallbackNum);
-                }
+                if (newNum && !usedNumbers.has(newNum)) { usedNumbers.add(newNum); predictions.push(newNum); }
+                else { let fallbackNum = generateRandomPick4(); while (usedNumbers.has(fallbackNum)) fallbackNum = generateRandomPick4(); usedNumbers.add(fallbackNum); predictions.push(fallbackNum); }
             }
-            
             return predictions;
         }
         
-        function generateRandomPick4() {
-            const digits = [];
-            for (let i = 0; i < 4; i++) {
-                digits.push(Math.floor(Math.random() * 10).toString());
-            }
-            return digits.join('');
-        }
+        function generateRandomPick4() { return Array(4).fill().map(() => Math.floor(Math.random() * 10)).join(''); }
         
         function displayPick4Predictions(predictions) {
             const container = document.getElementById('pick4NumbersGrid');
-            if (!predictions || predictions.length === 0) {
-                if (container) container.innerHTML = '<div class="ia-info">No se pudieron generar predicciones. Ingresa más números.</div>';
-                return;
-            }
-            
+            if (!predictions || predictions.length === 0) { if (container) container.innerHTML = '<div class="ia-info">No se pudieron generar predicciones. Ingresa más números.</div>'; return; }
             container.innerHTML = '';
-            predictions.forEach((num, index) => {
-                const probability = Math.round(95 - (index * 5));
-                const card = document.createElement('div');
-                card.className = 'pick4-number-card';
-                card.innerHTML = `
-                    <div class="pick4-number">${num}</div>
-                    <div class="pick4-probability">🎯 ${probability}%</div>
-                `;
-                container.appendChild(card);
-            });
+            predictions.forEach((num, index) => { const probability = Math.round(95 - (index * 5)); const card = document.createElement('div'); card.className = 'pick4-number-card'; card.innerHTML = `<div class="pick4-number">${num}</div><div class="pick4-probability">🎯 ${probability}%</div>`; container.appendChild(card); });
         }
         
-        // ==================== NUEVA IA PARA PICK 3 (basada en últimos tiros) ====================
-        
-        function savePick3History() {
-            if (!currentUser) return;
-            localStorage.setItem(`pick3History_${currentUser.email}`, JSON.stringify(pick3History));
-        }
-        
-        function loadPick3History() {
-            if (!currentUser) return [];
-            const saved = localStorage.getItem(`pick3History_${currentUser.email}`);
-            if (saved) {
-                try {
-                    return JSON.parse(saved);
-                } catch(e) { return []; }
-            }
-            return [];
-        }
+        function savePick3History() { if (!currentUser) return; localStorage.setItem(`pick3History_${currentUser.email}`, JSON.stringify(pick3History)); }
+        function loadPick3History() { if (!currentUser) return []; const saved = localStorage.getItem(`pick3History_${currentUser.email}`); if (saved) { try { return JSON.parse(saved); } catch(e) { return []; } } return []; }
         
         function updatePick3HistoryUI() {
             const container = document.getElementById('pick3HistoryList');
             if (!container) return;
-            if (pick3History.length === 0) {
-                container.innerHTML = '<div class="ia-info">No hay historial. Ingresa números de Pick 3 (3 dígitos) para comenzar.</div>';
-                return;
-            }
+            if (pick3History.length === 0) { container.innerHTML = '<div class="ia-info">No hay historial. Ingresa números de Pick 3 (3 dígitos) para comenzar.</div>'; return; }
             container.innerHTML = '';
-            pick3History.slice(0, 10).forEach(num => {
-                const badge = document.createElement('div');
-                badge.className = 'pick4-history-badge';
-                badge.innerHTML = num;
-                container.appendChild(badge);
-            });
+            pick3History.slice(0, 10).forEach(num => { const badge = document.createElement('div'); badge.className = 'pick4-history-badge'; badge.innerHTML = num; container.appendChild(badge); });
         }
         
         function generarPick3() {
             const inputText = document.getElementById('pick3InputNumbers').value.trim();
-            if (!inputText) {
-                showDialog('⚠️ Entrada vacía', 'Por favor, ingresa números de Pick 3 (3 dígitos).\n\nEjemplo: 123 456 789');
-                return;
-            }
-            
-            // Extraer números de 3 dígitos
+            if (!inputText) { showDialog('⚠️ Entrada vacía', 'Por favor, ingresa números de Pick 3 (3 dígitos).\n\nEjemplo: 123 456 789'); return; }
             const numbers = [];
             const matches = inputText.match(/\b\d{3}\b/g);
-            if (matches) {
-                matches.forEach(m => {
-                    if (m.length === 3 && !isNaN(parseInt(m))) {
-                        numbers.push(m);
-                    }
-                });
-            }
-            
-            if (numbers.length === 0) {
-                showDialog('⚠️ Formato incorrecto', 'Ingresa números de EXACTAMENTE 3 dígitos.\n\nEjemplo válido: 123, 456, 789');
-                return;
-            }
-            
-            // Actualizar historial
-            for (const num of numbers) {
-                const index = pick3History.indexOf(num);
-                if (index > -1) pick3History.splice(index, 1);
-                pick3History.unshift(num);
-            }
+            if (matches) matches.forEach(m => { if (m.length === 3 && !isNaN(parseInt(m))) numbers.push(m); });
+            if (numbers.length === 0) { showDialog('⚠️ Formato incorrecto', 'Ingresa números de EXACTAMENTE 3 dígitos.\n\nEjemplo válido: 123, 456, 789'); return; }
+            for (const num of numbers) { const index = pick3History.indexOf(num); if (index > -1) pick3History.splice(index, 1); pick3History.unshift(num); }
             pick3History = pick3History.slice(0, 15);
             savePick3History();
             updatePick3HistoryUI();
-            
-            // Generar predicciones con IA
             const predictions = generarPrediccionesPick3(pick3History);
             mostrarPrediccionesPick3(predictions);
-            
             document.getElementById('pick3NumbersContainer').style.display = 'block';
             document.getElementById('pick3HistoryContainer').style.display = 'block';
             showDialog('🎱 IA Pick 3', `Se generaron ${predictions.length} predicciones de Pick 3 basadas en ${pick3History.length} números analizados.`);
         }
         
         function generarPrediccionesPick3(historial) {
-            if (historial.length === 0) {
-                const random = [];
-                for (let i = 0; i < 8; i++) {
-                    random.push(Math.floor(Math.random() * 900 + 100).toString());
-                }
-                return random;
-            }
-            
-            // Análisis de frecuencias por posición
+            if (historial.length === 0) { const random = []; for (let i = 0; i < 8; i++) random.push(Math.floor(Math.random() * 900 + 100).toString()); return random; }
             const freqPos = [{}, {}, {}];
             const ultimos = historial.slice(0, 12);
-            for (const num of ultimos) {
-                const digits = num.split('');
-                for (let i = 0; i < 3; i++) {
-                    const d = digits[i];
-                    freqPos[i][d] = (freqPos[i][d] || 0) + 1;
-                }
-            }
-            
-            // Dígitos calientes por posición
+            for (const num of ultimos) { const digits = num.split(''); for (let i = 0; i < 3; i++) freqPos[i][digits[i]] = (freqPos[i][digits[i]] || 0) + 1; }
             const hotDigits = [];
-            for (let i = 0; i < 3; i++) {
-                const sorted = Object.entries(freqPos[i]).sort((a,b) => b[1] - a[1]);
-                hotDigits.push(sorted.slice(0, 4).map(item => item[0]));
-            }
-            
-            // Análisis de sumas
+            for (let i = 0; i < 3; i++) { const sorted = Object.entries(freqPos[i]).sort((a, b) => b[1] - a[1]); hotDigits.push(sorted.slice(0, 4).map(item => item[0])); }
             let sumaTotal = 0;
-            for (const num of ultimos) {
-                const digits = num.split('');
-                let s = 0;
-                for (const d of digits) s += parseInt(d);
-                sumaTotal += s;
-            }
+            for (const num of ultimos) sumaTotal += num.split('').reduce((a, b) => a + parseInt(b), 0);
             const sumaPromedio = sumaTotal / ultimos.length;
-            
-            // Análisis de secuencias consecutivas o patrones
             let esTendenciaConsecutiva = false;
             let countConsec = 0;
-            for (let i = 0; i < ultimos.length - 1; i++) {
-                const num1 = parseInt(ultimos[i]);
-                const num2 = parseInt(ultimos[i+1]);
-                if (Math.abs(num1 - num2) === 1 || Math.abs(num1 - num2) === 111 || Math.abs(num1 - num2) === 222) {
-                    countConsec++;
-                }
-            }
+            for (let i = 0; i < ultimos.length - 1; i++) { if (Math.abs(parseInt(ultimos[i]) - parseInt(ultimos[i+1])) === 1 || Math.abs(parseInt(ultimos[i]) - parseInt(ultimos[i+1])) === 111 || Math.abs(parseInt(ultimos[i]) - parseInt(ultimos[i+1])) === 222) countConsec++; }
             if (countConsec > ultimos.length / 3) esTendenciaConsecutiva = true;
-            
             const predicciones = new Set();
-            
-            // Generar hasta 10 predicciones únicas
             while (predicciones.size < 10) {
                 let digits = [];
-                for (let i = 0; i < 3; i++) {
-                    let digit;
-                    if (Math.random() < 0.75 && hotDigits[i] && hotDigits[i].length > 0) {
-                        digit = hotDigits[i][Math.floor(Math.random() * hotDigits[i].length)];
-                    } else {
-                        digit = Math.floor(Math.random() * 10).toString();
-                    }
-                    digits.push(digit);
-                }
-                
-                // Ajustar por suma promedio
-                let sumaDigitos = digits.reduce((acc, d) => acc + parseInt(d), 0);
-                if (sumaDigitos < sumaPromedio - 3 && Math.random() < 0.4) {
-                    const idx = Math.floor(Math.random() * 3);
-                    let newVal = parseInt(digits[idx]) + Math.floor(Math.random() * 3) + 1;
-                    if (newVal > 9) newVal = 9;
-                    digits[idx] = newVal.toString();
-                } else if (sumaDigitos > sumaPromedio + 3 && Math.random() < 0.4) {
-                    const idx = Math.floor(Math.random() * 3);
-                    let newVal = parseInt(digits[idx]) - Math.floor(Math.random() * 3) - 1;
-                    if (newVal < 0) newVal = 0;
-                    digits[idx] = newVal.toString();
-                }
-                
-                // Si hay tendencia a números consecutivos, forzar un poco
-                if (esTendenciaConsecutiva && Math.random() < 0.3) {
-                    const start = Math.floor(Math.random() * 8);
-                    digits = [start.toString(), (start+1).toString(), (start+2).toString()];
-                }
-                
+                for (let i = 0; i < 3; i++) { let digit; if (Math.random() < 0.75 && hotDigits[i] && hotDigits[i].length > 0) digit = hotDigits[i][Math.floor(Math.random() * hotDigits[i].length)]; else digit = Math.floor(Math.random() * 10).toString(); digits.push(digit); }
+                let sumaDigitos = digits.reduce((a, b) => a + parseInt(b), 0);
+                if (sumaDigitos < sumaPromedio - 3 && Math.random() < 0.4) { let idx = Math.floor(Math.random() * 3); let newVal = parseInt(digits[idx]) + Math.floor(Math.random() * 3) + 1; if (newVal > 9) newVal = 9; digits[idx] = newVal.toString(); }
+                else if (sumaDigitos > sumaPromedio + 3 && Math.random() < 0.4) { let idx = Math.floor(Math.random() * 3); let newVal = parseInt(digits[idx]) - Math.floor(Math.random() * 3) - 1; if (newVal < 0) newVal = 0; digits[idx] = newVal.toString(); }
+                if (esTendenciaConsecutiva && Math.random() < 0.3) { const start = Math.floor(Math.random() * 8); digits = [start.toString(), (start+1).toString(), (start+2).toString()]; }
                 const numStr = digits.join('');
                 if (numStr.length === 3) predicciones.add(numStr);
             }
-            
             return Array.from(predicciones);
         }
         
@@ -3190,16 +2796,8 @@
             const container = document.getElementById('pick3NumbersGrid');
             if (!container) return;
             container.innerHTML = '';
-            predictions.forEach((num, idx) => {
-                const prob = Math.round(90 - (idx * 4));
-                const card = document.createElement('div');
-                card.className = 'ia-number-card';
-                card.innerHTML = `<div class="ia-number">${num}</div><div class="ia-probability">🎯 ${prob}%</div>`;
-                container.appendChild(card);
-            });
+            predictions.forEach((num, idx) => { const prob = Math.round(90 - (idx * 4)); const card = document.createElement('div'); card.className = 'ia-number-card'; card.innerHTML = `<div class="ia-number">${num}</div><div class="ia-probability">🎯 ${prob}%</div>`; container.appendChild(card); });
         }
-        
-        // ==================== FIN PICK 3 ====================
         
         function generateIAPrediction() {
             const inputText = document.getElementById('iaInputNumbers').value.trim();
@@ -3225,8 +2823,7 @@
             const nums = historyNumbers.map(n => parseInt(n));
             const frequency = {};
             nums.forEach(num => { frequency[num] = (frequency[num] || 0) + 1; });
-            const decenasFreq = {};
-            const terminalesFreq = {};
+            const decenasFreq = {}, terminalesFreq = {};
             nums.forEach(num => { const decena = Math.floor(num / 10); const terminal = num % 10; decenasFreq[decena] = (decenasFreq[decena] || 0) + 1; terminalesFreq[terminal] = (terminalesFreq[terminal] || 0) + 1; });
             let topDecenas = Object.entries(decenasFreq).sort((a,b) => b[1] - a[1]).slice(0, 3).map(d => parseInt(d[0]));
             let topTerminales = Object.entries(terminalesFreq).sort((a,b) => b[1] - a[1]).slice(0, 3).map(d => parseInt(d[0]));
@@ -3262,14 +2859,28 @@
             container.innerHTML = `<div class="decenas-box"><h4>🔟 DECENAS MÁS PROBABLES</h4><div class="decenas-items">${decenas.map(d => `<span class="decena-item">${d}</span>`).join('')}</div><div style="font-size: 0.6rem; margin-top: 6px; color: var(--text-secondary);">Números que comienzan con estos dígitos</div></div><div class="terminales-box"><h4>🔢 TERMINALES MÁS PROBABLES</h4><div class="terminales-items">${terminales.map(t => `<span class="terminal-item">${t}</span>`).join('')}</div><div style="font-size: 0.6rem; margin-top: 6px; color: var(--text-secondary);">Números que terminan con estos dígitos</div></div>`;
         }
         
-        async function loadIAData() { if (!currentUser) return; const saved = localStorage.getItem(`iaPro_${currentUser.email}`); if (saved) { try { const data = JSON.parse(saved); iaNumbers = data.numbers || []; iaDecenas = data.decenas || []; iaTerminales = data.terminales || []; iaLastInput = data.lastInput || ''; if (iaNumbers.length > 0) { displayIANumbers(iaNumbers); displayDecenasTerminales(iaDecenas, iaTerminales); document.getElementById('iaHistoryContainer').style.display = 'block'; document.getElementById('iaLastInput').innerHTML = `📊 "${iaLastInput}" → Generados ${iaNumbers.length} números (${new Date(data.timestamp).toLocaleDateString()})`; } } catch(e) { console.error(e); } } 
-            // Cargar historial de Pick 3
+        async function loadIAData() { 
+            if (!currentUser) return; 
+            const saved = localStorage.getItem(`iaPro_${currentUser.email}`); 
+            if (saved) { 
+                try { 
+                    const data = JSON.parse(saved); 
+                    iaNumbers = data.numbers || []; 
+                    iaDecenas = data.decenas || []; 
+                    iaTerminales = data.terminales || []; 
+                    iaLastInput = data.lastInput || ''; 
+                    if (iaNumbers.length > 0) { 
+                        displayIANumbers(iaNumbers); 
+                        displayDecenasTerminales(iaDecenas, iaTerminales); 
+                        document.getElementById('iaHistoryContainer').style.display = 'block'; 
+                        document.getElementById('iaLastInput').innerHTML = `📊 "${iaLastInput}" → Generados ${iaNumbers.length} números (${new Date(data.timestamp).toLocaleDateString()})`; 
+                    } 
+                } catch(e) { console.error(e); } 
+            } 
             pick3History = loadPick3History();
             updatePick3HistoryUI();
         }
         
-        function initTheme() { const savedTheme = localStorage.getItem('floridaTheme'); const themeBtn = document.getElementById('themeToggleBtn'); if (savedTheme === 'dark') { document.body.classList.add('dark'); if (themeBtn) themeBtn.innerHTML = '☀️'; } else { document.body.classList.remove('dark'); if (themeBtn) themeBtn.innerHTML = '🌙'; } }
-        function toggleTheme() { const body = document.body; const btn = document.getElementById('themeToggleBtn'); if (body.classList.contains('dark')) { body.classList.remove('dark'); localStorage.setItem('floridaTheme', 'light'); if (btn) btn.innerHTML = '🌙'; } else { body.classList.add('dark'); localStorage.setItem('floridaTheme', 'dark'); if (btn) btn.innerHTML = '☀️'; } }
         async function copyToClipboard(text) { try { await navigator.clipboard.writeText(text); showDialog('✅ Copiado', `"${text}" ha sido copiado al portapapeles`); } catch (err) { showDialog('Error', 'No se pudo copiar el texto'); } }
         function shareTelegramLink() { const code = document.getElementById('userReferralCode').innerText; if (code && code !== 'Cargando...') { const telegramLink = `https://t.me/pronostico1_bot?start=${code}`; window.open(telegramLink, '_blank'); showDialog('📲 Invitar por Telegram', `Comparte este enlace con tus amigos:\n\n${telegramLink}`); } else { showDialog('Error', 'Código de referido no disponible aún.'); } }
         async function copyReferralCode() { const code = document.getElementById('userReferralCode').innerText; await copyToClipboard(code); }
@@ -3282,6 +2893,7 @@
         function getCurrentDateFormatted() { const today = new Date(); return today.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }); }
         function formatTime12Hour(dateString) { if (!dateString) return 'No disponible'; const date = new Date(dateString); let hours = date.getHours(); const minutes = date.getMinutes().toString().padStart(2, '0'); const ampm = hours >= 12 ? 'PM' : 'AM'; hours = hours % 12; hours = hours ? hours : 12; return `${hours}:${minutes} ${ampm}`; }
         function formatDate(dateString) { if (!dateString) return getCurrentDateFormatted(); const date = new Date(dateString); if (isNaN(date.getTime())) return getCurrentDateFormatted(); return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }); }
+        
         function toggleAuthMode() { 
             if (authMode === 'login') { 
                 authMode = 'register'; 
@@ -3300,130 +2912,16 @@
         
         function showForgotPassword() {
             const email = document.getElementById('authEmail').value.trim();
-            if (!email) {
-                showDialog('Recuperar contraseña', 'Por favor, ingresa tu correo electrónico en el campo superior antes de continuar.');
-                return;
-            }
-            
-            auth.sendPasswordResetEmail(email)
-                .then(() => {
-                    showDialog('📧 Correo enviado', `Se ha enviado un enlace de recuperación a ${email}. Revisa tu bandeja de entrada y sigue las instrucciones para restablecer tu contraseña.`);
-                })
-                .catch((error) => {
-                    let msg = 'Error al enviar el correo de recuperación.';
-                    if (error.code === 'auth/user-not-found') {
-                        msg = 'No existe una cuenta con este correo electrónico.';
-                    } else if (error.code === 'auth/invalid-email') {
-                        msg = 'El correo electrónico ingresado no es válido.';
-                    }
-                    showDialog('Error', msg);
-                });
+            if (!email) { showDialog('Recuperar contraseña', 'Por favor, ingresa tu correo electrónico en el campo superior antes de continuar.'); return; }
+            auth.sendPasswordResetEmail(email).then(() => { showDialog('📧 Correo enviado', `Se ha enviado un enlace de recuperación a ${email}. Revisa tu bandeja de entrada y sigue las instrucciones para restablecer tu contraseña.`); }).catch((error) => { let msg = 'Error al enviar el correo de recuperación.'; if (error.code === 'auth/user-not-found') msg = 'No existe una cuenta con este correo electrónico.'; else if (error.code === 'auth/invalid-email') msg = 'El correo electrónico ingresado no es válido.'; showDialog('Error', msg); });
         }
         
         function generateReferralCode(email) { const prefix = email.split('@')[0].substring(0, 6).toUpperCase(); const random = Math.random().toString(36).substring(2, 8).toUpperCase(); return `${prefix}${random}`; }
-        async function validateReferralCode(code, newUserEmail) { 
-            if (!code) return true;
-            try { 
-                const usersRef = db.collection('members'); 
-                const query = await usersRef.where('referralCode', '==', code).get(); 
-                if (!query.empty) { 
-                    const referrerDoc = query.docs[0]; 
-                    const referrerEmail = referrerDoc.data().email; 
-                    if (referrerEmail === newUserEmail) return false; 
-                    return true; 
-                } 
-                return false; 
-            } catch (error) { 
-                return false; 
-            } 
-        }
-        async function processReferral(newUserEmail, referralCode) { 
-            if (!referralCode) return null; 
-            try { 
-                const usersRef = db.collection('members'); 
-                const query = await usersRef.where('referralCode', '==', referralCode).get(); 
-                if (!query.empty) { 
-                    const referrerDoc = query.docs[0]; 
-                    const referrerEmail = referrerDoc.data().email; 
-                    if (referrerEmail === newUserEmail) return null; 
-                    await db.collection('referrals').add({ referrerEmail: referrerEmail, referredEmail: newUserEmail, referredAt: new Date().toISOString(), status: 'pending_cup', statusDays: 'pending_days', membershipActive: false, referralCode: referralCode }); 
-                    return referrerEmail; 
-                } 
-            } catch (error) {} 
-            return null; 
-        }
-        async function checkAndRewardReferralsWithCup(userEmail) { 
-            try { 
-                const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); 
-                let totalEarned = 0; 
-                for (const doc of referralsSnapshot.docs) { 
-                    const referral = doc.data(); 
-                    const refId = doc.id; 
-                    if (referral.status === 'rewarded_cup') continue; 
-                    const referredMember = await db.collection('members').doc(referral.referredEmail).get(); 
-                    if (referredMember.exists && referredMember.data().membershipActive) { 
-                        const expires = new Date(referredMember.data().membershipExpires); 
-                        if (expires > new Date()) { 
-                            const rewardCheck = await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').get(); 
-                            if (!rewardCheck.exists) { 
-                                const userRef = db.collection('wallets').doc(userEmail); 
-                                const userDoc = await userRef.get(); 
-                                const currentBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; 
-                                await userRef.set({ balance: currentBalance + 50, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); 
-                                await db.collection('referrals').doc(refId).update({ status: 'rewarded_cup', rewardedAt: new Date().toISOString(), rewardAmount: 50 }); 
-                                totalEarned += 50; 
-                            } 
-                        } 
-                    } 
-                } 
-                if (totalEarned > 0) { 
-                    await loadUserBalance(); 
-                    await updateAllBalanceDisplays(); 
-                    showDialog('🎉 ¡RECOMPENSA RECIBIDA!', `Has ganado ${totalEarned} cup por referidos activos.`); 
-                    await updateReferralsUI(); 
-                    await loadProfile(); 
-                } 
-                return totalEarned; 
-            } catch (error) { 
-                return 0; 
-            } 
-        }
-        async function checkAndRewardReferrals(userEmail) { 
-            try { 
-                const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); 
-                let activeReferrals = []; 
-                for (const doc of referralsSnapshot.docs) { 
-                    const referral = doc.data(); 
-                    if (referral.statusDays === 'rewarded_days') continue; 
-                    const referredMember = await db.collection('members').doc(referral.referredEmail).get(); 
-                    if (referredMember.exists && referredMember.data().membershipActive) { 
-                        const expires = new Date(referredMember.data().membershipExpires); 
-                        if (expires > new Date()) activeReferrals.push({ id: doc.id, data: referral }); 
-                    } 
-                } 
-                const activeCount = activeReferrals.length; 
-                const rewardCycles = Math.floor(activeCount / 10); 
-                if (rewardCycles > 0) { 
-                    const userDoc = await db.collection('members').doc(userEmail).get(); 
-                    let currentExpires = new Date(); 
-                    if (userDoc.exists && userDoc.data().membershipExpires) { 
-                        currentExpires = new Date(userDoc.data().membershipExpires); 
-                        if (currentExpires < new Date()) currentExpires = new Date(); 
-                    } 
-                    const newExpires = new Date(currentExpires); 
-                    newExpires.setDate(newExpires.getDate() + (rewardCycles * 30)); 
-                    await db.collection('members').doc(userEmail).update({ membershipExpires: newExpires.toISOString(), referralBonusDays: firebase.firestore.FieldValue.increment(rewardCycles * 30) }); 
-                    for (let i = 0; i < rewardCycles * 10 && i < activeReferrals.length; i++) { 
-                        await db.collection('referrals').doc(activeReferrals[i].id).update({ statusDays: 'rewarded_days', rewardedAt: new Date().toISOString(), rewardDays: 30 }); 
-                    } 
-                    showDialog('🎁 ¡RECOMPENSA DE DÍAS RECIBIDA!', `Has ganado ${rewardCycles * 30} días gratis de membresía.`); 
-                    await checkMembership(userEmail); 
-                } 
-                return { totalReferrals: referralsSnapshot.size, activeReferrals: activeCount }; 
-            } catch (error) { 
-                return { totalReferrals: 0, activeReferrals: 0 }; 
-            } 
-        }
+        async function validateReferralCode(code, newUserEmail) { if (!code) return true; try { const usersRef = db.collection('members'); const query = await usersRef.where('referralCode', '==', code).get(); if (!query.empty) { const referrerDoc = query.docs[0]; const referrerEmail = referrerDoc.data().email; if (referrerEmail === newUserEmail) return false; return true; } return false; } catch (error) { return false; } }
+        async function processReferral(newUserEmail, referralCode) { if (!referralCode) return null; try { const usersRef = db.collection('members'); const query = await usersRef.where('referralCode', '==', referralCode).get(); if (!query.empty) { const referrerDoc = query.docs[0]; const referrerEmail = referrerDoc.data().email; if (referrerEmail === newUserEmail) return null; await db.collection('referrals').add({ referrerEmail: referrerEmail, referredEmail: newUserEmail, referredAt: new Date().toISOString(), status: 'pending_cup', statusDays: 'pending_days', membershipActive: false, referralCode: referralCode }); return referrerEmail; } } catch (error) {} return null; }
+        async function checkAndRewardReferralsWithCup(userEmail) { try { const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); let totalEarned = 0; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); const refId = doc.id; if (referral.status === 'rewarded_cup') continue; const referredMember = await db.collection('members').doc(referral.referredEmail).get(); if (referredMember.exists && referredMember.data().membershipActive) { const expires = new Date(referredMember.data().membershipExpires); if (expires > new Date()) { const rewardCheck = await db.collection('referrals').doc(refId).collection('rewards').doc('cup_reward').get(); if (!rewardCheck.exists) { const userRef = db.collection('wallets').doc(userEmail); const userDoc = await userRef.get(); const currentBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; await userRef.set({ balance: currentBalance + 50, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); await db.collection('referrals').doc(refId).update({ status: 'rewarded_cup', rewardedAt: new Date().toISOString(), rewardAmount: 50 }); totalEarned += 50; } } } } if (totalEarned > 0) { await loadUserBalance(); await updateAllBalanceDisplays(); showDialog('🎉 ¡RECOMPENSA RECIBIDA!', `Has ganado ${totalEarned} cup por referidos activos.`); await updateReferralsUI(); await loadProfile(); } return totalEarned; } catch (error) { return 0; } }
+        async function checkAndRewardReferrals(userEmail) { try { const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', userEmail).get(); let activeReferrals = []; for (const doc of referralsSnapshot.docs) { const referral = doc.data(); if (referral.statusDays === 'rewarded_days') continue; const referredMember = await db.collection('members').doc(referral.referredEmail).get(); if (referredMember.exists && referredMember.data().membershipActive) { const expires = new Date(referredMember.data().membershipExpires); if (expires > new Date()) activeReferrals.push({ id: doc.id, data: referral }); } } const activeCount = activeReferrals.length; const rewardCycles = Math.floor(activeCount / 10); if (rewardCycles > 0) { const userDoc = await db.collection('members').doc(userEmail).get(); let currentExpires = new Date(); if (userDoc.exists && userDoc.data().membershipExpires) { currentExpires = new Date(userDoc.data().membershipExpires); if (currentExpires < new Date()) currentExpires = new Date(); } const newExpires = new Date(currentExpires); newExpires.setDate(newExpires.getDate() + (rewardCycles * 30)); await db.collection('members').doc(userEmail).update({ membershipExpires: newExpires.toISOString(), referralBonusDays: firebase.firestore.FieldValue.increment(rewardCycles * 30) }); for (let i = 0; i < rewardCycles * 10 && i < activeReferrals.length; i++) { await db.collection('referrals').doc(activeReferrals[i].id).update({ statusDays: 'rewarded_days', rewardedAt: new Date().toISOString(), rewardDays: 30 }); } showDialog('🎁 ¡RECOMPENSA DE DÍAS RECIBIDA!', `Has ganado ${rewardCycles * 30} días gratis de membresía.`); await checkMembership(userEmail); } return { totalReferrals: referralsSnapshot.size, activeReferrals: activeCount }; } catch (error) { return { totalReferrals: 0, activeReferrals: 0 }; } }
+        
         async function updateReferralsUI() { 
             if (!currentUser) return; 
             try { 
@@ -3431,8 +2929,7 @@
                 const referralCode = userDoc.data()?.referralCode || 'No disponible'; 
                 document.getElementById('userReferralCode').innerText = referralCode; 
                 const referralsSnapshot = await db.collection('referrals').where('referrerEmail', '==', currentUser.email).get(); 
-                let activeCount = 0; 
-                let totalCupEarned = 0; 
+                let activeCount = 0, totalCupEarned = 0; 
                 const referralsList = []; 
                 for (const doc of referralsSnapshot.docs) { 
                     const referral = doc.data(); 
@@ -3450,44 +2947,18 @@
                 document.getElementById('cupEarnedStat').innerText = totalCupEarned; 
                 const tbody = document.getElementById('referralsTableBody'); 
                 tbody.innerHTML = ''; 
-                if (referralsList.length === 0) { 
-                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></tr>'; 
-                } else { 
-                    referralsList.forEach(ref => { 
-                        const row = tbody.insertRow(); 
-                        row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`; 
-                        row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString(); 
-                        row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>'; 
-                        row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-'); 
-                    }); 
-                } 
+                if (referralsList.length === 0) tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aún no has invitado a nadie. ¡Comparte tu código!</td></tr>'; 
+                else referralsList.forEach(ref => { const row = tbody.insertRow(); row.insertCell(0).innerHTML = `<strong>${ref.email}</strong>`; row.insertCell(1).innerText = new Date(ref.date).toLocaleDateString(); row.insertCell(2).innerHTML = ref.isActive ? '<span class="badge-win">✅ Activa</span>' : '<span style="color: var(--danger);">❌ Inactiva</span>'; row.insertCell(3).innerHTML = ref.rewarded ? '<span class="badge-rewarded">💰 50 cup</span>' : (ref.isActive ? '<span class="badge-pending">⏳ Pendiente</span>' : '-'); }); 
                 await checkAndRewardReferralsWithCup(currentUser.email); 
                 await checkAndRewardReferrals(currentUser.email); 
-            } catch (error) { 
-                console.error('Error actualizando referidos:', error); 
-            } 
+            } catch (error) { console.error('Error actualizando referidos:', error); } 
         }
-        async function loadUserBalance() { 
-            if (!currentUser) return; 
-            try { 
-                const userDoc = await db.collection('wallets').doc(currentUser.email).get(); 
-                userBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; 
-                await updateAllBalanceDisplays(); 
-                return userBalance; 
-            } catch (error) { 
-                return 0; 
-            } 
-        }
-        async function updateUserBalance(amount) { 
-            if (!currentUser) return; 
-            try { 
-                await db.collection('wallets').doc(currentUser.email).set({ balance: amount, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); 
-                userBalance = amount; 
-                await updateAllBalanceDisplays(); 
-            } catch (error) {} 
-        }
+        
+        async function loadUserBalance() { if (!currentUser) return; try { const userDoc = await db.collection('wallets').doc(currentUser.email).get(); userBalance = userDoc.exists ? userDoc.data().balance || 0 : 0; await updateAllBalanceDisplays(); return userBalance; } catch (error) { return 0; } }
+        async function updateUserBalance(amount) { if (!currentUser) return; try { await db.collection('wallets').doc(currentUser.email).set({ balance: amount, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); userBalance = amount; await updateAllBalanceDisplays(); } catch (error) {} }
         function showDepositForm() { document.getElementById('depositForm').style.display = 'block'; document.getElementById('withdrawForm').style.display = 'none'; }
         function showWithdrawForm() { document.getElementById('depositForm').style.display = 'none'; document.getElementById('withdrawForm').style.display = 'block'; }
+        
         async function submitDeposit() { 
             if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; } 
             const amount = parseFloat(document.getElementById('depositAmount').value); 
@@ -3500,10 +2971,9 @@
                 document.getElementById('depositAmount').value = '200'; 
                 showDialog('✅ Solicitud enviada', `Depósito de ${amount} Cup registrado.\n\n📌 IMPORTANTE:\n1. Envía la captura a @sdesaroyador\n2. El administrador aprobará tu depósito\n3. Al aprobarse, se activará tu membresía por 30 días y tu saldo será de ${amount - 200} Cup\n\nNúmero de transacción: ${transactionNumber}`); 
                 loadTransactions(); 
-            } catch (error) { 
-                showDialog('Error', error.message); 
-            } 
+            } catch (error) { showDialog('Error', error.message); } 
         }
+        
         async function submitWithdraw() { 
             if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; } 
             const amount = parseFloat(document.getElementById('withdrawAmount').value); 
@@ -3519,10 +2989,9 @@
                 document.getElementById('withdrawPhone').value = ''; 
                 showDialog('✅ Solicitud enviada', `Retiro de ${amount} Cup solicitado.`); 
                 loadTransactions(); 
-            } catch (error) { 
-                showDialog('Error', error.message); 
-            } 
+            } catch (error) { showDialog('Error', error.message); } 
         }
+        
         async function loadTransactions() { 
             if (!currentUser) return; 
             try { 
@@ -3532,266 +3001,73 @@
                 if (!transactionsSnapshot.empty) { 
                     historyCard.style.display = 'block'; 
                     tbody.innerHTML = ''; 
-                    transactionsSnapshot.forEach(doc => { 
-                        const tx = doc.data(); 
-                        const row = tbody.insertRow(); 
-                        const date = tx.timestamp?.toDate ? tx.timestamp.toDate().toLocaleString() : new Date(tx.timestamp).toLocaleString(); 
-                        row.insertCell(0).innerText = date; 
-                        let typeText = ''; 
-                        if (tx.type === 'deposit') typeText = '💰 Depósito'; 
-                        else if (tx.type === 'withdraw') typeText = '🏦 Retiro'; 
-                        else if (tx.type === 'membership_deduction') typeText = '🔻 Membresía'; 
-                        else if (tx.type === 'deposit_processed') typeText = '💵 Depósito Procesado'; 
-                        else typeText = tx.type; 
-                        row.insertCell(1).innerHTML = typeText; 
-                        let amountText = ''; 
-                        if (tx.type === 'deposit') amountText = `${tx.amount} Cup`; 
-                        else if (tx.type === 'withdraw') amountText = `- ${tx.amount} Cup`; 
-                        else if (tx.type === 'membership_deduction') amountText = `- ${tx.amount} Cup`; 
-                        else if (tx.type === 'deposit_processed') amountText = tx.finalBalance !== undefined ? `Saldo final: ${tx.finalBalance} Cup` : `${tx.amount} Cup`; 
-                        else amountText = `${tx.amount} Cup`; 
-                        row.insertCell(2).innerText = amountText; 
-                        let statusHtml = ''; 
-                        if (tx.status === 'approved') statusHtml = '<span class="badge-win">✅ Aprobado</span>'; 
-                        else if (tx.status === 'pending') statusHtml = '<span class="badge-pending">⏳ Pendiente</span>'; 
-                        else if (tx.type === 'deposit_processed') statusHtml = '<span class="badge-win">✅ Procesado</span>'; 
-                        else statusHtml = '<span style="color: var(--danger);">❌ Rechazado</span>'; 
-                        row.insertCell(3).innerHTML = statusHtml; 
-                    }); 
-                } else { 
-                    historyCard.style.display = 'none'; 
-                } 
+                    transactionsSnapshot.forEach(doc => { const tx = doc.data(); const row = tbody.insertRow(); const date = tx.timestamp?.toDate ? tx.timestamp.toDate().toLocaleString() : new Date(tx.timestamp).toLocaleString(); row.insertCell(0).innerText = date; let typeText = tx.type === 'deposit' ? '💰 Depósito' : tx.type === 'withdraw' ? '🏦 Retiro' : tx.type === 'membership_deduction' ? '🔻 Membresía' : tx.type === 'deposit_processed' ? '💵 Depósito Procesado' : tx.type; row.insertCell(1).innerHTML = typeText; let amountText = tx.type === 'deposit' ? `${tx.amount} Cup` : tx.type === 'withdraw' ? `- ${tx.amount} Cup` : tx.type === 'membership_deduction' ? `- ${tx.amount} Cup` : tx.type === 'deposit_processed' && tx.finalBalance !== undefined ? `Saldo final: ${tx.finalBalance} Cup` : `${tx.amount} Cup`; row.insertCell(2).innerText = amountText; let statusHtml = tx.status === 'approved' ? '<span class="badge-win">✅ Aprobado</span>' : tx.status === 'pending' ? '<span class="badge-pending">⏳ Pendiente</span>' : tx.type === 'deposit_processed' ? '<span class="badge-win">✅ Procesado</span>' : '<span style="color: var(--danger);">❌ Rechazado</span>'; row.insertCell(3).innerHTML = statusHtml; }); 
+                } else historyCard.style.display = 'none'; 
             } catch (error) {} 
         }
         
         let predictionsCache = null;
         
-        function getLotteriesHTML() {
-            return `
-                <div class="lotteries-banner">
-                    <div class="lottery-badge">
-                        <span class="lottery-icon">🌴🐊</span>
-                        <div>
-                            <div class="lottery-name">FLORIDA</div>
-                            <div class="lottery-location">🎯 Pick 2,3,4,5</div>
-                        </div>
-                    </div>
-                    <div class="lottery-badge">
-                        <span class="lottery-icon">🍑⚾</span>
-                        <div>
-                            <div class="lottery-name">GEORGIA</div>
-                            <div class="lottery-location">🎯 Cash 3, Cash 4</div>
-                        </div>
-                    </div>
-                    <div class="lottery-badge">
-                        <span class="lottery-icon">🗽🍎</span>
-                        <div>
-                            <div class="lottery-name">NUEVA YORK</div>
-                            <div class="lottery-location">🎯 Numbers, Win 4</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="update-info" style="margin-bottom: 10px; text-align: center;">
-                    <span style="font-size: 0.75rem;">✨ Este pronóstico es VÁLIDO para las loterías de FLORIDA, GEORGIA y NUEVA YORK ✨</span>
-                </div>
-            `;
-        }
+        function getLotteriesHTML() { return `<div class="lotteries-banner"><div class="lottery-badge"><span class="lottery-icon">🌴🐊</span><div><div class="lottery-name">FLORIDA</div><div class="lottery-location">🎯 Pick 2,3,4,5</div></div></div><div class="lottery-badge"><span class="lottery-icon">🍑⚾</span><div><div class="lottery-name">GEORGIA</div><div class="lottery-location">🎯 Cash 3, Cash 4</div></div></div><div class="lottery-badge"><span class="lottery-icon">🗽🍎</span><div><div class="lottery-name">NUEVA YORK</div><div class="lottery-location">🎯 Numbers, Win 4</div></div></div></div><div class="update-info" style="margin-bottom: 10px; text-align: center;"><span style="font-size: 0.75rem;">✨ Este pronóstico es VÁLIDO para las loterías de FLORIDA, GEORGIA y NUEVA YORK ✨</span></div>`; }
         
         function renderPredictions(numbers, strongNumbers, mediumNumbers, afternoonWinner, nightWinner, lastUpdate, lastUpdateFormatted) {
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-            
-            predictionsCache = {
-                numbers: numbers || [],
-                strongNumbers: strongNumbers || [],
-                mediumNumbers: mediumNumbers || [],
-                afternoonWinner: afternoonWinner || null,
-                nightWinner: nightWinner || null,
-                lastUpdate: lastUpdate || null,
-                lastUpdateFormatted: lastUpdateFormatted || null
-            };
-            
-            if (!isActive) {
-                container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para ver los pronósticos.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button></div>`;
-                return;
-            }
-            
-            let finalNumbers = numbers;
-            let finalStrong = strongNumbers;
-            let finalMedium = mediumNumbers;
-            let finalAfternoon = afternoonWinner;
-            let finalNight = nightWinner;
-            let finalLastUpdate = lastUpdate;
-            let finalLastUpdateFormatted = lastUpdateFormatted;
-            
-            if (finalNumbers && finalNumbers.length > 0) {
-                cachedNumbers = [...finalNumbers];
-                cachedStrong = finalStrong || [];
-                cachedMedium = finalMedium || [];
-                if (finalAfternoon !== undefined) cachedAfternoonWinner = finalAfternoon;
-                if (finalNight !== undefined) cachedNightWinner = finalNight;
-                if (finalLastUpdate) cachedLastUpdate = finalLastUpdate;
-                if (finalLastUpdateFormatted) cachedLastUpdateFormatted = finalLastUpdateFormatted;
-            } else if (cachedNumbers.length > 0) {
-                finalNumbers = cachedNumbers;
-                finalStrong = cachedStrong;
-                finalMedium = cachedMedium;
-                if (afternoonWinner === undefined) finalAfternoon = cachedAfternoonWinner;
-                if (nightWinner === undefined) finalNight = cachedNightWinner;
-                if (!lastUpdate) finalLastUpdate = cachedLastUpdate;
-                if (!lastUpdateFormatted) finalLastUpdateFormatted = cachedLastUpdateFormatted;
-            }
-            
-            if (!finalNumbers || finalNumbers.length === 0) {
-                container.innerHTML = `<div class="text-center"><h3>⏳ Esperando pronósticos</h3><p>Los números se mostrarán aquí cuando el admin los publique.</p><button class="refresh-btn" onclick="manualRefreshPredictions()" style="margin-top: 1rem;">🔄 Actualizar ahora</button></div>`;
-                return;
-            }
-            
+            predictionsCache = { numbers: numbers || [], strongNumbers: strongNumbers || [], mediumNumbers: mediumNumbers || [], afternoonWinner: afternoonWinner || null, nightWinner: nightWinner || null, lastUpdate: lastUpdate || null, lastUpdateFormatted: lastUpdateFormatted || null };
+            if (!isActive) { container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para ver los pronósticos.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button></div>`; return; }
+            let finalNumbers = numbers, finalStrong = strongNumbers, finalMedium = mediumNumbers, finalAfternoon = afternoonWinner, finalNight = nightWinner, finalLastUpdate = lastUpdate, finalLastUpdateFormatted = lastUpdateFormatted;
+            if (finalNumbers && finalNumbers.length > 0) { cachedNumbers = [...finalNumbers]; cachedStrong = finalStrong || []; cachedMedium = finalMedium || []; if (finalAfternoon !== undefined) cachedAfternoonWinner = finalAfternoon; if (finalNight !== undefined) cachedNightWinner = finalNight; if (finalLastUpdate) cachedLastUpdate = finalLastUpdate; if (finalLastUpdateFormatted) cachedLastUpdateFormatted = finalLastUpdateFormatted; }
+            else if (cachedNumbers.length > 0) { finalNumbers = cachedNumbers; finalStrong = cachedStrong; finalMedium = cachedMedium; if (afternoonWinner === undefined) finalAfternoon = cachedAfternoonWinner; if (nightWinner === undefined) finalNight = cachedNightWinner; if (!lastUpdate) finalLastUpdate = cachedLastUpdate; if (!lastUpdateFormatted) finalLastUpdateFormatted = cachedLastUpdateFormatted; }
+            if (!finalNumbers || finalNumbers.length === 0) { container.innerHTML = `<div class="text-center"><h3>⏳ Esperando pronósticos</h3><p>Los números se mostrarán aquí cuando el admin los publique.</p><button class="refresh-btn" onclick="manualRefreshPredictions()" style="margin-top: 1rem;">🔄 Actualizar ahora</button></div>`; return; }
             const displayTime = finalLastUpdateFormatted || formatTime12Hour(finalLastUpdate);
             const displayDate = formatDate(finalLastUpdate);
             const currentDate = getCurrentDateFormatted();
-            
-            let html = `<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
-                            <h2 style="color: var(--gold-solid); font-size: 1.1rem;">🎯 Pronóstico del Día <span class="live-badge">ACTIVO</span></h2>
-                            <button class="refresh-btn" onclick="manualRefreshPredictions()">🔄 Actualizar</button>
-                        </div>
-                        ${getLotteriesHTML()}
-                        <div class="update-info">
-                            <span class="update-label">📅 Fecha: ${currentDate}</span>
-                            <span class="update-time">🕒 Actualización: ${displayTime}</span>
-                            <span class="update-date">📆 Publicado: ${displayDate}</span>
-                        </div>
-                        <div class="numbers-grid" id="numbersGrid"></div>`;
-            
-            let afternoonClass = 'result-box result-waiting';
-            let afternoonText = '⏳ ESPERANDO RESULTADO...';
-            let afternoonAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>';
-            if (finalAfternoon) {
-                if (finalAfternoon === 'fallo') {
-                    afternoonClass = 'result-box result-fallo';
-                    afternoonText = '❌ FALLO - No hubo ganador';
-                    afternoonAlert = '';
-                } else {
-                    afternoonClass = 'result-box result-winner';
-                    afternoonText = `🎯 GANADOR: ${finalAfternoon}`;
-                    afternoonAlert = '';
-                }
-            }
+            let html = `<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;"><h2 style="color: var(--gold-solid); font-size: 1.1rem;">🎯 Pronóstico del Día <span class="live-badge">ACTIVO</span></h2><button class="refresh-btn" onclick="manualRefreshPredictions()">🔄 Actualizar</button></div>${getLotteriesHTML()}<div class="update-info"><span class="update-label">📅 Fecha: ${currentDate}</span><span class="update-time">🕒 Actualización: ${displayTime}</span><span class="update-date">📆 Publicado: ${displayDate}</span></div><div class="numbers-grid" id="numbersGrid"></div>`;
+            let afternoonClass = 'result-box result-waiting', afternoonText = '⏳ ESPERANDO RESULTADO...', afternoonAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>';
+            if (finalAfternoon) { if (finalAfternoon === 'fallo') { afternoonClass = 'result-box result-fallo'; afternoonText = '❌ FALLO - No hubo ganador'; afternoonAlert = ''; } else { afternoonClass = 'result-box result-winner'; afternoonText = `🎯 GANADOR: ${finalAfternoon}`; afternoonAlert = ''; } }
             html += `<div class="${afternoonClass}"><div class="result-title">🌅 MEDIODÍA (1:35 PM)</div><div class="result-value">${afternoonText}</div>${afternoonAlert}</div>`;
-            
-            let nightClass = 'result-box result-waiting';
-            let nightText = '⏳ ESPERANDO RESULTADO...';
-            let nightAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>';
-            if (finalNight) {
-                if (finalNight === 'fallo') {
-                    nightClass = 'result-box result-fallo';
-                    nightText = '❌ FALLO - No hubo ganador';
-                    nightAlert = '';
-                } else {
-                    nightClass = 'result-box result-winner';
-                    nightText = `🎯 GANADOR: ${finalNight}`;
-                    nightAlert = '';
-                }
-            }
+            let nightClass = 'result-box result-waiting', nightText = '⏳ ESPERANDO RESULTADO...', nightAlert = '<div class="waiting-alert">🔄 Pendiente publicación</div>';
+            if (finalNight) { if (finalNight === 'fallo') { nightClass = 'result-box result-fallo'; nightText = '❌ FALLO - No hubo ganador'; nightAlert = ''; } else { nightClass = 'result-box result-winner'; nightText = `🎯 GANADOR: ${finalNight}`; nightAlert = ''; } }
             html += `<div class="${nightClass}"><div class="result-title">🌙 NOCHE (9:50 PM)</div><div class="result-value">${nightText}</div>${nightAlert}</div>`;
             container.innerHTML = html;
-            
             const grid = document.getElementById('numbersGrid');
-            if (grid) {
-                grid.innerHTML = '';
-                finalNumbers.forEach(num => {
-                    let className = 'number-card';
-                    if (finalStrong && finalStrong.includes(num)) className += ' strong';
-                    else if (finalMedium && finalMedium.includes(num)) className += ' medium';
-                    const isWinner = (finalAfternoon && finalAfternoon !== 'fallo' && finalAfternoon === num) || (finalNight && finalNight !== 'fallo' && finalNight === num);
-                    if (isWinner) className += ' winner';
-                    let probText = '';
-                    if (finalStrong && finalStrong.includes(num)) probText = '<div class="probability">68% 🔥</div>';
-                    else if (finalMedium && finalMedium.includes(num)) probText = '<div class="probability">50% 📊</div>';
-                    const card = document.createElement('div');
-                    card.className = className;
-                    card.innerHTML = `<div class="number">${num}</div>${probText}`;
-                    grid.appendChild(card);
-                });
-            }
+            if (grid) { grid.innerHTML = ''; finalNumbers.forEach(num => { let className = 'number-card'; if (finalStrong && finalStrong.includes(num)) className += ' strong'; else if (finalMedium && finalMedium.includes(num)) className += ' medium'; const isWinner = (finalAfternoon && finalAfternoon !== 'fallo' && finalAfternoon === num) || (finalNight && finalNight !== 'fallo' && finalNight === num); if (isWinner) className += ' winner'; let probText = ''; if (finalStrong && finalStrong.includes(num)) probText = '<div class="probability">68% 🔥</div>'; else if (finalMedium && finalMedium.includes(num)) probText = '<div class="probability">50% 📊</div>'; const card = document.createElement('div'); card.className = className; card.innerHTML = `<div class="number">${num}</div>${probText}`; grid.appendChild(card); }); }
         }
         
         async function manualRefreshPredictions() {
             const refreshBtn = document.querySelector('#predictionsContent .refresh-btn');
-            if (refreshBtn) {
-                refreshBtn.classList.add('spinning');
-                setTimeout(() => refreshBtn.classList.remove('spinning'), 600);
-            }
-            
+            if (refreshBtn) { refreshBtn.classList.add('spinning'); setTimeout(() => refreshBtn.classList.remove('spinning'), 600); }
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-            if (isActive) {
-                showForecastLoadingModal();
-                updateForecastLoading('step3', 50);
-            }
-            
+            if (isActive) { showForecastLoadingModal(); updateForecastLoading('step3', 50); }
             try {
                 const doc = await db.collection('masterPredictions').doc('current').get();
-                if (isActive) {
-                    updateForecastLoading('step4', 90);
-                    await new Promise(resolve => setTimeout(resolve, 300));
-                }
-                if (doc.exists) {
-                    const data = doc.data();
-                    renderPredictions(data.numbers || [], data.strongNumbers || [], data.mediumNumbers || [], data.afternoonWinner || null, data.nightWinner || null, data.lastUpdate || null, data.lastUpdateFormatted || null);
-                    if (isActive) {
-                        updateForecastLoading('step4', 100);
-                        await new Promise(resolve => setTimeout(resolve, 400));
-                    }
-                    showDialog('✅ Actualizado', 'El pronóstico ha sido actualizado correctamente.');
-                } else {
-                    if (predictionsCache && predictionsCache.numbers && predictionsCache.numbers.length > 0) {
-                        renderPredictions(predictionsCache.numbers, predictionsCache.strongNumbers, predictionsCache.mediumNumbers, predictionsCache.afternoonWinner, predictionsCache.nightWinner, predictionsCache.lastUpdate, predictionsCache.lastUpdateFormatted);
-                        showDialog('ℹ️ Sin conexión', 'No se pudo conectar con el servidor. Mostrando datos en caché.');
-                    } else {
-                        showDialog('⚠️ Sin datos', 'No hay pronósticos disponibles en este momento.');
-                    }
-                }
-            } catch (error) {
-                if (predictionsCache && predictionsCache.numbers && predictionsCache.numbers.length > 0) {
-                    renderPredictions(predictionsCache.numbers, predictionsCache.strongNumbers, predictionsCache.mediumNumbers, predictionsCache.afternoonWinner, predictionsCache.nightWinner, predictionsCache.lastUpdate, predictionsCache.lastUpdateFormatted);
-                    showDialog('⚠️ Error de conexión', 'No se pudo conectar con el servidor. Mostrando datos guardados localmente.');
-                } else {
-                    showDialog('⚠️ Error', 'No se pudo actualizar. Verifica tu conexión.');
-                }
-            } finally {
-                if (isActive) {
-                    hideForecastLoadingModal();
-                }
-            }
+                if (isActive) { updateForecastLoading('step4', 90); await new Promise(resolve => setTimeout(resolve, 300)); }
+                if (doc.exists) { const data = doc.data(); renderPredictions(data.numbers || [], data.strongNumbers || [], data.mediumNumbers || [], data.afternoonWinner || null, data.nightWinner || null, data.lastUpdate || null, data.lastUpdateFormatted || null); if (isActive) { updateForecastLoading('step4', 100); await new Promise(resolve => setTimeout(resolve, 400)); } showDialog('✅ Actualizado', 'El pronóstico ha sido actualizado correctamente.'); }
+                else { if (predictionsCache && predictionsCache.numbers && predictionsCache.numbers.length > 0) { renderPredictions(predictionsCache.numbers, predictionsCache.strongNumbers, predictionsCache.mediumNumbers, predictionsCache.afternoonWinner, predictionsCache.nightWinner, predictionsCache.lastUpdate, predictionsCache.lastUpdateFormatted); showDialog('ℹ️ Sin conexión', 'No se pudo conectar con el servidor. Mostrando datos en caché.'); } else showDialog('⚠️ Sin datos', 'No hay pronósticos disponibles en este momento.'); }
+            } catch (error) { if (predictionsCache && predictionsCache.numbers && predictionsCache.numbers.length > 0) { renderPredictions(predictionsCache.numbers, predictionsCache.strongNumbers, predictionsCache.mediumNumbers, predictionsCache.afternoonWinner, predictionsCache.nightWinner, predictionsCache.lastUpdate, predictionsCache.lastUpdateFormatted); showDialog('⚠️ Error de conexión', 'No se pudo conectar con el servidor. Mostrando datos guardados localmente.'); } else showDialog('⚠️ Error', 'No se pudo actualizar. Verifica tu conexión.'); }
+            finally { if (isActive) hideForecastLoadingModal(); }
         }
         
         function setupRealtimeListeners() { 
             if (unsubscribePredictions) unsubscribePredictions(); 
-            unsubscribePredictions = db.collection('masterPredictions').doc('current').onSnapshot(async (doc) => { 
-                if (doc.exists) { 
-                    const data = doc.data(); 
-                    renderPredictions(data.numbers || [], data.strongNumbers || [], data.mediumNumbers || [], data.afternoonWinner || null, data.nightWinner || null, data.lastUpdate || null, data.lastUpdateFormatted || null); 
-                } else { 
-                    renderPredictions([], [], [], null, null, null, null); 
-                } 
-            }); 
+            unsubscribePredictions = db.collection('masterPredictions').doc('current').onSnapshot(async (doc) => { if (doc.exists) { const data = doc.data(); renderPredictions(data.numbers || [], data.strongNumbers || [], data.mediumNumbers || [], data.afternoonWinner || null, data.nightWinner || null, data.lastUpdate || null, data.lastUpdateFormatted || null); } else renderPredictions([], [], [], null, null, null, null); }); 
             if (unsubscribeRiddle) unsubscribeRiddle(); 
-            unsubscribeRiddle = db.collection('riddles').doc('current').onSnapshot(() => { 
-                if (document.getElementById('riddleSection').style.display !== 'none') loadRiddle(); 
-            }); 
+            unsubscribeRiddle = db.collection('riddles').doc('current').onSnapshot(() => { if (document.getElementById('riddleSection').style.display !== 'none') loadRiddle(); }); 
             if (unsubscribeDailyProb) unsubscribeDailyProb(); 
-            unsubscribeDailyProb = db.collection('dailyProbabilities').doc('current').onSnapshot(() => { 
-                if (document.getElementById('dailyProbSection').style.display !== 'none') loadDailyProbabilities(); 
-            }); 
+            unsubscribeDailyProb = db.collection('dailyProbabilities').doc('current').onSnapshot(() => { if (document.getElementById('dailyProbSection').style.display !== 'none') loadDailyProbabilities(); }); 
         }
         
-        async function loadRiddle() { try { const doc = await db.collection('riddles').doc('current').get(); if (doc.exists) { const data = doc.data(); document.getElementById('riddleQuestion').innerHTML = data.question || 'No hay adivinanza'; window.currentRiddleAnswer = data.answer || ''; document.getElementById('riddleAnswer').innerHTML = window.currentRiddleAnswer; document.getElementById('riddleDate').innerHTML = `📅 ${data.date || getCurrentDateFormatted()}`; } else { document.getElementById('riddleQuestion').innerHTML = '✨ No hay adivinanza hoy'; } document.getElementById('riddleAnswer').classList.remove('show'); } catch (error) {} }
+        async function loadRiddle() { try { const doc = await db.collection('riddles').doc('current').get(); if (doc.exists) { const data = doc.data(); document.getElementById('riddleQuestion').innerHTML = data.question || 'No hay adivinanza'; window.currentRiddleAnswer = data.answer || ''; document.getElementById('riddleAnswer').innerHTML = window.currentRiddleAnswer; document.getElementById('riddleDate').innerHTML = `📅 ${data.date || getCurrentDateFormatted()}`; } else document.getElementById('riddleQuestion').innerHTML = '✨ No hay adivinanza hoy'; document.getElementById('riddleAnswer').classList.remove('show'); } catch (error) {} }
         function toggleRiddleAnswer() { document.getElementById('riddleAnswer').classList.toggle('show'); }
-        async function loadDailyProbabilities() { const currentDate = getCurrentDateFormatted(); const badgeElement = document.getElementById('probabilitiesTodayBadge'); if (badgeElement) badgeElement.innerHTML = `📅 ${currentDate}`; try { const doc = await db.collection('dailyProbabilities').doc('current').get(); if (doc.exists) { const data = doc.data(); const numbers = data.numbers || []; const percentages = data.percentages || []; const lastUpdate = data.lastUpdateFormatted || 'No disponible'; const lastUpdateDate = data.lastUpdate ? new Date(data.lastUpdate).toLocaleDateString() : 'No disponible'; document.getElementById('probUpdateTime').innerHTML = lastUpdate; document.getElementById('probUpdateDate').innerHTML = lastUpdateDate; const container = document.getElementById('probabilitiesList'); container.innerHTML = ''; if (numbers.length === 0) { container.innerHTML = '<div class="text-center">📊 No hay probabilidades</div>'; return; } numbers.forEach((num, index) => { const percent = percentages[index] || Math.floor(Math.random() * 30) + 50; const probDiv = document.createElement('div'); probDiv.className = 'prob-item'; probDiv.innerHTML = `<div class="prob-number">${num}</div><div class="prob-percent">${percent}%</div>`; container.appendChild(probDiv); }); } else { document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">📊 No hay probabilidades disponibles hoy</div>'; document.getElementById('probUpdateTime').innerHTML = '--:-- --'; document.getElementById('probUpdateDate').innerHTML = '--/--/----'; } } catch (error) { console.error('Error cargando probabilidades:', error); document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">❌ Error al cargar probabilidades</div>'; } }
-        async function loadComments() { const container = document.getElementById('commentsList'); if (!container) return; try { const commentsSnapshot = await db.collection('comments').orderBy('timestamp', 'desc').limit(50).get(); if (commentsSnapshot.empty) { container.innerHTML = '<div class="text-center" style="padding: 2rem;">💬 No hay comentarios aún. ¡Sé el primero en compartir tu jugada!</div>'; return; } container.innerHTML = ''; commentsSnapshot.forEach(doc => { const comment = doc.data(); const commentDiv = document.createElement('div'); commentDiv.className = 'comment-card'; let numberHtml = ''; if (comment.number) numberHtml = `<div class="comment-number" style="display:inline-block; background:var(--gradient-primary); color:#0A0F2C; padding:4px 12px; border-radius:20px; font-size:0.65rem; margin-top:8px; font-weight:600;">🎯 Número jugado: ${escapeHtml(comment.number)} ${comment.draw ? `(${escapeHtml(comment.draw)})` : ''}</div>`; commentDiv.innerHTML = `<div class="comment-header"><span class="comment-user">👤 ${escapeHtml(comment.userEmail || 'Usuario')}</span><span class="comment-date">📅 ${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Reciente'}</span></div><div class="comment-text">${escapeHtml(comment.message)}</div>${numberHtml}`; container.appendChild(commentDiv); }); } catch (error) { console.error('Error cargando comentarios:', error); container.innerHTML = '<div class="text-center">❌ Error al cargar comentarios</div>'; } }
+        
+        async function loadDailyProbabilities() { const currentDate = getCurrentDateFormatted(); const badgeElement = document.getElementById('probabilitiesTodayBadge'); if (badgeElement) badgeElement.innerHTML = `📅 ${currentDate}`; try { const doc = await db.collection('dailyProbabilities').doc('current').get(); if (doc.exists) { const data = doc.data(); const numbers = data.numbers || []; const percentages = data.percentages || []; const lastUpdate = data.lastUpdateFormatted || 'No disponible'; const lastUpdateDate = data.lastUpdate ? new Date(data.lastUpdate).toLocaleDateString() : 'No disponible'; document.getElementById('probUpdateTime').innerHTML = lastUpdate; document.getElementById('probUpdateDate').innerHTML = lastUpdateDate; const container = document.getElementById('probabilitiesList'); container.innerHTML = ''; if (numbers.length === 0) container.innerHTML = '<div class="text-center">📊 No hay probabilidades</div>'; else numbers.forEach((num, index) => { const percent = percentages[index] || Math.floor(Math.random() * 30) + 50; const probDiv = document.createElement('div'); probDiv.className = 'prob-item'; probDiv.innerHTML = `<div class="prob-number">${num}</div><div class="prob-percent">${percent}%</div>`; container.appendChild(probDiv); }); } else { document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">📊 No hay probabilidades disponibles hoy</div>'; document.getElementById('probUpdateTime').innerHTML = '--:-- --'; document.getElementById('probUpdateDate').innerHTML = '--/--/----'; } } catch (error) { console.error('Error cargando probabilidades:', error); document.getElementById('probabilitiesList').innerHTML = '<div class="text-center">❌ Error al cargar probabilidades</div>'; } }
+        
+        async function loadComments() { const container = document.getElementById('commentsList'); if (!container) return; try { const commentsSnapshot = await db.collection('comments').orderBy('timestamp', 'desc').limit(50).get(); if (commentsSnapshot.empty) { container.innerHTML = '<div class="text-center" style="padding: 2rem;">💬 No hay comentarios aún. ¡Sé el primero en compartir tu jugada!</div>'; return; } container.innerHTML = ''; commentsSnapshot.forEach(doc => { const comment = doc.data(); const commentDiv = document.createElement('div'); commentDiv.className = 'comment-card'; let numberHtml = ''; if (comment.number) numberHtml = `<div class="comment-number" style="display:inline-block; background:var(--gradient-primary); color:#0A0F2C; padding:4px 12px; border-radius:20px; font-size:0.65rem; margin-top:8px; font-weight:600;">🎯 Número jugado: ${escapeHtml(comment.number)} ${comment.draw ? `(${escapeHtml(comment.draw)})` : ''}</div>`; commentDiv.innerHTML = `<div class="comment-header"><span class="comment-user">👤 ${escapeHtml(comment.userEmail || 'Usuario')}</span><span class="comment-date">📅 ${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Reciente'}</span></div><div class="comment-text">${escapeHtml(comment.message)}</div>${numberHtml}`; container.appendChild(commentDiv); }); } catch (error) { container.innerHTML = '<div class="text-center">❌ Error al cargar comentarios</div>'; } }
+        
         async function publishComment() { if (!currentUser) { showDialog('Inicia sesión', 'Debes iniciar sesión para publicar comentarios'); return; } const message = document.getElementById('commentMessage').value.trim(); const number = document.getElementById('commentNumber').value.trim(); const draw = document.getElementById('commentDraw').value.trim(); if (!message) { showDialog('Error', 'Escribe un comentario antes de publicar'); return; } try { await db.collection('comments').add({ userEmail: currentUser.email, userId: currentUser.uid, message: message, number: number || null, draw: draw || null, timestamp: firebase.firestore.FieldValue.serverTimestamp(), likes: 0 }); document.getElementById('commentMessage').value = ''; document.getElementById('commentNumber').value = ''; document.getElementById('commentDraw').value = ''; showDialog('✅ Publicado', 'Tu comentario ha sido publicado'); loadComments(); } catch (error) { showDialog('Error', 'No se pudo publicar el comentario'); } }
         function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
-        async function loadProfile() { const content = document.getElementById('profileContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); const expires = userMembership?.membershipExpires ? new Date(userMembership.membershipExpires).toLocaleDateString() : 'Inactiva'; let daysLeft = 0; if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000); document.getElementById('daysLeft').innerText = daysLeft; const referralCode = userMembership?.referralCode || 'Cargando...'; content.innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div><div class="stat-card"><div class="stat-number">${userBalance}</div><div class="stat-label">💰 Saldo Cup</div></div></div><div style="background: rgba(0, 0, 0, 0.5); border-radius: 20px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Membresía vence:</strong> ${expires}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--gradient-primary); color: #0A0F2C; padding: 0.2rem 0.5rem; border-radius: 12px; font-weight:600;">${escapeHtml(referralCode)}</code></p><button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--gradient-primary); width: auto;">📲 Compartir enlace</button></div>${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}${!isActive ? `<div style="margin-top: 1rem; padding: 1rem; background: rgba(220, 20, 60, 0.2); border-radius: 20px; text-align: center;"><strong style="color: var(--danger);">⚠️ Membresía Inactiva</strong><br>Realiza un depósito de 200 Cup para activar 30 días de acceso.</div>` : ''}`; }
+        
+        async function loadProfile() { const content = document.getElementById('profileContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); const expires = userMembership?.membershipExpires ? new Date(userMembership.membershipExpires).toLocaleDateString() : 'Inactiva'; let daysLeft = 0; if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000); document.getElementById('daysLeft').innerText = daysLeft; const referralCode = userMembership?.referralCode || 'Cargando...'; content.innerHTML = `<div class="stats-grid" style="margin-top:0;"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div><div class="stat-card"><div class="stat-number">${userBalance}</div><div class="stat-label">💰 Saldo Cup</div></div></div><div style="background: rgba(0, 0, 0, 0.5); border-radius: 20px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Membresía vence:</strong> ${expires}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--gradient-primary); color: #0A0F2C; padding: 0.2rem 0.5rem; border-radius: 12px; font-weight:600;">${escapeHtml(referralCode)}</code></p><button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--gradient-primary); width: auto;">📲 Compartir enlace</button></div>${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}${!isActive ? `<div style="margin-top: 1rem; padding: 1rem; background: rgba(220, 20, 60, 0.2); border-radius: 20px; text-align: center;"><strong style="color: var(--danger);">⚠️ Membresía Inactiva</strong><br>Realiza un depósito de 200 Cup para activar 30 días de acceso.</div>` : ''}`; }
         
         function showSection(section) { 
             document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
@@ -3804,7 +3080,7 @@
             document.getElementById('profileSection').style.display = section === 'profile' ? 'block' : 'none';
             document.getElementById('paymentSection').style.display = section === 'payment' ? 'block' : 'none';
             document.getElementById('slotSection').style.display = section === 'slot' ? 'block' : 'none';
-            document.querySelectorAll('.nav-card').forEach(card => { if (card.dataset.section === section) card.classList.add('active'); else card.classList.remove('active'); });
+            document.querySelectorAll('.sidebar-nav-item').forEach(card => { if (card.dataset.section === section) card.classList.add('active'); else card.classList.remove('active'); });
             if (section === 'profile') loadProfile();
             if (section === 'comments') loadComments();
             if (section === 'referrals') updateReferralsUI();
@@ -3812,16 +3088,9 @@
             if (section === 'riddle') loadRiddle();
             if (section === 'dailyProb') loadDailyProbabilities();
             if (section === 'iaPro') loadIAData();
-            if (section === 'pick4Pro') {
-                renderPick4Content();
-            }
+            if (section === 'pick4Pro') renderPick4Content();
             if (section === 'slot') loadSlotData();
-            if (section === 'predictions') {
-                const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-                if (isActive && (!predictionsCache || !predictionsCache.numbers || predictionsCache.numbers.length === 0)) {
-                    loadPredictionsWithLoading();
-                }
-            }
+            if (section === 'predictions') { const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); if (isActive && (!predictionsCache || !predictionsCache.numbers || predictionsCache.numbers.length === 0)) loadPredictionsWithLoading(); }
         }
         
         async function handleAuth() { 
@@ -3830,36 +3099,15 @@
             const referralCode = document.getElementById('referralCodeInput').value.trim(); 
             if (!email || !password) { showDialog('Error', 'Completa todos los campos'); return; } 
             if (authMode === 'login') { 
-                try { 
-                    await auth.signInWithEmailAndPassword(email, password); 
-                } catch (error) { 
-                    let msg = error.message; 
-                    if (error.code === 'auth/invalid-email') msg = 'Email inválido'; 
-                    if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta'; 
-                    if (error.code === 'auth/user-not-found') msg = 'Usuario no encontrado'; 
-                    showDialog('Error', msg); 
-                } 
+                try { await auth.signInWithEmailAndPassword(email, password); } 
+                catch (error) { let msg = error.message; if (error.code === 'auth/invalid-email') msg = 'Email inválido'; if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta'; if (error.code === 'auth/user-not-found') msg = 'Usuario no encontrado'; showDialog('Error', msg); } 
             } else { 
-                if (referralCode) {
-                    const isValid = await validateReferralCode(referralCode, email); 
-                    if (!isValid) { 
-                        showDialog('Error', 'El código de invitación ingresado NO es válido.\n\nVerifica el código o solicita uno nuevo a tu referidor.'); 
-                        return; 
-                    }
-                }
+                if (referralCode) { const isValid = await validateReferralCode(referralCode, email); if (!isValid) { showDialog('Error', 'El código de invitación ingresado NO es válido.\n\nVerifica el código o solicita uno nuevo a tu referidor.'); return; } }
                 try { 
                     const userCred = await auth.createUserWithEmailAndPassword(email, password); 
                     const newReferralCode = generateReferralCode(email); 
                     const referrer = referralCode ? await processReferral(email, referralCode) : null; 
-                    await db.collection('members').doc(email).set({ 
-                        email: email, 
-                        membershipActive: false, 
-                        createdAt: new Date().toISOString(), 
-                        userId: userCred.user.uid, 
-                        referralCode: newReferralCode, 
-                        referredBy: referrer || null, 
-                        referralBonusDays: 0 
-                    }); 
+                    await db.collection('members').doc(email).set({ email: email, membershipActive: false, createdAt: new Date().toISOString(), userId: userCred.user.uid, referralCode: newReferralCode, referredBy: referrer || null, referralBonusDays: 0 }); 
                     await db.collection('wallets').doc(email).set({ balance: 0, createdAt: new Date().toISOString() }); 
                     let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Pronóstico Pro!\n\n'; 
                     message += `📋 Tu código de invitación: ${newReferralCode}\n`; 
@@ -3872,13 +3120,7 @@
                     document.getElementById('referralCodeInput').value = ''; 
                     await auth.signOut(); 
                     await auth.signInWithEmailAndPassword(email, password); 
-                } catch (error) { 
-                    let msg = error.message; 
-                    if (error.code === 'auth/email-already-in-use') msg = 'Email ya registrado'; 
-                    if (error.code === 'auth/weak-password') msg = 'Contraseña débil (mínimo 6 caracteres)'; 
-                    if (error.code === 'auth/invalid-email') msg = 'Email inválido'; 
-                    showDialog('Error', msg); 
-                } 
+                } catch (error) { let msg = error.message; if (error.code === 'auth/email-already-in-use') msg = 'Email ya registrado'; if (error.code === 'auth/weak-password') msg = 'Contraseña débil (mínimo 6 caracteres)'; if (error.code === 'auth/invalid-email') msg = 'Email inválido'; showDialog('Error', msg); } 
             } 
         }
         
@@ -3900,18 +3142,34 @@
             document.getElementById('referralCodeInput').value = ''; 
         }
         
-        document.querySelectorAll('.nav-card').forEach(card => { card.addEventListener('click', () => { const section = card.dataset.section; if (section) showSection(section); }); });
+        const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+        const sidebar = document.getElementById('sidebar');
+        
+        if (sidebarToggleBtn) {
+            sidebarToggleBtn.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.toggle('mobile-open');
+                } else {
+                    sidebar.classList.toggle('collapsed');
+                }
+            });
+        }
+        
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('mobile-open')) {
+                if (!sidebar.contains(e.target) && !sidebarToggleBtn.contains(e.target)) {
+                    sidebar.classList.remove('mobile-open');
+                }
+            }
+        });
+        
+        document.querySelectorAll('.sidebar-nav-item').forEach(card => { card.addEventListener('click', () => { const section = card.dataset.section; if (section) showSection(section); }); });
         
         animateLoading();
         setTimeout(async () => { 
             const isConnected = await checkConnection(); 
-            if (isConnected) { 
-                updateLoadingProgress(100); 
-                setTimeout(() => { hideLoadingScreen(); }, 300); 
-            } else { 
-                updateLoadingProgress(100); 
-                setTimeout(() => { hideLoadingScreen(); showDialog('⚠️ Error de conexión', 'No se pudo conectar al servidor. Verifica tu conexión a internet.'); }, 300); 
-            } 
+            if (isConnected) { updateLoadingProgress(100); setTimeout(() => { hideLoadingScreen(); }, 300); } 
+            else { updateLoadingProgress(100); setTimeout(() => { hideLoadingScreen(); showDialog('⚠️ Error de conexión', 'No se pudo conectar al servidor. Verifica tu conexión a internet.'); }, 300); } 
         }, 1500);
         
         auth.onAuthStateChanged(async (user) => { 
@@ -3932,19 +3190,12 @@
                 loadSlotData();
                 pick4History = loadPick4History();
                 updatePick4HistoryUI();
-                // Cargar historial Pick 3
                 pick3History = loadPick3History();
                 updatePick3HistoryUI();
                 document.getElementById('authScreen').style.display = 'none'; 
                 document.getElementById('dashboardScreen').style.display = 'block';
-                initTheme(); 
-                const themeBtn = document.getElementById('themeToggleBtn'); 
-                if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
-                
                 const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
-                if (isActive) {
-                    await loadPredictionsWithLoading();
-                }
+                if (isActive) await loadPredictionsWithLoading();
                 showSection('predictions');
             } else { 
                 if (unsubscribePredictions) unsubscribePredictions(); 
