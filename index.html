@@ -54,6 +54,7 @@
             --transition-normal: 0.2s ease;
             --sidebar-width: 280px;
             --sidebar-collapsed-width: 80px;
+            --costo-membresia: 50;
         }
 
         body {
@@ -2017,7 +2018,7 @@
                     <div class="card referral-card">
                         <h2 style="font-size: 1.1rem; margin-bottom: 0.8rem;">🎁 Invita Amigos y Gana 50 cup por referido activo</h2>
                         <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 1rem;">
-                            Comparte tu código de invitación. Por cada amigo que se registre y <strong>pague una membresía ACTIVA</strong> (200 cup mínimo), 
+                            Comparte tu código de invitación. Por cada amigo que se registre y <strong>pague una membresía ACTIVA</strong> (50 cup mínimo), 
                             recibirás <strong>50 cup COMPLETAMENTE RETIRABLES</strong> en tu cuenta.
                         </p>
                         <div class="referral-code-box">
@@ -2074,7 +2075,7 @@
                             <div class="stat-card"><div class="stat-number" id="memberStatus">Inactiva</div><div class="stat-label">Membresía</div></div>
                         </div>
                         <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                            <button class="btn" onclick="showDepositForm()" style="flex: 1;">💵 DEPOSITAR (200 cup)</button>
+                            <button class="btn" onclick="showDepositForm()" style="flex: 1;">💵 DEPOSITAR (50 cup)</button>
                             <button class="btn btn-outline" onclick="showWithdrawForm()" style="flex: 1;">🏦 RETIRAR</button>
                         </div>
                         <div id="depositForm" style="display: block;">
@@ -2093,7 +2094,7 @@
 💰 DEPÓSITO PRONÓSTICO PRO<br>
 💳 Tarjeta: 9227 0699 9771 1927<br>
 📝 Número de transacción: [TU NÚMERO]<br>
-💵 Monto: [MONTO] Cup<br>
+💵 Monto: [MONTO] Cup (mínimo 50 Cup)<br>
 📧 Correo: [TU CORREO]
                                     </code>
                                 </div>
@@ -2104,8 +2105,8 @@
                                 <button class="btn btn-small" onclick="confirmTransferDone()" style="width: auto; background: var(--success); margin-top: 8px;">✅ Ya realicé la transferencia</button>
                             </div>
                             <div class="input-group">
-                                <label>💰 Cantidad a depositar (CUP) - Mínimo 200 cup</label>
-                                <input type="number" id="depositAmount" placeholder="Mínimo 200 CUP" value="200" min="200">
+                                <label>💰 Cantidad a depositar (CUP) - Mínimo 50 cup (membresía 30 días)</label>
+                                <input type="number" id="depositAmount" placeholder="Mínimo 50 CUP" value="50" min="50">
                             </div>
                             <div class="input-group">
                                 <label>🔢 Número de transacción (obligatorio)</label>
@@ -2254,6 +2255,9 @@
         let slotBiggestWin = 0;
         let slotHistory = [];
         let isSpinning = false;
+        
+        // Costo de membresía actualizado a 50 cup
+        const COSTO_MEMBRESIA = 50;
         
         const slotSymbols = ['🍒', '🍋', '🍊', '🍉', '🍇', '🔔', '⭐', '💎', '7️⃣'];
         
@@ -2528,7 +2532,7 @@
                             const transactionId = change.doc.id;
                             const memberDoc = await db.collection('members').doc(currentUser.email).get();
                             const isAlreadyActive = memberDoc.exists && memberDoc.data().membershipActive === true;
-                            if (transaction.amount >= 200 && !transaction.processedForMembership && !isAlreadyActive) {
+                            if (transaction.amount >= COSTO_MEMBRESIA && !transaction.processedForMembership && !isAlreadyActive) {
                                 await processDepositAndActivateMembership(transaction, transactionId);
                                 await change.doc.ref.update({ processedForMembership: true });
                             }
@@ -2541,7 +2545,6 @@
             if (!currentUser) return;
             try {
                 const amount = transaction.amount;
-                const COSTO_MEMBRESIA = 200;
                 const finalBalance = amount - COSTO_MEMBRESIA;
                 const walletRef = db.collection('wallets').doc(currentUser.email);
                 await walletRef.set({ balance: finalBalance, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
@@ -2619,7 +2622,7 @@
             } else {
                 alertDiv.className = 'membership-expired-alert';
                 alertDiv.style.display = 'block';
-                alertDiv.innerHTML = `⚠️ MEMBRESÍA INACTIVA - Realiza un depósito de 200 cup para activar 30 días de acceso completo.`;
+                alertDiv.innerHTML = `⚠️ MEMBRESÍA INACTIVA - Realiza un depósito de ${COSTO_MEMBRESIA} cup para activar 30 días de acceso completo.`;
             }
         }
         
@@ -2628,7 +2631,7 @@
         
         function confirmTransferDone() {
             const email = currentUser?.email || 'tu_correo@ejemplo.com';
-            const mensajePredefinido = `💰 DEPÓSITO PRONÓSTICO PRO\n\n💳 Tarjeta: 9227 0699 9771 1927\n📝 Número de transacción: [TU NÚMERO]\n💵 Monto: [MONTO] Cup\n📧 Correo: ${email}`;
+            const mensajePredefinido = `💰 DEPÓSITO PRONÓSTICO PRO\n\n💳 Tarjeta: 9227 0699 9771 1927\n📝 Número de transacción: [TU NÚMERO]\n💵 Monto: [MONTO] Cup (mínimo ${COSTO_MEMBRESIA} Cup)\n📧 Correo: ${email}`;
             showDialog('✅ Transferencia confirmada', `Por favor, envía la captura de pantalla y este mensaje a @sdesaroyador:\n\n<code style="display:block; background:rgba(0,0,0,0.1); padding:8px; border-radius:12px; margin-top:8px; font-size:11px; text-align:left;">${mensajePredefinido.replace(/\n/g, '<br>')}</code>\n\n📌 Recuerda adjuntar la imagen de tu transferencia.`);
         }
         
@@ -2636,7 +2639,7 @@
             const container = document.getElementById('pick4ContentContainer');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             if (!isActive) {
-                container.innerHTML = `<div class="card pick4-locked"><div style="text-align: center; padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para acceder al generador Pick 4 Pro.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button></div></div>`;
+                container.innerHTML = `<div class="card pick4-locked"><div style="text-align: center; padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para acceder al generador Pick 4 Pro.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de ${COSTO_MEMBRESIA} Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar ${COSTO_MEMBRESIA} Cup</button></div></div>`;
                 return;
             }
             container.innerHTML = `<div class="card ia-card"><h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🎲 Pick 4 Pro - Generador IA de 4 Dígitos</h2><p style="color: var(--text-secondary); font-size: 0.7rem; margin-bottom: 1rem;">Ingresa los últimos resultados de Pick 4 (números de 4 dígitos) separados por comas o espacios. La IA analizará los patrones y generará <strong>8 posibles combinaciones de Pick 4</strong> basadas en los últimos números.</p><div class="ia-input-group"><input type="text" id="pick4InputNumbers" placeholder="Ej: 1234, 5678, 9012, 3456, 7890, 2345, 6789, 4321" autocomplete="off"><button class="btn btn-ai btn-small" onclick="generatePick4Prediction()" style="width: auto; padding: 12px 20px;">🎲 Generar Pick 4 IA</button></div><div id="pick4NumbersContainer" style="display: none;"><h3 style="font-size: 0.85rem; margin: 14px 0 8px 0;">🎯 Combinaciones de Pick 4 generadas por IA:</h3><div id="pick4NumbersGrid" class="pick4-numbers-grid"></div><div class="ia-info">🤖 Estas combinaciones fueron generadas analizando frecuencias por posición, dígitos calientes y patrones de los últimos números ingresados.</div></div><div id="pick4HistoryContainer" style="display: none; margin-top: 16px;"><h3 style="font-size: 0.85rem; margin-bottom: 8px;">📊 Historial de los últimos números ingresados:</h3><div id="pick4HistoryList" class="pick4-history-list"></div><div id="pick4LastInfo" class="ia-info" style="background: var(--gradient-ai); color: white; margin-top: 10px;"></div></div></div>`;
@@ -2963,13 +2966,13 @@
             if (!currentUser) { showDialog('Error', 'Debes iniciar sesión'); return; } 
             const amount = parseFloat(document.getElementById('depositAmount').value); 
             const transactionNumber = document.getElementById('transactionNumber').value.trim(); 
-            if (isNaN(amount) || amount < 200) { showDialog('Error', 'El monto mínimo para depósito es 200 Cup (incluye membresía de 30 días)'); return; } 
+            if (isNaN(amount) || amount < COSTO_MEMBRESIA) { showDialog('Error', `El monto mínimo para depósito es ${COSTO_MEMBRESIA} Cup (incluye membresía de 30 días)`); return; } 
             if (!transactionNumber) { showDialog('Error', 'Ingresa el número de transacción'); return; } 
             try { 
                 await db.collection('transactions').add({ userEmail: currentUser.email, userId: currentUser.uid, type: 'deposit', amount: amount, transactionNumber: transactionNumber, status: 'pending', timestamp: firebase.firestore.FieldValue.serverTimestamp(), processedForMembership: false }); 
                 document.getElementById('transactionNumber').value = ''; 
-                document.getElementById('depositAmount').value = '200'; 
-                showDialog('✅ Solicitud enviada', `Depósito de ${amount} Cup registrado.\n\n📌 IMPORTANTE:\n1. Envía la captura a @sdesaroyador\n2. El administrador aprobará tu depósito\n3. Al aprobarse, se activará tu membresía por 30 días y tu saldo será de ${amount - 200} Cup\n\nNúmero de transacción: ${transactionNumber}`); 
+                document.getElementById('depositAmount').value = COSTO_MEMBRESIA.toString(); 
+                showDialog('✅ Solicitud enviada', `Depósito de ${amount} Cup registrado.\n\n📌 IMPORTANTE:\n1. Envía la captura a @sdesaroyador\n2. El administrador aprobará tu depósito\n3. Al aprobarse, se activará tu membresía por 30 días y tu saldo será de ${amount - COSTO_MEMBRESIA} Cup\n\nNúmero de transacción: ${transactionNumber}`); 
                 loadTransactions(); 
             } catch (error) { showDialog('Error', error.message); } 
         }
@@ -3014,7 +3017,7 @@
             const container = document.getElementById('predictionsContent');
             const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date();
             predictionsCache = { numbers: numbers || [], strongNumbers: strongNumbers || [], mediumNumbers: mediumNumbers || [], afternoonWinner: afternoonWinner || null, nightWinner: nightWinner || null, lastUpdate: lastUpdate || null, lastUpdateFormatted: lastUpdateFormatted || null };
-            if (!isActive) { container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para ver los pronósticos.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de 200 Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar 200 Cup</button></div>`; return; }
+            if (!isActive) { container.innerHTML = `<div class="text-center" style="padding: 2rem;"><div style="font-size: 3rem;">🔒</div><h3>Contenido Bloqueado</h3><p>Necesitas membresía activa para ver los pronósticos.</p><p style="margin-top: 0.5rem; font-size: 0.8rem;">💰 Realiza un depósito de ${COSTO_MEMBRESIA} Cup y obtén 30 días de acceso completo.</p><button class="btn" onclick="showSection('payment'); showDepositForm();" style="margin-top: 1rem;">💵 Depositar ${COSTO_MEMBRESIA} Cup</button></div>`; return; }
             let finalNumbers = numbers, finalStrong = strongNumbers, finalMedium = mediumNumbers, finalAfternoon = afternoonWinner, finalNight = nightWinner, finalLastUpdate = lastUpdate, finalLastUpdateFormatted = lastUpdateFormatted;
             if (finalNumbers && finalNumbers.length > 0) { cachedNumbers = [...finalNumbers]; cachedStrong = finalStrong || []; cachedMedium = finalMedium || []; if (finalAfternoon !== undefined) cachedAfternoonWinner = finalAfternoon; if (finalNight !== undefined) cachedNightWinner = finalNight; if (finalLastUpdate) cachedLastUpdate = finalLastUpdate; if (finalLastUpdateFormatted) cachedLastUpdateFormatted = finalLastUpdateFormatted; }
             else if (cachedNumbers.length > 0) { finalNumbers = cachedNumbers; finalStrong = cachedStrong; finalMedium = cachedMedium; if (afternoonWinner === undefined) finalAfternoon = cachedAfternoonWinner; if (nightWinner === undefined) finalNight = cachedNightWinner; if (!lastUpdate) finalLastUpdate = cachedLastUpdate; if (!lastUpdateFormatted) finalLastUpdateFormatted = cachedLastUpdateFormatted; }
@@ -3067,7 +3070,7 @@
         async function publishComment() { if (!currentUser) { showDialog('Inicia sesión', 'Debes iniciar sesión para publicar comentarios'); return; } const message = document.getElementById('commentMessage').value.trim(); const number = document.getElementById('commentNumber').value.trim(); const draw = document.getElementById('commentDraw').value.trim(); if (!message) { showDialog('Error', 'Escribe un comentario antes de publicar'); return; } try { await db.collection('comments').add({ userEmail: currentUser.email, userId: currentUser.uid, message: message, number: number || null, draw: draw || null, timestamp: firebase.firestore.FieldValue.serverTimestamp(), likes: 0 }); document.getElementById('commentMessage').value = ''; document.getElementById('commentNumber').value = ''; document.getElementById('commentDraw').value = ''; showDialog('✅ Publicado', 'Tu comentario ha sido publicado'); loadComments(); } catch (error) { showDialog('Error', 'No se pudo publicar el comentario'); } }
         function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
         
-        async function loadProfile() { const content = document.getElementById('profileContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); const expires = userMembership?.membershipExpires ? new Date(userMembership.membershipExpires).toLocaleDateString() : 'Inactiva'; let daysLeft = 0; if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000); document.getElementById('daysLeft').innerText = daysLeft; const referralCode = userMembership?.referralCode || 'Cargando...'; content.innerHTML = `<div class="stats-grid" style="margin-top:0;"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div><div class="stat-card"><div class="stat-number">${userBalance}</div><div class="stat-label">💰 Saldo Cup</div></div></div><div style="background: rgba(0, 0, 0, 0.5); border-radius: 20px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Membresía vence:</strong> ${expires}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--gradient-primary); color: #0A0F2C; padding: 0.2rem 0.5rem; border-radius: 12px; font-weight:600;">${escapeHtml(referralCode)}</code></p><button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--gradient-primary); width: auto;">📲 Compartir enlace</button></div>${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}${!isActive ? `<div style="margin-top: 1rem; padding: 1rem; background: rgba(220, 20, 60, 0.2); border-radius: 20px; text-align: center;"><strong style="color: var(--danger);">⚠️ Membresía Inactiva</strong><br>Realiza un depósito de 200 Cup para activar 30 días de acceso.</div>` : ''}`; }
+        async function loadProfile() { const content = document.getElementById('profileContent'); const isActive = userMembership?.membershipActive && new Date(userMembership.membershipExpires) > new Date(); const expires = userMembership?.membershipExpires ? new Date(userMembership.membershipExpires).toLocaleDateString() : 'Inactiva'; let daysLeft = 0; if (isActive && userMembership?.membershipExpires) daysLeft = Math.ceil((new Date(userMembership.membershipExpires) - new Date()) / 86400000); document.getElementById('daysLeft').innerText = daysLeft; const referralCode = userMembership?.referralCode || 'Cargando...'; content.innerHTML = `<div class="stats-grid" style="margin-top:0;"><div class="stat-card"><div class="stat-number">${isActive ? '✅' : '❌'}</div><div class="stat-label">Estado</div></div><div class="stat-card"><div class="stat-number">${daysLeft}</div><div class="stat-label">Días restantes</div></div><div class="stat-card"><div class="stat-number">${userBalance}</div><div class="stat-label">💰 Saldo Cup</div></div></div><div style="background: rgba(0, 0, 0, 0.5); border-radius: 20px; padding: 1rem;"><p><strong>📧 Email:</strong> ${currentUser?.email}</p><p><strong>📅 Membresía vence:</strong> ${expires}</p><p><strong>🎁 Código de invitación:</strong> <code style="background: var(--gradient-primary); color: #0A0F2C; padding: 0.2rem 0.5rem; border-radius: 12px; font-weight:600;">${escapeHtml(referralCode)}</code></p><button class="btn btn-small mt-3" onclick="shareTelegramLink()" style="background: var(--gradient-primary); width: auto;">📲 Compartir enlace</button></div>${userBalance > 0 ? `<button class="btn mt-3" onclick="showSection('payment'); showWithdrawForm();" style="background: var(--success);">💸 Retirar ${userBalance} cup</button>` : ''}${!isActive ? `<div style="margin-top: 1rem; padding: 1rem; background: rgba(220, 20, 60, 0.2); border-radius: 20px; text-align: center;"><strong style="color: var(--danger);">⚠️ Membresía Inactiva</strong><br>Realiza un depósito de ${COSTO_MEMBRESIA} Cup para activar 30 días de acceso.</div>` : ''}`; }
         
         function showSection(section) { 
             document.getElementById('predictionsSection').style.display = section === 'predictions' ? 'block' : 'none';
@@ -3112,7 +3115,7 @@
                     let message = '✅ Cuenta creada correctamente.\n\n🎁 ¡Bienvenido a Pronóstico Pro!\n\n'; 
                     message += `📋 Tu código de invitación: ${newReferralCode}\n`; 
                     message += '🤖 IA Pro: Ingresa resultados anteriores para obtener predicciones inteligentes.\n\n'; 
-                    message += '💰 Para acceder a los pronósticos, realiza un depósito de 200 Cup (membresía 30 días).\n\n'; 
+                    message += `💰 Para acceder a los pronósticos, realiza un depósito de ${COSTO_MEMBRESIA} Cup (membresía 30 días).\n\n`; 
                     message += '🎁 ¡Invita amigos! Por cada referido que active membresía, recibirás 50 cup retirables.\n\n'; 
                     if (referrer) message += `🎉 ¡Fuiste referido por ${referrer}! Cuando actives tu membresía, él recibirá 50 cup.`; 
                     showDialog('✅ Registro Exitoso', message); 
