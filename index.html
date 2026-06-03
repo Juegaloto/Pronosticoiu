@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+p<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -80,7 +80,6 @@
             z-index: -1;
         }
 
-        /* SIDEBAR MENÚ LATERAL */
         .sidebar {
             position: fixed;
             left: 0;
@@ -228,7 +227,6 @@
             color: white;
         }
 
-        /* Botón para colapsar/expandir sidebar */
         .sidebar-toggle {
             position: fixed;
             left: 20px;
@@ -255,7 +253,6 @@
             transform: scale(1.05);
         }
 
-        /* Sidebar colapsada */
         .sidebar.collapsed {
             width: var(--sidebar-collapsed-width);
         }
@@ -290,7 +287,6 @@
             justify-content: center;
         }
 
-        /* Main content con espacio para sidebar */
         .main-content {
             margin-left: var(--sidebar-width);
             transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1707,7 +1703,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Estilos para Damas Españolas */
         .checkers-board {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
@@ -2685,6 +2680,7 @@
                             const transactionId = change.doc.id;
                             const memberDoc = await db.collection('members').doc(currentUser.email).get();
                             const isAlreadyActive = memberDoc.exists && memberDoc.data().membershipActive === true;
+                            // Auto-activar membresía cuando el depósito es aprobado y es >= 50 cup
                             if (transaction.amount >= COSTO_MEMBRESIA && !transaction.processedForMembership && !isAlreadyActive) {
                                 await processDepositAndActivateMembership(transaction, transactionId);
                                 await change.doc.ref.update({ processedForMembership: true });
@@ -3263,7 +3259,7 @@
                     });
                 });
                 
-                document.getElementById('joinQueueBtn').addEventListener('click', joinQueue);
+                document.getElementById('joinQueueBtn')?.addEventListener('click', joinQueue);
                 loadMatchHistory();
             } else if (waitingForOpponent) {
                 container.innerHTML = `
@@ -3293,15 +3289,13 @@
             waitingForOpponent = true;
             renderCheckersSection();
             
-            // Buscar oponente en Firestore
             const queueRef = db.collection('gameQueue').doc('checkers');
-            const gameRef = db.collection('checkersGames');
             
             try {
                 const queueDoc = await queueRef.get();
                 let opponent = null;
                 
-                if (queueDoc.exists && queueDoc.data().playerEmail && queueDoc.data().playerEmail !== currentUser.email && queueDoc.data().betAmount === selectedBet) {
+                if (queueDoc.exists && queueDoc.data().playerEmail !== currentUser.email && queueDoc.data().betAmount === selectedBet) {
                     opponent = queueDoc.data().playerEmail;
                     await queueRef.delete();
                     await createGame(opponent, selectedBet);
@@ -3312,7 +3306,6 @@
                         timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     });
                     
-                    // Esperar oponente
                     const unsubscribe = queueRef.onSnapshot(async (snap) => {
                         if (snap.exists && snap.data().playerEmail !== currentUser.email && snap.data().betAmount === selectedBet) {
                             unsubscribe();
@@ -3342,6 +3335,9 @@
             const gameId = `${currentUser.email}_${opponentEmail}_${Date.now()}`;
             const initialBoard = createInitialBoard();
             
+            // Descontar la apuesta del jugador actual
+            await updateUserBalance(userBalance - betAmount);
+            
             currentGame = {
                 id: gameId,
                 players: {
@@ -3362,6 +3358,8 @@
             await db.collection('checkersGames').doc(gameId).set(currentGame);
             waitingForOpponent = false;
             startGameMonitoring(gameId);
+            renderCheckersSection();
+            showDialog('Partida iniciada', `Tu apuesta de ${betAmount} Cup ha sido registrada. ¡Buena suerte!`);
         }
         
         function createInitialBoard() {
@@ -3398,7 +3396,7 @@
                             if (updatedGame.winner === currentUser.email) {
                                 const winAmount = updatedGame.betAmount * 0.8;
                                 await updateUserBalance(userBalance + winAmount);
-                                showDialog('🎉 ¡VICTORIA!', `Ganaste la partida y recibes ${winAmount} Cup (80% de la apuesta).`);
+                                showDialog('🎉 ¡VICTORIA!', `Ganaste la partida y recibes ${winAmount} Cup (80% de la apuesta de ${updatedGame.betAmount} Cup).`);
                             } else if (updatedGame.winner === 'abandon') {
                                 const winAmount = updatedGame.betAmount;
                                 await updateUserBalance(userBalance + winAmount);
@@ -3414,11 +3412,16 @@
                         const now = new Date();
                         const diffSeconds = (now - abandonTime) / 1000;
                         if (diffSeconds >= 180) {
+                            const winner = updatedGame.abandonedBy === currentUser.email ? 
+                                (updatedGame.players.white === currentUser.email ? updatedGame.players.black : updatedGame.players.white) : 
+                                currentUser.email;
                             await db.collection('checkersGames').doc(gameId).update({
                                 status: 'finished',
-                                winner: updatedGame.abandonedBy === currentUser.email ? opponentEmail : currentUser.email,
+                                winner: winner,
                                 finishedAt: new Date().toISOString()
                             });
+                        } else if (updatedGame.abandonedBy === currentUser.email && document.getElementById('checkersSection').style.display !== 'none') {
+                            renderGameBoard();
                         }
                     } else {
                         currentGame = updatedGame;
@@ -3441,14 +3444,14 @@
             let html = `
                 <div class="card">
                     <div class="game-info">
-                        <div>💰 Apuesta: ${currentGame.betAmount} Cup</div>
+                        <div>💰 Apuesta: ${currentGame.betAmount} Cup (80% para el ganador)</div>
                         <div class="turn-indicator">Turno: ${currentGame.turn === 'white' ? '⚪ Blancas' : '⚫ Negras'}</div>
                         <div>🎨 Eres: ${myColor === 'white' ? '⚪ Blancas' : '⚫ Negras'}</div>
                     </div>
-                    ${currentGame.abandonedBy ? `<div class="abandon-timer">⏰ Oponente abandonó. Tiempo para regresar: ${abandonTimeLeft} segundos</div>` : ''}
+                    ${currentGame.abandonedBy ? `<div class="abandon-timer">⏰ ${currentGame.abandonedBy === currentUser.email ? 'Abandonaste la partida' : 'Oponente abandonó'} - Tiempo para reconectar: ${abandonTimeLeft} segundos</div>` : ''}
                     <div class="checkers-board" id="checkersBoard"></div>
                     <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                        ${isMyTurn && !currentGame.abandonedBy ? `<button class="btn" onclick="abandonGame()">🏳️ Abandonar partida</button>` : ''}
+                        ${isMyTurn && !currentGame.abandonedBy && currentGame.status === 'active' ? `<button class="btn" onclick="abandonGame()">🏳️ Abandonar partida</button>` : ''}
                         <button class="btn btn-outline" onclick="renderCheckersSection()">🔄 Actualizar</button>
                     </div>
                 </div>
@@ -3483,20 +3486,12 @@
         }
         
         async function makeMove(row, col) {
-            if (!currentGame || currentGame.status !== 'active') return;
-            const myColor = currentGame.players.white === currentUser.email ? 'white' : 'black';
-            if ((currentGame.turn === 'white' && myColor !== 'white') || (currentGame.turn === 'black' && myColor !== 'black')) {
-                showDialog('No es tu turno', 'Espera a que tu oponente juegue');
-                return;
-            }
-            
-            // Implementación simplificada de movimientos (para producción se necesitaría lógica completa)
-            showDialog('Movimiento', 'Funcionalidad de movimiento implementada. Por ahora usa el botón de abandonar para probar el sistema.');
+            showDialog('En desarrollo', 'La funcionalidad completa de movimientos estará disponible pronto. Por ahora usa "Abandonar" para probar el sistema de apuestas.');
         }
         
         async function abandonGame() {
             if (!currentGame || currentGame.status !== 'active') return;
-            if (confirm('¿Seguro que quieres abandonar? Tendrás 3 minutos para reconectar o perderás la partida.')) {
+            if (confirm('¿Seguro que quieres abandonar? Tendrás 3 minutos para reconectar o perderás la partida y la apuesta.')) {
                 await db.collection('checkersGames').doc(currentGame.id).update({
                     abandonedBy: currentUser.email,
                     abandonTime: new Date().toISOString()
